@@ -21,13 +21,29 @@
     --coral:#C9552C;
     --line:rgba(11,58,43,0.16);
     --muted:#5C6B62;
+    /* نصوص الصفحة العادية — منفصلة عن --ink/--ink2 لأن تلك تُستخدم أيضًا
+       كخلفيات ثابتة (الهيدر، رأس الجدول...) يجب أن تبقى نفس اللون الأخضر
+       الغامق دائمًا. --text/--text2 هي فقط للنص، فتنعكس في الوضع الليلي. */
+    --text:#0B3A2B;
+    --text2:#155A43;
   }
+  /* ===== الوضع الليلي — اختياري، يُفعَّل بزر 🌙 ويُحفظ محليًا لكل جهاز ===== */
+  html.dark-mode{
+    --cream:#121815;
+    --paper:#1C2622;
+    --line:rgba(255,255,255,0.12);
+    --muted:#8FA79C;
+    --text:#F1EFE4;
+    --text2:#BFE0D0;
+  }
+  html.dark-mode .status-msg.ok{background:#123524;color:#8FE3B0;}
+  html.dark-mode .status-msg.err{background:#3A1D14;color:#FFB199;}
   *{box-sizing:border-box;}
   body{
     margin:0;
     font-family:'Tajawal',Arial,sans-serif;
     background:var(--cream);
-    color:var(--ink);
+    color:var(--text);
     line-height:1.6;
   }
   .wrap{max-width:760px;margin:0 auto;padding:0 0 60px;}
@@ -72,9 +88,22 @@
     text-align:center;font-size:0.78rem;font-weight:800;
     padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);
   }
-  /* وضع "خط أكبر" لسهولة القراءة — يكبّر كل القياسات المبنية على rem في
-     الصفحة (أغلب النصوص) دفعة واحدة برفع حجم خط الجذر */
-  html.big-font{font-size:118%;}
+  /* رسالة ترحيب لأول زيارة — تظهر مرة واحدة فقط (localStorage) */
+  .onboard-overlay{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(11,58,43,0.72);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .onboard-card{
+    background:var(--paper);border-radius:16px;padding:22px 20px;
+    max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  }
+  .onboard-title{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;}
+  .onboard-list{margin:0 0 12px;padding-inline-start:18px;list-style:none;}
+  .onboard-list li{font-size:0.86rem;color:var(--text);margin-bottom:9px;line-height:1.5;}
+  .onboard-hint{font-size:0.8rem;color:var(--muted);margin:0 0 16px;text-align:center;}
+  .onboard-card .btn{width:100%;}
   /* نقطة تنبيه تحديث جديد (لم يُشاهَد بعد) */
   .update-dot{
     position:absolute; top:7px; inset-inline-end:6px;
@@ -94,7 +123,7 @@
     font-size:1.05rem;
     font-weight:800;
     margin:0 0 14px;
-    color:var(--ink);
+    color:var(--text);
     border-inline-start:5px solid var(--coral);
     padding-inline-start:10px;
   }
@@ -145,7 +174,7 @@
   .history-table th, .history-table td{padding:5px 6px;font-size:0.76rem;text-align:center;border-bottom:1px dotted var(--line);}
   .history-table th{color:var(--muted);font-weight:700;}
   .toggle-btn{
-    background:none;border:none;cursor:pointer;color:var(--ink2);font-size:0.9rem;
+    background:none;border:none;cursor:pointer;color:var(--text2);font-size:0.9rem;
     padding:2px 4px;
   }
 
@@ -153,24 +182,38 @@
   .rules-list{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
   .rules-list h4{margin:14px 0 4px;font-size:0.92rem;color:var(--coral);}
   .rules-list h4:first-child{margin-top:0;}
-  .rules-list p{margin:0 0 4px;font-size:0.87rem;color:var(--ink);}
+  .rules-list p{margin:0 0 4px;font-size:0.87rem;color:var(--text);}
+
+  /* الأسئلة الشائعة */
+  .faq-item{
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;
+    padding:2px 14px;margin-bottom:8px;
+  }
+  .faq-item summary{
+    padding:11px 0;font-weight:700;font-size:0.88rem;color:var(--text);
+    cursor:pointer;list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::before{content:'❯';display:inline-block;margin-inline-end:8px;color:var(--gold);transition:transform 0.15s;}
+  .faq-item[open] summary::before{transform:rotate(90deg);}
+  .faq-item p{margin:0 0 12px;font-size:0.84rem;color:var(--muted);line-height:1.6;}
 
   /* أوسمة الموسم */
   .badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
   .badge-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
   .badge-icon{font-size:1.8rem;line-height:1;margin-bottom:4px;}
   .badge-title{font-size:0.78rem;font-weight:800;color:var(--gold);margin-bottom:4px;}
-  .badge-names{font-size:0.87rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .badge-names{font-size:0.87rem;font-weight:700;color:var(--text);margin-bottom:2px;}
   .badge-detail{font-size:0.74rem;color:var(--muted);}
 
   /* مواجهة مباشرة */
   .h2h-picker{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .h2h-picker select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-family:inherit;font-size:0.85rem;}
+  .h2h-picker select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--text);font-family:inherit;font-size:0.85rem;}
   .h2h-vs{font-weight:800;color:var(--muted);font-size:0.8rem;flex:0 0 auto;}
   .h2h-table{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
   .h2h-row{display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);}
   .h2h-row:last-child{border-bottom:none;}
-  .h2h-val{text-align:center;font-weight:800;font-size:0.95rem;color:var(--ink);}
+  .h2h-val{text-align:center;font-weight:800;font-size:0.95rem;color:var(--text);}
   .h2h-val.h2h-win{color:var(--gold);}
   .h2h-label{text-align:center;font-size:0.76rem;color:var(--muted);}
 
@@ -193,11 +236,11 @@
 
   /* توقعات بطل الجولة القادمة */
   .predict-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
-  .predict-title{font-weight:800;font-size:0.95rem;color:var(--ink);margin-bottom:8px;}
+  .predict-title{font-weight:800;font-size:0.95rem;color:var(--text);margin-bottom:8px;}
   .predict-hint{font-size:0.82rem;color:var(--muted);}
   .predict-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-  .predict-row select{flex:1;min-width:140px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--cream);color:var(--ink);font-family:inherit;font-size:0.85rem;}
-  .predict-current{font-size:0.82rem;color:var(--ink2);margin-top:8px;}
+  .predict-row select{flex:1;min-width:140px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--cream);color:var(--text);font-family:inherit;font-size:0.85rem;}
+  .predict-current{font-size:0.82rem;color:var(--text2);margin-top:8px;}
   .predict-count{font-size:0.76rem;color:var(--muted);margin-top:6px;}
   .predict-leader-title{font-weight:800;font-size:0.82rem;color:var(--gold);margin-top:12px;margin-bottom:6px;}
   .predict-leaderboard{display:flex;flex-direction:column;gap:4px;}
@@ -219,7 +262,7 @@
     padding:9px 16px;font-family:inherit;font-weight:700;font-size:0.88rem;cursor:pointer;
   }
   .btn.secondary{background:var(--ink);}
-  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);}
   .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 
   .round-entry-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden;}
@@ -251,9 +294,9 @@
   .r2-club-row{display:flex;align-items:flex-start;gap:8px;}
   .r2-club-row .crest{width:26px;height:29px;flex-shrink:0;margin-top:1px;}
   .r2-club-matches{flex:1;min-width:0;}
-  .r2-club-matches .r2-club-name{font-size:0.75rem;font-weight:700;color:var(--ink2);margin-bottom:2px;}
+  .r2-club-matches .r2-club-name{font-size:0.75rem;font-weight:700;color:var(--text2);margin-bottom:2px;}
   .r2-match-line{font-size:0.74rem;color:var(--muted);line-height:1.5;}
-  .r2-match-line b{color:var(--ink);font-weight:700;}
+  .r2-match-line b{color:var(--text);font-weight:700;}
   .r2-res-win{color:#1E8E4B;font-weight:700;}
   .r2-res-draw{color:var(--gold);font-weight:700;}
   .r2-res-loss{color:var(--coral);font-weight:700;}
@@ -263,7 +306,7 @@
   .r1-simple-row:last-child{border-bottom:none;}
   .r1-simple-row .r1-rank{color:var(--muted);font-weight:700;width:20px;flex-shrink:0;}
   .r1-simple-row .r1-name{flex:1;font-weight:700;}
-  .r1-simple-row .r1-pts{font-weight:800;color:var(--ink2);}
+  .r1-simple-row .r1-pts{font-weight:800;color:var(--text2);}
   .rounds-subtitle{font-size:0.8rem;color:var(--muted);margin:14px 2px 8px;line-height:1.6;}
   .mini-table{width:100%;font-size:0.78rem;border-collapse:collapse;}
   .mini-table td{padding:3px 4px;border-bottom:1px dotted var(--line);}
@@ -440,7 +483,7 @@
   .copy-area{
     width:100%;min-height:120px;font-family:inherit;font-size:0.78rem;
     padding:10px;border:1px solid var(--line);border-radius:8px;
-    background:var(--paper);color:var(--ink);margin-top:8px;line-height:1.7;
+    background:var(--paper);color:var(--text);margin-top:8px;line-height:1.7;
   }
 
   .loading{text-align:center;padding:40px 10px;color:var(--muted);}
@@ -551,12 +594,27 @@
 
 <div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
 
+<div id="onboardOverlay" class="onboard-overlay" hidden>
+  <div class="onboard-card">
+    <div class="onboard-title">👋 أهلًا فيك بدوري بروكي الفانتازي!</div>
+    <ul class="onboard-list">
+      <li>🏆 <b>الترتيب العام</b> — مركزك ونقاطك لحظة بلحظة</li>
+      <li>👥 <b>المشاركون</b> — كل واحد وأنديته الثلاثة</li>
+      <li>📅 <b>الجولات</b> — أرشيف كل بطل جولة سابقة</li>
+      <li>📊 <b>الإحصائيات</b> — تطوّر الترتيب وأداء الأندية</li>
+      <li>📜 <b>اللائحة</b> — القواعد والأسئلة الشائعة</li>
+    </ul>
+    <p class="onboard-hint">اختر اسمك من "مين أنت؟" فوق الترتيب عشان تشوف لوحتك الشخصية 🎯</p>
+    <button class="btn" id="onboardCloseBtn">تمام، يلا نبدأ 🚀</button>
+  </div>
+</div>
+
 <header>
   <img id="logoImg" alt="شعار دوري بروكي الفانتازي" style="width:150px;height:150px;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
   <h1>دوري بروكي الفانتازي</h1>
   <p>الموسم الثاني</p>
   <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
-    <button id="fontSizeToggleBtn" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);" aria-pressed="false">🔤 تكبير الخط</button>
+    <button id="darkModeToggleBtn" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);" aria-pressed="false">🌙 الوضع الليلي</button>
     <a href="report.html" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);text-decoration:none;display:inline-block;">🧾 ساهم بالبيانات</a>
   </div>
 </header>
@@ -610,6 +668,7 @@
       <button class="btn secondary" id="dlParticipantsBtn">⬇️ تحميل القائمة كصورة</button>
     </div>
     <div id="participantsImgMsg"></div>
+    <input type="text" id="participantsSearchInput" placeholder="🔍 دوّر باسم مشارك..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.88rem;margin-bottom:12px;">
     <div id="participantsCapture">
       <h2 class="section-title">قائمة المشاركين وأنديتهم</h2>
       <div id="participantsBox"></div>
@@ -666,6 +725,34 @@
         <p>يلزم كتابة النقاط كل أسبوع بعد نهاية المباريات في كشف المطابقة، حفظًا للحقوق ومطابقة النقاط مع المحصّل.</p>
         <h4>نظام احتساب النقاط</h4>
         <p>فوز = ٣ نقاط · تعادل = ١ نقطة · خسارة = صفر</p>
+      </div>
+
+      <h2 class="section-title" style="margin-top:22px;">❓ الأسئلة الشائعة</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>كيف أشوف وضعي أنا بالتحديد؟</summary>
+          <p>اختر اسمك من قائمة "مين أنت؟" فوق تبويب الترتيب العام — تظهر لك لوحة شخصية فيها مركزك ونقاطك وأقرب منافس فوقك وتحتك.</p>
+        </details>
+        <details class="faq-item">
+          <summary>وش تعني "الممّة"؟</summary>
+          <p>يعني خرجت بدون أي نقطة هذا الأسبوع — كل أنديتك الثلاثة إما خسرت أو تعادلت بدون ما تحقق فوزًا واحدًا يمنحك نقاط.</p>
+        </details>
+        <details class="faq-item">
+          <summary>متى تُحدَّث النتائج؟</summary>
+          <p>فور ما يدخلها المنظم من تبويب "المنظم" — تظهر لحظيًا عند كل من يفتح الصفحة بدون ما يحتاج يضغط تحديث.</p>
+        </details>
+        <details class="faq-item">
+          <summary>وش الفرق بين "الإجمالي" و"نقاط الجولة"؟</summary>
+          <p>الإجمالي = مجموع نقاطك من بداية الموسم. نقاط الجولة (تظهر بين قوسين) = بس اللي حصدته هذا الأسبوع تحديدًا.</p>
+        </details>
+        <details class="faq-item">
+          <summary>أقدر أساهم ببيانات جولة حتى لو ما أنا منظم؟</summary>
+          <p>أكيد — افتح صفحة "🧾 ساهم بالبيانات" من الأعلى وسجّل أي نتيجة نادٍ تعرفها أو نقاطك أنت، ويراجعها المنظم قبل الاعتماد الرسمي.</p>
+        </details>
+        <details class="faq-item">
+          <summary>ليش ما أقدر أشوف "المواجهة المباشرة"؟</summary>
+          <p>هذي أداة خاصة بالمنظم فقط حاليًا، تظهر بعد تسجيل الدخول من تبويب "المنظم".</p>
+        </details>
       </div>
     </div>
   </section>
@@ -744,12 +831,26 @@
         <button class="btn ghost" id="toggleCodesBtn">👁️ إظهار الرموز</button>
       </div>
       <div id="participantCodesBox" style="display:none;font-size:0.85rem;"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">📱 روابط سريعة (QR)</h2>
+      <p style="margin:0 0 8px;font-size:0.85rem;">امسح أو صوّر أي كود عشان تشاركه بسرعة — أسهل من نسخ الرابط يدويًا.</p>
+      <div class="row" style="gap:20px;">
+        <div style="text-align:center;">
+          <div id="qrSite" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
+          <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">الموقع الرئيسي</div>
+        </div>
+        <div style="text-align:center;">
+          <div id="qrReport" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
+          <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">ساهم بالبيانات</div>
+        </div>
+      </div>
     </div>
   </section>
 
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" data-h2c="1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js"></script>
 <script>
@@ -758,6 +859,8 @@ document.getElementById("logoImg").src = LOGO_BASE64;
 
 const STORAGE_KEY = 'brookie-fantasy-s2-data';
 const ADMIN_PIN = '2580';
+const SITE_URL = 'https://wwrrp456-web.github.io/brookie-fantasy-league/';
+const REPORT_URL = 'https://wwrrp456-web.github.io/brookie-fantasy-league/report.html';
 
 // تحديث 2 سبتمبر 2026: نظام النقاط صُحِّح ليطابق منطق البطولة الحقيقي
 // (فوز=3، تعادل=1، خسارة=0 — نفس نظام كرة القدم العادي، وليس تعادل=2 كما
@@ -2048,7 +2151,37 @@ function renderMyDashboard(){
       </div>
       ${rivalHtml}
       ${predHtml}
+      <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
     </div>`;
+  const shareBtn = document.getElementById('shareMyRankBtn');
+  if(shareBtn) shareBtn.addEventListener('click', shareMyRank);
+}
+
+// نص شخصي جاهز للمشاركة بالواتساب — منفصل عن ملخص الموسم العام (خاص
+// بالمنظم)، متاح لأي زائر اختار اسمه من "مين أنت؟" عشان يشارك وضعه هو بس.
+function buildMyRankShareText(){
+  if(MY_ID === null) return '';
+  const me = PARTICIPANTS.find(p=>p.id===MY_ID);
+  const st = computeStandings();
+  const idx = st.findIndex(x=>x.id===MY_ID);
+  if(!me || idx === -1) return '';
+  const meRow = st[idx];
+  const rank = idx+1;
+  const rn = getCurrentRoundNumber();
+  let t = `🏆 *دوري بروكي الفانتازي*\n`;
+  t += `أنا ${me.name}، مركزي رقم *${rank}* برصيد *${meRow.total}* نقطة بعد الجولة ${rn} 💪\n`;
+  const above = idx>0 ? st[idx-1] : null;
+  const below = idx<st.length-1 ? st[idx+1] : null;
+  if(above) t += `🔼 ناقصني ${above.total - meRow.total} نقطة أوصل ${above.name}\n`;
+  if(below) t += `🔽 متقدم على ${below.name} بفارق ${meRow.total - below.total} نقطة\n`;
+  t += `تابع الترتيب كامل: ${SITE_URL}`;
+  return t;
+}
+function shareMyRank(){
+  const text = buildMyRankShareText();
+  if(!text) return;
+  const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
 }
 
 
@@ -3105,12 +3238,17 @@ function renderParticipants(){
   const box = document.getElementById('participantsBox');
   let html = '';
   PARTICIPANTS.forEach(p=>{
-    html += `<div class="participant-card">
+    html += `<div class="participant-card" data-name="${p.name.toLowerCase()}">
       <h3>${p.name}</h3>
       <div class="teams-row">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div>
     </div>`;
   });
   box.innerHTML = html;
+  // إعادة تطبيق البحث الحالي (إن وُجد) بعد أي إعادة رسم للقائمة
+  const searchInput = document.getElementById('participantsSearchInput');
+  if(searchInput && searchInput.value.trim()){
+    searchInput.dispatchEvent(new Event('input'));
+  }
 }
 
 // شارة نتيجة صغيرة (فوز/تعادل/خسارة) بلون مناسب
@@ -3128,7 +3266,7 @@ function renderRound2Section(){
     return a.p.name.localeCompare(b.p.name, 'ar');
   });
 
-  let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--ink);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
+  let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
   html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. 👑 بطل الجولة: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة).</p>`;
 
   rows.forEach(({p, r2})=>{
@@ -3168,7 +3306,7 @@ function renderRound1Section(){
     return a.p.name.localeCompare(b.p.name, 'ar');
   });
 
-  let html = `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--ink);">🥇 الجولة 1 — ملخص النقاط (حتى 25 أغسطس 2026)</h4>`;
+  let html = `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">🥇 الجولة 1 — ملخص النقاط (حتى 25 أغسطس 2026)</h4>`;
   html += `<p class="rounds-subtitle" style="margin-top:0;">ملخّص نقاط فقط من كشف الترتيب المعتمد بتاريخ 25 أغسطس 2026 — بلا تفاصيل مباريات لكل نادٍ.</p>`;
   html += `<div class="r1-simple-card">`;
   rows.forEach((row, i)=>{
@@ -3331,6 +3469,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     const predToggle = document.getElementById('predictionsEnabledToggle');
     if(predToggle) predToggle.checked = !!PRED_DATA.enabled;
     loadCommunityReports();
+    renderQuickLinkCodes();
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
@@ -3566,6 +3705,21 @@ document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{
   btn.textContent = '🙈 إخفاء الرموز';
 });
 
+// ---------- رموز QR لرابطي الموقع وصفحة المساهمة ----------
+// تُولَّد مرة واحدة فقط (guard بمتغيّر) عند أول تسجيل دخول ناجح — إعادة توليدها
+// مع كل دخول كانت ستكرّر عناصر canvas داخل نفس الصندوق.
+let _qrCodesRendered = false;
+function renderQuickLinkCodes(){
+  if(_qrCodesRendered) return;
+  if(typeof QRCode === 'undefined') return; // تعذّر تحميل المكتبة (مثلاً بدون إنترنت) — نتجاهل بصمت
+  const siteBox = document.getElementById('qrSite');
+  const reportBox = document.getElementById('qrReport');
+  if(!siteBox || !reportBox) return;
+  new QRCode(siteBox, { text: SITE_URL, width: 120, height: 120, colorDark: '#0B3A2B', colorLight: '#ffffff' });
+  new QRCode(reportBox, { text: REPORT_URL, width: 120, height: 120, colorDark: '#0B3A2B', colorLight: '#ffffff' });
+  _qrCodesRendered = true;
+}
+
 // ---------- Round form ----------
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   const rawNum = document.getElementById('roundNumber').value;
@@ -3751,31 +3905,62 @@ window.addEventListener('online', updateOfflineBadge);
 window.addEventListener('offline', updateOfflineBadge);
 updateOfflineBadge();
 
-// ---------- وضع "خط أكبر" لسهولة القراءة ----------
+// ---------- الوضع الليلي ----------
 // تفضيل شخصي محفوظ محليًا لكل جهاز/متصفح (localStorage) — لا علاقة له
 // ببيانات الموسم المشتركة عبر Firebase، ولا يؤثر على أي زائر آخر.
-const FONT_PREF_KEY = 'brookie-big-font';
-function applyFontPref(){
-  const btn = document.getElementById('fontSizeToggleBtn');
+// (حلّ محل زر "تكبير الخط" القديم بطلب المستخدم — كان يعتبره زائدًا لوجود
+// تكبير المتصفح بإصبعين أصلاً؛ هذا الموضع أنسب لميزة فعلية جديدة).
+const DARK_MODE_KEY = 'brookie-dark-mode';
+function applyDarkModePref(){
+  const btn = document.getElementById('darkModeToggleBtn');
   let on = false;
-  try{ on = localStorage.getItem(FONT_PREF_KEY) === '1'; }catch(e){}
-  document.documentElement.classList.toggle('big-font', on);
+  try{ on = localStorage.getItem(DARK_MODE_KEY) === '1'; }catch(e){}
+  document.documentElement.classList.toggle('dark-mode', on);
   if(btn){
-    btn.textContent = on ? '🔤 إلغاء تكبير الخط' : '🔤 تكبير الخط';
+    btn.textContent = on ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
     btn.setAttribute('aria-pressed', String(on));
   }
 }
-const fontToggleBtn = document.getElementById('fontSizeToggleBtn');
-if(fontToggleBtn){
-  fontToggleBtn.addEventListener('click', ()=>{
+const darkModeToggleBtn = document.getElementById('darkModeToggleBtn');
+if(darkModeToggleBtn){
+  darkModeToggleBtn.addEventListener('click', ()=>{
     let on = false;
-    try{ on = localStorage.getItem(FONT_PREF_KEY) === '1'; }catch(e){}
+    try{ on = localStorage.getItem(DARK_MODE_KEY) === '1'; }catch(e){}
     const next = !on;
-    try{ localStorage.setItem(FONT_PREF_KEY, next ? '1' : '0'); }catch(e){}
-    applyFontPref();
+    try{ localStorage.setItem(DARK_MODE_KEY, next ? '1' : '0'); }catch(e){}
+    applyDarkModePref();
   });
 }
-applyFontPref();
+applyDarkModePref();
+
+// ---------- رسالة ترحيب لأول زيارة ----------
+// تظهر مرة واحدة فقط لكل زائر (localStorage)، تشرح بسرعة كيف يتنقل بالموقع،
+// بدل ما يحتاج يسأل شفهيًا كل مرة. لا تظهر أبدًا لمن زار الموقع من قبل.
+const ONBOARD_KEY = 'brookie-onboarded';
+function initOnboarding(){
+  let seen = false;
+  try{ seen = localStorage.getItem(ONBOARD_KEY) === '1'; }catch(e){}
+  if(seen) return;
+  const overlay = document.getElementById('onboardOverlay');
+  if(!overlay) return;
+  overlay.hidden = false;
+  const dismiss = ()=>{
+    overlay.hidden = true;
+    try{ localStorage.setItem(ONBOARD_KEY, '1'); }catch(e){}
+  };
+  document.getElementById('onboardCloseBtn').addEventListener('click', dismiss);
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) dismiss(); });
+}
+initOnboarding();
+
+// ---------- بحث سريع بالاسم في تبويب المشاركين ----------
+document.getElementById('participantsSearchInput').addEventListener('input', (e)=>{
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('#participantsBox .participant-card').forEach(card=>{
+    const name = (card.dataset.name || '').toLowerCase();
+    card.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+});
 </script>
 </body>
 </html>
