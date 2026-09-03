@@ -1094,7 +1094,7 @@ function computeStandings(upTo){
   // وربط bridge بالحالة العامة كان يفقد بيانات ROUND2_GOALS فور دخول أول جولة حقيقية
   // (خطأ اكتُشف وأُصلح 3 سبتمبر 2026 قبل دخول الجولة 3 مباشرة).
   const bridge = limit === 0;
-  const currentRoundPoints = bridge ? getCurrentRoundPointsMap() : null;
+  const currentRoundPoints = bridge ? getRound2BridgePointsMap() : null;
 
   const list = PARTICIPANTS.map(p=>{
     let lastRound;
@@ -1197,6 +1197,18 @@ function getCurrentRoundPointsMap(){
   } else {
     PARTICIPANTS.forEach(p=> map[p.id] = (p.carry||0) - (ROUND1_POINTS[p.id]||0));
   }
+  return map;
+}
+
+// نقاط "جسر" الجولة 2 حصرًا (carry − ROUND1_POINTS) — بدون أي شرط على DATA.rounds.length.
+// يُستخدم فقط لحساب لقطة الترتيب التاريخية "قبل أي جولة حقيقية" (bridge داخل
+// computeStandings عند limit===0). getCurrentRoundPointsMap لا يصلح هنا لأنه يتحول
+// لاستخدام آخر جولة حقيقية بمجرد دخولها — وهو صحيح لاستخداماته الأخرى (نقاط الجولة
+// الجارية)، لكنه كان يُفقد بيانات جسر الجولة 2 تحديدًا في هذه اللقطة التاريخية فور
+// دخول الجولة 3 (خطأ ثانٍ مرتبط، اكتُشف وأُصلح 3 سبتمبر 2026 أثناء اختبار الإصلاح الأول).
+function getRound2BridgePointsMap(){
+  const map = {};
+  PARTICIPANTS.forEach(p=> map[p.id] = (p.carry||0) - (ROUND1_POINTS[p.id]||0));
   return map;
 }
 
