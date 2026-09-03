@@ -734,6 +734,16 @@
         <div style="font-weight:800;font-size:0.85rem;margin-bottom:6px;">🎯 نقاط ذاتية مُرسَلة من المشاركين</div>
         <div id="communityPointsBox" style="font-size:0.85rem;"></div>
       </div>
+
+      <h2 class="section-title" style="margin-top:22px;">🔑 رموز المشاركين</h2>
+      <p style="margin:0 0 8px;font-size:0.85rem;">
+        رمز خاص بكل مشارك (4 أرقام) يمنع أي شخص مضاف بالجروب وليس مشاركًا فعليًا من إرسال نقاط باسم غيره في صفحة "ساهم بالبيانات".
+        أرسل لكل واحد رمزه <b>خاص</b> عبر واتساب (لا تنشرها بالجروب العام). الرموز ثابتة طول الموسم.
+      </p>
+      <div class="row" style="margin-bottom:10px;">
+        <button class="btn ghost" id="toggleCodesBtn">👁️ إظهار الرموز</button>
+      </div>
+      <div id="participantCodesBox" style="display:none;font-size:0.85rem;"></div>
     </div>
   </section>
 
@@ -3528,6 +3538,33 @@ async function loadCommunityReports(){
 }
 
 document.getElementById('refreshCommunityBtn').addEventListener('click', loadCommunityReports);
+
+// ---------- رموز المشاركين (خاصة بـ report.html) ----------
+// نفس الرموز المُضمَّنة في report.html حرفيًا — إذا تغيّرت هناك (لإضافة/حذف
+// مشارك مثلاً) لازم تُحدَّث هنا بنفس الوقت. الهدف: يقدر المنظم يرجع لهذي
+// القائمة وقت ما يحتاج يرسل رمز أي مشارك له من جديد (نسي رمزه، عضو جديد...).
+const PARTICIPANT_CODES = {
+  1:'2679', 2:'9935', 3:'4582', 4:'1488', 5:'4657', 6:'1434',
+  7:'5506', 8:'5012', 9:'2824', 10:'7912', 11:'4257', 12:'1409',
+  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279'
+};
+
+document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{
+  const box = document.getElementById('participantCodesBox');
+  const btn = document.getElementById('toggleCodesBtn');
+  const showing = box.style.display !== 'none';
+  if(showing){
+    box.style.display = 'none';
+    btn.textContent = '👁️ إظهار الرموز';
+    return;
+  }
+  box.innerHTML = PARTICIPANTS.map(p=>`
+    <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);">
+      <span>${p.name}</span><span style="font-weight:800;letter-spacing:1px;">${PARTICIPANT_CODES[p.id] || '—'}</span>
+    </div>`).join('');
+  box.style.display = '';
+  btn.textContent = '🙈 إخفاء الرموز';
+});
 
 // ---------- Round form ----------
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{

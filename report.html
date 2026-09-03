@@ -151,6 +151,10 @@
       <label class="field-label" for="participantSelect">اسمك</label>
       <select id="participantSelect"></select>
 
+      <label class="field-label" for="codeInput">رمزك الخاص (4 أرقام)</label>
+      <input type="text" id="codeInput" inputmode="numeric" maxlength="4" placeholder="مثال: 1234">
+      <p class="note" style="margin-top:-6px;">هذا الرمز أرسله لك المنظم خاص بواتساب — يثبّت اسمك ويمنع غيرك من الإرسال باسمك. ما تعرفه؟ تواصل مع المنظم.</p>
+
       <label class="field-label" for="pointsInput">نقاطك هذه الجولة</label>
       <input type="number" id="pointsInput" min="0" placeholder="مثال: 6">
 
@@ -211,6 +215,16 @@ const PARTICIPANTS = [
 ];
 
 const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>a.localeCompare(b,'ar'));
+
+// رمز خاص لكل مشارك (4 أرقام) — يمنع أي شخص مضاف بالجروب بالغلط (وليس مشاركًا
+// فعليًا) من إرسال نقاط باسم غيره. المنظم يرسل كل رمز لصاحبه خاص بواتساب،
+// ولازم يطابق الاسم المختار وإلا يُرفض الإرسال. لو تغيّرت هذي القيم لازم
+// تُحدَّث بنفس الوقت في لوحة "🔑 رموز المشاركين" بلوحة المنظم في league.html.
+const PARTICIPANT_CODES = {
+  1:'2679', 2:'9935', 3:'4582', 4:'1488', 5:'4657', 6:'1434',
+  7:'5506', 8:'5012', 9:'2824', 10:'7912', 11:'4257', 12:'1409',
+  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279'
+};
 
 let targetRound = null;
 
@@ -302,9 +316,18 @@ document.getElementById('submitPointsBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('pointsMsg');
   const pid = participantSelect.value;
   const points = document.getElementById('pointsInput').value;
+  const code = document.getElementById('codeInput').value.trim();
 
   if(!pid){
     msg.innerHTML = '<div class="status-msg err">اختر اسمك أولاً.</div>';
+    return;
+  }
+  if(!code){
+    msg.innerHTML = '<div class="status-msg err">أدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</div>';
+    return;
+  }
+  if(String(PARTICIPANT_CODES[pid]) !== code){
+    msg.innerHTML = '<div class="status-msg err">الرمز غير مطابق للاسم المختار. تأكد من الرقم اللي أرسلناه لك، أو تواصل مع المنظم.</div>';
     return;
   }
   if(points===''){
