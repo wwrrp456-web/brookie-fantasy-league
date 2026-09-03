@@ -1009,8 +1009,15 @@ async function loadData(){
   if(!loaded){
     DATA = {rounds:[]};
   }
-  if(!DATA || !Array.isArray(DATA.rounds)){
+  // ملاحظة: Firebase Realtime Database لا يخزّن المصفوفات الفارغة (rounds:[])
+  // كمفتاح فعلي — يحذفها من الشجرة عند القراءة. لذلك عند غياب rounds فقط
+  // (وليس كل الكائن) يجب تصحيح هذا الحقل بمفرده، لا استبدال DATA بالكامل —
+  // وإلا نفقد أي حقول أخرى محفوظة معه مثل nextRoundAt (خطأ حقيقي اكتُشف
+  // وأُصلح 3 سبتمبر 2026 أثناء اختبار مزامنة العداد بين زائرين حقيقيين).
+  if(!DATA || typeof DATA !== 'object'){
     DATA = {rounds:[]};
+  }else if(!Array.isArray(DATA.rounds)){
+    DATA.rounds = [];
   }
   renderAll();
 }
