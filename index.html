@@ -1084,11 +1084,16 @@ function computeStandings(upTo){
 
   const lastStats = roundStatsList.length ? roundStatsList[roundStatsList.length-1] : null;
 
-  // فترة "جسر" الجولة 2: لسه ما دخلنا جولات حقيقية في DATA.rounds، فـ lastStats
-  // فاضية دايمًا وكل التعادلات كانت تسقط مباشرة للاسم الأبجدي (خطأ). هنا نستخدم
-  // نقاط الجولة الحالية (getCurrentRoundPointsMap) وأهدافها (ROUND2_GOALS) بدلها،
+  // فترة "جسر" الجولة 2: هذا الاستدعاء تحديدًا لا يحتسب أي جولات حقيقية (limit===0)،
+  // فـ lastStats فاضية دايمًا وكل التعادلات كانت تسقط مباشرة للاسم الأبجدي (خطأ). هنا
+  // نستخدم نقاط الجولة الحالية (getCurrentRoundPointsMap) وأهدافها (ROUND2_GOALS) بدلها،
   // بنفس منطق كسر التعادل المطبّق على بطل الجولة وحركة المراكز.
-  const bridge = DATA.rounds.length === 0;
+  // ملاحظة مهمة: الشرط لازم يعتمد على limit (معامل هذا الاستدعاء تحديدًا)، وليس على
+  // DATA.rounds.length (الحالة العامة) — لأن getAllMovementsHistory() يستدعي
+  // getRankMap(0) دائمًا (حتى بعد دخول جولات 3/4/5...) لحساب "جسر الجولة 2" التاريخي،
+  // وربط bridge بالحالة العامة كان يفقد بيانات ROUND2_GOALS فور دخول أول جولة حقيقية
+  // (خطأ اكتُشف وأُصلح 3 سبتمبر 2026 قبل دخول الجولة 3 مباشرة).
+  const bridge = limit === 0;
   const currentRoundPoints = bridge ? getCurrentRoundPointsMap() : null;
 
   const list = PARTICIPANTS.map(p=>{
@@ -1269,10 +1274,15 @@ function computeBadges(){
   });
 
   // 5) أكبر صعود في المركز هذه الجولة تحديدًا (ديناميكي، يتغيّر كل جولة)
+  // ملاحظة: يجمع كل الأسماء المتعادلة على نفس القفزة (بنفس نمط الأوسمة الأخرى أعلاه)
+  // بدل الاحتفاظ باسم واحد فقط — تعادل حقيقي بين مشاركين كان يُسقط أحدهما بصمت
+  // (خطأ اكتُشف وأُصلح 3 سبتمبر 2026).
   const mv = getMovements();
-  let topClimberVal = 0, topClimberName = null;
+  let topClimberVal = 0, topClimberNames = [];
   PARTICIPANTS.forEach(p=>{
-    if((mv[p.id]||0) > topClimberVal){ topClimberVal = mv[p.id]; topClimberName = p.name; }
+    const v = mv[p.id]||0;
+    if(v > topClimberVal){ topClimberVal = v; topClimberNames = [p.name]; }
+    else if(v === topClimberVal && v > 0){ topClimberNames.push(p.name); }
   });
 
   const fmtNames = (arr)=> arr.length<=3 ? arr.join('، ') : `${arr.length} مشاركين`;
@@ -1289,8 +1299,8 @@ function computeBadges(){
   if(mostMumVal > 0){
     badges.push({icon:'💀', title:'الأكثر ممات', names: fmtNames(mostMumNames), detail:`${mostMumVal} ممة`});
   }
-  if(topClimberName){
-    badges.push({icon:'🚀', title:'أكبر صعود هذه الجولة', names: topClimberName, detail:`+${topClimberVal} مركز`});
+  if(topClimberNames.length){
+    badges.push({icon:'🚀', title:'أكبر صعود هذه الجولة', names: fmtNames(topClimberNames), detail:`+${topClimberVal} مركز`});
   }
 
   return badges;
@@ -1624,16 +1634,21 @@ function buildRoundStory(){
   if(!h) return '';
   const mv = getMovements();
 
-  let topClimberName = null, topClimberVal = 0;
+  // يجمع كل الأسماء المتعادلة على نفس القفزة (نفس إصلاح computeBadges أعلاه) بدل
+  // الاحتفاظ باسم واحد فقط عند تعادل حقيقي.
+  let topClimberNames = [], topClimberVal = 0;
   PARTICIPANTS.forEach(p=>{
-    if((mv[p.id]||0) > topClimberVal){ topClimberVal = mv[p.id]; topClimberName = p.name; }
+    const v = mv[p.id]||0;
+    if(v > topClimberVal){ topClimberVal = v; topClimberNames = [p.name]; }
+    else if(v === topClimberVal && v > 0){ topClimberNames.push(p.name); }
   });
 
   const parts = [];
   parts.push(`الجولة ${h.roundNumber} شهدت تربّع *${h.top.name}* على القمة بـ${h.top.points} نقطة${h.top.tieBreak ? ' بعد كسر تعادل مثير' : ''}.`);
 
-  if(topClimberName && topClimberVal >= 2){
-    parts.push(`${topClimberName} كان الأكثر صعودًا بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
+  if(topClimberNames.length && topClimberVal >= 2){
+    const climberLabel = topClimberNames.length<=3 ? topClimberNames.join('، ') : `${topClimberNames.length} مشاركين`;
+    parts.push(`${climberLabel} كان الأكثر صعودًا بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
   }
 
   if(h.mummat.length){
@@ -2035,6 +2050,19 @@ function drawRoundedRect(ctx,x,y,w,h,r){
   ctx.closePath();
 }
 
+// يصغّر حجم الخط تدريجيًا حتى يدخل النص ضمن العرض المتاح — يمنع خروج الأسماء
+// الطويلة (مثل "أبو تغريد (زيد)") عن حدود الكرت في الصور القابلة للمشاركة
+// (خطأ اكتُشف ومنع 3 سبتمبر 2026).
+function fitFontSize(ctx, text, maxWidth, fontSpec, minSize){
+  let size = fontSpec.size;
+  while(size > (minSize||24)){
+    ctx.font = `${fontSpec.weight} ${size}px ${fontSpec.family}`;
+    if(ctx.measureText(text).width <= maxWidth) break;
+    size -= 4;
+  }
+  return size;
+}
+
 async function buildChampionCard(){
   const h = getRoundHeroes();
   if(!h) return null;
@@ -2082,8 +2110,10 @@ async function buildChampionCard(){
   ctx.fillStyle='#F0C400'; ctx.font='800 44px Tajawal, Arial';
   ctx.fillText(`بطل الجولة ${h.roundNumber}`, W/2, 320);
 
-  // الاسم
-  ctx.fillStyle='#FFFFFF'; ctx.font='800 82px Tajawal, Arial';
+  // الاسم (حجم الخط يتصاغر تلقائيًا للأسماء الطويلة حتى لا يخرج عن حدود الكرت)
+  ctx.fillStyle='#FFFFFF';
+  const nameSize = fitFontSize(ctx, h.top.name, W-80, {size:82, weight:'800', family:'Tajawal, Arial'}, 40);
+  ctx.font = `800 ${nameSize}px Tajawal, Arial`;
   ctx.fillText(h.top.name, W/2, 420);
 
   // نقاط الجولة
@@ -2742,8 +2772,17 @@ document.getElementById('clearNextRoundAtBtn').addEventListener('click', async (
 
 // ---------- Round form ----------
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{
-  const num = parseInt(document.getElementById('roundNumber').value);
-  if(!num){ alert('أدخل رقم الجولة أولاً'); return; }
+  const rawNum = document.getElementById('roundNumber').value;
+  const num = parseInt(rawNum);
+  // لازم رقم صحيح أكبر من CURRENT_BASE_ROUND (=2، وهي الجولتان المدمجتان في carry).
+  // بدون هذا الشرط كان ممكن يكتب المنظم بالغلط "2" أو "1" أو رقمًا سالبًا فيُنشأ
+  // كسجل جولة جديد فوق نقاط carry المدمجة أصلاً — يضاعف نقاط تلك الجولة على كل
+  // الـ18 مشاركًا ويكسر منطق "فترة الجسر" في الترتيب وحركة المراكز (خطأ اكتُشف
+  // ومنع 3 سبتمبر 2026).
+  if(!Number.isInteger(num) || num <= CURRENT_BASE_ROUND){
+    alert(`رقم الجولة لازم يكون رقمًا صحيحًا أكبر من ${CURRENT_BASE_ROUND} (الجولة القادمة هي رقم ${CURRENT_BASE_ROUND+1} فأعلى).`);
+    return;
+  }
 
   let existing = DATA.rounds.find(r=>r.number===num);
   const box = document.getElementById('roundFormBox');
@@ -2753,7 +2792,10 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
     html += `<details class="round-entry-card"><summary>${p.name}</summary>`;
     p.teams.forEach((team, ti)=>{
       const prev = existing && existing.entries && existing.entries[p.id] ? existing.entries[p.id][ti] : null;
-      const selResult = prev ? prev.result : 'draw';
+      // لا يوجد نتيجة افتراضية مختارة عمدًا (بدل ما كانت "تعادل" افتراضيًا) — حتى لا
+      // يُسجَّل تعادل وهمي بالغلط لأي مباراة نسي المنظم يحدد نتيجتها. الحفظ يُرفض إذا
+      // بقيت أي مباراة بدون اختيار (خطأ اكتُشف ومنع 3 سبتمبر 2026).
+      const selResult = prev ? prev.result : '';
       const gf = prev ? prev.gf : '';
       const ga = prev ? prev.ga : '';
       html += `<div class="team-input-row" data-pid="${p.id}" data-ti="${ti}">
@@ -2762,6 +2804,7 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
           <span>${team}</span>
         </div>
         <select class="res-select">
+          <option value="" ${selResult===''?'selected':''} disabled>اختر النتيجة</option>
           <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
           <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option>
           <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option>
@@ -2777,12 +2820,24 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   box.innerHTML = html;
 
   document.getElementById('saveRoundBtn').addEventListener('click', async ()=>{
+    // تحقق قبل الحفظ: أي مباراة بدون نتيجة مختارة تمنع الحفظ بالكامل — بدل ما كانت
+    // تُسجَّل "تعادل" بصمت لأي صف نسي المنظم يلمسه (خطأ اكتُشف ومنع 3 سبتمبر 2026).
+    const missing = document.querySelectorAll('#roundForm .res-select').length
+      - Array.from(document.querySelectorAll('#roundForm .res-select')).filter(s=>s.value).length;
+    if(missing > 0){
+      document.getElementById('saveRoundMsg').innerHTML =
+        `<div class="status-msg err">فيه ${missing} مباراة بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div>`;
+      return;
+    }
     const entries = {};
     document.querySelectorAll('#roundForm .team-input-row').forEach(row=>{
       const pid = Number(row.dataset.pid);
       const result = row.querySelector('.res-select').value;
-      const gf = row.querySelector('.gf-input').value;
-      const ga = row.querySelector('.ga-input').value;
+      // نمنع الأهداف السالبة عند الحفظ (الحقل يقبلها رغم min="0" لأنه مجرد تلميح
+      // للمتصفح وليس تحققًا فعليًا) — قيمة سالبة كانت تكسر فرق الأهداف في كسر
+      // التعادل بصمت (خطأ اكتُشف ومنع 3 سبتمبر 2026).
+      const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
+      const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
       if(!entries[pid]) entries[pid] = [];
       entries[pid].push({result, gf, ga});
     });
