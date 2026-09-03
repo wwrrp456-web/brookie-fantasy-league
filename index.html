@@ -555,7 +555,10 @@
   <img id="logoImg" alt="شعار دوري بروكي الفانتازي" style="width:150px;height:150px;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
   <h1>دوري بروكي الفانتازي</h1>
   <p>الموسم الثاني</p>
-  <button id="fontSizeToggleBtn" class="btn ghost" style="margin-top:12px;font-size:0.75rem;padding:6px 14px;" aria-pressed="false">🔤 تكبير الخط</button>
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+    <button id="fontSizeToggleBtn" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);" aria-pressed="false">🔤 تكبير الخط</button>
+    <a href="report.html" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);text-decoration:none;display:inline-block;">🧾 ساهم بالبيانات</a>
+  </div>
 </header>
 
 <nav class="tabs">
@@ -713,6 +716,24 @@
         <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
       </div>
       <div id="backupMsg"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">📥 تقارير الأعضاء (تجريبي)</h2>
+      <p style="margin:0 0 8px;font-size:0.85rem;">
+        رابط منفصل يقدر أي عضو بالجروب يفتحه ويسجّل فيه نتائج مباريات يعرفها أو نقاطه المحسوبة بنفسه —
+        بدون أي تأثير على بيانات الموسم الرسمية. هذي القراءة للمراجعة اليدوية فقط، ما تدخل تلقائيًا بالترتيب.
+      </p>
+      <div class="row" style="margin-bottom:10px;">
+        <button class="btn secondary" id="refreshCommunityBtn">🔄 تحديث تقارير الجولة القادمة</button>
+      </div>
+      <div id="communityMsg"></div>
+      <div style="margin-top:10px;">
+        <div style="font-weight:800;font-size:0.85rem;margin-bottom:6px;">⚽ نتائج مُرسَلة من الأعضاء</div>
+        <div id="communityMatchesBox" style="font-size:0.85rem;"></div>
+      </div>
+      <div style="margin-top:16px;">
+        <div style="font-weight:800;font-size:0.85rem;margin-bottom:6px;">🎯 نقاط ذاتية مُرسَلة من المشاركين</div>
+        <div id="communityPointsBox" style="font-size:0.85rem;"></div>
+      </div>
     </div>
   </section>
 
@@ -3299,6 +3320,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     if(nextInput) nextInput.value = isoToDatetimeLocal(DATA.nextRoundAt);
     const predToggle = document.getElementById('predictionsEnabledToggle');
     if(predToggle) predToggle.checked = !!PRED_DATA.enabled;
+    loadCommunityReports();
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
@@ -3430,6 +3452,82 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
   };
   reader.readAsText(file);
 });
+
+// ---------- تقارير الأعضاء (تجريبي) ----------
+// صفحة منفصلة (report.html) تسمح لأي عضو بالجروب يسجّل نتيجة مباراة يعرفها
+// أو نقاطه المحسوبة بنفسه، بمسار Firebase معزول تمامًا عن بيانات الموسم
+// الرسمية (brookie/community-reports بدل brookie/brookie-fantasy-s2-data).
+// هذا القسم هنا للمراجعة اليدوية فقط — لا يكتب أي شيء تلقائيًا على DATA،
+// المنظم يقارن يدويًا ثم يدخل الرسمي من نموذج "إضافة جولة جديدة" فوق.
+const RESULT_LABEL_COMMUNITY = {win:'فوز', draw:'تعادل', loss:'خسارة'};
+
+async function loadCommunityReports(){
+  const msg = document.getElementById('communityMsg');
+  const matchesBox = document.getElementById('communityMatchesBox');
+  const pointsBox = document.getElementById('communityPointsBox');
+  const targetRound = getCurrentRoundNumber() + 1;
+  msg.innerHTML = `<div style="color:var(--muted);font-size:0.8rem;">جارٍ تحميل تقارير الجولة ${targetRound}...</div>`;
+
+  try{
+    const db = _fbInit();
+    const [matchesSnap, pointsSnap] = await Promise.all([
+      db.ref(`brookie/community-reports/matches/${targetRound}`).get(),
+      db.ref(`brookie/community-reports/points/${targetRound}`).get()
+    ]);
+
+    // نتائج المباريات — تُجمَّع حسب النادي عشان يبين للمنظم فورًا لو فيه
+    // تعارض بين تقريرين لنفس النادي (نفس المباراة لازم نتيجتها متطابقة)
+    if(!matchesSnap.exists()){
+      matchesBox.innerHTML = '<div style="color:var(--muted);">لا توجد نتائج مُرسَلة بعد لهذه الجولة.</div>';
+    }else{
+      const list = Object.values(matchesSnap.val());
+      const byClub = {};
+      list.forEach(r=>{ (byClub[r.club] = byClub[r.club] || []).push(r); });
+      let html = '';
+      Object.keys(byClub).sort((a,b)=>a.localeCompare(b,'ar')).forEach(club=>{
+        const reports = byClub[club];
+        const distinct = new Set(reports.map(r=>`${r.result}|${r.gf}|${r.ga}`));
+        const conflict = distinct.size > 1;
+        html += `<div style="padding:8px 0;border-bottom:1px dotted var(--line);">
+          <div style="font-weight:800;">${club} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>`;
+        reports.forEach(r=>{
+          html += `<div style="font-size:0.8rem;color:var(--muted);">
+            ${RESULT_LABEL_COMMUNITY[r.result]||r.result} (${r.gf}-${r.ga}) ${r.reporter ? '— أرسلها: '+r.reporter : ''}
+          </div>`;
+        });
+        html += `</div>`;
+      });
+      matchesBox.innerHTML = html;
+    }
+
+    // نقاط ذاتية — تُعرض كقائمة بسيطة، ومن لم يُرسل بعد يُذكر بالاسم كتذكير
+    if(!pointsSnap.exists()){
+      pointsBox.innerHTML = '<div style="color:var(--muted);">لا يوجد أحد أرسل نقاطه بعد لهذه الجولة.</div>';
+    }else{
+      const entries = pointsSnap.val();
+      const reportedIds = Object.keys(entries).map(Number);
+      let html = '<div>';
+      PARTICIPANTS.forEach(p=>{
+        if(entries[p.id]){
+          html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);">
+            <span>${p.name}</span><span style="font-weight:800;">${entries[p.id].points} نقطة</span></div>`;
+        }
+      });
+      html += '</div>';
+      const missing = PARTICIPANTS.filter(p=>!reportedIds.includes(p.id)).map(p=>p.name);
+      if(missing.length){
+        html += `<div style="margin-top:10px;font-size:0.78rem;color:var(--muted);">لم يُرسل بعد: ${missing.join('، ')}</div>`;
+      }
+      pointsBox.innerHTML = html;
+    }
+
+    msg.innerHTML = `<div class="status-msg ok">تم التحديث — بيانات الجولة ${targetRound} ✅</div>`;
+  }catch(e){
+    msg.innerHTML = '<div class="status-msg err">تعذّر تحميل التقارير، تحقق من الاتصال وحاول ثانية.</div>';
+  }
+}
+
+document.getElementById('refreshCommunityBtn').addEventListener('click', loadCommunityReports);
 
 // ---------- Round form ----------
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{

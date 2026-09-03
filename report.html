@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ساهم بالبيانات — دوري بروكي الفانتازي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B3A2B;
+    --ink2:#155A43;
+    --cream:#F5F0E1;
+    --paper:#FBF8EF;
+    --gold:#B8862F;
+    --gold-light:#E7C158;
+    --coral:#C9552C;
+    --green-ok:#1E8E4B;
+    --line:rgba(11,58,43,0.16);
+    --muted:#5C6B62;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Tajawal',Arial,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 0 60px;}
+  header{
+    background:radial-gradient(120% 140% at 50% 0%, var(--ink2) 0%, var(--ink) 70%);
+    color:var(--paper);
+    padding:24px 20px 20px;
+    text-align:center;
+    border-bottom:4px solid var(--gold);
+  }
+  header h1{margin:0;font-size:1.25rem;font-weight:800;}
+  header p{margin:6px 0 0;color:var(--gold-light);font-size:0.85rem;font-weight:500;}
+
+  .tabs{display:flex;background:var(--ink);border-bottom:3px solid var(--gold);}
+  .tabs button{
+    flex:1;background:none;border:none;color:#cfe0d8;
+    font-family:inherit;font-size:0.9rem;font-weight:700;
+    padding:14px 8px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;
+  }
+  .tabs button.active{color:#fff;border-bottom-color:var(--gold);}
+
+  .panel{padding:18px 16px;display:none;}
+  .panel.active{display:block;}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;}
+  .field-label{display:block;font-size:0.82rem;font-weight:700;margin:0 0 6px;}
+  select, input[type=number], input[type=text]{
+    width:100%;padding:11px 10px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:0.92rem;background:#fff;color:var(--ink);
+    margin-bottom:12px;min-height:44px;
+  }
+  .row2{display:flex;gap:10px;}
+  .row2 > *{flex:1;}
+  .btn{
+    display:inline-block;width:100%;background:var(--coral);color:#fff;border:none;border-radius:9px;
+    padding:13px 10px;font-family:inherit;font-size:0.95rem;font-weight:800;cursor:pointer;
+  }
+  .btn:disabled{opacity:0.6;}
+  .btn.secondary{background:var(--ink);}
+
+  .status-msg{margin-top:10px;padding:9px 10px;border-radius:8px;font-size:0.82rem;font-weight:700;text-align:center;}
+  .status-msg.ok{background:#DCF3E4;color:var(--green-ok);}
+  .status-msg.err{background:#FBE4DA;color:var(--coral);}
+
+  .round-chip{
+    display:inline-block;background:rgba(240,196,0,0.14);border:1px solid rgba(240,196,0,0.4);
+    color:var(--gold);font-weight:800;font-size:0.8rem;padding:5px 12px;border-radius:20px;margin-bottom:14px;
+  }
+
+  .live-list{margin-top:6px;}
+  .live-row{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:9px 4px;border-bottom:1px dotted var(--line);font-size:0.85rem;
+  }
+  .live-row:last-child{border-bottom:none;}
+  .live-row .res-win{color:var(--green-ok);font-weight:800;}
+  .live-row .res-draw{color:var(--gold);font-weight:800;}
+  .live-row .res-loss{color:var(--coral);font-weight:800;}
+  .empty-hint{color:var(--muted);font-size:0.82rem;text-align:center;padding:10px 0;}
+
+  .section-title{font-size:0.95rem;font-weight:800;margin:0 0 10px;}
+  .note{font-size:0.78rem;color:var(--muted);margin:0 0 14px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏆 دوري بروكي الفانتازي</h1>
+  <p>ساهم ببيانات الجولة — تجربة مؤقتة</p>
+</header>
+
+<div class="tabs">
+  <button data-panel="matches" class="active" id="tabMatches">📋 نتائج المباريات</button>
+  <button data-panel="points" id="tabPoints">🎯 نقاطي هذي الجولة</button>
+</div>
+
+<div class="wrap">
+
+  <section class="panel active" id="panel-matches">
+    <div style="text-align:center;"><span class="round-chip" id="targetRoundChip">جارٍ التحميل...</span></div>
+    <p class="note">اختر أي نادٍ تعرف نتيجته هذه الجولة (مو لازم يكون ناديك) وسجّلها. ما فيه داعي تكرر نادٍ مسجّل مسبقًا بالأسفل.</p>
+
+    <div class="card">
+      <label class="field-label" for="clubSelect">النادي</label>
+      <select id="clubSelect"></select>
+
+      <label class="field-label" for="resultSelect">النتيجة</label>
+      <select id="resultSelect">
+        <option value="" disabled selected>اختر النتيجة</option>
+        <option value="win">فوز</option>
+        <option value="draw">تعادل</option>
+        <option value="loss">خسارة</option>
+      </select>
+
+      <div class="row2">
+        <div>
+          <label class="field-label" for="gfInput">أهداف له</label>
+          <input type="number" id="gfInput" min="0" placeholder="0">
+        </div>
+        <div>
+          <label class="field-label" for="gaInput">أهداف عليه</label>
+          <input type="number" id="gaInput" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <label class="field-label" for="reporterNameMatch">اسمك (اختياري)</label>
+      <input type="text" id="reporterNameMatch" placeholder="اختياري — يساعدنا لو احتجنا نتأكد">
+
+      <button class="btn" id="submitMatchBtn">إرسال النتيجة</button>
+      <div id="matchMsg"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">✅ نتائج مُسجَّلة لهذه الجولة</div>
+      <div class="live-list" id="matchesLiveList"><div class="empty-hint">لا توجد نتائج مسجّلة بعد</div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-points">
+    <div style="text-align:center;"><span class="round-chip" id="targetRoundChipPoints">جارٍ التحميل...</span></div>
+    <p class="note">احسب نقاطك بنفسك لهذه الجولة (فوز = 3، تعادل = 1، خسارة = 0) وسجّلها هنا — تُقارَن مع حساب المنظم عند الاعتماد الرسمي. تقدر تعيد الإرسال لتحديث رقمك أي وقت قبل الاعتماد.</p>
+
+    <div class="card">
+      <label class="field-label" for="participantSelect">اسمك</label>
+      <select id="participantSelect"></select>
+
+      <label class="field-label" for="pointsInput">نقاطك هذه الجولة</label>
+      <input type="number" id="pointsInput" min="0" placeholder="مثال: 6">
+
+      <button class="btn" id="submitPointsBtn">إرسال نقاطي</button>
+      <div id="pointsMsg"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">📝 من سجّل نقاطه حتى الآن</div>
+      <div class="live-list" id="pointsLiveList"><div class="empty-hint">ما أحد سجّل نقاطه بعد</div></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js"></script>
+<script>
+// نفس مشروع Firebase المستخدم في الموقع الرئيسي (proki-fantasy) — هذه الصفحة
+// تكتب في مسار منفصل تمامًا (brookie/community-reports) ولا تلمس بيانات
+// الموسم الرسمية (brookie/brookie-fantasy-s2-data) بأي شكل. الهدف منها فقط
+// جمع مساهمات الأعضاء ليراجعها المنظم يدويًا قبل الإدخال الرسمي.
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCvmWS4SKl_nG0FWQHCrHcv4h4QWckAFQM",
+  authDomain: "proki-fantasy.firebaseapp.com",
+  databaseURL: "https://proki-fantasy-default-rtdb.firebaseio.com",
+  projectId: "proki-fantasy",
+  storageBucket: "proki-fantasy.firebasestorage.app",
+  messagingSenderId: "537069553900",
+  appId: "1:537069553900:web:b2d24bd8840ead8f733dc9"
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const db = firebase.database();
+
+const CURRENT_BASE_ROUND = 2; // لازم يطابق نفس الثابت في league.html
+
+// نسخة مبسّطة من نفس قائمة المشاركين وأنديتهم في league.html — إذا تغيّر
+// المشاركون أو أنديتهم هناك لازم تُحدَّث هنا يدويًا بنفس الوقت.
+const PARTICIPANTS = [
+  {id:1, name:'أبو تغريد (زيد)', teams:['الهلال','برشلونة','مانشستر سيتي']},
+  {id:2, name:'أبو مناف', teams:['الهلال','ميلان','باريس سان جيرمان']},
+  {id:3, name:'أبو يحيى', teams:['الهلال','تشيلسي','بورتو']},
+  {id:4, name:'العندليب', teams:['الاتحاد','برشلونة','غلطة سراي']},
+  {id:5, name:'أبو عبيدة', teams:['القادسية','يوفنتوس','دينامو زغرب']},
+  {id:6, name:'أبو عزام', teams:['الاتحاد','برشلونة','بنفيكا']},
+  {id:7, name:'أبو شيخة', teams:['الهلال','ريال مدريد','بوروسيا دورتموند']},
+  {id:8, name:'موسى (العجوز)', teams:['الاتحاد','أتلتيكو مدريد','فنربخشة']},
+  {id:9, name:'أبو رمزي', teams:['النصر','ريال مدريد','أياكس']},
+  {id:10, name:'أبو حمد', teams:['الاتحاد','ميلان','أرسنال']},
+  {id:11, name:'مصطفى عبده', teams:['الهلال','ميلان','سلتيك']},
+  {id:12, name:'ليمان', teams:['الاتحاد','ريال مدريد','بايرن ميونيخ']},
+  {id:13, name:'سعيد', teams:['الاتحاد','ريال مدريد','فاينورد']},
+  {id:14, name:'أبا عتاب', teams:['الاتحاد','برشلونة','رينجرز']},
+  {id:15, name:'علي قوول', teams:['ريال مدريد','الاتحاد','سبورتينغ لشبونة']},
+  {id:16, name:'أبو أوس', teams:['الهلال','برشلونة','آيندهوفن']},
+  {id:17, name:'أيوب', teams:['الهلال','برشلونة','روما']},
+  {id:18, name:'أبو صالح', teams:['الشباب','ريال مدريد','ليفربول']},
+];
+
+const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>a.localeCompare(b,'ar'));
+
+let targetRound = null;
+
+// ---------- تبويبات ----------
+document.querySelectorAll('.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.panel).classList.add('active');
+  });
+});
+
+// ---------- تحديد رقم الجولة المستهدفة (نفس منطق getCurrentRoundNumber+1 في الموقع الرئيسي) ----------
+async function loadTargetRound(){
+  try{
+    const snap = await db.ref('brookie/brookie-fantasy-s2-data').get();
+    const data = snap.exists() ? snap.val() : null;
+    const rounds = (data && Array.isArray(data.rounds)) ? data.rounds : [];
+    const last = rounds.length ? Math.max(...rounds.map(r=>r.number)) : CURRENT_BASE_ROUND;
+    targetRound = last + 1;
+  }catch(e){
+    targetRound = CURRENT_BASE_ROUND + 1; // تقدير احتياطي لو تعذّرت القراءة
+  }
+  const label = `الجولة ${targetRound}`;
+  document.getElementById('targetRoundChip').textContent = label;
+  document.getElementById('targetRoundChipPoints').textContent = label;
+  startLiveListeners();
+}
+
+// ---------- تعبئة القوائم ----------
+const clubSelect = document.getElementById('clubSelect');
+CLUBS.forEach(c=>{
+  const opt = document.createElement('option');
+  opt.value = c; opt.textContent = c;
+  clubSelect.appendChild(opt);
+});
+
+const participantSelect = document.getElementById('participantSelect');
+const emptyOpt = document.createElement('option');
+emptyOpt.value = ''; emptyOpt.textContent = '— اختر اسمك —'; emptyOpt.disabled = true; emptyOpt.selected = true;
+participantSelect.appendChild(emptyOpt);
+PARTICIPANTS.forEach(p=>{
+  const opt = document.createElement('option');
+  opt.value = p.id; opt.textContent = p.name;
+  participantSelect.appendChild(opt);
+});
+
+// ---------- إرسال نتيجة مباراة ----------
+document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('matchMsg');
+  const club = clubSelect.value;
+  const result = document.getElementById('resultSelect').value;
+  const gf = document.getElementById('gfInput').value;
+  const ga = document.getElementById('gaInput').value;
+  const reporter = document.getElementById('reporterNameMatch').value.trim();
+
+  if(!club || !result || gf==='' || ga===''){
+    msg.innerHTML = '<div class="status-msg err">أكمل كل الحقول (النادي، النتيجة، الأهداف) قبل الإرسال.</div>';
+    return;
+  }
+  if(targetRound===null){
+    msg.innerHTML = '<div class="status-msg err">لسه جارٍ تحديد رقم الجولة، حاول بعد ثانية.</div>';
+    return;
+  }
+
+  const btn = document.getElementById('submitMatchBtn');
+  btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
+  try{
+    await db.ref(`brookie/community-reports/matches/${targetRound}`).push({
+      club, result,
+      gf: Math.max(0, parseInt(gf)||0),
+      ga: Math.max(0, parseInt(ga)||0),
+      reporter: reporter || null,
+      submittedAt: Date.now()
+    });
+    msg.innerHTML = '<div class="status-msg ok">تم إرسال النتيجة، شكرًا لمساهمتك ✅</div>';
+    document.getElementById('resultSelect').value = '';
+    document.getElementById('gfInput').value = '';
+    document.getElementById('gaInput').value = '';
+  }catch(e){
+    msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
+  }
+  btn.disabled = false; btn.textContent = 'إرسال النتيجة';
+});
+
+// ---------- إرسال نقاط شخصية ----------
+document.getElementById('submitPointsBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('pointsMsg');
+  const pid = participantSelect.value;
+  const points = document.getElementById('pointsInput').value;
+
+  if(!pid){
+    msg.innerHTML = '<div class="status-msg err">اختر اسمك أولاً.</div>';
+    return;
+  }
+  if(points===''){
+    msg.innerHTML = '<div class="status-msg err">أدخل عدد نقاطك.</div>';
+    return;
+  }
+  if(targetRound===null){
+    msg.innerHTML = '<div class="status-msg err">لسه جارٍ تحديد رقم الجولة، حاول بعد ثانية.</div>';
+    return;
+  }
+
+  const p = PARTICIPANTS.find(x=>String(x.id)===String(pid));
+  const btn = document.getElementById('submitPointsBtn');
+  btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
+  try{
+    await db.ref(`brookie/community-reports/points/${targetRound}/${pid}`).set({
+      name: p.name,
+      points: Math.max(0, parseInt(points)||0),
+      submittedAt: Date.now()
+    });
+    msg.innerHTML = '<div class="status-msg ok">تم إرسال نقاطك، تقدر تعدّلها وترسلها ثانية أي وقت ✅</div>';
+  }catch(e){
+    msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
+  }
+  btn.disabled = false; btn.textContent = 'إرسال نقاطي';
+});
+
+// ---------- عرض حي لما وصل حتى الآن (يشجّع المشاركة ويمنع التكرار) ----------
+const RESULT_LABEL = {win:'فوز', draw:'تعادل', loss:'خسارة'};
+const RESULT_CLASS = {win:'res-win', draw:'res-draw', loss:'res-loss'};
+
+function startLiveListeners(){
+  db.ref(`brookie/community-reports/matches/${targetRound}`).on('value', snap=>{
+    const box = document.getElementById('matchesLiveList');
+    if(!snap.exists()){ box.innerHTML = '<div class="empty-hint">لا توجد نتائج مسجّلة بعد</div>'; return; }
+    const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
+    box.innerHTML = rows.map(r=>`
+      <div class="live-row">
+        <span>${r.club}</span>
+        <span class="${RESULT_CLASS[r.result]||''}">${RESULT_LABEL[r.result]||r.result} (${r.gf}-${r.ga})</span>
+      </div>`).join('');
+  });
+
+  db.ref(`brookie/community-reports/points/${targetRound}`).on('value', snap=>{
+    const box = document.getElementById('pointsLiveList');
+    if(!snap.exists()){ box.innerHTML = '<div class="empty-hint">ما أحد سجّل نقاطه بعد</div>'; return; }
+    const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
+    box.innerHTML = rows.map(r=>`
+      <div class="live-row"><span>${r.name}</span><span style="font-weight:800;">${r.points} نقطة</span></div>`).join('');
+  });
+}
+
+loadTargetRound();
+</script>
+</body>
+</html>
