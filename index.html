@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دوري بروكي الفانتازي - الموسم الثاني</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B3A2B">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -49,6 +53,7 @@
     border-bottom:3px solid var(--gold);
   }
   nav.tabs button{
+    position:relative;
     flex:1 0 auto;
     background:none;border:none;
     color:#cfe0d8;
@@ -58,6 +63,13 @@
     white-space:nowrap;
     border-bottom:3px solid transparent;
     margin-bottom:-3px;
+  }
+  /* نقطة تنبيه تحديث جديد (لم يُشاهَد بعد) */
+  .update-dot{
+    position:absolute; top:7px; inset-inline-end:6px;
+    width:8px; height:8px; border-radius:50%;
+    background:var(--coral);
+    box-shadow:0 0 0 2px var(--ink);
   }
   nav.tabs button.active{
     color:#fff;
@@ -150,6 +162,23 @@
   .h2h-val{text-align:center;font-weight:800;font-size:0.95rem;color:var(--ink);}
   .h2h-val.h2h-win{color:var(--gold);}
   .h2h-label{text-align:center;font-size:0.76rem;color:var(--muted);}
+
+  /* لوحتي الشخصية */
+  .my-dash-card{
+    background:linear-gradient(135deg, var(--ink) 0%, #0B3A2B 100%);
+    border:1px solid var(--gold);border-radius:12px;
+    padding:14px 16px;margin-bottom:14px;color:#fff;
+  }
+  .my-dash-head{font-weight:800;font-size:0.98rem;margin-bottom:10px;color:var(--gold-light);}
+  .my-dash-stats{display:flex;gap:10px;margin-bottom:10px;}
+  .my-dash-stat{
+    flex:1;text-align:center;background:rgba(255,255,255,0.08);
+    border-radius:10px;padding:8px 4px;
+  }
+  .my-dash-num{display:block;font-size:1.25rem;font-weight:800;}
+  .my-dash-label{display:block;font-size:0.68rem;color:#cfe0d8;margin-top:2px;}
+  .my-dash-rival{font-size:0.8rem;color:#e6efe9;margin-bottom:4px;}
+  .my-dash-pred{font-size:0.82rem;color:var(--gold-light);margin-top:8px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.2);}
 
   /* توقعات بطل الجولة القادمة */
   .predict-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
@@ -488,10 +517,17 @@
   /* ===== دعم الوضع الأفقي وتحسين اللمس ===== */
   @media (hover:none){
     .btn, .toggle-btn, nav.tabs button, .round-entry-card summary{
-      min-height:40px;
+      min-height:44px;
       display:flex;align-items:center;justify-content:center;
     }
     .round-entry-card summary{justify-content:flex-start;}
+    /* توسيع مساحة لمس عناصر الإدخال في نموذج الجولة والاختيارات العامة */
+    select, input[type="datetime-local"], input[type="number"]{min-height:42px;}
+  }
+
+  /* كونفيتي إعلان بطل الجولة (fireConfetti) */
+  @keyframes confettiFall{
+    to{ transform:translateY(105vh) rotate(600deg); }
   }
 
   /* احترام تفضيل تقليل الحركة */
@@ -509,7 +545,7 @@
 </header>
 
 <nav class="tabs">
-  <button data-tab="standings" class="active">الترتيب العام</button>
+  <button data-tab="standings" class="active">الترتيب العام<span class="update-dot" id="standingsUpdateDot" hidden></span></button>
   <button data-tab="participants">المشاركون</button>
   <button data-tab="rounds">الجولات</button>
   <button data-tab="stats">الإحصائيات</button>
@@ -527,6 +563,8 @@
       <select id="mePicker"><option value="">— اختر اسمك —</option></select>
     </div>
 
+    <div id="myDashboardBox" style="display:none;"></div>
+
     <div id="predictionBox"></div>
 
     <div id="heroesBox"></div>
@@ -536,6 +574,7 @@
       <button class="btn secondary" id="copySummaryBtn" style="display:none;">📋 ملخص للواتساب</button>
       <button class="btn" id="champCardBtn" style="display:none;">🏆 كرت بطل الجولة</button>
       <button class="btn secondary" id="dlStandingsBtn" style="display:none;">⬇️ تحميل الترتيب كصورة</button>
+      <button class="btn secondary" id="shareStandingsBtn" style="display:none;">📤 شارك في واتساب</button>
       <button class="btn secondary" id="dlStandingsStoryBtn" style="display:none;">📱 ترتيب كستوري</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
@@ -993,19 +1032,19 @@ window.storage = {
   }
 };
 
-async function loadData(){
+// يطبّق قيمة DATA خام (من قراءة لمرة واحدة أو من مستمع لحظي) وينظّفها —
+// مستخرجة لدالة منفصلة عشان تُستخدم في المسارين: القراءة اليدوية (loadData)
+// والمزامنة اللحظية (startRealtimeSync) بدون تكرار منطق التصحيح.
+function applyLoadedData(raw){
   let loaded = false;
-  try{
-    const res = await window.storage.get(STORAGE_KEY, true);
-    if(res && res.value !== undefined && res.value !== null){
-      const v = res.value;
-      DATA = (typeof v === 'string') ? JSON.parse(v) : v;
+  if(raw !== undefined && raw !== null){
+    try{
+      DATA = (typeof raw === 'string') ? JSON.parse(raw) : raw;
       loaded = true;
+    }catch(e){
+      console.warn('تعذّر تفسير البيانات المحفوظة:', e);
     }
-  }catch(e){
-    console.warn('لا توجد بيانات محفوظة بعد أو تعذّر القراءة:', e);
   }
-
   if(!loaded){
     DATA = {rounds:[]};
   }
@@ -1018,6 +1057,16 @@ async function loadData(){
     DATA = {rounds:[]};
   }else if(!Array.isArray(DATA.rounds)){
     DATA.rounds = [];
+  }
+}
+
+async function loadData(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    applyLoadedData(res && res.value);
+  }catch(e){
+    console.warn('لا توجد بيانات محفوظة بعد أو تعذّر القراءة:', e);
+    applyLoadedData(null);
   }
   renderAll();
 }
@@ -1713,6 +1762,7 @@ function renderCopyBox(){
     <textarea class="copy-area" id="summaryArea" readonly>${text}</textarea>
     <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
       <button class="btn" id="doCopyBtn">نسخ النص</button>
+      <button class="btn secondary" id="waShareBtn">📤 شارك في واتساب مباشرة</button>
       <button class="btn ghost" id="closeCopyBtn">إغلاق</button>
     </div>
     <div id="copyMsg"></div>`;
@@ -1725,6 +1775,13 @@ function renderCopyBox(){
       ta.select();
       document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">حدّد النص واضغط نسخ يدوياً</div>';
     }
+  };
+  // فتح واتساب مباشرة والنص جاهز بالداخل — يفتح تطبيق واتساب على الجوال
+  // (تختار أنت الجروب) أو واتساب ويب على الكمبيوتر، بدل نسخ النص يدويًا.
+  document.getElementById('waShareBtn').onclick = ()=>{
+    const ta = document.getElementById('summaryArea');
+    const url = 'https://wa.me/?text=' + encodeURIComponent(ta.value);
+    window.open(url, '_blank');
   };
   document.getElementById('closeCopyBtn').onclick = ()=>{ box.innerHTML=''; };
 }
@@ -1814,6 +1871,28 @@ function renderUpdatedChip(){
   if(!chip) return;
   chip.textContent = DATA.updatedAt ? `آخر تحديث: ${timeAgo(DATA.updatedAt)}` : 'لم تُسجَّل جولات بعد';
 }
+// يحدّث نص "آخر تحديث" كل دقيقة تلقائيًا حتى بدون أي تغيير فعلي في البيانات
+// (بما إنه الآن مع المزامنة اللحظية ممكن الصفحة تبقى مفتوحة لفترة طويلة).
+setInterval(renderUpdatedChip, 60000);
+
+// ---------- نقطة تنبيه تحديث جديد على تبويب "الترتيب العام" ----------
+// تُظهر نقطة صغيرة على التبويب لو صار تحديث (جولة جديدة عبر المزامنة اللحظية)
+// والمستخدم حاليًا فاتح تبويبًا غير "الترتيب العام" فلم يلاحظه. تُخفى تلقائيًا
+// بمجرد فتح تبويب الترتيب (يُعتبر التحديث "مُشاهَدًا" شخصيًا لهذا الزائر، فيُحفظ
+// محليًا في متصفحه — shared:false — بنفس منطق "مين أنت").
+function renderUpdateDot(){
+  const dot = document.getElementById('standingsUpdateDot');
+  if(!dot) return;
+  const standingsBtn = document.querySelector('nav.tabs button[data-tab="standings"]');
+  const isStandingsActive = !!(standingsBtn && standingsBtn.classList.contains('active'));
+  if(isStandingsActive){
+    if(DATA.updatedAt) localStorage.setItem('brookie-last-seen-update', String(DATA.updatedAt));
+    dot.hidden = true;
+    return;
+  }
+  const lastSeen = Number(localStorage.getItem('brookie-last-seen-update')||0);
+  dot.hidden = !(DATA.updatedAt && DATA.updatedAt > lastSeen);
+}
 
 // ---------- اختيار "أنت" ----------
 let MY_ID = null;
@@ -1830,6 +1909,7 @@ function initMePicker(){
     try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
     renderStandings();
     renderPredictions();
+    renderMyDashboard();
   });
 }
 
@@ -1841,8 +1921,65 @@ async function loadMyId(){
       const sel = document.getElementById('mePicker');
       if(sel) sel.value = MY_ID;
       renderPredictions();
+      renderMyDashboard();
     }
   }catch(e){}
+}
+
+// ---------- لوحتي الشخصية ----------
+// صندوق ملخّص فوري يظهر بمجرد اختيار "مين أنت؟": مركزك، نقاطك، حركتك هذه
+// الجولة، أقرب منافس فوقك وتحتك، وحالة توقعك للجولة القادمة — بدل ما يدوّر
+// الزائر بنفسه بين الجدول والتوقعات عشان يلقى وضعه. يُعاد بناؤه مع كل
+// renderAll() (يشمل تحديثات المزامنة اللحظية) وعند تغيير "مين أنت".
+function renderMyDashboard(){
+  const box = document.getElementById('myDashboardBox');
+  if(!box) return;
+  if(MY_ID === null){ box.style.display='none'; box.innerHTML=''; return; }
+  const me = PARTICIPANTS.find(p=>p.id===MY_ID);
+  const st = computeStandings();
+  const idx = st.findIndex(x=>x.id===MY_ID);
+  if(!me || idx === -1){ box.style.display='none'; box.innerHTML=''; return; }
+
+  const meRow = st[idx];
+  const rank = idx+1;
+  const mv = getMovements();
+  const myMove = mv[MY_ID]||0;
+  const moveLabel = myMove>0 ? `▲${myMove}` : myMove<0 ? `▼${Math.abs(myMove)}` : '—';
+  const moveColor = myMove>0 ? '#3DD47E' : myMove<0 ? '#FF6B5E' : '#8A8A8A';
+
+  let rivalHtml = '';
+  const above = idx>0 ? st[idx-1] : null;
+  const below = idx<st.length-1 ? st[idx+1] : null;
+  if(above){
+    rivalHtml += `<div class="my-dash-rival">🔼 <b>${above.name}</b> يسبقك بفارق ${above.total - meRow.total} نقطة</div>`;
+  }
+  if(below){
+    rivalHtml += `<div class="my-dash-rival">🔽 <b>${below.name}</b> خلفك بفارق ${meRow.total - below.total} نقطة</div>`;
+  }
+  if(!above && !below){
+    rivalHtml = '<div class="my-dash-rival">أنت المشارك الوحيد 🎉</div>';
+  }
+
+  const targetRound = getCurrentRoundNumber() + 1;
+  const roundEntries = PRED_DATA.entries[targetRound] || {};
+  const myPrediction = roundEntries[MY_ID];
+  const predName = myPrediction !== undefined ? (PARTICIPANTS.find(p=>p.id===Number(myPrediction))||{}).name : null;
+  const predHtml = predName
+    ? `توقعك لبطل الجولة ${targetRound}: <b>${predName}</b>`
+    : `لسه ما توقعت بطل الجولة ${targetRound} 🔮`;
+
+  box.style.display = 'block';
+  box.innerHTML = `
+    <div class="my-dash-card">
+      <div class="my-dash-head">👋 أهلًا ${me.name}</div>
+      <div class="my-dash-stats">
+        <div class="my-dash-stat"><span class="my-dash-num">${rank}</span><span class="my-dash-label">مركزك</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${meRow.total}</span><span class="my-dash-label">نقاطك</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num" style="color:${moveColor};">${moveLabel}</span><span class="my-dash-label">حركتك</span></div>
+      </div>
+      ${rivalHtml}
+      <div class="my-dash-pred">${predHtml}</div>
+    </div>`;
 }
 
 
@@ -1853,18 +1990,28 @@ async function loadMyId(){
 const PRED_STORAGE_KEY = 'brookie-fantasy-s2-predictions';
 let PRED_DATA = {entries:{}};
 
-async function loadPredictions(){
-  try{
-    const res = await window.storage.get(PRED_STORAGE_KEY, true);
-    if(res && res.value !== undefined && res.value !== null){
-      const v = res.value;
-      PRED_DATA = (typeof v === 'string') ? JSON.parse(v) : v;
+// نفس فكرة applyLoadedData أعلاه، لكن لبيانات التوقعات — تُستخدم في القراءة
+// اليدوية والمزامنة اللحظية معًا.
+function applyLoadedPredictions(raw){
+  if(raw !== undefined && raw !== null){
+    try{
+      PRED_DATA = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+    }catch(e){
+      console.warn('تعذّر تفسير بيانات التوقعات:', e);
     }
-  }catch(e){
-    console.warn('تعذّر تحميل التوقعات:', e);
   }
   if(!PRED_DATA || typeof PRED_DATA !== 'object') PRED_DATA = {entries:{}};
   if(!PRED_DATA.entries || typeof PRED_DATA.entries !== 'object') PRED_DATA.entries = {};
+}
+
+async function loadPredictions(){
+  try{
+    const res = await window.storage.get(PRED_STORAGE_KEY, true);
+    applyLoadedPredictions(res && res.value);
+  }catch(e){
+    console.warn('تعذّر تحميل التوقعات:', e);
+    applyLoadedPredictions(null);
+  }
   renderPredictions();
 }
 
@@ -1878,6 +2025,36 @@ async function savePredictions(){
     if(r2) return true;
   }catch(e2){ console.warn('فشلت المحاولة الثانية لحفظ التوقعات:', e2); }
   return false;
+}
+
+// ---------- مزامنة لحظية (بدون زر تحديث) ----------
+// بدل الاكتفاء بقراءة واحدة عند فتح الصفحة، نستخدم مستمع Firebase الحي
+// (on('value')) على مساري البيانات المشتركة — أي تغيير يحفظه أي شخص (مثلاً
+// المنظم يحفظ جولة جديدة) يصل تلقائيًا لكل من فاتح الصفحة الآن، بدون ما
+// يحتاج يضغط "تحديث" أو حتى يعيد تحميل الصفحة. لا تمس هذه الدالة نموذج
+// إدخال الجولة (roundFormBox) لأن renderAll() لا يعيد بناءه إطلاقًا — فلو
+// كان المنظم يملأ نموذجًا حاليًا، وصول تحديث آخر أثناء ذلك لا يمسح ما كتبه.
+let _realtimeSyncStarted = false;
+function startRealtimeSync(){
+  if(_realtimeSyncStarted) return;
+  try{
+    const db = _fbInit();
+    db.ref('brookie/' + STORAGE_KEY).on('value', snap=>{
+      applyLoadedData(snap.exists() ? snap.val() : null);
+      renderAll();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية لبيانات الجولات:', err); });
+
+    db.ref('brookie/' + PRED_STORAGE_KEY).on('value', snap=>{
+      applyLoadedPredictions(snap.exists() ? snap.val() : null);
+      renderPredictions();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية للتوقعات:', err); });
+
+    _realtimeSyncStarted = true;
+  }catch(e){
+    // فشل تفعيل المزامنة اللحظية (مثلاً Firebase لم يُحمَّل بعد) لا يوقف التطبيق —
+    // يبقى زر "تحديث" اليدوي يعمل كخط رجعة كما كان قبل هذه الميزة.
+    console.warn('تعذّر تفعيل المزامنة اللحظية، زر التحديث اليدوي يبقى متاحًا:', e);
+  }
 }
 
 // بطل جولة معيّنة (2 فصاعدًا) — تُستخدم لتصحيح التوقعات القديمة تلقائيًا
@@ -2049,6 +2226,30 @@ function downloadCanvasPNG(cv, filename){
     a.remove();
     setTimeout(()=>URL.revokeObjectURL(url), 2000);
   },'image/png');
+}
+
+// يحاول فتح شاشة "مشاركة" الجهاز مباشرة (تشمل واتساب) لملف صورة الكانفاس —
+// بنفس نمط زر "مشاركة الكرت" الموجود مسبقًا لكرت بطل الجولة، هنا مُعمَّم
+// كدالة واحدة يعاد استخدامها بدل تكرار نفس الكود. يرجع true لو نجحت المشاركة
+// فعليًا (فيتولى المستدعي عدم عرض رسالة "تم التحميل" لأنه ما صار تحميل).
+function tryShareCanvas(cv, filename, shareTitle, shareText){
+  return new Promise(resolve=>{
+    cv.toBlob(async (blob)=>{
+      if(!blob){ resolve(false); return; }
+      try{
+        const file = new File([blob], filename, {type:'image/png'});
+        if(navigator.canShare && navigator.canShare({files:[file]})){
+          await navigator.share({files:[file], title:shareTitle||'', text:shareText||''});
+          resolve(true);
+          return;
+        }
+      }catch(e){
+        // المستخدم ألغى نافذة المشاركة أو فشلت — لا نعتبره خطأ، فقط نرجع false
+        // ليكمل المستدعي بالتحميل العادي كخط رجعة.
+      }
+      resolve(false);
+    }, 'image/png');
+  });
 }
 
 // ---------- كرت بطل الجولة (صورة قابلة للمشاركة) ----------
@@ -2227,6 +2428,35 @@ async function buildStoryCanvas(sourceCanvas){
   return cv;
 }
 
+// ---------- تأثير احتفالي بسيط عند إعلان بطل الجولة ----------
+// كونفيتي مبني ذاتيًا (بدون أي مكتبة خارجية) — يحترم تفضيل "تقليل الحركة"
+// في نظام المستخدم فلا يُنشئ أي عنصر إطلاقًا لمن فعّله، ويزيل نفسه من الصفحة
+// تلقائيًا بعد انتهاء الحركة (لا يترك أي أثر في الـ DOM).
+function fireConfetti(){
+  try{
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  }catch(e){}
+  const colors = ['#F0C400','#E7C158','#3DD47E','#FF6B5E','#FFFFFF'];
+  const container = document.createElement('div');
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;';
+  const count = 60;
+  for(let i=0;i<count;i++){
+    const piece = document.createElement('div');
+    const size = 6 + Math.random()*6;
+    const left = Math.random()*100;
+    const duration = 2.2 + Math.random()*1.6;
+    const delay = Math.random()*0.4;
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const rotateStart = Math.floor(Math.random()*360);
+    piece.style.cssText = `position:absolute;top:-20px;left:${left}%;width:${size}px;height:${size*0.4}px;`
+      + `background:${color};opacity:0.9;transform:rotate(${rotateStart}deg);`
+      + `animation:confettiFall ${duration}s ease-in ${delay}s forwards;`;
+    container.appendChild(piece);
+  }
+  document.body.appendChild(container);
+  setTimeout(()=>container.remove(), 4200);
+}
+
 async function showChampionCard(){
   const box = document.getElementById('copyBox');
   const h = getRoundHeroes();
@@ -2242,6 +2472,7 @@ async function showChampionCard(){
   box.innerHTML = '';
   cv.id='championCanvas';
   box.appendChild(cv);
+  fireConfetti();
 
   const acts = document.createElement('div');
   acts.className='champ-actions';
@@ -2413,6 +2644,35 @@ async function downloadStandingsImage(){
   }
 }
 
+// نفس صورة الترتيب، لكن تفتح شاشة مشاركة الجهاز مباشرة (تشمل واتساب) بدل
+// التحميل — للأجهزة التي تدعم Web Share API (أغلب الجوالات). على الأجهزة
+// التي لا تدعمها (أغلب أجهزة الكمبيوتر) تتصرف مثل زر التحميل تمامًا كخط رجعة.
+async function shareStandingsImage(){
+  const box = document.getElementById('standingsImgBox');
+  const btn = document.getElementById('shareStandingsBtn');
+  if(box) box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز صورة الترتيب…</p>';
+  if(btn) btn.disabled = true;
+
+  try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+
+  try{
+    const cv = await buildStandingsCard();
+    const roundNum = getCurrentRoundNumber();
+    const filename = `brookie-standings-round-${roundNum}.png`;
+    const shared = await tryShareCanvas(cv, filename, 'ترتيب دوري بروكي', `🏆 الترتيب العام بعد الجولة ${roundNum}`);
+    if(!shared){
+      downloadCanvasPNG(cv, filename);
+      if(box) box.innerHTML = '<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة — تم تحميل الصورة بدلاً منها، أرسلها يدويًا 📲</div>';
+    } else if(box){
+      box.innerHTML = '<div class="status-msg ok">تم فتح المشاركة ✅</div>';
+    }
+  }catch(e){
+    if(box) box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>';
+  } finally {
+    if(btn) btn.disabled = false;
+  }
+}
+
 async function downloadStandingsStoryImage(){
   const box = document.getElementById('standingsImgBox');
   const btn = document.getElementById('dlStandingsStoryBtn');
@@ -2500,8 +2760,10 @@ function renderAll(){
   renderH2H();
   renderClubStats();
   renderUpdatedChip();
+  renderUpdateDot();
   renderPredictions();
   renderCountdown();
+  renderMyDashboard();
 }
 
 function buildParticipantHistory(pid){
@@ -2727,6 +2989,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
     document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    renderUpdateDot();
   });
 });
 
@@ -2744,6 +3007,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     document.getElementById('copySummaryBtn').style.display='';
     document.getElementById('champCardBtn').style.display='';
     document.getElementById('dlStandingsBtn').style.display='';
+    document.getElementById('shareStandingsBtn').style.display='';
     document.getElementById('dlStandingsStoryBtn').style.display='';
     // أزرار تحميل المشاركين/الجولات/الإحصائيات/اللائحة كصور خاصة بالمنظم أيضًا
     document.getElementById('participantsToolbar').style.display='';
@@ -2891,6 +3155,7 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
 document.getElementById('copySummaryBtn').addEventListener('click', renderCopyBox);
 document.getElementById('champCardBtn').addEventListener('click', showChampionCard);
 document.getElementById('dlStandingsBtn').addEventListener('click', downloadStandingsImage);
+document.getElementById('shareStandingsBtn').addEventListener('click', shareStandingsImage);
 document.getElementById('dlStandingsStoryBtn').addEventListener('click', downloadStandingsStoryImage);
 
 document.getElementById('dlParticipantsBtn').addEventListener('click', ()=>{
@@ -2909,6 +3174,18 @@ initMePicker();
 loadMyId();
 loadData();
 loadPredictions();
+startRealtimeSync();
+
+// تسجيل service worker لدعم "أضف للشاشة الرئيسية" (PWA) — فشل التسجيل (مثلاً
+// متصفح قديم لا يدعمه) لا يوقف أي شيء آخر في الصفحة، فقط تظل خاصية التثبيت
+// غير متاحة.
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(e=>{
+      console.warn('تعذّر تسجيل service worker (لا يمس عمل الصفحة):', e);
+    });
+  });
+}
 </script>
 </body>
 </html>
