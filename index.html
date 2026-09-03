@@ -64,6 +64,17 @@
     border-bottom:3px solid transparent;
     margin-bottom:-3px;
   }
+  /* شارة انقطاع الاتصال — تظهر فوق كل شيء لأن الصفحة صارت تعمل جزئيًا بدون
+     إنترنت (PWA)، فلازم الزائر يعرف إن الأرقام المعروضة قد تكون قديمة */
+  .offline-badge{
+    position:fixed;top:0;inset-inline:0;z-index:999;
+    background:var(--gold);color:#1a1400;
+    text-align:center;font-size:0.78rem;font-weight:800;
+    padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  }
+  /* وضع "خط أكبر" لسهولة القراءة — يكبّر كل القياسات المبنية على rem في
+     الصفحة (أغلب النصوص) دفعة واحدة برفع حجم خط الجذر */
+  html.big-font{font-size:118%;}
   /* نقطة تنبيه تحديث جديد (لم يُشاهَد بعد) */
   .update-dot{
     position:absolute; top:7px; inset-inline-end:6px;
@@ -538,10 +549,13 @@
 </head>
 <body>
 
+<div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
+
 <header>
   <img id="logoImg" alt="شعار دوري بروكي الفانتازي" style="width:150px;height:150px;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
   <h1>دوري بروكي الفانتازي</h1>
   <p>الموسم الثاني</p>
+  <button id="fontSizeToggleBtn" class="btn ghost" style="margin-top:12px;font-size:0.75rem;padding:6px 14px;" aria-pressed="false">🔤 تكبير الخط</button>
 </header>
 
 <nav class="tabs">
@@ -576,6 +590,7 @@
       <button class="btn secondary" id="dlStandingsBtn" style="display:none;">⬇️ تحميل الترتيب كصورة</button>
       <button class="btn secondary" id="shareStandingsBtn" style="display:none;">📤 شارك في واتساب</button>
       <button class="btn secondary" id="dlStandingsStoryBtn" style="display:none;">📱 ترتيب كستوري</button>
+      <button class="btn" id="seasonWrapBtn" style="display:none;">📊 ملخص الموسم</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
     <div id="refreshMsg"></div>
@@ -604,7 +619,9 @@
     </div>
     <div id="roundsImgMsg"></div>
     <div id="roundsCapture">
-      <h2 class="section-title">سجل الجولات</h2>
+      <h2 class="section-title">🏆 أرشيف أبطال الجولات</h2>
+      <div id="championsArchiveBox"></div>
+      <h2 class="section-title" style="margin-top:22px;">سجل الجولات</h2>
       <div id="roundsBox" class="loading">جارٍ التحميل...</div>
     </div>
   </section>
@@ -618,7 +635,7 @@
       <h2 class="section-title">تطوّر الترتيب</h2>
       <div id="chartBox"></div>
       <div id="recordsBox"></div>
-      <div id="h2hBox"></div>
+      <div id="h2hBox" style="display:none;"></div>
       <h2 class="section-title" style="margin-top:22px;">أداء الأندية</h2>
       <div id="clubStatsBox"></div>
     </div>
@@ -687,6 +704,15 @@
         <input type="checkbox" id="predictionsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
       </div>
       <div id="predictionsEnabledMsg"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">💾 نسخة احتياطية</h2>
+      <p style="margin:0 0 8px;font-size:0.85rem;">يُنصح بتنزيل نسخة احتياطية بعد كل جولة — أي طارئ في قاعدة البيانات يقدر يُصلَح باستيراد آخر نسخة.</p>
+      <div class="row" style="margin-bottom:10px;">
+        <button class="btn secondary" id="exportBackupBtn">⬇️ تنزيل نسخة احتياطية</button>
+        <button class="btn ghost" id="importBackupBtn">⬆️ استيراد نسخة احتياطية</button>
+        <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
+      </div>
+      <div id="backupMsg"></div>
     </div>
   </section>
 
@@ -2540,6 +2566,159 @@ async function showChampionCard(){
   document.getElementById('closeCardBtn').onclick = ()=>{ box.innerHTML=''; };
 }
 
+// ---------- ملخّص نهاية الموسم القابل للمشاركة (خاص بالمنظم) ----------
+// يجمع أبرز أرقام الموسم في كرت واحد بنفس هوية كرت بطل الجولة، على نمط
+// "الملخص السنوي" لتطبيقات الموسيقى — مصمم ليُنشر في المجموعة عند نهاية
+// الموسم أو أي وقت يرغب فيه المنظم بلمحة شاملة.
+function getSeasonWrapStats(){
+  const st = computeStandings();
+  const leader = st[0] || null;
+
+  // أفضل أداء فردي بجولة واحدة عبر كامل الموسم (تشمل جسر الجولة 2 وكل
+  // الجولات الحقيقية 3 فصاعدًا)
+  let bestRound = {name:'', points:-Infinity, round:null};
+  const bridgePts = getRound2BridgePointsMap();
+  PARTICIPANTS.forEach(p=>{
+    if(bridgePts[p.id] > bestRound.points) bestRound = {name:p.name, points:bridgePts[p.id], round:2};
+  });
+  DATA.rounds.forEach(round=>{
+    const stats = computeRoundStats(round);
+    PARTICIPANTS.forEach(p=>{
+      if(stats[p.id].points > bestRound.points) bestRound = {name:p.name, points:stats[p.id].points, round:round.number};
+    });
+  });
+
+  // الأكثر توقعًا صحيحًا — نفس ترتيب لوحة المتصدرين في قسم التوقعات
+  const acc = computePredictionAccuracy();
+  const predRanked = PARTICIPANTS
+    .map(p=>({name:p.name, correct:acc[p.id].correct, total:acc[p.id].total}))
+    .filter(a=>a.total>0)
+    .sort((a,b)=> b.correct-a.correct || (b.correct/b.total)-(a.correct/a.total));
+  const topPredictor = predRanked[0] || null;
+
+  // أطول سلسلة جولات متتالية بدون ممة (bestStreak محسوبة أصلاً في computeStandings)
+  let bestStreakOwner = {name:'', streak:0};
+  st.forEach(s=>{
+    if(s.bestStreak > bestStreakOwner.streak) bestStreakOwner = {name:s.name, streak:s.bestStreak};
+  });
+
+  return {leader, bestRound, topPredictor, bestStreakOwner};
+}
+
+async function buildSeasonWrapCard(){
+  const stats = getSeasonWrapStats();
+  const roundNum = getCurrentRoundNumber();
+  const W=800, H=1100;
+  const cv = document.createElement('canvas');
+  cv.width=W; cv.height=H;
+  const ctx = cv.getContext('2d');
+
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#0B3A2B'); g.addColorStop(0.55,'#08251B'); g.addColorStop(1,'#000000');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  ctx.save(); ctx.globalAlpha=0.07; ctx.translate(W/2,300);
+  for(let i=0;i<12;i++){
+    ctx.rotate(Math.PI/6);
+    ctx.fillStyle='#F0C400';
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-45,-620); ctx.lineTo(45,-620); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+
+  ctx.strokeStyle='#C9A227'; ctx.lineWidth=6;
+  drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#E7C158'; ctx.font='700 30px Tajawal, Arial';
+  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 82);
+  ctx.strokeStyle='rgba(231,193,88,0.35)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(120,104); ctx.lineTo(W-120,104); ctx.stroke();
+
+  ctx.font='96px serif'; ctx.fillText('📊', W/2, 218);
+
+  ctx.fillStyle='#F0C400'; ctx.font='800 40px Tajawal, Arial';
+  ctx.fillText(`ملخّص الموسم حتى الجولة ${roundNum}`, W/2, 288);
+
+  const cardsData = [
+    {emoji:'👑', label:'متصدّر الترتيب', value: stats.leader ? `${stats.leader.name} — ${stats.leader.total} نقطة` : '—'},
+    {emoji:'🔥', label:'أفضل أداء بجولة واحدة', value: stats.bestRound.round ? `${stats.bestRound.name} — ${stats.bestRound.points} نقطة (الجولة ${stats.bestRound.round})` : '—'},
+    {emoji:'🔮', label:'الأكثر توقعًا صحيحًا', value: stats.topPredictor ? `${stats.topPredictor.name} — ${stats.topPredictor.correct}/${stats.topPredictor.total}` : 'لا توجد توقعات كافية بعد'},
+    {emoji:'⚡', label:'أطول سلسلة بدون ممة', value: stats.bestStreakOwner.streak>0 ? `${stats.bestStreakOwner.name} — ${stats.bestStreakOwner.streak} ${stats.bestStreakOwner.streak===1?'جولة':'جولات'}` : '—'}
+  ];
+
+  let y = 335;
+  const cardH = 150, cardGap = 20, cardW = W-100, cardX=50;
+  cardsData.forEach(c=>{
+    ctx.fillStyle='rgba(255,255,255,0.05)';
+    drawRoundedRect(ctx, cardX, y, cardW, cardH, 16); ctx.fill();
+    ctx.strokeStyle='rgba(240,196,0,0.25)'; ctx.lineWidth=1.5;
+    drawRoundedRect(ctx, cardX, y, cardW, cardH, 16); ctx.stroke();
+
+    ctx.font='44px serif'; ctx.fillText(c.emoji, W/2, y+52);
+    ctx.fillStyle='#9FB3AA'; ctx.font='600 22px Tajawal, Arial';
+    ctx.fillText(c.label, W/2, y+86);
+    ctx.fillStyle='#FFFFFF';
+    const valSize = fitFontSize(ctx, c.value, cardW-60, {size:28, weight:'800', family:'Tajawal, Arial'}, 18);
+    ctx.font = `800 ${valSize}px Tajawal, Arial`;
+    ctx.fillText(c.value, W/2, y+126);
+
+    y += cardH + cardGap;
+  });
+
+  ctx.fillStyle='#6B7F76'; ctx.font='600 22px Tajawal, Arial';
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-40);
+
+  return cv;
+}
+
+async function showSeasonWrapCard(){
+  const box = document.getElementById('copyBox');
+  if(!box) return;
+  box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز ملخص الموسم…</p>';
+
+  try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+
+  const cv = await buildSeasonWrapCard();
+  box.innerHTML = '';
+  cv.id = 'seasonWrapCanvas';
+  box.appendChild(cv);
+
+  const roundNum = getCurrentRoundNumber();
+  const acts = document.createElement('div');
+  acts.className = 'champ-actions';
+  acts.innerHTML = `
+    <button class="btn" id="shareWrapBtn">📤 مشاركة الملخص</button>
+    <button class="btn secondary" id="dlWrapBtn">⬇️ تحميل الصورة</button>
+    <button class="btn secondary" id="storyWrapBtn">📱 نسخة ستوري</button>
+    <button class="btn ghost" id="closeWrapBtn">إغلاق</button>`;
+  box.appendChild(acts);
+  const msg = document.createElement('div'); box.appendChild(msg);
+
+  document.getElementById('dlWrapBtn').onclick = ()=>{
+    downloadCanvasPNG(cv, `brookie-season-wrap-round-${roundNum}.png`);
+  };
+
+  document.getElementById('storyWrapBtn').onclick = async ()=>{
+    const btn = document.getElementById('storyWrapBtn');
+    btn.disabled = true;
+    const storyCv = await buildStoryCanvas(cv);
+    downloadCanvasPNG(storyCv, `brookie-season-wrap-round-${roundNum}-story.png`);
+    btn.disabled = false;
+  };
+
+  document.getElementById('shareWrapBtn').onclick = async ()=>{
+    const shared = await tryShareCanvas(cv, 'ملخص-الموسم.png', 'ملخص الموسم', `📊 ملخص دوري بروكي الفانتازي حتى الجولة ${roundNum}`);
+    if(!shared){
+      downloadCanvasPNG(cv, `brookie-season-wrap-round-${roundNum}.png`);
+      msg.innerHTML = '<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة — تم تحميل الصورة بدلاً منها 📲</div>';
+    } else {
+      msg.innerHTML = '<div class="status-msg ok">تم فتح المشاركة ✅</div>';
+    }
+  };
+
+  document.getElementById('closeWrapBtn').onclick = ()=>{ box.innerHTML=''; };
+}
+
 // ---------- كرت الترتيب العام (صورة قابلة للمشاركة — متاحة للجميع) ----------
 async function buildStandingsCard(){
   const st = computeStandings();
@@ -2781,6 +2960,7 @@ function renderAll(){
   renderBadges();
   renderParticipants();
   renderRounds();
+  renderChampionsArchive();
   renderChart();
   renderRecords();
   renderH2H();
@@ -2971,6 +3151,76 @@ function renderRound1Section(){
   return html;
 }
 
+// ---------- أرشيف أبطال الجولات ----------
+// يعيد قائمة {round, champions:[أسماء], points} من الأحدث للأقدم. الجولة 2
+// (فترة الجسر) تُحسب دائمًا من ROUND2 الثابتة بمعزل عن أي جولات لاحقة —
+// حتى تبقى صحيحة تاريخيًا مهما دخلت جولات جديدة (نفس مبدأ إصلاح 9.9).
+// الجولات 3 فصاعدًا تُحسب من بياناتها الفعلية مع كسر تعادل بالأهداف، وتجمع
+// كل الأسماء المتعادلة فعليًا بدل اختيار واحد بالغلط (نفس نمط إصلاح الأوسمة).
+function getRoundChampionsArchive(){
+  const archive = [];
+
+  const bridgePoints = getRound2BridgePointsMap();
+  let maxBridge = -Infinity;
+  PARTICIPANTS.forEach(p=>{ if(bridgePoints[p.id] > maxBridge) maxBridge = bridgePoints[p.id]; });
+  let bridgeNames;
+  if(ROUND_HERO_OVERRIDE[2]){
+    const w = PARTICIPANTS.find(p=>p.id===ROUND_HERO_OVERRIDE[2]);
+    bridgeNames = w ? [w.name] : [];
+  } else {
+    bridgeNames = PARTICIPANTS.filter(p=>bridgePoints[p.id]===maxBridge).map(p=>p.name);
+  }
+  archive.push({round:2, champions:bridgeNames, points:maxBridge});
+
+  DATA.rounds.forEach(round=>{
+    const stats = computeRoundStats(round);
+    let maxPts = -Infinity;
+    PARTICIPANTS.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
+    const tied = PARTICIPANTS.filter(p=>stats[p.id].points===maxPts);
+    let champNames;
+    if(ROUND_HERO_OVERRIDE[round.number]){
+      const w = PARTICIPANTS.find(p=>p.id===ROUND_HERO_OVERRIDE[round.number]);
+      champNames = w ? [w.name] : [];
+    } else if(tied.length <= 1){
+      champNames = tied.length ? [tied[0].name] : [];
+    } else {
+      let bestGf = -Infinity, bestGa = Infinity;
+      tied.forEach(p=>{
+        const g = computeRoundGoals(round, p.id);
+        if(g.gf > bestGf || (g.gf===bestGf && g.ga < bestGa)){ bestGf = g.gf; bestGa = g.ga; }
+      });
+      champNames = tied.filter(p=>{
+        const g = computeRoundGoals(round, p.id);
+        return g.gf === bestGf && g.ga === bestGa;
+      }).map(p=>p.name);
+      if(!champNames.length) champNames = [tied[0].name];
+    }
+    archive.push({round:round.number, champions:champNames, points:maxPts});
+  });
+
+  return archive.sort((a,b)=>b.round-a.round);
+}
+
+function renderChampionsArchive(){
+  const box = document.getElementById('championsArchiveBox');
+  if(!box) return;
+  const archive = getRoundChampionsArchive();
+  if(!archive.length){ box.innerHTML=''; return; }
+  let html = '<div class="champions-archive">';
+  archive.forEach(row=>{
+    const names = row.champions.length ? row.champions.join(' و') : '—';
+    html += `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-weight:800;font-size:0.8rem;color:var(--gold);min-width:60px;">الجولة ${row.round}</span>
+        <span style="font-weight:700;font-size:0.85rem;">👑 ${names}</span>
+      </div>
+      <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${row.points} نقطة</span>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
 function renderRounds(){
   const box = document.getElementById('roundsBox');
   let html = '';
@@ -3032,9 +3282,14 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     // إلا بعد ما يدخل هنا ويرجع لذاك التبويب)
     document.getElementById('copySummaryBtn').style.display='';
     document.getElementById('champCardBtn').style.display='';
+    // قسم "المواجهة المباشرة" في تبويب الإحصائيات صار خاصًا بالمنظم فقط
+    // بطلب المستخدم (3 سبتمبر 2026) — يظهر فقط بعد تسجيل الدخول هنا.
+    const h2hBoxEl = document.getElementById('h2hBox');
+    if(h2hBoxEl) h2hBoxEl.style.display='';
     document.getElementById('dlStandingsBtn').style.display='';
     document.getElementById('shareStandingsBtn').style.display='';
     document.getElementById('dlStandingsStoryBtn').style.display='';
+    document.getElementById('seasonWrapBtn').style.display='';
     // أزرار تحميل المشاركين/الجولات/الإحصائيات/اللائحة كصور خاصة بالمنظم أيضًا
     document.getElementById('participantsToolbar').style.display='';
     document.getElementById('roundsToolbar').style.display='';
@@ -3098,6 +3353,84 @@ document.getElementById('predictionsEnabledToggle').addEventListener('change', a
   }
 });
 
+// ---------- نسخة احتياطية: تصدير واستيراد ----------
+// بما إن قاعدة Firebase مفتوحة الصلاحيات بالكامل (أي شخص يعرف رابطها يقدر
+// يكتب فيها)، أي خطأ أو طارئ ممكن يخرّب بيانات الموسم كاملة. هذا الزرّان
+// يعطيان المنظم خط رجعة سريع: تنزيل كل البيانات (الجولات + التوقعات) كملف
+// JSON واحد بأي وقت، واستعادتها من نفس الملف لو صار خلل.
+document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
+  const backup = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data: DATA,
+    predictions: PRED_DATA
+  };
+  const json = JSON.stringify(backup, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `brookie-backup-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+  const msg = document.getElementById('backupMsg');
+  if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية ✅</div>';
+});
+
+document.getElementById('importBackupBtn').addEventListener('click', ()=>{
+  document.getElementById('importBackupInput').click();
+});
+
+document.getElementById('importBackupInput').addEventListener('change', (e)=>{
+  const msg = document.getElementById('backupMsg');
+  const file = e.target.files && e.target.files[0];
+  e.target.value = ''; // يسمح باختيار نفس الملف مرة ثانية لاحقًا
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async ()=>{
+    let parsed;
+    try{
+      parsed = JSON.parse(reader.result);
+    }catch(err){
+      msg.innerHTML = '<div class="status-msg err">الملف غير صالح — تأكد إنه ملف نسخة احتياطية JSON صحيح.</div>';
+      return;
+    }
+    if(!parsed || typeof parsed !== 'object' || !parsed.data){
+      msg.innerHTML = '<div class="status-msg err">الملف لا يحتوي على بيانات نسخة احتياطية معروفة.</div>';
+      return;
+    }
+    const roundsCount = Array.isArray(parsed.data.rounds) ? parsed.data.rounds.length : 0;
+    const exportedLabel = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ar') : 'غير معروف';
+    const sure = confirm(
+      `تحذير: هذا الإجراء يستبدل كل بيانات الجولات والتوقعات الحالية على الموقع الحي لكل الزوار بمحتوى هذا الملف.\n\n` +
+      `تاريخ تصدير الملف: ${exportedLabel}\nعدد الجولات في الملف: ${roundsCount}\n\n` +
+      `هل أنت متأكد إنك تبي تستعيد هذه النسخة الآن؟`
+    );
+    if(!sure) return;
+
+    applyLoadedData(parsed.data);
+    applyLoadedPredictions(parsed.predictions || null);
+
+    const okData = await saveData();
+    const okPred = await savePredictions();
+    renderAll();
+    renderPredictions();
+    renderMyDashboard();
+
+    msg.innerHTML = (okData && okPred)
+      ? '<div class="status-msg ok">تم استعادة النسخة الاحتياطية بنجاح ✅</div>'
+      : '<div class="status-msg err">تعذّرت الاستعادة كاملة، تحقق من الاتصال وحاول مرة ثانية.</div>';
+  };
+  reader.onerror = ()=>{
+    msg.innerHTML = '<div class="status-msg err">تعذّرت قراءة الملف.</div>';
+  };
+  reader.readAsText(file);
+});
+
 // ---------- Round form ----------
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   const rawNum = document.getElementById('roundNumber').value;
@@ -3143,9 +3476,39 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
     });
     html += `</details>`;
   });
-  html += `<button class="btn" id="saveRoundBtn" style="margin-top:10px;">حفظ الجولة</button>
+  html += `<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+    <button class="btn" id="saveRoundBtn">حفظ الجولة</button>
+    ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>` : ''}
+    </div>
     <div id="saveRoundMsg"></div></div>`;
   box.innerHTML = html;
+
+  // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
+  // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
+  // الجميع. أُضيف بطلب المستخدم (3 سبتمبر 2026) كخط رجعة سريع بدل التعديل اليدوي.
+  const deleteBtn = document.getElementById('deleteRoundBtn');
+  if(deleteBtn){
+    deleteBtn.addEventListener('click', async ()=>{
+      const sure = confirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها نهائيًا من بيانات كل الزوار ولا يمكن التراجع عنه إلا باستعادة نسخة احتياطية.`);
+      if(!sure) return;
+      DATA.rounds = DATA.rounds.filter(r=>r.number!==num);
+      DATA.updatedAt = Date.now();
+      deleteBtn.disabled = true;
+      const ok = await saveData();
+      renderAll();
+      const saveMsg = document.getElementById('saveRoundMsg');
+      if(saveMsg) saveMsg.innerHTML = ok
+        ? `<div class="status-msg ok">تم حذف الجولة ${num} بنجاح ✅</div>`
+        : '<div class="status-msg err">تعذّر الحذف، حاول مرة ثانية.</div>';
+      if(ok){
+        setTimeout(()=>{
+          box.innerHTML = '';
+          const numInput = document.getElementById('roundNumber');
+          if(numInput) numInput.value = '';
+        }, 1500);
+      }
+    });
+  }
 
   document.getElementById('saveRoundBtn').addEventListener('click', async ()=>{
     // تحقق قبل الحفظ: أي مباراة بدون نتيجة مختارة تمنع الحفظ بالكامل — بدل ما كانت
@@ -3206,6 +3569,7 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
 // ---------- التشغيل الأولي عند فتح الصفحة ----------
 document.getElementById('copySummaryBtn').addEventListener('click', renderCopyBox);
 document.getElementById('champCardBtn').addEventListener('click', showChampionCard);
+document.getElementById('seasonWrapBtn').addEventListener('click', showSeasonWrapCard);
 document.getElementById('dlStandingsBtn').addEventListener('click', downloadStandingsImage);
 document.getElementById('shareStandingsBtn').addEventListener('click', shareStandingsImage);
 document.getElementById('dlStandingsStoryBtn').addEventListener('click', downloadStandingsStoryImage);
@@ -3238,6 +3602,45 @@ if('serviceWorker' in navigator){
     });
   });
 }
+
+// ---------- مؤشر حالة الاتصال بالإنترنت ----------
+// بما إن الموقع صار يعمل جزئيًا بدون إنترنت (PWA + service worker)، هذه
+// الشارة تنبّه الزائر إن الصفحة قد تعرض بيانات مخزَّنة قديمة إذا انقطع
+// اتصاله، بدل ما يتفاجأ إن الأرقام ما تتحدّث.
+function updateOfflineBadge(){
+  const badge = document.getElementById('offlineBadge');
+  if(!badge) return;
+  badge.hidden = navigator.onLine;
+}
+window.addEventListener('online', updateOfflineBadge);
+window.addEventListener('offline', updateOfflineBadge);
+updateOfflineBadge();
+
+// ---------- وضع "خط أكبر" لسهولة القراءة ----------
+// تفضيل شخصي محفوظ محليًا لكل جهاز/متصفح (localStorage) — لا علاقة له
+// ببيانات الموسم المشتركة عبر Firebase، ولا يؤثر على أي زائر آخر.
+const FONT_PREF_KEY = 'brookie-big-font';
+function applyFontPref(){
+  const btn = document.getElementById('fontSizeToggleBtn');
+  let on = false;
+  try{ on = localStorage.getItem(FONT_PREF_KEY) === '1'; }catch(e){}
+  document.documentElement.classList.toggle('big-font', on);
+  if(btn){
+    btn.textContent = on ? '🔤 إلغاء تكبير الخط' : '🔤 تكبير الخط';
+    btn.setAttribute('aria-pressed', String(on));
+  }
+}
+const fontToggleBtn = document.getElementById('fontSizeToggleBtn');
+if(fontToggleBtn){
+  fontToggleBtn.addEventListener('click', ()=>{
+    let on = false;
+    try{ on = localStorage.getItem(FONT_PREF_KEY) === '1'; }catch(e){}
+    const next = !on;
+    try{ localStorage.setItem(FONT_PREF_KEY, next ? '1' : '0'); }catch(e){}
+    applyFontPref();
+  });
+}
+applyFontPref();
 </script>
 </body>
 </html>
