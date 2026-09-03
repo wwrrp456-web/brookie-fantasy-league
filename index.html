@@ -132,6 +132,42 @@
   .rules-list h4:first-child{margin-top:0;}
   .rules-list p{margin:0 0 4px;font-size:0.87rem;color:var(--ink);}
 
+  /* أوسمة الموسم */
+  .badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+  .badge-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .badge-icon{font-size:1.8rem;line-height:1;margin-bottom:4px;}
+  .badge-title{font-size:0.78rem;font-weight:800;color:var(--gold);margin-bottom:4px;}
+  .badge-names{font-size:0.87rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .badge-detail{font-size:0.74rem;color:var(--muted);}
+
+  /* مواجهة مباشرة */
+  .h2h-picker{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .h2h-picker select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-family:inherit;font-size:0.85rem;}
+  .h2h-vs{font-weight:800;color:var(--muted);font-size:0.8rem;flex:0 0 auto;}
+  .h2h-table{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .h2h-row{display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);}
+  .h2h-row:last-child{border-bottom:none;}
+  .h2h-val{text-align:center;font-weight:800;font-size:0.95rem;color:var(--ink);}
+  .h2h-val.h2h-win{color:var(--gold);}
+  .h2h-label{text-align:center;font-size:0.76rem;color:var(--muted);}
+
+  /* توقعات بطل الجولة القادمة */
+  .predict-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+  .predict-title{font-weight:800;font-size:0.95rem;color:var(--ink);margin-bottom:8px;}
+  .predict-hint{font-size:0.82rem;color:var(--muted);}
+  .predict-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .predict-row select{flex:1;min-width:140px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--cream);color:var(--ink);font-family:inherit;font-size:0.85rem;}
+  .predict-current{font-size:0.82rem;color:var(--ink2);margin-top:8px;}
+  .predict-count{font-size:0.76rem;color:var(--muted);margin-top:6px;}
+  .predict-leader-title{font-weight:800;font-size:0.82rem;color:var(--gold);margin-top:12px;margin-bottom:6px;}
+  .predict-leaderboard{display:flex;flex-direction:column;gap:4px;}
+  .predict-leader-row{display:flex;justify-content:space-between;font-size:0.83rem;background:var(--cream);border-radius:6px;padding:5px 10px;}
+
+  /* عداد تنازلي للجولة القادمة */
+  .countdown-card{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);color:var(--paper);border-radius:12px;padding:12px 16px;margin-bottom:14px;text-align:center;}
+  .countdown-label{font-size:0.78rem;opacity:0.85;margin-bottom:4px;}
+  .countdown-timer{font-size:1.3rem;font-weight:800;letter-spacing:0.5px;color:var(--gold-light);}
+
   /* Admin */
   .admin-box{background:var(--paper);border:1px dashed var(--gold);border-radius:10px;padding:14px;margin-bottom:16px;}
   .admin-box input[type=password], .admin-box input[type=text], .admin-box input[type=number]{
@@ -484,10 +520,14 @@
 <div class="wrap">
 
   <section class="panel active" id="panel-standings">
+    <div id="countdownBox"></div>
+
     <div class="me-picker">
       <span style="font-size:0.82rem;font-weight:700;">مين أنت؟</span>
       <select id="mePicker"><option value="">— اختر اسمك —</option></select>
     </div>
+
+    <div id="predictionBox"></div>
 
     <div id="heroesBox"></div>
 
@@ -496,6 +536,7 @@
       <button class="btn secondary" id="copySummaryBtn" style="display:none;">📋 ملخص للواتساب</button>
       <button class="btn" id="champCardBtn" style="display:none;">🏆 كرت بطل الجولة</button>
       <button class="btn secondary" id="dlStandingsBtn" style="display:none;">⬇️ تحميل الترتيب كصورة</button>
+      <button class="btn secondary" id="dlStandingsStoryBtn" style="display:none;">📱 ترتيب كستوري</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
     <div id="refreshMsg"></div>
@@ -503,6 +544,8 @@
     <div id="standingsImgBox"></div>
 
     <div id="standingsBox" class="loading">جارٍ تحميل البيانات...</div>
+
+    <div id="badgesBox"></div>
   </section>
 
   <section class="panel" id="panel-participants">
@@ -535,6 +578,8 @@
     <div id="statsCapture">
       <h2 class="section-title">تطوّر الترتيب</h2>
       <div id="chartBox"></div>
+      <div id="recordsBox"></div>
+      <div id="h2hBox"></div>
       <h2 class="section-title" style="margin-top:22px;">أداء الأندية</h2>
       <div id="clubStatsBox"></div>
     </div>
@@ -587,6 +632,15 @@
         <button class="btn secondary" id="startRoundBtn">تجهيز نموذج الجولة</button>
       </div>
       <div id="roundFormBox"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">⏰ عداد الجولة القادمة</h2>
+      <div class="row" style="margin-bottom:10px;">
+        <label class="field-label">تاريخ ووقت بداية الجولة القادمة:</label>
+        <input type="datetime-local" id="nextRoundAtInput">
+        <button class="btn secondary" id="saveNextRoundAtBtn">حفظ</button>
+        <button class="btn ghost" id="clearNextRoundAtBtn">إخفاء العداد</button>
+      </div>
+      <div id="nextRoundAtMsg"></div>
     </div>
   </section>
 
@@ -1080,6 +1134,274 @@ function getCurrentRoundPointsMap(){
   return map;
 }
 
+// ---------- طبقة بيانات موحّدة: تاريخ كل مشارك جولة بجولة ----------
+// تجمع الجولة 1 (ROUND1_POINTS، بلا أهداف مفصّلة) + الجولة 2 (جسر
+// computeRound2ForParticipter بأهدافها الحقيقية) + أي جولات حقيقية أُدخلت
+// لاحقًا من تبويب المنظم (DATA.rounds) — في مصفوفة زمنية واحدة لكل مشارك.
+// أساس ميزتي "أوسمة الموسم" و"الأرقام القياسية"، وتتحدّث تلقائيًا مع كل
+// جولة جديدة يُدخلها المنظم دون أي تعديل إضافي على هذه الدالة.
+function getAllRoundsHistory(pid){
+  const p = PARTICIPANTS.find(x=>x.id===pid);
+  if(!p) return [];
+  const rounds = [];
+  // أبو صالح (JOINED_AFTER_ROUND1) لم يشارك في الجولة 1 فعليًا — يُستثنى
+  // كي لا تُحتسب له "ممة" وهمية لجولة لم يلعبها أصلاً.
+  if(!JOINED_AFTER_ROUND1[pid]){
+    rounds.push({round:1, points: ROUND1_POINTS[pid]||0, gf:null, ga:null});
+  }
+  const r2 = computeRound2ForParticipant(p);
+  rounds.push({round:2, points:r2.points, gf:r2.gf, ga:r2.ga});
+  DATA.rounds.forEach(r=>{
+    if(!round_has_entries(r, pid)) return;
+    const stats = computeRoundStats(r)[pid];
+    rounds.push({round:r.number, points:stats.points, gf:stats.gf, ga:stats.ga});
+  });
+  return rounds;
+}
+
+function getAllParticipantsRoundsHistory(){
+  const map = {};
+  PARTICIPANTS.forEach(p=> map[p.id] = getAllRoundsHistory(p.id));
+  return map;
+}
+
+// ---------- أوسمة الموسم ----------
+// تُحسب بالكامل من getAllParticipantsRoundsHistory + getMovements، وتكبر
+// تلقائيًا مع كل جولة حقيقية جديدة يُدخلها المنظم دون أي تعديل هنا.
+function computeBadges(){
+  const histMap = getAllParticipantsRoundsHistory();
+  const badges = [];
+
+  // 1) الأكثر ثباتًا: صفر ممات عبر كل الجولات المعروفة (يحتاج جولتين فأكثر)
+  let steadiest = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    if(hist.length < 2) return;
+    if(hist.every(r=> r.points > 0)) steadiest.push(p.name);
+  });
+
+  // 2) أطول سلسلة نقاط متتالية (points>0)
+  let bestStreakVal = 0, bestStreakNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    let cur=0, best=0;
+    hist.forEach(r=>{ if(r.points>0){ cur++; best=Math.max(best,cur); } else cur=0; });
+    if(best > bestStreakVal){ bestStreakVal = best; bestStreakNames = [p.name]; }
+    else if(best === bestStreakVal && best > 0){ bestStreakNames.push(p.name); }
+  });
+
+  // 3) أعلى حصاد في جولة واحدة عبر تاريخ الموسم
+  let bestRoundVal = -1, bestRoundNames = [];
+  PARTICIPANTS.forEach(p=>{
+    histMap[p.id].forEach(r=>{
+      if(r.points > bestRoundVal){ bestRoundVal = r.points; bestRoundNames = [p.name]; }
+      else if(r.points === bestRoundVal && !bestRoundNames.includes(p.name)){ bestRoundNames.push(p.name); }
+    });
+  });
+
+  // 4) الأكثر ممات عبر تاريخ الموسم
+  let mostMumVal = -1, mostMumNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const mumCount = histMap[p.id].filter(r=>r.points===0).length;
+    if(mumCount > mostMumVal){ mostMumVal = mumCount; mostMumNames = [p.name]; }
+    else if(mumCount === mostMumVal && mumCount > 0){ mostMumNames.push(p.name); }
+  });
+
+  // 5) أكبر صعود في المركز هذه الجولة تحديدًا (ديناميكي، يتغيّر كل جولة)
+  const mv = getMovements();
+  let topClimberVal = 0, topClimberName = null;
+  PARTICIPANTS.forEach(p=>{
+    if((mv[p.id]||0) > topClimberVal){ topClimberVal = mv[p.id]; topClimberName = p.name; }
+  });
+
+  const fmtNames = (arr)=> arr.length<=3 ? arr.join('، ') : `${arr.length} مشاركين`;
+
+  if(steadiest.length){
+    badges.push({icon:'🧊', title:'الأكثر ثباتًا', names: fmtNames(steadiest), detail:'صفر ممات منذ بداية الموسم'});
+  }
+  if(bestStreakVal >= 2){
+    badges.push({icon:'🔥', title:'أطول سلسلة نقاط', names: fmtNames(bestStreakNames), detail:`${bestStreakVal} جولات متتالية بنقاط`});
+  }
+  if(bestRoundVal > 0){
+    badges.push({icon:'💥', title:'أعلى حصاد في جولة واحدة', names: fmtNames(bestRoundNames), detail:`${bestRoundVal} نقطة`});
+  }
+  if(mostMumVal > 0){
+    badges.push({icon:'💀', title:'الأكثر ممات', names: fmtNames(mostMumNames), detail:`${mostMumVal} ممة`});
+  }
+  if(topClimberName){
+    badges.push({icon:'🚀', title:'أكبر صعود هذه الجولة', names: topClimberName, detail:`+${topClimberVal} مركز`});
+  }
+
+  return badges;
+}
+
+function renderBadges(){
+  const box = document.getElementById('badgesBox');
+  if(!box) return;
+  const badges = computeBadges();
+  if(!badges.length){ box.innerHTML=''; return; }
+  let html = '<h2 class="section-title" style="margin-top:22px;">🏅 أوسمة الموسم</h2>';
+  html += '<div class="badges-grid">';
+  badges.forEach(b=>{
+    html += `<div class="badge-card">
+      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-title">${b.title}</div>
+      <div class="badge-names">${b.names}</div>
+      <div class="badge-detail">${b.detail}</div>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- الأرقام القياسية ----------
+// كل انتقال معروف بين ترتيبَين متتاليين عبر تاريخ الموسم (الجسر ثم كل جولة
+// حقيقية أُدخلت لاحقًا) — نفس منطق getMovements() لكن يُبقي على كامل
+// السجل بدل آخر انتقال فقط، ليُستخدم في اكتشاف أكبر صعود/هبوط تاريخي.
+function getAllMovementsHistory(){
+  const result = [];
+  const r1 = getRound1RankMap();
+  const rBridge = getRankMap(0);
+  PARTICIPANTS.forEach(p=>{
+    result.push({round:2, pid:p.id, name:p.name, delta:(r1[p.id]||0)-(rBridge[p.id]||0)});
+  });
+  for(let i=1;i<=DATA.rounds.length;i++){
+    const before = getRankMap(i-1);
+    const now = getRankMap(i);
+    PARTICIPANTS.forEach(p=>{
+      result.push({round:DATA.rounds[i-1].number, pid:p.id, name:p.name, delta:(before[p.id]||0)-(now[p.id]||0)});
+    });
+  }
+  return result;
+}
+
+function computeRecords(){
+  const histMap = getAllParticipantsRoundsHistory();
+
+  // أعلى حصاد جولة واحدة عبر كل تاريخ الموسم
+  let allRoundEntries = [];
+  PARTICIPANTS.forEach(p=>{
+    histMap[p.id].forEach(r=> allRoundEntries.push({name:p.name, round:r.round, points:r.points}));
+  });
+  allRoundEntries.sort((a,b)=> b.points - a.points);
+  const topRound = allRoundEntries[0] || null;
+
+  // أعنف صراع في الترتيب الحالي: أقرب فارق نقاط بين مركزين متجاورين
+  const standings = computeStandings();
+  let minGap = Infinity, minGapPair = null;
+  for(let i=0;i<standings.length-1;i++){
+    const gap = standings[i].total - standings[i+1].total;
+    if(gap < minGap){ minGap = gap; minGapPair = [standings[i], standings[i+1]]; }
+  }
+
+  // أكبر صعود/هبوط دفعة واحدة عبر تاريخ الموسم
+  const moves = getAllMovementsHistory();
+  let maxUp = null, maxDown = null;
+  moves.forEach(m=>{
+    if(!maxUp || m.delta > maxUp.delta) maxUp = m;
+    if(!maxDown || m.delta < maxDown.delta) maxDown = m;
+  });
+
+  return {
+    topRound,
+    closest: minGapPair ? {gap:minGap, a:minGapPair[0], b:minGapPair[1]} : null,
+    maxUp, maxDown
+  };
+}
+
+function renderRecords(){
+  const box = document.getElementById('recordsBox');
+  if(!box) return;
+  const rec = computeRecords();
+  let html = '<h2 class="section-title" style="margin-top:22px;">📊 أرقام الموسم القياسية</h2>';
+  html += '<div class="badges-grid">';
+
+  if(rec.topRound){
+    html += `<div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${rec.topRound.points} نقطة — الجولة ${rec.topRound.round}</div></div>`;
+  }
+  if(rec.closest){
+    html += `<div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">يفصل بينهما ${rec.closest.gap} نقطة فقط</div></div>`;
+  }
+  if(rec.maxUp && rec.maxUp.delta > 0){
+    html += `<div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">+${rec.maxUp.delta} مركز — الجولة ${rec.maxUp.round}</div></div>`;
+  }
+  if(rec.maxDown && rec.maxDown.delta < 0){
+    html += `<div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">${rec.maxDown.delta} مركز — الجولة ${rec.maxDown.round}</div></div>`;
+  }
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- مواجهة مباشرة ----------
+let h2hA = null, h2hB = null;
+
+function renderH2H(){
+  const box = document.getElementById('h2hBox');
+  if(!box) return;
+  if(h2hA===null) h2hA = PARTICIPANTS[0].id;
+  if(h2hB===null) h2hB = PARTICIPANTS[1].id;
+
+  const options = PARTICIPANTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  let html = '<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>';
+  html += `<div class="h2h-picker">
+    <select id="h2hSelectA">${options}</select>
+    <span class="h2h-vs">ضد</span>
+    <select id="h2hSelectB">${options}</select>
+  </div>`;
+  html += `<div id="h2hResult"></div>`;
+  box.innerHTML = html;
+
+  const selA = document.getElementById('h2hSelectA');
+  const selB = document.getElementById('h2hSelectB');
+  selA.value = h2hA;
+  selB.value = h2hB;
+  selA.addEventListener('change', ()=>{ h2hA = Number(selA.value); renderH2HResult(); });
+  selB.addEventListener('change', ()=>{ h2hB = Number(selB.value); renderH2HResult(); });
+
+  renderH2HResult();
+}
+
+function renderH2HResult(){
+  const box = document.getElementById('h2hResult');
+  if(!box) return;
+  const standings = computeStandings();
+  const rankMap = {};
+  standings.forEach((s,i)=> rankMap[s.id]=i+1);
+  const sA = standings.find(s=>s.id===h2hA);
+  const sB = standings.find(s=>s.id===h2hB);
+  if(!sA || !sB){ box.innerHTML=''; return; }
+
+  const histA = getAllRoundsHistory(h2hA);
+  const histB = getAllRoundsHistory(h2hB);
+  const bestA = histA.reduce((m,r)=>Math.max(m,r.points),0);
+  const bestB = histB.reduce((m,r)=>Math.max(m,r.points),0);
+  const mumA = histA.filter(r=>r.points===0).length;
+  const mumB = histB.filter(r=>r.points===0).length;
+
+  const rows = [
+    {label:'المركز الحالي', a:rankMap[h2hA], b:rankMap[h2hB], lowerBetter:true},
+    {label:'إجمالي النقاط', a:sA.total, b:sB.total},
+    {label:'أفضل جولة', a:bestA, b:bestB},
+    {label:'عدد الممات', a:mumA, b:mumB, lowerBetter:true},
+  ];
+
+  let html = '<div class="h2h-table">';
+  rows.forEach(r=>{
+    let aWin=false, bWin=false;
+    if(r.a !== r.b){
+      if(r.lowerBetter){ aWin = r.a<r.b; bWin = r.b<r.a; }
+      else { aWin = r.a>r.b; bWin = r.b>r.a; }
+    }
+    html += `<div class="h2h-row">
+      <div class="h2h-val ${aWin?'h2h-win':''}">${r.a}</div>
+      <div class="h2h-label">${r.label}</div>
+      <div class="h2h-val ${bWin?'h2h-win':''}">${r.b}</div>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
 // كسر تعادل "بطل الجولة" حسب اللائحة (قسم 3، بند 4):
 // الأكثر حصادًا أسبوعيًا ← من وصل أولًا (أنديته لعبت مبارياتها أولًا زمنيًا) ←
 // الأكثر أهدافًا ← الأقل استقبالًا.
@@ -1233,6 +1555,36 @@ function renderHeroes(){
 }
 
 // ---------- ملخص الواتساب ----------
+// قصة الجولة التلقائية: فقرة عربية قصيرة مبنية بالكامل من بيانات محسوبة
+// (بطل الجولة، أكبر صاعد، الممات) — تُضاف أعلى ملخص الواتساب لطابع صحفي
+// بدل الأرقام الجافة فقط. لا تحتاج أي بيانات إضافية غير موجودة أصلاً.
+function buildRoundStory(){
+  const h = getRoundHeroes();
+  if(!h) return '';
+  const mv = getMovements();
+
+  let topClimberName = null, topClimberVal = 0;
+  PARTICIPANTS.forEach(p=>{
+    if((mv[p.id]||0) > topClimberVal){ topClimberVal = mv[p.id]; topClimberName = p.name; }
+  });
+
+  const parts = [];
+  parts.push(`الجولة ${h.roundNumber} شهدت تربّع *${h.top.name}* على القمة بـ${h.top.points} نقطة${h.top.tieBreak ? ' بعد كسر تعادل مثير' : ''}.`);
+
+  if(topClimberName && topClimberVal >= 2){
+    parts.push(`${topClimberName} كان الأكثر صعودًا بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
+  }
+
+  if(h.mummat.length){
+    const names = h.mummat.length<=3 ? h.mummat.join('، ') : `${h.mummat.length} مشاركين`;
+    parts.push(`في المقابل، تعرّض ${names} لـ"ممة" هذه الجولة بصفر نقاط.`);
+  } else {
+    parts.push('الجميع سجّل نقاطًا هذه الجولة — لا ممات! 🎉');
+  }
+
+  return parts.join(' ');
+}
+
 function buildWhatsAppSummary(){
   const st = computeStandings();
   const mv = getMovements();
@@ -1241,6 +1593,11 @@ function buildWhatsAppSummary(){
   const medals = ['🥇','🥈','🥉'];
   let t = `🏆 *دوري بروكي الفانتازي — الموسم الثاني*\n`;
   t += `📅 تحديث بعد الجولة ${rn}\n`;
+  const story = buildRoundStory();
+  if(story){
+    t += `━━━━━━━━━━━━━━\n`;
+    t += `📝 ${story}\n`;
+  }
   t += `━━━━━━━━━━━━━━\n`;
   t += `📊 *الإجمالي* = مجموع النقاط التراكمي منذ بداية الموسم\n`;
   t += `➕ (بين قوسين) = نقاط هذه الجولة بس\n`;
@@ -1384,6 +1741,7 @@ function initMePicker(){
     MY_ID = sel.value ? Number(sel.value) : null;
     try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
     renderStandings();
+    renderPredictions();
   });
 }
 
@@ -1394,10 +1752,193 @@ async function loadMyId(){
       MY_ID = Number(typeof r.value==='string' ? JSON.parse(r.value) : r.value);
       const sel = document.getElementById('mePicker');
       if(sel) sel.value = MY_ID;
+      renderPredictions();
     }
   }catch(e){}
 }
 
+
+// ---------- لعبة توقعات بطل الجولة القادمة ----------
+// مخزَّنة في مفتاح مشترك منفصل عن DATA الرئيسية (كي لا تتصادم كتابات
+// المتوقعين المتعددين مع حفظ المنظم لنتائج الجولات). البنية:
+// PRED_DATA.entries = { "<رقم الجولة>": { "<معرّف المتوقّع>": <معرّف من توقّعه بطلاً> } }
+const PRED_STORAGE_KEY = 'brookie-fantasy-s2-predictions';
+let PRED_DATA = {entries:{}};
+
+async function loadPredictions(){
+  try{
+    const res = await window.storage.get(PRED_STORAGE_KEY, true);
+    if(res && res.value !== undefined && res.value !== null){
+      const v = res.value;
+      PRED_DATA = (typeof v === 'string') ? JSON.parse(v) : v;
+    }
+  }catch(e){
+    console.warn('تعذّر تحميل التوقعات:', e);
+  }
+  if(!PRED_DATA || typeof PRED_DATA !== 'object') PRED_DATA = {entries:{}};
+  if(!PRED_DATA.entries || typeof PRED_DATA.entries !== 'object') PRED_DATA.entries = {};
+  renderPredictions();
+}
+
+async function savePredictions(){
+  try{
+    const r = await window.storage.set(PRED_STORAGE_KEY, PRED_DATA, true);
+    if(r) return true;
+  }catch(e){ console.warn('فشلت محاولة حفظ التوقعات:', e); }
+  try{
+    const r2 = await window.storage.set(PRED_STORAGE_KEY, JSON.stringify(PRED_DATA), true);
+    if(r2) return true;
+  }catch(e2){ console.warn('فشلت المحاولة الثانية لحفظ التوقعات:', e2); }
+  return false;
+}
+
+// بطل جولة معيّنة (2 فصاعدًا) — تُستخدم لتصحيح التوقعات القديمة تلقائيًا
+// بمجرد أن يصير رقم الجولة معروف النتيجة (سواء الجسر أو جولة حقيقية أدخلها
+// المنظم). ترجع null لجولة لسه ما اتلعبت (قادمة).
+function getRoundChampion(roundNumber){
+  if(roundNumber === 2 && DATA.rounds.length === 0){
+    const h = getRoundHeroes();
+    return (h && h.top) ? h.top.id : null;
+  }
+  const round = DATA.rounds.find(r=>r.number===roundNumber);
+  if(!round) return null;
+  const stats = computeRoundStats(round);
+  let maxPts = -Infinity;
+  PARTICIPANTS.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
+  const tied = PARTICIPANTS.filter(p=> stats[p.id].points === maxPts);
+  if(tied.length === 1) return tied[0].id;
+  const sorted = tied.slice().sort((a,b)=>{
+    const ga_ = computeRoundGoals(round, a.id), gb_ = computeRoundGoals(round, b.id);
+    if(gb_.gf !== ga_.gf) return gb_.gf - ga_.gf;
+    if(ga_.ga !== gb_.ga) return ga_.ga - gb_.ga;
+    return a.name.localeCompare(b.name,'ar');
+  });
+  return sorted[0].id;
+}
+
+function computePredictionAccuracy(){
+  const totals = {};
+  PARTICIPANTS.forEach(p=> totals[p.id] = {correct:0, total:0});
+  Object.keys(PRED_DATA.entries).forEach(roundNumStr=>{
+    const champion = getRoundChampion(Number(roundNumStr));
+    if(champion === null) return; // جولة قادمة لسه ما اتحسمت
+    const roundEntries = PRED_DATA.entries[roundNumStr] || {};
+    Object.keys(roundEntries).forEach(voterIdStr=>{
+      const voterId = Number(voterIdStr);
+      if(!totals[voterId]) return;
+      totals[voterId].total++;
+      if(Number(roundEntries[voterIdStr]) === champion) totals[voterId].correct++;
+    });
+  });
+  return totals;
+}
+
+function renderPredictions(){
+  const box = document.getElementById('predictionBox');
+  if(!box) return;
+  const targetRound = getCurrentRoundNumber() + 1;
+  const roundEntries = PRED_DATA.entries[targetRound] || {};
+  const myPrediction = (MY_ID !== null) ? roundEntries[MY_ID] : undefined;
+
+  let html = '<div class="predict-card">';
+  html += `<div class="predict-title">🔮 توقّع بطل الجولة ${targetRound}</div>`;
+
+  if(MY_ID === null){
+    html += '<div class="predict-hint">اختر اسمك من "مين أنت؟" بالأعلى عشان تقدر تتوقّع</div>';
+  } else {
+    const options = PARTICIPANTS.map(p=>`<option value="${p.id}" ${Number(myPrediction)===p.id?'selected':''}>${p.name}</option>`).join('');
+    html += `<div class="predict-row">
+      <select id="predictSelect"><option value="">— اختر بطل الجولة القادمة —</option>${options}</select>
+      <button class="btn" id="predictSubmitBtn">${myPrediction!==undefined?'تحديث توقعي':'أرسل توقعي'}</button>
+    </div>`;
+    if(myPrediction !== undefined){
+      const predName = (PARTICIPANTS.find(p=>p.id===Number(myPrediction))||{}).name || '';
+      html += `<div class="predict-current">توقعك الحالي: <b>${predName}</b></div>`;
+    }
+  }
+
+  const totalVotes = Object.keys(roundEntries).length;
+  if(totalVotes > 0){
+    html += `<div class="predict-count">${totalVotes} ${totalVotes===1?'شخص توقّع':'أشخاص توقّعوا'} حتى الآن</div>`;
+  }
+
+  const acc = computePredictionAccuracy();
+  const ranked = PARTICIPANTS
+    .map(p=>({name:p.name, correct:acc[p.id].correct, total:acc[p.id].total}))
+    .filter(a=>a.total>0)
+    .sort((a,b)=> b.correct-a.correct || (b.correct/b.total)-(a.correct/a.total));
+  if(ranked.length){
+    html += '<div class="predict-leader-title">🏆 الأكثر توقعًا صحيحًا</div><div class="predict-leaderboard">';
+    ranked.slice(0,5).forEach((r,i)=>{
+      html += `<div class="predict-leader-row"><span>${i+1}. ${r.name}</span><span>${r.correct}/${r.total}</span></div>`;
+    });
+    html += '</div>';
+  }
+
+  html += '</div>';
+  box.innerHTML = html;
+
+  const sel = document.getElementById('predictSelect');
+  const btn = document.getElementById('predictSubmitBtn');
+  if(sel && btn){
+    btn.addEventListener('click', async ()=>{
+      if(MY_ID === null || !sel.value) return;
+      if(!PRED_DATA.entries[targetRound]) PRED_DATA.entries[targetRound] = {};
+      PRED_DATA.entries[targetRound][MY_ID] = Number(sel.value);
+      btn.disabled = true;
+      btn.textContent = 'جارٍ الحفظ...';
+      const ok = await savePredictions();
+      renderPredictions();
+      if(!ok){
+        const box2 = document.getElementById('predictionBox');
+        if(box2) box2.insertAdjacentHTML('beforeend', '<div class="status-msg err">تعذّر حفظ التوقع، حاول مرة ثانية.</div>');
+      }
+    });
+  }
+}
+
+// ---------- عداد تنازلي للجولة القادمة ----------
+// المنظم يحدد التاريخ من لوحة المنظم (DATA.nextRoundAt، ISO string) — يُحفظ
+// ويُقرأ ضمن DATA الرئيسية مثل بقية بيانات الجولات. يظهر للجميع بلا قيود.
+let countdownInterval = null;
+
+function isoToDatetimeLocal(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return '';
+  const pad = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function renderCountdown(){
+  const box = document.getElementById('countdownBox');
+  if(!box) return;
+  if(countdownInterval){ clearInterval(countdownInterval); countdownInterval=null; }
+
+  if(!DATA.nextRoundAt){ box.innerHTML=''; return; }
+  const target = new Date(DATA.nextRoundAt).getTime();
+  if(isNaN(target)){ box.innerHTML=''; return; }
+
+  const nextRoundNum = getCurrentRoundNumber() + 1;
+
+  function tick(){
+    const diff = target - Date.now();
+    if(diff <= 0){
+      box.innerHTML = `<div class="countdown-card"><div class="countdown-label">⏰ الجولة ${nextRoundNum}</div><div class="countdown-timer">بدأت الجولة! 🔥</div></div>`;
+      if(countdownInterval){ clearInterval(countdownInterval); countdownInterval=null; }
+      return;
+    }
+    const days = Math.floor(diff/86400000);
+    const hours = Math.floor((diff/3600000)%24);
+    const mins = Math.floor((diff/60000)%60);
+    const secs = Math.floor((diff/1000)%60);
+    const pad = n => String(n).padStart(2,'0');
+    const dayPart = days>0 ? `${days}ي ` : '';
+    box.innerHTML = `<div class="countdown-card"><div class="countdown-label">⏰ العد التنازلي لبداية الجولة ${nextRoundNum}</div><div class="countdown-timer">${dayPart}${pad(hours)}:${pad(mins)}:${pad(secs)}</div></div>`;
+  }
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
 
 // ---------- تنزيل كانفاس كصورة PNG (مشتركة بين كرت البطل وكرت الترتيب) ----------
 // ملاحظتان مهمتان اتضحتا بالاختبار الفعلي (Playwright + كروميوم):
@@ -1544,6 +2085,45 @@ async function buildChampionCard(){
   return cv;
 }
 
+// ---------- نسخة ستوري عمودية (1080×1920) من أي كرت جاهز ----------
+// تُعيد استخدام الكرت الأصلي (بطل الجولة أو الترتيب) كصورة مُركَّبة داخل
+// إطار عمودي مناسب لحالة الواتساب/الستوري، بدل إعادة رسم كل التفاصيل من
+// الصفر بأبعاد جديدة — أضمن وأقل عرضة للأخطاء.
+async function buildStoryCanvas(sourceCanvas){
+  const W = 1080, H = 1920;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0B3A2B'); g.addColorStop(0.55,'#08251B'); g.addColorStop(1,'#000000');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#E7C158'; ctx.font = '800 42px Tajawal, Arial';
+  ctx.fillText('🏆 دوري بروكي الفانتازي', W/2, 96);
+  ctx.fillStyle = '#9FB3AA'; ctx.font = '600 26px Tajawal, Arial';
+  ctx.fillText('الموسم الثاني', W/2, 136);
+
+  const marginTop = 190, marginBottom = 130;
+  const availH = H - marginTop - marginBottom;
+  const srcW = sourceCanvas.width, srcH = sourceCanvas.height;
+  const scale = Math.min((W*0.9)/srcW, availH/srcH);
+  const dw = srcW*scale, dh = srcH*scale;
+  const dx = (W-dw)/2, dy = marginTop + (availH-dh)/2;
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.55)'; ctx.shadowBlur = 45;
+  ctx.drawImage(sourceCanvas, dx, dy, dw, dh);
+  ctx.restore();
+
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#6B7F76'; ctx.font = '600 24px Tajawal, Arial';
+  ctx.fillText('شارك الستوري 📲', W/2, H-56);
+
+  return cv;
+}
+
 async function showChampionCard(){
   const box = document.getElementById('copyBox');
   const h = getRoundHeroes();
@@ -1565,12 +2145,21 @@ async function showChampionCard(){
   acts.innerHTML = `
     <button class="btn" id="shareCardBtn">📤 مشاركة الكرت</button>
     <button class="btn secondary" id="dlCardBtn">⬇️ تحميل الصورة</button>
+    <button class="btn secondary" id="storyCardBtn">📱 نسخة ستوري</button>
     <button class="btn ghost" id="closeCardBtn">إغلاق</button>`;
   box.appendChild(acts);
   const msg = document.createElement('div'); box.appendChild(msg);
 
   document.getElementById('dlCardBtn').onclick = ()=>{
     downloadCanvasPNG(cv, `brookie-round-${h.roundNumber}-champion.png`);
+  };
+
+  document.getElementById('storyCardBtn').onclick = async ()=>{
+    const storyBtn = document.getElementById('storyCardBtn');
+    storyBtn.disabled = true;
+    const storyCv = await buildStoryCanvas(cv);
+    downloadCanvasPNG(storyCv, `brookie-round-${h.roundNumber}-champion-story.png`);
+    storyBtn.disabled = false;
   };
 
   document.getElementById('shareCardBtn').onclick = ()=>{
@@ -1721,6 +2310,27 @@ async function downloadStandingsImage(){
   }
 }
 
+async function downloadStandingsStoryImage(){
+  const box = document.getElementById('standingsImgBox');
+  const btn = document.getElementById('dlStandingsStoryBtn');
+  if(box) box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز نسخة الستوري…</p>';
+  if(btn) btn.disabled = true;
+
+  try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+
+  try{
+    const cv = await buildStandingsCard();
+    const storyCv = await buildStoryCanvas(cv);
+    const roundNum = getCurrentRoundNumber();
+    downloadCanvasPNG(storyCv, `brookie-standings-round-${roundNum}-story.png`);
+    if(box) box.innerHTML = '<div class="status-msg ok">تم تحميل نسخة الستوري — أرسلها في حالتك 📲</div>';
+  }catch(e){
+    if(box) box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>';
+  } finally {
+    if(btn) btn.disabled = false;
+  }
+}
+
 // ---------- تحميل أي تبويب (المشاركون / الجولات / الإحصائيات / اللائحة) كصورة ----------
 // دالة عامة تلتقط عنصر DOM حقيقي (وليس رسمًا يدويًا على canvas) عبر html2canvas،
 // لأن محتوى هذه التبويبات متغيّر الطول والشكل (قوائم، جداول، كروت مباريات...)
@@ -1779,11 +2389,16 @@ async function downloadElementAsImage(elementId, filename, msgBoxId, btnId){
 function renderAll(){
   renderHeroes();
   renderStandings();
+  renderBadges();
   renderParticipants();
   renderRounds();
   renderChart();
+  renderRecords();
+  renderH2H();
   renderClubStats();
   renderUpdatedChip();
+  renderPredictions();
+  renderCountdown();
 }
 
 function buildParticipantHistory(pid){
@@ -2026,14 +2641,42 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     document.getElementById('copySummaryBtn').style.display='';
     document.getElementById('champCardBtn').style.display='';
     document.getElementById('dlStandingsBtn').style.display='';
+    document.getElementById('dlStandingsStoryBtn').style.display='';
     // أزرار تحميل المشاركين/الجولات/الإحصائيات/اللائحة كصور خاصة بالمنظم أيضًا
     document.getElementById('participantsToolbar').style.display='';
     document.getElementById('roundsToolbar').style.display='';
     document.getElementById('statsToolbar').style.display='';
     document.getElementById('rulesToolbar').style.display='';
+    const nextInput = document.getElementById('nextRoundAtInput');
+    if(nextInput) nextInput.value = isoToDatetimeLocal(DATA.nextRoundAt);
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
+});
+
+// ---------- عداد الجولة القادمة (لوحة المنظم) ----------
+document.getElementById('saveNextRoundAtBtn').addEventListener('click', async ()=>{
+  const input = document.getElementById('nextRoundAtInput');
+  const msg = document.getElementById('nextRoundAtMsg');
+  if(!input.value){ msg.innerHTML = '<div class="status-msg err">اختر تاريخًا ووقتًا أولاً.</div>'; return; }
+  const d = new Date(input.value);
+  if(isNaN(d.getTime())){ msg.innerHTML = '<div class="status-msg err">تاريخ غير صالح.</div>'; return; }
+  DATA.nextRoundAt = d.toISOString();
+  const ok = await saveData();
+  renderCountdown();
+  msg.innerHTML = ok
+    ? '<div class="status-msg ok">تم حفظ موعد الجولة القادمة — العداد ظاهر الآن للجميع ✅</div>'
+    : '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+});
+document.getElementById('clearNextRoundAtBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('nextRoundAtMsg');
+  DATA.nextRoundAt = null;
+  document.getElementById('nextRoundAtInput').value = '';
+  const ok = await saveData();
+  renderCountdown();
+  msg.innerHTML = ok
+    ? '<div class="status-msg ok">تم إخفاء العداد.</div>'
+    : '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
 });
 
 // ---------- Round form ----------
@@ -2120,6 +2763,7 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
 document.getElementById('copySummaryBtn').addEventListener('click', renderCopyBox);
 document.getElementById('champCardBtn').addEventListener('click', showChampionCard);
 document.getElementById('dlStandingsBtn').addEventListener('click', downloadStandingsImage);
+document.getElementById('dlStandingsStoryBtn').addEventListener('click', downloadStandingsStoryImage);
 
 document.getElementById('dlParticipantsBtn').addEventListener('click', ()=>{
   downloadElementAsImage('participantsCapture', 'brookie-participants.png', 'participantsImgMsg', 'dlParticipantsBtn');
@@ -2136,6 +2780,7 @@ document.getElementById('dlRulesBtn').addEventListener('click', ()=>{
 initMePicker();
 loadMyId();
 loadData();
+loadPredictions();
 </script>
 </body>
 </html>
