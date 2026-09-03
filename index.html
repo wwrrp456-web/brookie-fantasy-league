@@ -680,6 +680,13 @@
         <button class="btn ghost" id="clearNextRoundAtBtn">إخفاء العداد</button>
       </div>
       <div id="nextRoundAtMsg"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">🔮 توقعات بطل الجولة</h2>
+      <div class="row" style="margin-bottom:10px;align-items:center;">
+        <label class="field-label" for="predictionsEnabledToggle" style="cursor:pointer;">إظهار خانة التوقعات للزوار:</label>
+        <input type="checkbox" id="predictionsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+      </div>
+      <div id="predictionsEnabledMsg"></div>
     </div>
   </section>
 
@@ -1960,13 +1967,18 @@ function renderMyDashboard(){
     rivalHtml = '<div class="my-dash-rival">أنت المشارك الوحيد 🎉</div>';
   }
 
-  const targetRound = getCurrentRoundNumber() + 1;
-  const roundEntries = PRED_DATA.entries[targetRound] || {};
-  const myPrediction = roundEntries[MY_ID];
-  const predName = myPrediction !== undefined ? (PARTICIPANTS.find(p=>p.id===Number(myPrediction))||{}).name : null;
-  const predHtml = predName
-    ? `توقعك لبطل الجولة ${targetRound}: <b>${predName}</b>`
-    : `لسه ما توقعت بطل الجولة ${targetRound} 🔮`;
+  // سطر التوقع في اللوحة الشخصية يتبع نفس مفتاح المنظم لإظهار/إخفاء خانة
+  // التوقعات — إذا أخفاها المنظم لا يظهر أي ذكر للتوقع هنا أيضًا.
+  let predHtml = '';
+  if(PRED_DATA.enabled){
+    const targetRound = getCurrentRoundNumber() + 1;
+    const roundEntries = PRED_DATA.entries[targetRound] || {};
+    const myPrediction = roundEntries[MY_ID];
+    const predName = myPrediction !== undefined ? (PARTICIPANTS.find(p=>p.id===Number(myPrediction))||{}).name : null;
+    predHtml = predName
+      ? `<div class="my-dash-pred">توقعك لبطل الجولة ${targetRound}: <b>${predName}</b></div>`
+      : `<div class="my-dash-pred">لسه ما توقعت بطل الجولة ${targetRound} 🔮</div>`;
+  }
 
   box.style.display = 'block';
   box.innerHTML = `
@@ -1978,7 +1990,7 @@ function renderMyDashboard(){
         <div class="my-dash-stat"><span class="my-dash-num" style="color:${moveColor};">${moveLabel}</span><span class="my-dash-label">حركتك</span></div>
       </div>
       ${rivalHtml}
-      <div class="my-dash-pred">${predHtml}</div>
+      ${predHtml}
     </div>`;
 }
 
@@ -2002,6 +2014,11 @@ function applyLoadedPredictions(raw){
   }
   if(!PRED_DATA || typeof PRED_DATA !== 'object') PRED_DATA = {entries:{}};
   if(!PRED_DATA.entries || typeof PRED_DATA.entries !== 'object') PRED_DATA.entries = {};
+  // مفتاح تحكم المنظم بإظهار/إخفاء خانة التوقعات لكل الزوار (بعض الجولات
+  // يرغب المنظم بعدم فتح التوقع فيها). افتراضيًا مفعّلة (true) — أي بيانات
+  // قديمة محفوظة قبل إضافة هذا الخيار (3 سبتمبر 2026) ما فيها هذا الحقل
+  // إطلاقًا، فتُعامَل كمفعّلة حفاظًا على السلوك القديم.
+  if(typeof PRED_DATA.enabled !== 'boolean') PRED_DATA.enabled = true;
 }
 
 async function loadPredictions(){
@@ -2013,6 +2030,7 @@ async function loadPredictions(){
     applyLoadedPredictions(null);
   }
   renderPredictions();
+  renderMyDashboard();
 }
 
 async function savePredictions(){
@@ -2047,6 +2065,7 @@ function startRealtimeSync(){
     db.ref('brookie/' + PRED_STORAGE_KEY).on('value', snap=>{
       applyLoadedPredictions(snap.exists() ? snap.val() : null);
       renderPredictions();
+      renderMyDashboard(); // سطر التوقع باللوحة الشخصية يتبع نفس مفتاح enabled
     }, err=>{ console.warn('انقطعت المزامنة اللحظية للتوقعات:', err); });
 
     _realtimeSyncStarted = true;
@@ -2101,6 +2120,13 @@ function computePredictionAccuracy(){
 function renderPredictions(){
   const box = document.getElementById('predictionBox');
   if(!box) return;
+  if(!PRED_DATA.enabled){
+    // المنظم أخفى خانة التوقعات لهذه الفترة — تختفي تمامًا لكل الزوار.
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  box.style.display = '';
   const targetRound = getCurrentRoundNumber() + 1;
   const roundEntries = PRED_DATA.entries[targetRound] || {};
   const myPrediction = (MY_ID !== null) ? roundEntries[MY_ID] : undefined;
@@ -3016,6 +3042,8 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     document.getElementById('rulesToolbar').style.display='';
     const nextInput = document.getElementById('nextRoundAtInput');
     if(nextInput) nextInput.value = isoToDatetimeLocal(DATA.nextRoundAt);
+    const predToggle = document.getElementById('predictionsEnabledToggle');
+    if(predToggle) predToggle.checked = !!PRED_DATA.enabled;
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
@@ -3044,6 +3072,30 @@ document.getElementById('clearNextRoundAtBtn').addEventListener('click', async (
   msg.innerHTML = ok
     ? '<div class="status-msg ok">تم إخفاء العداد.</div>'
     : '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+});
+
+// ---------- تفعيل/إخفاء خانة توقعات بطل الجولة (لوحة المنظم) ----------
+// خيار يتحكم فيه المنظم فقط: بعض الجولات يرغب يفتح فيها توقع بطل الجولة
+// للزوار، وبعضها لا. القيمة مشتركة (PRED_DATA.enabled) فتنعكس فورًا على كل
+// الزوار عبر المزامنة اللحظية الموجودة أصلاً لمسار التوقعات.
+document.getElementById('predictionsEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('predictionsEnabledMsg');
+  const newVal = e.target.checked;
+  PRED_DATA.enabled = newVal;
+  e.target.disabled = true;
+  const ok = await savePredictions();
+  e.target.disabled = false;
+  renderPredictions();
+  renderMyDashboard();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار خانة التوقعات للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء خانة التوقعات عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    PRED_DATA.enabled = !newVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
 });
 
 // ---------- Round form ----------
