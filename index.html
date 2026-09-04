@@ -170,8 +170,12 @@
      (كان أسود/داكن افتراضيًا، وأحيانًا لون مخصص كالكحلي والأسود) اللي كان
      يندمج مع الخلفية الداكنة بالوضع الليلي وتختفي معه حافة الشعار. توحيد
      الإطار بالذهبي بكل الأحوال أوضح بصريًا ويعطي الشعارات هوية متسقة أيضًا
-     (بداية 4 سبتمبر 2026 بالوضع الليلي فقط، ثم عُمِّم على كل الأوضاع). */
-  .crest .crest-border{stroke:var(--gold-light);stroke-opacity:0.85;}
+     (بداية 4 سبتمبر 2026 بالوضع الليلي فقط، ثم عُمِّم على كل الأوضاع).
+     لاحقًا (4 سبتمبر 2026) تحوّل الإطار من خط حد رفيع فوق درع مقصوص clip-path
+     إلى درع ذهبي كامل مُعبَّأ يرسم أولًا، وفوقه درع أصغر (ألوان النادي) —
+     فصار الإطار "يحتوي" الألوان فعليًا بهامش ذهبي مضمون في كل الأحجام
+     والقوائم، بدل مجرد خط حد قد يترك شعرة لون خارجه بالأحجام الصغيرة جدًا. */
+  .crest .crest-border{fill:var(--gold-light);}
   .club-mini{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px;}
   .club-mini .club-name{font-size:0.68rem;color:var(--muted);text-align:center;line-height:1.15;}
   .club-mini.sm .club-name{font-size:0.62rem;}
@@ -1178,19 +1182,26 @@ function clubCrestSVG(name, px){
     </g>`;
   }
 
+  // إطار الدرع: يُرسم أولًا درع كامل معبأ بالذهبي (لون افتراضي/مخصص قديم
+  // بـ strokeCol، لكن قاعدة CSS أعلاه .crest .crest-border تطغى عليه دائمًا
+  // بالذهبي الموحّد)، وفوقه درع أصغر (مُصغَّر من المنتصف) فيه ألوان النادي
+  // الفعلية (خلفية + نمط) مقصوصة بـ clip-path على مقاس الدرع الأصغر نفسه —
+  // فيبقى هامش ذهبي واضح ومضمون هندسيًا حول كل الألوان بأي حجم عرض (حتى
+  // أصغر مقاس مستخدم بأي قائمة)، بدل الاعتماد على خط حد رفيع فوق قص قد
+  // يترك شعرة بكسل من لون الخلفية خارج الإطار بالأحجام الصغيرة جدًا.
   const strokeCol = st.border || 'rgba(0,0,0,0.55)';
-  const fontPx = label.length > 2 ? 34 : 40;
+  const fontPx = label.length > 2 ? 28 : 33;
+  const INSET = 'translate(50,56) scale(0.82) translate(-50,-56)';
 
   return `<svg class="crest" width="${px}" height="${px*1.1}" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${name}">
     <defs>
       <clipPath id="sh${uid}">
-        <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z"/>
+        <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" transform="${INSET}"/>
       </clipPath>
     </defs>
+    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" fill="${strokeCol}"/>
     ${pattern}
-    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z"
-          fill="none" stroke="${strokeCol}" stroke-width="5"/>
-    <text x="50" y="62" text-anchor="middle"
+    <text x="50" y="60" text-anchor="middle"
           font-family="Tajawal, Arial, sans-serif" font-size="${fontPx}" font-weight="800"
           fill="${fg}" stroke="rgba(0,0,0,0.35)" stroke-width="0.8" paint-order="stroke">${label}</text>
   </svg>`;
