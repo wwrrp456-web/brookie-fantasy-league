@@ -88,7 +88,7 @@
     text-align:center;font-size:0.78rem;font-weight:800;
     padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);
   }
-  /* رسالة ترحيب لأول زيارة — تظهر مرة واحدة فقط (localStorage) */
+  /* شاشة ترحيب لأول زيارة (زائر/متسابق) — تظهر مرة واحدة فقط (localStorage) */
   .onboard-overlay{
     position:fixed;inset:0;z-index:1000;
     background:rgba(11,58,43,0.72);
@@ -101,10 +101,12 @@
     max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.35);
   }
   .onboard-title{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;}
-  .onboard-list{margin:0 0 12px;padding-inline-start:18px;list-style:none;}
-  .onboard-list li{font-size:0.86rem;color:var(--text);margin-bottom:9px;line-height:1.5;}
   .onboard-hint{font-size:0.8rem;color:var(--muted);margin:0 0 16px;text-align:center;}
   .onboard-card .btn{width:100%;}
+  .onboard-card select, .onboard-card input[type="text"]{
+    width:100%;font-family:inherit;padding:9px 10px;border:1px solid var(--line);
+    border-radius:6px;font-size:0.88rem;margin-bottom:8px;background:var(--paper);color:var(--text);
+  }
   /* نقطة تنبيه تحديث جديد (لم يُشاهَد بعد) */
   .update-dot{
     position:absolute; top:7px; inset-inline-end:6px;
@@ -641,16 +643,21 @@
 
 <div id="onboardOverlay" class="onboard-overlay" hidden>
   <div class="onboard-card">
-    <div class="onboard-title">👋 أهلًا فيك بدوري بروكي الفانتازي!</div>
-    <ul class="onboard-list">
-      <li>🏆 <b>الترتيب العام</b> — مركزك ونقاطك لحظة بلحظة</li>
-      <li>👥 <b>المشاركون</b> — كل واحد وأنديته الثلاثة</li>
-      <li>📅 <b>الجولات</b> — أرشيف كل بطل جولة سابقة</li>
-      <li>📊 <b>الإحصائيات</b> — تطوّر الترتيب وأداء الأندية</li>
-      <li>📜 <b>اللائحة</b> — القواعد والأسئلة الشائعة</li>
-    </ul>
-    <p class="onboard-hint">اختر اسمك من "مين أنت؟" فوق الترتيب عشان تشوف لوحتك الشخصية 🎯</p>
-    <button class="btn" id="onboardCloseBtn">تمام، يلا نبدأ 🚀</button>
+    <div id="onboardStepRole">
+      <div class="onboard-title">👋 أهلًا فيك بدوري بروكي الفانتازي!</div>
+      <p class="onboard-hint">وش تبي تسوي بالموقع؟</p>
+      <button class="btn" id="onboardRoleParticipant">🏆 أنا متسابق بالدوري</button>
+      <button class="btn ghost" id="onboardRoleVisitor" style="margin-top:8px;">👀 بس أتفرج (زائر)</button>
+    </div>
+    <div id="onboardStepId" hidden>
+      <div class="onboard-title">🏆 مين أنت؟</div>
+      <p class="onboard-hint">اختر اسمك وأدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</p>
+      <select id="onboardNameSelect"><option value="">— اختر اسمك —</option></select>
+      <input type="text" id="onboardCodeInput" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)">
+      <div id="onboardCodeMsg"></div>
+      <button class="btn" id="onboardCodeConfirmBtn">تأكيد ✅</button>
+      <button class="btn ghost" id="onboardBackBtn" style="margin-top:8px;">↩️ رجوع</button>
+    </div>
   </div>
 </div>
 
@@ -2337,6 +2344,24 @@ function renderUpdateDot(){
 // لا يطلبه ثانية لأنه أصلاً تم التحقق منه سابقًا بهذا المتصفح بالذات.
 let MY_ID = null;
 let meVerifiedId = ''; // آخر id (كنص) تم التحقق من رمزه فعليًا بهذا المتصفح
+
+// دالتا تحقق/تفعيل موحّدتان — يشترك فيهما منتقي "مين أنت؟" الرئيسي
+// (initMePicker) وشاشة الترحيب الجديدة "زائر/متسابق" لأول زيارة
+// (initOnboarding أسفل) عشان ما نكرر نفس منطق التحقق بمكانين.
+function codeMatchesParticipant(pid, code){
+  return !!code && String(PARTICIPANT_CODES[pid]) === String(code).trim();
+}
+async function applyMyId(id){
+  MY_ID = id;
+  meVerifiedId = id ? String(id) : '';
+  try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
+  const mainSel = document.getElementById('mePicker');
+  if(mainSel) mainSel.value = id || '';
+  renderStandings();
+  renderPredictions();
+  renderMyDashboard();
+}
+
 function initMePicker(){
   const sel = document.getElementById('mePicker');
   if(!sel || sel.options.length > 1) return;
@@ -2368,15 +2393,6 @@ function initMePicker(){
     codeInput.focus();
   }
 
-  async function applyMyId(id){
-    MY_ID = id;
-    meVerifiedId = id ? String(id) : '';
-    try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
-    renderStandings();
-    renderPredictions();
-    renderMyDashboard();
-  }
-
   function confirmCode(){
     const pid = Number(sel.value);
     const code = codeInput.value.trim();
@@ -2384,7 +2400,7 @@ function initMePicker(){
       msg.innerHTML = '<div class="status-msg err">أدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</div>';
       return;
     }
-    if(String(PARTICIPANT_CODES[pid]) !== code){
+    if(!codeMatchesParticipant(pid, code)){
       msg.innerHTML = '<div class="status-msg err">الرمز غير مطابق للاسم المختار. تأكد من الرقم اللي أرسلناه لك، أو تواصل مع المنظم.</div>';
       return;
     }
@@ -4023,10 +4039,12 @@ async function loadCommunityReports(){
 
 document.getElementById('refreshCommunityBtn').addEventListener('click', loadCommunityReports);
 
-// ---------- رموز المشاركين (خاصة بـ report.html) ----------
+// ---------- رموز المشاركين ----------
 // نفس الرموز المُضمَّنة في report.html حرفيًا — إذا تغيّرت هناك (لإضافة/حذف
-// مشارك مثلاً) لازم تُحدَّث هنا بنفس الوقت. الهدف: يقدر المنظم يرجع لهذي
-// القائمة وقت ما يحتاج يرسل رمز أي مشارك له من جديد (نسي رمزه، عضو جديد...).
+// مشارك مثلاً) لازم تُحدَّث هنا بنفس الوقت. تُستخدم هنا في مكانين: (أ) عرضها
+// للمنظم بالأسفل وقت ما يحتاج يرسل رمز أي مشارك له من جديد (نسي رمزه، عضو
+// جديد...)، (ب) التحقق من الهوية عند اختيار الاسم بقائمة "مين أنت؟" أعلى
+// تبويب الترتيب العام (initMePicker أعلاه) — منذ 4 سبتمبر 2026.
 const PARTICIPANT_CODES = {
   1:'2679', 2:'9935', 3:'4582', 4:'1488', 5:'4657', 6:'1434',
   7:'5506', 8:'5012', 9:'2824', 10:'7912', 11:'4257', 12:'1409',
@@ -4278,9 +4296,13 @@ if(darkModeToggleBtn){
 }
 applyDarkModePref();
 
-// ---------- رسالة ترحيب لأول زيارة ----------
-// تظهر مرة واحدة فقط لكل زائر (localStorage)، تشرح بسرعة كيف يتنقل بالموقع،
-// بدل ما يحتاج يسأل شفهيًا كل مرة. لا تظهر أبدًا لمن زار الموقع من قبل.
+// ---------- شاشة ترحيب لأول زيارة: زائر أو متسابق؟ ----------
+// تظهر مرة واحدة فقط لكل زائر (localStorage). خطوة أولى: زائر/متسابق.
+// لو ضغط "متسابق" تظهر خطوة ثانية لاختيار الاسم + الرمز الخاص — بالضبط
+// نفس آلية التحقق المستخدمة بمنتقي "مين أنت؟" الرئيسي أعلى تبويب الترتيب
+// (codeMatchesParticipant/applyMyId المعرَّفتان أعلاه بقسم initMePicker)،
+// فيدخل الموقع وهو محدَّد هويته من أول لحظة بدل ما يدوّر على القائمة بنفسه.
+// اختيار "زائر" (أو الضغط خارج الشاشة) يغلقها مباشرة بلا أي تحقق.
 const ONBOARD_KEY = 'brookie-onboarded';
 function initOnboarding(){
   let seen = false;
@@ -4289,11 +4311,67 @@ function initOnboarding(){
   const overlay = document.getElementById('onboardOverlay');
   if(!overlay) return;
   overlay.hidden = false;
+
+  const stepRole = document.getElementById('onboardStepRole');
+  const stepId = document.getElementById('onboardStepId');
+  const nameSelect = document.getElementById('onboardNameSelect');
+  const codeInput = document.getElementById('onboardCodeInput');
+  const confirmBtn = document.getElementById('onboardCodeConfirmBtn');
+  const backBtn = document.getElementById('onboardBackBtn');
+  const msg = document.getElementById('onboardCodeMsg');
+
+  if(nameSelect && nameSelect.options.length <= 1){
+    PARTICIPANTS.forEach(p=>{
+      const o = document.createElement('option');
+      o.value = p.id; o.textContent = p.name;
+      nameSelect.appendChild(o);
+    });
+  }
+
   const dismiss = ()=>{
     overlay.hidden = true;
     try{ localStorage.setItem(ONBOARD_KEY, '1'); }catch(e){}
   };
-  document.getElementById('onboardCloseBtn').addEventListener('click', dismiss);
+
+  document.getElementById('onboardRoleVisitor').addEventListener('click', dismiss);
+
+  document.getElementById('onboardRoleParticipant').addEventListener('click', ()=>{
+    stepRole.hidden = true;
+    stepId.hidden = false;
+    nameSelect.focus();
+  });
+
+  backBtn.addEventListener('click', ()=>{
+    stepId.hidden = true;
+    stepRole.hidden = false;
+    msg.innerHTML = '';
+    codeInput.value = '';
+  });
+
+  function confirmOnboardCode(){
+    if(!nameSelect.value){
+      msg.innerHTML = '<div class="status-msg err">اختر اسمك أولاً.</div>';
+      return;
+    }
+    const pid = Number(nameSelect.value);
+    const code = codeInput.value.trim();
+    if(!code){
+      msg.innerHTML = '<div class="status-msg err">أدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</div>';
+      return;
+    }
+    if(!codeMatchesParticipant(pid, code)){
+      msg.innerHTML = '<div class="status-msg err">الرمز غير مطابق للاسم المختار. تأكد من الرقم اللي أرسلناه لك، أو تواصل مع المنظم.</div>';
+      return;
+    }
+    applyMyId(pid);
+    dismiss();
+  }
+
+  confirmBtn.addEventListener('click', confirmOnboardCode);
+  codeInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); confirmOnboardCode(); }
+  });
+
   overlay.addEventListener('click', (e)=>{ if(e.target === overlay) dismiss(); });
 }
 initOnboarding();
