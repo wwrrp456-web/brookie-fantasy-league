@@ -492,6 +492,11 @@
     font-family:inherit;padding:7px 9px;border:1px solid var(--line);
     border-radius:6px;font-size:0.85rem;flex:1 1 140px;
   }
+  .me-picker .me-code-input{
+    font-family:inherit;padding:7px 9px;border:1px solid var(--line);
+    border-radius:6px;font-size:0.85rem;flex:1 1 130px;
+    background:var(--cream);color:var(--text);
+  }
 
   /* ===== شريط الأدوات + آخر تحديث ===== */
   .toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
@@ -676,7 +681,11 @@
     <div class="me-picker">
       <span style="font-size:0.82rem;font-weight:700;">مين أنت؟</span>
       <select id="mePicker"><option value="">— اختر اسمك —</option></select>
+      <input type="text" id="meCodeInput" class="me-code-input" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)" style="display:none;">
+      <button type="button" class="btn" id="meCodeConfirmBtn" style="display:none;">تأكيد ✅</button>
+      <button type="button" class="btn ghost" id="meCodeCancelBtn" style="display:none;">إلغاء</button>
     </div>
+    <div id="meCodeMsg"></div>
 
     <div id="myDashboardBox" style="display:none;"></div>
 
@@ -2320,7 +2329,14 @@ function renderUpdateDot(){
 }
 
 // ---------- اختيار "أنت" ----------
+// من 4 سبتمبر 2026: اختيار اسم من القائمة ما عاد يكفي وحده — لازم إدخال
+// الرمز الخاص بالمشارك (نفس رمز PARTICIPANT_CODES المستخدم أصلاً بصفحة
+// "ساهم بالبيانات") قبل ما يتفعّل الاختيار، عشان محد يقدر ينتحل اسم مشارك
+// ثاني بمجرد اختياره من القائمة. الرمز يُطلب فقط عند اختيار يدوي فعلي؛
+// استرجاع الاختيار المحفوظ مسبقًا بنفس المتصفح (loadMyId، عند فتح الصفحة)
+// لا يطلبه ثانية لأنه أصلاً تم التحقق منه سابقًا بهذا المتصفح بالذات.
 let MY_ID = null;
+let meVerifiedId = ''; // آخر id (كنص) تم التحقق من رمزه فعليًا بهذا المتصفح
 function initMePicker(){
   const sel = document.getElementById('mePicker');
   if(!sel || sel.options.length > 1) return;
@@ -2329,12 +2345,76 @@ function initMePicker(){
     o.value = p.id; o.textContent = p.name;
     sel.appendChild(o);
   });
-  sel.addEventListener('change', async ()=>{
-    MY_ID = sel.value ? Number(sel.value) : null;
+
+  const codeInput = document.getElementById('meCodeInput');
+  const confirmBtn = document.getElementById('meCodeConfirmBtn');
+  const cancelBtn = document.getElementById('meCodeCancelBtn');
+  const msg = document.getElementById('meCodeMsg');
+
+  function hideCodeBox(){
+    codeInput.style.display = 'none';
+    confirmBtn.style.display = 'none';
+    cancelBtn.style.display = 'none';
+    codeInput.value = '';
+    msg.innerHTML = '';
+  }
+
+  function showCodeBox(){
+    codeInput.style.display = '';
+    confirmBtn.style.display = '';
+    cancelBtn.style.display = '';
+    codeInput.value = '';
+    msg.innerHTML = '';
+    codeInput.focus();
+  }
+
+  async function applyMyId(id){
+    MY_ID = id;
+    meVerifiedId = id ? String(id) : '';
     try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
     renderStandings();
     renderPredictions();
     renderMyDashboard();
+  }
+
+  function confirmCode(){
+    const pid = Number(sel.value);
+    const code = codeInput.value.trim();
+    if(!code){
+      msg.innerHTML = '<div class="status-msg err">أدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</div>';
+      return;
+    }
+    if(String(PARTICIPANT_CODES[pid]) !== code){
+      msg.innerHTML = '<div class="status-msg err">الرمز غير مطابق للاسم المختار. تأكد من الرقم اللي أرسلناه لك، أو تواصل مع المنظم.</div>';
+      return;
+    }
+    hideCodeBox();
+    applyMyId(pid);
+  }
+
+  sel.addEventListener('change', ()=>{
+    const chosen = sel.value;
+    if(!chosen){
+      // رجوع لوضع "زائر" بلا هوية — بلا حاجة لرمز
+      hideCodeBox();
+      applyMyId(null);
+      return;
+    }
+    if(chosen === meVerifiedId){
+      // نفس الاسم المؤكَّد أصلاً بهذا المتصفح — بلا حاجة لإعادة الرمز
+      hideCodeBox();
+      return;
+    }
+    showCodeBox();
+  });
+
+  confirmBtn.addEventListener('click', confirmCode);
+  codeInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); confirmCode(); }
+  });
+  cancelBtn.addEventListener('click', ()=>{
+    sel.value = meVerifiedId;
+    hideCodeBox();
   });
 }
 
@@ -2343,6 +2423,7 @@ async function loadMyId(){
     const r = await window.storage.get('brookie-my-id', false);
     if(r && r.value !== undefined && r.value !== null){
       MY_ID = Number(typeof r.value==='string' ? JSON.parse(r.value) : r.value);
+      meVerifiedId = String(MY_ID);
       const sel = document.getElementById('mePicker');
       if(sel) sel.value = MY_ID;
       renderPredictions();
