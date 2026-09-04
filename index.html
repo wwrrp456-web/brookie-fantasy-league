@@ -165,11 +165,13 @@
     filter:drop-shadow(0 1px 2px rgba(0,0,0,0.35));
     flex-shrink:0;
   }
-  /* في الوضع الليلي، إطار الشعار (وبعض الأطر الخاصة بأندية معينة مثل الريال
-     والشباب) قد يكون لونه أسود/داكن أصلًا، فيندمج مع خلفية الصفحة الداكنة
-     الجديدة وتختفي معالم حافة الشعار. نجعل الإطار موحّدًا بلون ذهبي فاتح
-     في الوضع الليلي فقط (الوضع النهاري يبقى كما هو، بألوان كل نادٍ). */
-  html.dark-mode .crest .crest-border{stroke:var(--gold-light);stroke-opacity:0.85;}
+  /* إطار ذهبي موحّد لكل شعارات الأندية، بكل الأقسام (الترتيب، المشاركون،
+     الجولات...) وبكل الأوضاع (نهاري/ليلي) — بدل لون حد كل نادٍ الخاص
+     (كان أسود/داكن افتراضيًا، وأحيانًا لون مخصص كالكحلي والأسود) اللي كان
+     يندمج مع الخلفية الداكنة بالوضع الليلي وتختفي معه حافة الشعار. توحيد
+     الإطار بالذهبي بكل الأحوال أوضح بصريًا ويعطي الشعارات هوية متسقة أيضًا
+     (بداية 4 سبتمبر 2026 بالوضع الليلي فقط، ثم عُمِّم على كل الأوضاع). */
+  .crest .crest-border{stroke:var(--gold-light);stroke-opacity:0.85;}
   .club-mini{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px;}
   .club-mini .club-name{font-size:0.68rem;color:var(--muted);text-align:center;line-height:1.15;}
   .club-mini.sm .club-name{font-size:0.62rem;}
@@ -855,6 +857,13 @@
         <input type="checkbox" id="predictionsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
       </div>
       <div id="predictionsEnabledMsg"></div>
+
+      <h2 class="section-title" style="margin-top:22px;">⚔️ تحدي مواجهة الجولة</h2>
+      <div class="row" style="margin-bottom:10px;align-items:center;">
+        <label class="field-label" for="duelsEnabledToggle" style="cursor:pointer;">إظهار قسم مواجهات الجولة للزوار:</label>
+        <input type="checkbox" id="duelsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+      </div>
+      <div id="duelsEnabledMsg"></div>
 
       <h2 class="section-title" style="margin-top:22px;">💾 نسخة احتياطية</h2>
       <p style="margin:0 0 8px;font-size:0.85rem;">يُنصح بتنزيل نسخة احتياطية بعد كل جولة — أي طارئ في قاعدة البيانات يقدر يُصلَح باستيراد آخر نسخة.</p>
@@ -1573,6 +1582,10 @@ function computeWeeklyDuels(){
 function renderWeeklyDuels(){
   const box = document.getElementById('weeklyDuelsBox');
   if(!box) return;
+  if(DATA.duelsEnabled === false){
+    box.innerHTML = '';
+    return;
+  }
   const duels = computeWeeklyDuels();
   const roundNum = getCurrentRoundNumber();
   let html = `<h2 class="section-title" style="margin-top:22px;">⚔️ تحدي مواجهة الجولة ${roundNum}</h2>`;
@@ -3829,6 +3842,8 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     if(nextInput) nextInput.value = isoToDatetimeLocal(DATA.nextRoundAt);
     const predToggle = document.getElementById('predictionsEnabledToggle');
     if(predToggle) predToggle.checked = !!PRED_DATA.enabled;
+    const duelsToggle = document.getElementById('duelsEnabledToggle');
+    if(duelsToggle) duelsToggle.checked = DATA.duelsEnabled !== false;
     loadCommunityReports();
     renderQuickLinkCodes();
   }else{
@@ -3881,6 +3896,33 @@ document.getElementById('predictionsEnabledToggle').addEventListener('change', a
   }else{
     e.target.checked = !newVal;
     PRED_DATA.enabled = !newVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+});
+
+// ---------- تفعيل/إخفاء قسم "تحدي مواجهة الجولة" (لوحة المنظم) ----------
+// نفس فكرة تفعيل/إخفاء التوقعات أعلاه، بس للميزة الجديدة (9.16): خيار
+// للمنظم يقدر يفعّل أو يخفي قسم مواجهات الجولة عن كل الزوار بأي وقت —
+// مثلاً لو حاب يجرّب ميزات ثانية أول، أو يوقفها مؤقتًا بدون حذف كودها.
+// القيمة مشتركة (DATA.duelsEnabled) فتُحفظ وتُقرأ مع بيانات الجولات نفسها
+// (saveData/loadData/المزامنة اللحظية) — غيابها (بيانات قديمة من قبل هذا
+// الخيار) يُعامَل كـ "مفعّل" افتراضيًا حتى ما تختفي الميزة فجأة عن أحد.
+document.getElementById('duelsEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('duelsEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.duelsEnabled;
+  DATA.duelsEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderWeeklyDuels();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار قسم مواجهة الجولة للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء قسم مواجهة الجولة عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.duelsEnabled = prevVal;
     msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
   }
 });
