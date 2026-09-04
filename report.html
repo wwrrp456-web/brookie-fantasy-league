@@ -151,9 +151,12 @@
       <label class="field-label" for="participantSelect">اسمك</label>
       <select id="participantSelect"></select>
 
-      <label class="field-label" for="codeInput">رمزك الخاص (4 أرقام)</label>
-      <input type="text" id="codeInput" inputmode="numeric" maxlength="4" placeholder="مثال: 1234">
-      <p class="note" style="margin-top:-6px;">هذا الرمز أرسله لك المنظم خاص بواتساب — يثبّت اسمك ويمنع غيرك من الإرسال باسمك. ما تعرفه؟ تواصل مع المنظم.</p>
+      <div id="codeFieldBox">
+        <label class="field-label" for="codeInput">رمزك الخاص (4 أرقام)</label>
+        <input type="text" id="codeInput" inputmode="numeric" maxlength="4" placeholder="مثال: 1234">
+        <p class="note" style="margin-top:-6px;">هذا الرمز أرسله لك المنظم خاص بواتساب — يثبّت اسمك ويمنع غيرك من الإرسال باسمك. ما تعرفه؟ تواصل مع المنظم.</p>
+      </div>
+      <p class="note" id="codeSavedBox" style="display:none;">✅ رمزك محفوظ على هذا الجهاز — ما تحتاج تكتبه ثانية. <a href="#" id="forgetCodeLink">مو انت؟ امسح الحفظ</a></p>
 
       <label class="field-label" for="pointsInput">نقاطك هذه الجولة</label>
       <input type="number" id="pointsInput" min="0" placeholder="مثال: 6">
@@ -273,6 +276,63 @@ PARTICIPANTS.forEach(p=>{
   participantSelect.appendChild(opt);
 });
 
+// ---------- تذكّر الرمز الخاص لكل مشارك على هذا الجهاز ----------
+// بطلب المستخدم: أول ما يتحقق رمز المشارك بنجاح (عند أول إرسال)، يُحفظ محليًا
+// (localStorage) بهذا الجهاز/المتصفح تحديدًا، فما يُطلب منه يكتبه ثانية أي جولة
+// قادمة طالما مختار نفس اسمه. نخزن قاموس {pid: code} بدل قيمة وحيدة عشان لو
+// أكثر من مشارك يستخدمون نفس الجهاز، كل واحد له رمزه المحفوظ تحت اسمه هو بس.
+const CODE_STORE_KEY = 'brookie-report-codes';
+function loadSavedCodes(){
+  try{ return JSON.parse(localStorage.getItem(CODE_STORE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveCodeForParticipant(pid, code){
+  try{
+    const all = loadSavedCodes();
+    all[pid] = code;
+    localStorage.setItem(CODE_STORE_KEY, JSON.stringify(all));
+  }catch(e){ /* localStorage غير متاح (وضع خاص مثلاً) — نتجاهل بهدوء، الإرسال نفسه ما يتأثر */ }
+}
+function forgetCodeForParticipant(pid){
+  try{
+    const all = loadSavedCodes();
+    delete all[pid];
+    localStorage.setItem(CODE_STORE_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+
+const codeFieldBox = document.getElementById('codeFieldBox');
+const codeSavedBox = document.getElementById('codeSavedBox');
+const codeInput = document.getElementById('codeInput');
+
+// يحدّث شكل الحقل حسب وجود رمز محفوظ لصاحب الاسم المختار حاليًا — يُستدعى عند
+// تغيير الاسم، وأيضًا بعد أي حفظ/مسح للرمز حتى تنعكس الحالة فورًا بلا تحديث صفحة.
+function refreshCodeFieldState(){
+  const pid = participantSelect.value;
+  if(!pid){
+    codeFieldBox.style.display = '';
+    codeSavedBox.style.display = 'none';
+    codeInput.value = '';
+    return;
+  }
+  const saved = loadSavedCodes()[pid];
+  if(saved){
+    codeInput.value = saved;
+    codeFieldBox.style.display = 'none';
+    codeSavedBox.style.display = '';
+  }else{
+    codeInput.value = '';
+    codeFieldBox.style.display = '';
+    codeSavedBox.style.display = 'none';
+  }
+}
+participantSelect.addEventListener('change', refreshCodeFieldState);
+document.getElementById('forgetCodeLink').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const pid = participantSelect.value;
+  if(pid){ forgetCodeForParticipant(pid); refreshCodeFieldState(); }
+});
+
 // ---------- إرسال نتيجة مباراة ----------
 document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('matchMsg');
@@ -328,8 +388,16 @@ document.getElementById('submitPointsBtn').addEventListener('click', async ()=>{
   }
   if(String(PARTICIPANT_CODES[pid]) !== code){
     msg.innerHTML = '<div class="status-msg err">الرمز غير مطابق للاسم المختار. تأكد من الرقم اللي أرسلناه لك، أو تواصل مع المنظم.</div>';
+    // لو كان في رمز محفوظ سابقًا لنفس الاسم وصار غير مطابق (مثلاً المنظم غيّره)،
+    // نمسحه ونعيد إظهار حقل الرمز عشان يقدر يكتب الرمز الصحيح الجديد.
+    forgetCodeForParticipant(pid);
+    refreshCodeFieldState();
     return;
   }
+  // الرمز مطابق — يُحفظ على هذا الجهاز فورًا (حتى لو فشل الإرسال بعدين لسبب شبكة)
+  // عشان ما يُطلب من المشارك يكتبه ثانية طالما مختار نفس اسمه لاحقًا.
+  saveCodeForParticipant(pid, code);
+  refreshCodeFieldState();
   if(points===''){
     msg.innerHTML = '<div class="status-msg err">أدخل عدد نقاطك.</div>';
     return;
