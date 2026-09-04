@@ -652,8 +652,8 @@
     <div id="onboardStepRole">
       <div class="onboard-title">👋 أهلًا فيك بدوري بروكي الفانتازي!</div>
       <p class="onboard-hint">وش تبي تسوي بالموقع؟</p>
-      <button class="btn" id="onboardRoleParticipant">🏆 أنا متسابق بالدوري</button>
-      <button class="btn ghost" id="onboardRoleVisitor" style="margin-top:8px;">👀 بس أتفرج (زائر)</button>
+      <button class="btn" id="onboardRoleParticipant">متسابق</button>
+      <button class="btn ghost" id="onboardRoleVisitor" style="margin-top:8px;">زائر</button>
     </div>
     <div id="onboardStepId" hidden>
       <div class="onboard-title">🏆 مين أنت؟</div>
@@ -3383,6 +3383,146 @@ async function buildStandingsCard(){
   return cv;
 }
 
+// كرت "ستوري" مخصّص للترتيب (لا يستخدم buildStoryCanvas العام): تصميم طويل
+// رأسي 1080×1920 يعرض مباشرة أول 6 مراكز + آخر 3 مراكز (بدل تصغير كل الـ18
+// صفًا بكرت واحد) — لأن مساحة ستوري الواتساب طويلة وتتحمّل تفاصيل أوضح.
+async function buildStandingsStoryCanvas(){
+  const st = computeStandings();
+  const mv = getMovements();
+  const roundNum = getCurrentRoundNumber();
+  const n = st.length;
+
+  const W = 1080, H = 1920;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0B3A2B'); g.addColorStop(0.55,'#08251B'); g.addColorStop(1,'#000000');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  ctx.strokeStyle='#C9A227'; ctx.lineWidth=6;
+  drawRoundedRect(ctx,20,20,W-40,H-40,28); ctx.stroke();
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#E7C158'; ctx.font='700 34px Tajawal, Arial';
+  ctx.fillText('🏆 دوري بروكي الفانتازي', W/2, 90);
+  ctx.fillStyle='#9FB3AA'; ctx.font='600 26px Tajawal, Arial';
+  ctx.fillText('الموسم الثاني', W/2, 128);
+  ctx.fillStyle='#F0C400'; ctx.font='800 44px Tajawal, Arial';
+  ctx.fillText(`الترتيب العام — بعد الجولة ${roundNum}`, W/2, 190);
+
+  ctx.strokeStyle='rgba(231,193,88,0.35)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(70,214); ctx.lineTo(W-70,214); ctx.stroke();
+
+  const colRank = W-110, colName = W-190, colPts = 130, colMv = 260;
+  const rowH = 150;
+
+  function drawStoryHeaderRow(y){
+    ctx.fillStyle='#8FA69C'; ctx.font='700 24px Tajawal, Arial';
+    ctx.textAlign='center';
+    ctx.fillText('#', colRank, y);
+    ctx.fillText('النقاط', colPts, y);
+    ctx.fillText('الحركة', colMv, y);
+    ctx.textAlign='right';
+    ctx.fillText('المتسابق', colName, y);
+    ctx.textAlign='center';
+  }
+
+  function drawStoryRow(s, rank, y){
+    const isTop3 = rank<=3;
+    const isBottom3 = rank > n-3;
+    if(isTop3){
+      ctx.fillStyle = rank===1 ? 'rgba(240,196,0,0.16)' : rank===2 ? 'rgba(200,200,200,0.12)' : 'rgba(205,127,50,0.12)';
+    } else if(isBottom3){
+      ctx.fillStyle = 'rgba(255,107,94,0.10)';
+    } else {
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    }
+    drawRoundedRect(ctx, 60, y+6, W-120, rowH-12, 14); ctx.fill();
+
+    if(isTop3){
+      ctx.fillStyle = rank===1 ? '#F0C400' : rank===2 ? '#C0C0C0' : '#CD7F32';
+      drawRoundedRect(ctx, 60, y+6, 8, rowH-12, 4); ctx.fill();
+    } else if(isBottom3){
+      ctx.fillStyle = '#FF6B5E';
+      drawRoundedRect(ctx, 60, y+6, 8, rowH-12, 4); ctx.fill();
+    }
+
+    const midY = y + rowH/2 + 12;
+
+    ctx.textAlign='center';
+    ctx.fillStyle = isTop3 ? (rank===1?'#F0C400':rank===2?'#E4E4E4':'#E0A468') : (isBottom3 ? '#FF6B5E' : '#FFFFFF');
+    ctx.font = isTop3 ? '800 44px Tajawal, Arial' : '700 40px Tajawal, Arial';
+    ctx.fillText(`${rank}`, colRank, midY);
+
+    ctx.textAlign='right';
+    ctx.fillStyle='#FFFFFF';
+    ctx.font = isTop3 ? '800 38px Tajawal, Arial' : '700 35px Tajawal, Arial';
+    ctx.fillText(s.name, colName-40, midY);
+
+    ctx.textAlign='center';
+    ctx.fillStyle='#F0C400';
+    ctx.font='800 40px Tajawal, Arial';
+    ctx.fillText(`${s.total}`, colPts, midY);
+
+    const delta = mv[s.id];
+    ctx.font='700 32px Tajawal, Arial';
+    if(!delta){
+      ctx.fillStyle='#8FA69C';
+      ctx.fillText('—', colMv, midY);
+    } else if(delta>0){
+      ctx.fillStyle='#3DD47E';
+      ctx.fillText(`▲${delta}`, colMv, midY);
+    } else {
+      ctx.fillStyle='#FF6B5E';
+      ctx.fillText(`▼${Math.abs(delta)}`, colMv, midY);
+    }
+  }
+
+  const topN = Math.min(6, n);
+  const bottomN = Math.min(3, Math.max(0, n - topN));
+  const skipped = Math.max(0, n - topN - bottomN);
+
+  let cursorY = 250;
+  drawStoryHeaderRow(cursorY);
+  cursorY += 26;
+
+  for(let i=0;i<topN;i++){
+    drawStoryRow(st[i], i+1, cursorY);
+    cursorY += rowH;
+  }
+
+  if(skipped > 0){
+    cursorY += 14;
+    ctx.fillStyle='#6B7F76'; ctx.font='700 30px Tajawal, Arial';
+    ctx.fillText(`⋯ ${skipped} مراكز بينهم ⋯`, W/2, cursorY);
+    cursorY += 46;
+  } else {
+    cursorY += 20;
+  }
+
+  if(bottomN > 0){
+    ctx.fillStyle='#FF6B5E'; ctx.font='800 32px Tajawal, Arial';
+    ctx.fillText('🔥 سباق الهروب من القاع', W/2, cursorY);
+    cursorY += 54;
+
+    const bottomStart = n - bottomN;
+    for(let i=bottomStart;i<n;i++){
+      drawStoryRow(st[i], i+1, cursorY);
+      cursorY += rowH;
+    }
+  }
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#6B7F76'; ctx.font='600 24px Tajawal, Arial';
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-90);
+  ctx.fillStyle='#6B7F76'; ctx.font='600 24px Tajawal, Arial';
+  ctx.fillText('شارك الستوري 📲', W/2, H-50);
+
+  return cv;
+}
+
 async function downloadStandingsImage(){
   const box = document.getElementById('standingsImgBox');
   const btn = document.getElementById('dlStandingsBtn');
@@ -3441,8 +3581,7 @@ async function downloadStandingsStoryImage(){
   try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
 
   try{
-    const cv = await buildStandingsCard();
-    const storyCv = await buildStoryCanvas(cv);
+    const storyCv = await buildStandingsStoryCanvas();
     const roundNum = getCurrentRoundNumber();
     downloadCanvasPNG(storyCv, `brookie-standings-round-${roundNum}-story.png`);
     if(box) box.innerHTML = '<div class="status-msg ok">تم تحميل نسخة الستوري — أرسلها في حالتك 📲</div>';
