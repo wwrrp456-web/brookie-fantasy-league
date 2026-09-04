@@ -163,6 +163,11 @@
     filter:drop-shadow(0 1px 2px rgba(0,0,0,0.35));
     flex-shrink:0;
   }
+  /* في الوضع الليلي، إطار الشعار (وبعض الأطر الخاصة بأندية معينة مثل الريال
+     والشباب) قد يكون لونه أسود/داكن أصلًا، فيندمج مع خلفية الصفحة الداكنة
+     الجديدة وتختفي معالم حافة الشعار. نجعل الإطار موحّدًا بلون ذهبي فاتح
+     في الوضع الليلي فقط (الوضع النهاري يبقى كما هو، بألوان كل نادٍ). */
+  html.dark-mode .crest .crest-border{stroke:var(--gold-light);stroke-opacity:0.85;}
   .club-mini{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px;}
   .club-mini .club-name{font-size:0.68rem;color:var(--muted);text-align:center;line-height:1.15;}
   .club-mini.sm .club-name{font-size:0.62rem;}
@@ -1158,7 +1163,7 @@ function clubCrestSVG(name, px){
       </clipPath>
     </defs>
     ${pattern}
-    <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z"
+    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z"
           fill="none" stroke="${strokeCol}" stroke-width="5"/>
     <text x="50" y="62" text-anchor="middle"
           font-family="Tajawal, Arial, sans-serif" font-size="${fontPx}" font-weight="800"
