@@ -114,9 +114,10 @@
       <label class="field-label" for="clubSelect">النادي</label>
       <select id="clubSelect"></select>
 
-      <label class="field-label" for="opponentInput">الخصم</label>
-      <input type="text" id="opponentInput" placeholder="اكتب اسم الخصم">
-      <p class="note" style="margin-top:-6px;">اكتب اسم الخصم كما هو (ما فيه داعي يكون من أندية المشاركين الـ27) — يساعدنا نفرّق بين مباراتين مختلفتين لنفس النادي بنفس الجولة، ويمنع تعارض التقارير الوهمي.</p>
+      <label class="field-label" for="opponentSelect">الخصم</label>
+      <select id="opponentSelect"><option value="" disabled selected>اختر الخصم</option></select>
+      <input type="text" id="opponentOtherInput" placeholder="اكتب اسم الخصم" style="display:none;">
+      <p class="note" style="margin-top:-6px;">اختر الخصم من القائمة، أو اختر "فريق آخر" لو خصمك مو من ضمن أندية المشاركين الـ27 وتكتب اسمه بنفسك.</p>
 
       <label class="field-label" for="resultSelect">النتيجة</label>
       <select id="resultSelect">
@@ -273,9 +274,50 @@ CLUBS.forEach(c=>{
   clubSelect.appendChild(opt);
 });
 
-// حقل الخصم — نص حر (مو قائمة مقيَّدة)، لأن الخصم الفعلي قد لا يكون من
-// أندية المشاركين الـ27 (قد يكون خصمًا خارجيًا).
-const opponentInput = document.getElementById('opponentInput');
+// قائمة الخصم — قائمة أندية المشاركين الـ27 (باستثناء النادي المختار حاليًا،
+// نادٍ ما يلعب ضد نفسه) بالإضافة لبند أخير "فريق آخر" يظهر عند اختياره حقل
+// نص حر — عشان الخصم الفعلي قد لا يكون من ضمن الأندية الـ27 (خصم خارجي). هذا
+// تصميم هجين بطلب المستخدم (5 سبتمبر 2026): سرعة الاختيار من قائمة جاهزة
+// للحالة الشائعة، مع إبقاء المرونة للحالة النادرة (خصم خارجي) بلا إجبار كل
+// إدخال أن يكون نصًا حرًا بالكامل (كما كان بالتعديل السابق).
+const OTHER_OPPONENT_VALUE = '__other__';
+const opponentSelect = document.getElementById('opponentSelect');
+const opponentOtherInput = document.getElementById('opponentOtherInput');
+function refreshOpponentOptions(){
+  const selectedClub = clubSelect.value;
+  const prevOpponent = opponentSelect.value;
+  opponentSelect.innerHTML = '<option value="" disabled selected>اختر الخصم</option>';
+  CLUBS.filter(c=>c!==selectedClub).forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    opponentSelect.appendChild(opt);
+  });
+  const otherOpt = document.createElement('option');
+  otherOpt.value = OTHER_OPPONENT_VALUE;
+  otherOpt.textContent = '✍️ فريق آخر (اكتب الاسم)';
+  opponentSelect.appendChild(otherOpt);
+  if(prevOpponent && prevOpponent!==selectedClub){
+    opponentSelect.value = prevOpponent;
+  }
+}
+clubSelect.addEventListener('change', refreshOpponentOptions);
+refreshOpponentOptions();
+
+// إظهار/إخفاء حقل النص الحر حسب اختيار "فريق آخر" من القائمة.
+opponentSelect.addEventListener('change', ()=>{
+  const isOther = opponentSelect.value === OTHER_OPPONENT_VALUE;
+  opponentOtherInput.style.display = isOther ? '' : 'none';
+  if(isOther) opponentOtherInput.focus();
+  else opponentOtherInput.value = '';
+});
+
+// القيمة الفعلية للخصم بغض النظر عن مصدرها (من القائمة أو نص حر).
+function getSelectedOpponent(){
+  if(opponentSelect.value === OTHER_OPPONENT_VALUE){
+    return opponentOtherInput.value.trim();
+  }
+  return opponentSelect.value || '';
+}
 
 const participantSelect = document.getElementById('participantSelect');
 const emptyOpt = document.createElement('option');
@@ -348,7 +390,7 @@ document.getElementById('forgetCodeLink').addEventListener('click', (e)=>{
 document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('matchMsg');
   const club = clubSelect.value;
-  const opponent = opponentInput.value.trim();
+  const opponent = getSelectedOpponent();
   const result = document.getElementById('resultSelect').value;
   const gf = document.getElementById('gfInput').value;
   const ga = document.getElementById('gaInput').value;
@@ -381,7 +423,9 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
     document.getElementById('resultSelect').value = '';
     document.getElementById('gfInput').value = '';
     document.getElementById('gaInput').value = '';
-    opponentInput.value = '';
+    opponentOtherInput.value = '';
+    opponentOtherInput.style.display = 'none';
+    refreshOpponentOptions();
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
   }
