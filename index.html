@@ -329,6 +329,21 @@
     background:rgba(122,82,238,0.16);border:1px solid var(--line);
     border-radius:20px;padding:2px 8px;white-space:nowrap;
   }
+
+  /* مراجعة تقارير المجتمع — تعديل/حذف كل تقرير على حدة (5 سبتمبر 2026) */
+  .community-report-row{padding:4px 0;}
+  .community-report-view{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);}
+  .community-report-view .actions{display:flex;gap:4px;flex-shrink:0;}
+  .community-report-view .actions button{font-size:0.68rem!important;padding:2px 8px!important;}
+  .community-report-edit{
+    display:none;grid-template-columns:1.4fr 1fr 44px 44px auto auto;gap:5px;
+    align-items:center;padding:6px 0;
+  }
+  .community-report-edit.open{display:grid;}
+  .community-report-edit select, .community-report-edit input{
+    font-family:inherit;padding:5px;border:1px solid var(--line);border-radius:6px;font-size:0.78rem;
+  }
+  .community-report-edit button{font-size:0.7rem!important;padding:5px 8px!important;white-space:nowrap;}
   .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
   .team-input-row{
     display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
@@ -600,6 +615,11 @@
     }
     .team-input-row select, .team-input-row input{font-size:0.8rem;padding:7px 6px;width:100%;}
     .team-input-row .remove-match-btn{grid-column:1/-1;justify-self:end;width:auto;padding:4px 12px;}
+
+    /* صف تعديل تقرير مجتمعي: عمودين بدل ستة أعمدة على الجوال */
+    .community-report-edit.open{grid-template-columns:1fr 1fr;}
+    .community-report-edit select, .community-report-edit input{font-size:0.78rem;padding:7px 6px;width:100%;}
+    .community-report-edit button{grid-column:1/-1;}
 
     .btn{padding:10px 14px;font-size:0.84rem;}
     .history-table th, .history-table td{font-size:0.72rem;padding:4px 3px;}
@@ -4225,7 +4245,9 @@ async function loadCommunityReports(){
     if(!matchesSnap.exists()){
       matchesBox.innerHTML = '<div style="color:var(--muted);">لا توجد نتائج مُرسَلة بعد لهذه الجولة.</div>';
     }else{
-      const list = Object.values(matchesSnap.val());
+      // نحافظ على مفتاح push الخاص بكل تقرير (r.id) — لازم لبناء مسار
+      // Firebase الدقيق عند التعديل/الحذف بالأسفل (5 سبتمبر 2026).
+      const list = Object.entries(matchesSnap.val()).map(([id, r])=>({id, ...r}));
       const byMatch = {};
       list.forEach(r=>{
         const key = `${r.club}|${r.opponent||''}`;
@@ -4239,8 +4261,29 @@ async function loadCommunityReports(){
         html += `<div style="padding:8px 0;border-bottom:1px dotted var(--line);">
           <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>`;
         reports.forEach(r=>{
-          html += `<div style="font-size:0.8rem;color:var(--muted);">
-            ${RESULT_LABEL_COMMUNITY[r.result]||r.result} (${r.gf}-${r.ga}) ${r.reporter ? '— أرسلها: '+r.reporter : ''}
+          // كل تقرير له وضع عرض (view) ووضع تعديل (edit) — يبدأ العرض فقط
+          // ظاهرًا، وزر "✏️ تعديل" يبدّل بينهما (المنظم اكتشف نتيجة خاطئة
+          // مُرسَلة من زائر/متسابق ويحتاج يصححها أو يحذفها بلا رجوع للمُرسِل).
+          html += `<div class="community-report-row" data-id="${r.id}" data-round="${targetRound}">
+            <div class="community-report-view">
+              <span>${RESULT_LABEL_COMMUNITY[r.result]||r.result} (${r.gf}-${r.ga}) ${r.reporter ? '— أرسلها: '+r.reporter : ''}</span>
+              <span class="actions">
+                <button type="button" class="btn ghost edit-report-btn">✏️ تعديل</button>
+                <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف</button>
+              </span>
+            </div>
+            <div class="community-report-edit">
+              <input type="text" class="edit-opp-input" placeholder="الخصم" value="${(r.opponent||'').replace(/"/g,'&quot;')}">
+              <select class="edit-res-select">
+                <option value="win" ${r.result==='win'?'selected':''}>فوز</option>
+                <option value="draw" ${r.result==='draw'?'selected':''}>تعادل</option>
+                <option value="loss" ${r.result==='loss'?'selected':''}>خسارة</option>
+              </select>
+              <input type="number" class="edit-gf-input" min="0" placeholder="له" value="${r.gf}">
+              <input type="number" class="edit-ga-input" min="0" placeholder="عليه" value="${r.ga}">
+              <button type="button" class="btn save-report-btn">💾 حفظ</button>
+              <button type="button" class="btn ghost cancel-report-btn">إلغاء</button>
+            </div>
           </div>`;
         });
         html += `</div>`;
@@ -4276,6 +4319,64 @@ async function loadCommunityReports(){
 }
 
 document.getElementById('refreshCommunityBtn').addEventListener('click', loadCommunityReports);
+
+// تعديل/حذف تقرير مباراة فردي مُرسَل من زائر أو متسابق (5 سبتمبر 2026) — بطلب
+// المستخدم بعد ما لاحظ نتيجة خاطئة بتقارير المجتمع وما كان عنده وسيلة لتصحيحها
+// أو حذفها غير التواصل يدويًا مع من أرسلها. delegation ثابت على communityMatchesBox
+// نفسه (العنصر لا يُستبدَل، فقط innerHTML يتغيّر بكل loadCommunityReports()).
+document.getElementById('communityMatchesBox').addEventListener('click', async (e)=>{
+  const editBtn = e.target.closest('.edit-report-btn');
+  if(editBtn){
+    const row = editBtn.closest('.community-report-row');
+    row.querySelector('.community-report-edit').classList.add('open');
+    return;
+  }
+  const cancelBtn = e.target.closest('.cancel-report-btn');
+  if(cancelBtn){
+    const row = cancelBtn.closest('.community-report-row');
+    row.querySelector('.community-report-edit').classList.remove('open');
+    return;
+  }
+  const saveBtn = e.target.closest('.save-report-btn');
+  if(saveBtn){
+    const row = saveBtn.closest('.community-report-row');
+    const { id, round } = row.dataset;
+    const opponent = row.querySelector('.edit-opp-input').value.trim();
+    const result = row.querySelector('.edit-res-select').value;
+    // نمنع الأهداف السالبة كما بنموذج الجولة الرسمي (نفس السبب: min="0" مجرد
+    // تلميح للمتصفح وليس تحققًا فعليًا).
+    const gf = Math.max(0, parseInt(row.querySelector('.edit-gf-input').value) || 0);
+    const ga = Math.max(0, parseInt(row.querySelector('.edit-ga-input').value) || 0);
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'جارٍ الحفظ...';
+    try{
+      const db = _fbInit();
+      await db.ref(`brookie/community-reports/matches/${round}/${id}`).update({opponent: opponent || null, result, gf, ga});
+      await loadCommunityReports();
+    }catch(err){
+      saveBtn.disabled = false;
+      saveBtn.textContent = '💾 حفظ';
+      document.getElementById('communityMsg').innerHTML = '<div class="status-msg err">تعذّر حفظ التعديل، تحقق من الاتصال وحاول ثانية.</div>';
+    }
+    return;
+  }
+  const deleteBtn = e.target.closest('.delete-report-btn');
+  if(deleteBtn){
+    const row = deleteBtn.closest('.community-report-row');
+    const { id, round } = row.dataset;
+    const sure = confirm('هل أنت متأكد إنك تبي تحذف هذا التقرير نهائيًا؟ هذا الإجراء لا يمكن التراجع عنه.');
+    if(!sure) return;
+    deleteBtn.disabled = true;
+    try{
+      const db = _fbInit();
+      await db.ref(`brookie/community-reports/matches/${round}/${id}`).remove();
+      await loadCommunityReports();
+    }catch(err){
+      deleteBtn.disabled = false;
+      document.getElementById('communityMsg').innerHTML = '<div class="status-msg err">تعذّر الحذف، تحقق من الاتصال وحاول ثانية.</div>';
+    }
+  }
+});
 
 // ---------- رموز المشاركين ----------
 // نفس الرموز المُضمَّنة في report.html حرفيًا — إذا تغيّرت هناك (لإضافة/حذف
