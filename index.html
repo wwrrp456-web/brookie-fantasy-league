@@ -324,6 +324,11 @@
   }
   .team-block{border-top:1px solid var(--line);padding-bottom:8px;}
   .team-block-head{display:flex;align-items:center;gap:7px;padding:8px 12px 2px;font-size:0.85rem;}
+  .shared-club-badge{
+    font-size:0.68rem;font-weight:700;color:var(--gold-light);
+    background:rgba(122,82,238,0.16);border:1px solid var(--line);
+    border-radius:20px;padding:2px 8px;white-space:nowrap;
+  }
   .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
   .team-input-row{
     display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
@@ -4328,6 +4333,38 @@ function getTeamRoundEntries(entries, ti){
   return entries[ti] ? [entries[ti]] : [];
 }
 
+// عدد المشاركين المالكين لنفس النادي — يُستخدم لعرض شارة "مشترك" وتفعيل
+// مزامنة نموذج إدخال الجولة (5 سبتمبر 2026): نادٍ واحد بالواقع = مباراة واحدة
+// فعلية، فمهما كان عدد المشاركين المالكين له، نتيجتها يجب أن تكون واحدة لكل
+// الجميع بنفس الجولة.
+function clubParticipantCount(club){
+  return PARTICIPANTS.filter(p=>p.teams.includes(club)).length;
+}
+
+// مزامنة صفوف نادٍ مشترك بين المشاركين: لما يعدّل المنظم أي حقل (خصم/نتيجة/
+// أهداف) أو يضيف/يحذف صف مباراة داخل صندوق نادٍ معيّن (team-block)، نأخذ حالة
+// صفوفه الحالية كاملة (rowsData) وننشرها حرفيًا على كل صناديق نفس النادي عند
+// بقية المشاركين — بدل ما كان المنظم يفتح كل مشارك يملك نفس النادي ويسجّل له
+// نفس النتيجة يدويًا (طلب المستخدم 5 سبتمبر 2026، بعد ملاحظته إنه نادي مثل
+// "ريال مدريد" مشترك بين 6 مشاركين ويحتاج تكرار الإدخال 6 مرات لكل جولة).
+// آخر صندوق عدّله المنظم فعليًا هو "مصدر الحقيقة" لحظة التعديل — لو عدّل صندوق
+// آخر لنفس النادي بعدها (تصحيح مثلاً) ينعكس هو الآخر على البقية بنفس الطريقة.
+function syncSharedClub(sourceTeamBlock){
+  const club = sourceTeamBlock.dataset.team;
+  if(!club) return;
+  const rowsData = Array.from(sourceTeamBlock.querySelectorAll('.match-rows .team-input-row')).map(row=>({
+    opp: row.querySelector('.opp-input').value,
+    result: row.querySelector('.res-select').value,
+    gf: row.querySelector('.gf-input').value,
+    ga: row.querySelector('.ga-input').value,
+  }));
+  document.querySelectorAll('#roundForm .team-block').forEach(tb=>{
+    if(tb === sourceTeamBlock || tb.dataset.team !== club) return;
+    tb.querySelector('.match-rows').innerHTML = rowsData.map(r=>matchRowHTML(r)).join('');
+    refreshRemoveButtons(tb);
+  });
+}
+
 // صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم (اختياري، نص حر لأن
 // الخصم قد لا يكون من أندية المشاركين) والنتيجة والأهداف، وزر حذف الصف (يظهر
 // فقط إذا كان أكثر من صف واحد لنفس النادي).
@@ -4368,6 +4405,7 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     const teamBlock = addBtn.closest('.team-block');
     teamBlock.querySelector('.match-rows').insertAdjacentHTML('beforeend', matchRowHTML(null));
     refreshRemoveButtons(teamBlock);
+    syncSharedClub(teamBlock);
     return;
   }
   const removeBtn = e.target.closest('.remove-match-btn');
@@ -4375,6 +4413,23 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     const teamBlock = removeBtn.closest('.team-block');
     removeBtn.closest('.team-input-row').remove();
     refreshRemoveButtons(teamBlock);
+    syncSharedClub(teamBlock);
+  }
+});
+
+// مزامنة حيّة أثناء الكتابة/الاختيار: أي تغيير بحقل خصم/أهداف (input) أو نتيجة
+// (change، لأنه <select>) داخل أي صندوق نادٍ يُنشر فورًا على كل صناديق نفس
+// النادي عند بقية المشاركين (انظر تعليق syncSharedClub أعلاه).
+document.getElementById('roundFormBox').addEventListener('input', (e)=>{
+  if(e.target.matches('.opp-input, .gf-input, .ga-input')){
+    const teamBlock = e.target.closest('.team-block');
+    if(teamBlock) syncSharedClub(teamBlock);
+  }
+});
+document.getElementById('roundFormBox').addEventListener('change', (e)=>{
+  if(e.target.matches('.res-select')){
+    const teamBlock = e.target.closest('.team-block');
+    if(teamBlock) syncSharedClub(teamBlock);
   }
 });
 
@@ -4404,8 +4459,15 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
       // لو النادي لعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) تُعرض كل
       // مبارياته كصف مستقل — وإلا صف فارغ واحد افتراضيًا كالسابق.
       const rowsData = prevEntries.length ? prevEntries : [null];
-      html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}">
-        <div class="team-block-head">${clubCrestSVG(team, 22)}<span>${team}</span></div>
+      // data-team يحمل اسم النادي (مو فهرس ti الشخصي لكل مشارك) عشان تقدر ميزة
+      // "المزامنة بين المشاركين المشتركين بنفس النادي" تجمع كل صناديق نفس النادي
+      // عبر كل المشاركين بغض النظر عن ترتيبه بقائمة أندية كل واحد منهم.
+      const sharedCount = clubParticipantCount(team);
+      const sharedBadge = sharedCount > 1
+        ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${sharedCount} مشاركين — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span>`
+        : '';
+      html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}">
+        <div class="team-block-head">${clubCrestSVG(team, 22)}<span>${team}</span>${sharedBadge}</div>
         <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev)).join('')}</div>
         <button type="button" class="btn ghost add-match-btn">+ إضافة مباراة أخرى لهذا النادي</button>
       </div>`;
@@ -4419,6 +4481,23 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
     <div id="saveRoundMsg"></div></div>`;
   box.innerHTML = html;
   box.querySelectorAll('.team-block').forEach(refreshRemoveButtons);
+
+  // عند فتح جولة محفوظة مسبقًا للتعديل: لو نادٍ مشترك كان له بيانات مختلفة
+  // قليلاً بين مشاركين (بيانات قديمة من قبل ميزة المزامنة أعلاه) نوحّدها فورًا
+  // بأخذ أول صندوق فيه نتيجة مختارة فعليًا كمصدر ونشرها على البقية — بدل ما
+  // تظهر متضاربة بالنموذج رغم أنها بالواقع مباراة واحدة.
+  (function syncExistingSharedClubs(){
+    const seenClubs = new Set();
+    box.querySelectorAll('.team-block').forEach(tb=>{
+      const club = tb.dataset.team;
+      if(!club || seenClubs.has(club)) return;
+      const hasData = Array.from(tb.querySelectorAll('.res-select')).some(s=>s.value);
+      if(hasData){
+        seenClubs.add(club);
+        syncSharedClub(tb);
+      }
+    });
+  })();
 
   // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
   // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
