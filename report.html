@@ -108,11 +108,15 @@
 
   <section class="panel active" id="panel-matches">
     <div style="text-align:center;"><span class="round-chip" id="targetRoundChip">جارٍ التحميل...</span></div>
-    <p class="note">اختر أي نادٍ تعرف نتيجته هذه الجولة (مو لازم يكون ناديك) وسجّلها. ما فيه داعي تكرر نادٍ مسجّل مسبقًا بالأسفل.</p>
+    <p class="note">اختر أي نادٍ تعرف نتيجته هذه الجولة (مو لازم يكون ناديك) وسجّلها مع الخصم. ما فيه داعي تكرر نفس المباراة (نادٍ + خصم) المسجّلة مسبقًا بالأسفل — لكن لو النادي لعب أكثر من مباراة بنفس الجولة سجّل كل مباراة له بخصمها لحالها.</p>
 
     <div class="card">
       <label class="field-label" for="clubSelect">النادي</label>
       <select id="clubSelect"></select>
+
+      <label class="field-label" for="opponentSelect">الخصم</label>
+      <select id="opponentSelect"><option value="" disabled selected>اختر الخصم</option></select>
+      <p class="note" style="margin-top:-6px;">اختيار الخصم يساعدنا نفرّق بين مباراتين مختلفتين لنفس النادي بنفس الجولة، ويمنع تعارض التقارير الوهمي.</p>
 
       <label class="field-label" for="resultSelect">النتيجة</label>
       <select id="resultSelect">
@@ -269,6 +273,25 @@ CLUBS.forEach(c=>{
   clubSelect.appendChild(opt);
 });
 
+// قائمة الخصم — نفس قائمة الأندية، باستثناء النادي المختار حاليًا (نادٍ ما
+// يلعب ضد نفسه). تُعاد تعبئتها كل ما تغيّر اختيار النادي.
+const opponentSelect = document.getElementById('opponentSelect');
+function refreshOpponentOptions(){
+  const selectedClub = clubSelect.value;
+  const prevOpponent = opponentSelect.value;
+  opponentSelect.innerHTML = '<option value="" disabled selected>اختر الخصم</option>';
+  CLUBS.filter(c=>c!==selectedClub).forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    opponentSelect.appendChild(opt);
+  });
+  if(prevOpponent && prevOpponent!==selectedClub){
+    opponentSelect.value = prevOpponent;
+  }
+}
+clubSelect.addEventListener('change', refreshOpponentOptions);
+refreshOpponentOptions();
+
 const participantSelect = document.getElementById('participantSelect');
 const emptyOpt = document.createElement('option');
 emptyOpt.value = ''; emptyOpt.textContent = '— اختر اسمك —'; emptyOpt.disabled = true; emptyOpt.selected = true;
@@ -340,13 +363,14 @@ document.getElementById('forgetCodeLink').addEventListener('click', (e)=>{
 document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('matchMsg');
   const club = clubSelect.value;
+  const opponent = opponentSelect.value;
   const result = document.getElementById('resultSelect').value;
   const gf = document.getElementById('gfInput').value;
   const ga = document.getElementById('gaInput').value;
   const reporter = document.getElementById('reporterNameMatch').value.trim();
 
-  if(!club || !result || gf==='' || ga===''){
-    msg.innerHTML = '<div class="status-msg err">أكمل كل الحقول (النادي، النتيجة، الأهداف) قبل الإرسال.</div>';
+  if(!club || !opponent || !result || gf==='' || ga===''){
+    msg.innerHTML = '<div class="status-msg err">أكمل كل الحقول (النادي، الخصم، النتيجة، الأهداف) قبل الإرسال.</div>';
     return;
   }
   if(targetRound===null){
@@ -358,7 +382,7 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
   btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
   try{
     await db.ref(`brookie/community-reports/matches/${targetRound}`).push({
-      club, result,
+      club, opponent, result,
       gf: Math.max(0, parseInt(gf)||0),
       ga: Math.max(0, parseInt(ga)||0),
       reporter: reporter || null,
@@ -368,6 +392,7 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
     document.getElementById('resultSelect').value = '';
     document.getElementById('gfInput').value = '';
     document.getElementById('gaInput').value = '';
+    refreshOpponentOptions();
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
   }
@@ -437,7 +462,7 @@ function startLiveListeners(){
     const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
     box.innerHTML = rows.map(r=>`
       <div class="live-row">
-        <span>${r.club}</span>
+        <span>${r.club}${r.opponent?` ضد ${r.opponent}`:''}</span>
         <span class="${RESULT_CLASS[r.result]||''}">${RESULT_LABEL[r.result]||r.result} (${r.gf}-${r.ga})</span>
       </div>`).join('');
   });

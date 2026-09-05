@@ -62,7 +62,7 @@
   }
   header svg{width:96px;height:96px;display:block;margin:0 auto 10px;}
   header h1{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:0.5px;}
-  header p{margin:6px 0 0;color:var(--gold-light);font-size:0.9rem;font-weight:500;}
+  header p{margin:6px 0 0;color:var(--gold-light);font-size:1.15rem;font-weight:600;}
 
   /* Tabs */
   nav.tabs{
@@ -322,13 +322,20 @@
     padding:10px 12px;font-weight:700;cursor:pointer;font-size:0.9rem;
     background:rgba(122,82,238,0.10);
   }
+  .team-block{border-top:1px solid var(--line);padding-bottom:8px;}
+  .team-block-head{display:flex;align-items:center;gap:7px;padding:8px 12px 2px;font-size:0.85rem;}
+  .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
   .team-input-row{
-    display:grid;grid-template-columns:1fr 1fr 44px 44px;gap:6px;
-    padding:8px 12px;align-items:center;border-top:1px solid var(--line);
+    display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
+    padding:6px 12px;align-items:center;
     font-size:0.85rem;
   }
   .team-input-row select, .team-input-row input{
     font-family:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;font-size:0.82rem;
+  }
+  .team-input-row .remove-match-btn{
+    background:none;border:1px solid var(--coral);color:var(--coral);border-radius:6px;
+    cursor:pointer;font-size:0.72rem;padding:5px 0;line-height:1;
   }
   .field-label{font-size:0.72rem;color:var(--muted);}
 
@@ -555,7 +562,7 @@
     header{padding:18px 12px 16px;}
     header img{width:160px!important;height:auto!important;}
     header h1{font-size:1.18rem;}
-    header p{font-size:0.82rem;}
+    header p{font-size:1rem;}
 
     nav.tabs button{font-size:0.8rem;padding:11px 10px;}
 
@@ -580,13 +587,14 @@
     .rules-list h4{font-size:0.86rem;}
     .rules-list p{font-size:0.82rem;}
 
-    /* نموذج إدخال الجولة: عمودين بدل أربعة */
+    /* نموذج إدخال الجولة: عمودين بدل خمسة */
     .team-input-row{
       grid-template-columns:1fr 1fr;
       gap:6px 8px;
       padding:10px;
     }
     .team-input-row select, .team-input-row input{font-size:0.8rem;padding:7px 6px;width:100%;}
+    .team-input-row .remove-match-btn{grid-column:1/-1;justify-self:end;width:auto;padding:4px 12px;}
 
     .btn{padding:10px 14px;font-size:0.84rem;}
     .history-table th, .history-table td{font-size:0.72rem;padding:4px 3px;}
@@ -2103,14 +2111,17 @@ function getClubStats(){
     PARTICIPANTS.forEach(p=>{
       const entries = (r.entries && r.entries[p.id]) || [];
       p.teams.forEach((t,i)=>{
-        const e = entries[i];
-        if(e && e.result){
-          map[t].played++;
-          map[t].pts += RESULT_POINTS[e.result] || 0;
-          if(e.result==='win') map[t].w++;
-          else if(e.result==='draw') map[t].d++;
-          else map[t].l++;
-        }
+        // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) — نجمع كل
+        // مبارياته بدل مباراة واحدة موضعية فقط.
+        getTeamRoundEntries(entries, i).forEach(e=>{
+          if(e && e.result){
+            map[t].played++;
+            map[t].pts += RESULT_POINTS[e.result] || 0;
+            if(e.result==='win') map[t].w++;
+            else if(e.result==='draw') map[t].d++;
+            else map[t].l++;
+          }
+        });
       });
     });
   });
@@ -3680,7 +3691,12 @@ function buildParticipantHistory(pid){
     const s = stats[pid];
     cum += s.points;
     const entries = (r.entries && r.entries[pid]) || [];
-    const teamResults = p.teams.map((t,i)=>({team:t, result: entries[i]?entries[i].result:null}));
+    // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) — results
+    // تحمل كل نتائجه بدل نتيجة واحدة فقط؛ result تبقى للتوافق (أول نتيجة).
+    const teamResults = p.teams.map((t,i)=>{
+      const es = getTeamRoundEntries(entries, i);
+      return {team:t, result: es.length?es[0].result:null, results: es.map(e=>e.result)};
+    });
     return {number:r.number, points:s.points, cumulative:cum, teamResults};
   });
 }
@@ -3945,11 +3961,16 @@ function renderRounds(){
           <div style="font-weight:700;font-size:0.8rem;flex:1 1 60px;min-width:56px;">${p.name}</div>
           <div style="display:flex;gap:5px;flex:0 0 auto;">
             ${p.teams.map((t,i)=>{
-              const res = entries[i] ? entries[i].result : null;
+              // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) —
+              // تُعرض كل نتيجة مفصولة بـ"+"، ولون أول نتيجة يحدد لون الشارة.
+              const es = getTeamRoundEntries(entries, i);
+              const res = es.length ? es[0].result : null;
               const resColor = res==='win' ? '#1E8E4B' : res==='draw' ? '#7A52EE' : res==='loss' ? '#FF6F52' : '#999';
-              return `<div style="display:flex;flex-direction:column;align-items:center;">
+              const label = es.length ? es.map(e=>RESULT_LABEL[e.result]).join('+') : '-';
+              const oppTitle = es.map(e=>e.opp).filter(Boolean).join('، ');
+              return `<div style="display:flex;flex-direction:column;align-items:center;"${oppTitle?` title="ضد: ${oppTitle}"`:''}>
                 ${clubCrestSVG(t, 24)}
-                <span style="font-size:0.6rem;color:${resColor};font-weight:700;">${res?RESULT_LABEL[res]:'-'}</span>
+                <span style="font-size:0.6rem;color:${resColor};font-weight:700;">${label}</span>
               </div>`;
             }).join('')}
           </div>
@@ -4192,21 +4213,26 @@ async function loadCommunityReports(){
       db.ref(`brookie/community-reports/points/${targetRound}`).get()
     ]);
 
-    // نتائج المباريات — تُجمَّع حسب النادي عشان يبين للمنظم فورًا لو فيه
-    // تعارض بين تقريرين لنفس النادي (نفس المباراة لازم نتيجتها متطابقة)
+    // نتائج المباريات — تُجمَّع حسب (النادي + الخصم) لا النادي وحده (منذ 5
+    // سبتمبر 2026)، عشان: (أ) تعارض التقارير يُكتشف فقط بين تقريرين لنفس
+    // المباراة الفعلية (نادٍ ضد نفس الخصم)، و(ب) نادٍ لعب أكثر من مباراة
+    // بنفس الجولة يظهر كل مباراة له بشكل منفصل بدل تعارض وهمي بينهما.
     if(!matchesSnap.exists()){
       matchesBox.innerHTML = '<div style="color:var(--muted);">لا توجد نتائج مُرسَلة بعد لهذه الجولة.</div>';
     }else{
       const list = Object.values(matchesSnap.val());
-      const byClub = {};
-      list.forEach(r=>{ (byClub[r.club] = byClub[r.club] || []).push(r); });
+      const byMatch = {};
+      list.forEach(r=>{
+        const key = `${r.club}|${r.opponent||''}`;
+        (byMatch[key] = byMatch[key] || {club:r.club, opponent:r.opponent, reports:[]}).reports.push(r);
+      });
       let html = '';
-      Object.keys(byClub).sort((a,b)=>a.localeCompare(b,'ar')).forEach(club=>{
-        const reports = byClub[club];
+      Object.keys(byMatch).sort((a,b)=>a.localeCompare(b,'ar')).forEach(key=>{
+        const {club, opponent, reports} = byMatch[key];
         const distinct = new Set(reports.map(r=>`${r.result}|${r.gf}|${r.ga}`));
         const conflict = distinct.size > 1;
         html += `<div style="padding:8px 0;border-bottom:1px dotted var(--line);">
-          <div style="font-weight:800;">${club} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>`;
+          <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>`;
         reports.forEach(r=>{
           html += `<div style="font-size:0.8rem;color:var(--muted);">
             ${RESULT_LABEL_COMMUNITY[r.result]||r.result} (${r.gf}-${r.ga}) ${r.reporter ? '— أرسلها: '+r.reporter : ''}
@@ -4291,6 +4317,67 @@ function renderQuickLinkCodes(){
 }
 
 // ---------- Round form ----------
+// يرجع كل مباريات نادٍ معيّن (بموضعه ti ضمن أندية المشارك) خلال جولة، بدعم
+// أكثر من مباراة لنفس النادي بنفس الجولة (منذ 5 سبتمبر 2026). العناصر الجديدة
+// تُحفظ بخاصية .ti صريحة؛ الجولات القديمة المحفوظة قبل هذا التحديث لا تحمل
+// هذه الخاصية، فنرجع لموضعها المباشر entries[ti] كما كان الحال دائمًا (مباراة
+// واحدة بالضبط لكل نادٍ) — توافق كامل مع كل الجولات المحفوظة سابقًا.
+function getTeamRoundEntries(entries, ti){
+  const tagged = entries.filter(e => e && typeof e.ti === 'number');
+  if(tagged.length) return tagged.filter(e=>e.ti===ti);
+  return entries[ti] ? [entries[ti]] : [];
+}
+
+// صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم (اختياري، نص حر لأن
+// الخصم قد لا يكون من أندية المشاركين) والنتيجة والأهداف، وزر حذف الصف (يظهر
+// فقط إذا كان أكثر من صف واحد لنفس النادي).
+function matchRowHTML(prev){
+  const selResult = prev ? prev.result : '';
+  const gf = prev ? prev.gf : '';
+  const ga = prev ? prev.ga : '';
+  const opp = prev && prev.opp ? prev.opp : '';
+  return `<div class="team-input-row">
+    <input type="text" class="opp-input" placeholder="الخصم (اختياري)" value="${opp.replace(/"/g,'&quot;')}">
+    <select class="res-select">
+      <option value="" ${selResult===''?'selected':''} disabled>اختر النتيجة</option>
+      <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
+      <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option>
+      <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option>
+    </select>
+    <input type="number" class="gf-input" placeholder="له" min="0" value="${gf}">
+    <input type="number" class="ga-input" placeholder="عليه" min="0" value="${ga}">
+    <button type="button" class="remove-match-btn" title="حذف هذه المباراة">✕</button>
+  </div>`;
+}
+
+// إظهار/إخفاء زر حذف الصف: يظهر فقط عند وجود أكثر من مباراة واحدة لنفس النادي
+// (لا نسمح بحذف الصف الأخير — كل نادٍ لازم له صف واحد على الأقل بالنموذج).
+function refreshRemoveButtons(teamBlock){
+  const rows = teamBlock.querySelectorAll('.match-rows .team-input-row');
+  rows.forEach(row=>{
+    const btn = row.querySelector('.remove-match-btn');
+    if(btn) btn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+  });
+}
+
+// تفويض الأحداث (event delegation) لأزرار "+ إضافة مباراة أخرى" و"✕ حذف" —
+// لازم delegation لأن الصفوف تُبنى ديناميكيًا وقد تُضاف/تُحذف بعد أول رسم.
+document.getElementById('roundFormBox').addEventListener('click', (e)=>{
+  const addBtn = e.target.closest('.add-match-btn');
+  if(addBtn){
+    const teamBlock = addBtn.closest('.team-block');
+    teamBlock.querySelector('.match-rows').insertAdjacentHTML('beforeend', matchRowHTML(null));
+    refreshRemoveButtons(teamBlock);
+    return;
+  }
+  const removeBtn = e.target.closest('.remove-match-btn');
+  if(removeBtn){
+    const teamBlock = removeBtn.closest('.team-block');
+    removeBtn.closest('.team-input-row').remove();
+    refreshRemoveButtons(teamBlock);
+  }
+});
+
 document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   const rawNum = document.getElementById('roundNumber').value;
   const num = parseInt(rawNum);
@@ -4311,26 +4398,16 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   PARTICIPANTS.forEach(p=>{
     html += `<details class="round-entry-card"><summary>${p.name}</summary>`;
     p.teams.forEach((team, ti)=>{
-      const prev = existing && existing.entries && existing.entries[p.id] ? existing.entries[p.id][ti] : null;
-      // لا يوجد نتيجة افتراضية مختارة عمدًا (بدل ما كانت "تعادل" افتراضيًا) — حتى لا
-      // يُسجَّل تعادل وهمي بالغلط لأي مباراة نسي المنظم يحدد نتيجتها. الحفظ يُرفض إذا
-      // بقيت أي مباراة بدون اختيار (خطأ اكتُشف ومنع 3 سبتمبر 2026).
-      const selResult = prev ? prev.result : '';
-      const gf = prev ? prev.gf : '';
-      const ga = prev ? prev.ga : '';
-      html += `<div class="team-input-row" data-pid="${p.id}" data-ti="${ti}">
-        <div style="display:flex;align-items:center;gap:7px;">
-          ${clubCrestSVG(team, 22)}
-          <span>${team}</span>
-        </div>
-        <select class="res-select">
-          <option value="" ${selResult===''?'selected':''} disabled>اختر النتيجة</option>
-          <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
-          <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option>
-          <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option>
-        </select>
-        <input type="number" class="gf-input" placeholder="له" min="0" value="${gf}">
-        <input type="number" class="ga-input" placeholder="عليه" min="0" value="${ga}">
+      const prevEntries = existing && existing.entries && existing.entries[p.id]
+        ? getTeamRoundEntries(existing.entries[p.id], ti)
+        : [];
+      // لو النادي لعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) تُعرض كل
+      // مبارياته كصف مستقل — وإلا صف فارغ واحد افتراضيًا كالسابق.
+      const rowsData = prevEntries.length ? prevEntries : [null];
+      html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}">
+        <div class="team-block-head">${clubCrestSVG(team, 22)}<span>${team}</span></div>
+        <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev)).join('')}</div>
+        <button type="button" class="btn ghost add-match-btn">+ إضافة مباراة أخرى لهذا النادي</button>
       </div>`;
     });
     html += `</details>`;
@@ -4341,6 +4418,7 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
     </div>
     <div id="saveRoundMsg"></div></div>`;
   box.innerHTML = html;
+  box.querySelectorAll('.team-block').forEach(refreshRemoveButtons);
 
   // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
   // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
@@ -4381,15 +4459,21 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
     }
     const entries = {};
     document.querySelectorAll('#roundForm .team-input-row').forEach(row=>{
-      const pid = Number(row.dataset.pid);
+      const teamBlock = row.closest('.team-block');
+      const pid = Number(teamBlock.dataset.pid);
+      const ti = Number(teamBlock.dataset.ti);
       const result = row.querySelector('.res-select').value;
       // نمنع الأهداف السالبة عند الحفظ (الحقل يقبلها رغم min="0" لأنه مجرد تلميح
       // للمتصفح وليس تحققًا فعليًا) — قيمة سالبة كانت تكسر فرق الأهداف في كسر
       // التعادل بصمت (خطأ اكتُشف ومنع 3 سبتمبر 2026).
       const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
       const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
+      const opp = row.querySelector('.opp-input').value.trim();
       if(!entries[pid]) entries[pid] = [];
-      entries[pid].push({result, gf, ga});
+      // .ti صريحة على كل عنصر — تسمح بدعم أكثر من مباراة لنفس النادي بنفس
+      // الجولة (منذ 5 سبتمبر 2026) وتُستخدم لاحقًا بكل دوال العرض بدل الاعتماد
+      // على الموضع المباشر بالمصفوفة (getTeamRoundEntries).
+      entries[pid].push({ti, opp: opp || null, result, gf, ga});
     });
 
     let round = DATA.rounds.find(r=>r.number===num);
