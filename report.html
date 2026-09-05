@@ -33,7 +33,7 @@
   .wrap{max-width:560px;margin:0 auto;padding:0 0 60px;}
   header{
     background:radial-gradient(120% 140% at 50% 0%, var(--ink2) 0%, var(--ink) 70%);
-    color:var(--paper);
+    color:#fff;
     padding:24px 20px 20px;
     text-align:center;
     border-bottom:4px solid var(--gold);
@@ -114,9 +114,9 @@
       <label class="field-label" for="clubSelect">النادي</label>
       <select id="clubSelect"></select>
 
-      <label class="field-label" for="opponentSelect">الخصم</label>
-      <select id="opponentSelect"><option value="" disabled selected>اختر الخصم</option></select>
-      <p class="note" style="margin-top:-6px;">اختيار الخصم يساعدنا نفرّق بين مباراتين مختلفتين لنفس النادي بنفس الجولة، ويمنع تعارض التقارير الوهمي.</p>
+      <label class="field-label" for="opponentInput">الخصم</label>
+      <input type="text" id="opponentInput" placeholder="اكتب اسم الخصم">
+      <p class="note" style="margin-top:-6px;">اكتب اسم الخصم كما هو (ما فيه داعي يكون من أندية المشاركين الـ27) — يساعدنا نفرّق بين مباراتين مختلفتين لنفس النادي بنفس الجولة، ويمنع تعارض التقارير الوهمي.</p>
 
       <label class="field-label" for="resultSelect">النتيجة</label>
       <select id="resultSelect">
@@ -273,24 +273,9 @@ CLUBS.forEach(c=>{
   clubSelect.appendChild(opt);
 });
 
-// قائمة الخصم — نفس قائمة الأندية، باستثناء النادي المختار حاليًا (نادٍ ما
-// يلعب ضد نفسه). تُعاد تعبئتها كل ما تغيّر اختيار النادي.
-const opponentSelect = document.getElementById('opponentSelect');
-function refreshOpponentOptions(){
-  const selectedClub = clubSelect.value;
-  const prevOpponent = opponentSelect.value;
-  opponentSelect.innerHTML = '<option value="" disabled selected>اختر الخصم</option>';
-  CLUBS.filter(c=>c!==selectedClub).forEach(c=>{
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c;
-    opponentSelect.appendChild(opt);
-  });
-  if(prevOpponent && prevOpponent!==selectedClub){
-    opponentSelect.value = prevOpponent;
-  }
-}
-clubSelect.addEventListener('change', refreshOpponentOptions);
-refreshOpponentOptions();
+// حقل الخصم — نص حر (مو قائمة مقيَّدة)، لأن الخصم الفعلي قد لا يكون من
+// أندية المشاركين الـ27 (قد يكون خصمًا خارجيًا).
+const opponentInput = document.getElementById('opponentInput');
 
 const participantSelect = document.getElementById('participantSelect');
 const emptyOpt = document.createElement('option');
@@ -363,7 +348,7 @@ document.getElementById('forgetCodeLink').addEventListener('click', (e)=>{
 document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('matchMsg');
   const club = clubSelect.value;
-  const opponent = opponentSelect.value;
+  const opponent = opponentInput.value.trim();
   const result = document.getElementById('resultSelect').value;
   const gf = document.getElementById('gfInput').value;
   const ga = document.getElementById('gaInput').value;
@@ -371,6 +356,10 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
 
   if(!club || !opponent || !result || gf==='' || ga===''){
     msg.innerHTML = '<div class="status-msg err">أكمل كل الحقول (النادي، الخصم، النتيجة، الأهداف) قبل الإرسال.</div>';
+    return;
+  }
+  if(opponent === club){
+    msg.innerHTML = '<div class="status-msg err">الخصم لازم يختلف عن النادي.</div>';
     return;
   }
   if(targetRound===null){
@@ -392,7 +381,7 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
     document.getElementById('resultSelect').value = '';
     document.getElementById('gfInput').value = '';
     document.getElementById('gaInput').value = '';
-    refreshOpponentOptions();
+    opponentInput.value = '';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
   }
