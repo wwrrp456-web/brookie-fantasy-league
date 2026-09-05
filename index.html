@@ -344,6 +344,19 @@
     font-family:inherit;padding:5px;border:1px solid var(--line);border-radius:6px;font-size:0.78rem;
   }
   .community-report-edit button{font-size:0.7rem!important;padding:5px 8px!important;white-space:nowrap;}
+
+  /* شارة تمييز مباراة داخلية (بين ناديين كلاهما مملوك لمشاركين بالبطولة، مثل
+     الاتحاد والنصر) عن مباراة خارجية (الخصم نادٍ خارج تجمّع الأندية الـ27) —
+     5 سبتمبر 2026. مباراة داخلية تعني نتيجة الطرفين مرآة لبعضها، فتُفحَص
+     تلقائيًا مقابل تسجيل الطرف الآخر إن وُجد. */
+  .match-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-top:3px;}
+  .match-badge-info{background:rgba(122,82,238,0.14);color:var(--gold-light);}
+  .match-badge-ok{background:#123524;color:#8FE3B0;}
+  .match-badge-warn{background:#3A1D14;color:#FFB199;}
+  .match-badge-external{background:rgba(255,255,255,0.05);color:var(--muted);}
+  html.light-mode .match-badge-ok{background:#E4F1EA;color:var(--text2);}
+  html.light-mode .match-badge-warn{background:#FBE4DA;color:var(--coral);}
+
   .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
   .team-input-row{
     display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
@@ -999,6 +1012,11 @@ const PARTICIPANTS = [
   {id:17, name:'أيوب', carry:27, teams:['الهلال','برشلونة','روما']},
   {id:18, name:'أبو صالح', carry:14, teams:['الشباب','ريال مدريد','ليفربول']},
 ];
+
+// قائمة الأندية الـ27 المشاركة (نفس بناء CLUBS بصفحة report.html حرفيًا) —
+// تُستخدم بمراجعة تقارير المجتمع لتمييز مباراة "داخلية" (خصمها نادٍ آخر من
+// نفس هذه القائمة، مثل الاتحاد ضد النصر) عن مباراة "خارجية" (5 سبتمبر 2026).
+const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>a.localeCompare(b,'ar'));
 
 const RESULT_POINTS = {win:3, draw:1, loss:0};
 const RESULT_LABEL = {win:'فوز', draw:'تعادل', loss:'خسارة'};
@@ -4224,6 +4242,14 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
 // المنظم يقارن يدويًا ثم يدخل الرسمي من نموذج "إضافة جولة جديدة" فوق.
 const RESULT_LABEL_COMMUNITY = {win:'فوز', draw:'تعادل', loss:'خسارة'};
 
+// نتيجة معكوسة لخصمٍ ما — يستخدمها فحص "المباراة الداخلية" بالأسفل: لو نادٍ
+// أ فاز على نادٍ ب، فالمنطقي أن ب سجّل "خسارة" ضد أ (بنفس الأهداف معكوسة).
+function invertMatchResult(result){
+  if(result === 'win') return 'loss';
+  if(result === 'loss') return 'win';
+  return 'draw';
+}
+
 async function loadCommunityReports(){
   const msg = document.getElementById('communityMsg');
   const matchesBox = document.getElementById('communityMatchesBox');
@@ -4258,8 +4284,34 @@ async function loadCommunityReports(){
         const {club, opponent, reports} = byMatch[key];
         const distinct = new Set(reports.map(r=>`${r.result}|${r.gf}|${r.ga}`));
         const conflict = distinct.size > 1;
+
+        // تمييز مباراة "داخلية" (خصمها نادٍ آخر من ضمن أندية المشاركين الـ27،
+        // مثل الاتحاد ضد النصر) عن مباراة "خارجية" (الخصم نادٍ خارج التجمّع) —
+        // طلب المستخدم (5 سبتمبر 2026): مباراة داخلية نتيجتها مرآة لتسجيل
+        // الطرف الآخر (فوز نادٍ = خسارة الآخر بنفس الأهداف معكوسة)، فنبحث عن
+        // تسجيل الطرف الآخر (byMatch[opponent|club]) ونقارنه بدل التعامل مع
+        // كل تسجيل كمباراة منفصلة لا علاقة لها بالأخرى.
+        let matchBadge = '';
+        if(opponent && CLUBS.includes(opponent)){
+          const mirror = byMatch[`${opponent}|${club}`];
+          if(!mirror){
+            matchBadge = `<span class="match-badge match-badge-info">⚔️ داخلية — بانتظار تسجيل ${opponent}</span>`;
+          }else{
+            const rep = reports[0];
+            const mirrorRep = mirror.reports[0];
+            const matches = mirrorRep.result === invertMatchResult(rep.result)
+              && Number(mirrorRep.gf) === Number(rep.ga) && Number(mirrorRep.ga) === Number(rep.gf);
+            matchBadge = matches
+              ? `<span class="match-badge match-badge-ok">⚔️ داخلية — تُطابق تسجيل ${opponent} ✅</span>`
+              : `<span class="match-badge match-badge-warn">⚔️ داخلية — ⚠️ لا تُطابق تسجيل ${opponent}</span>`;
+          }
+        }else if(opponent){
+          matchBadge = `<span class="match-badge match-badge-external">🌍 خصم خارجي</span>`;
+        }
+
         html += `<div style="padding:8px 0;border-bottom:1px dotted var(--line);">
-          <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>`;
+          <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
+          ${matchBadge ? `<div style="margin:3px 0 2px;">${matchBadge}</div>` : ''}`;
         reports.forEach(r=>{
           // كل تقرير له وضع عرض (view) ووضع تعديل (edit) — يبدأ العرض فقط
           // ظاهرًا، وزر "✏️ تعديل" يبدّل بينهما (المنظم اكتشف نتيجة خاطئة

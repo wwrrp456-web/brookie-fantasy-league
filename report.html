@@ -86,6 +86,13 @@
   .live-row .res-win{color:var(--green-ok);font-weight:800;}
   .live-row .res-draw{color:var(--gold);font-weight:800;}
   .live-row .res-loss{color:var(--coral);font-weight:800;}
+  /* شارة "مباراة داخلية" — الخصم نادٍ آخر من ضمن الأندية الـ27 المشاركة
+     (مثل الاتحاد ضد النصر)، لا خصم خارجي (5 سبتمبر 2026). */
+  .match-tag{
+    display:inline-block;font-size:0.66rem;font-weight:700;
+    padding:1px 7px;border-radius:12px;margin-right:6px;
+    background:rgba(122,82,238,0.14);color:var(--gold-light);white-space:nowrap;
+  }
   .empty-hint{color:var(--muted);font-size:0.82rem;text-align:center;padding:10px 0;}
 
   .section-title{font-size:0.95rem;font-weight:800;margin:0 0 10px;}
@@ -493,11 +500,17 @@ function startLiveListeners(){
     const box = document.getElementById('matchesLiveList');
     if(!snap.exists()){ box.innerHTML = '<div class="empty-hint">لا توجد نتائج مسجّلة بعد</div>'; return; }
     const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
-    box.innerHTML = rows.map(r=>`
+    box.innerHTML = rows.map(r=>{
+      // شارة "داخلية" لو الخصم نفسه نادٍ من ضمن أندية المشاركين الـ27 —
+      // مباراة كهذي (مثل الاتحاد ضد النصر) نتيجتها تلقائيًا مرآة لتسجيل
+      // الطرف الآخر، تُفحص مقابل بعضها بلوحة المنظم.
+      const isInternal = r.opponent && CLUBS.includes(r.opponent);
+      return `
       <div class="live-row">
-        <span>${r.club}${r.opponent?` ضد ${r.opponent}`:''}</span>
+        <span>${r.club}${r.opponent?` ضد ${r.opponent}`:''}${isInternal?' <span class="match-tag">⚔️ داخلية</span>':''}</span>
         <span class="${RESULT_CLASS[r.result]||''}">${RESULT_LABEL[r.result]||r.result} (${r.gf}-${r.ga})</span>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   });
 
   db.ref(`brookie/community-reports/points/${targetRound}`).on('value', snap=>{
