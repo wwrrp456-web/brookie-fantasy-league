@@ -8,23 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0B3A2B;
-    --ink2:#155A43;
-    --cream:#F5F0E1;
-    --paper:#FBF8EF;
-    --gold:#B8862F;
-    --gold-light:#E7C158;
-    --coral:#C9552C;
+    /* هوية PROKI الجديدة (كحلي/بنفسجي/سماوي) — تطابق الهوية الافتراضية
+       في الصفحة الرئيسية league.html (سبتمبر 2026). */
+    --ink:#040421;
+    --ink2:#3D2E99;
+    --cream:#0A0A24;
+    --paper:#10102E;
+    --gold:#7A52EE;
+    --gold-light:#9B7BF5;
+    --coral:#FF6F52;
     --green-ok:#1E8E4B;
-    --line:rgba(11,58,43,0.16);
-    --muted:#5C6B62;
+    --line:rgba(122,82,238,0.22);
+    --muted:#9C9BC9;
+    --text:#EDEBFF;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
     font-family:'Tajawal',Arial,sans-serif;
     background:var(--cream);
-    color:var(--ink);
+    color:var(--text);
     line-height:1.6;
   }
   .wrap{max-width:560px;margin:0 auto;padding:0 0 60px;}
@@ -40,7 +43,7 @@
 
   .tabs{display:flex;background:var(--ink);border-bottom:3px solid var(--gold);}
   .tabs button{
-    flex:1;background:none;border:none;color:#cfe0d8;
+    flex:1;background:none;border:none;color:#cdc6f0;
     font-family:inherit;font-size:0.9rem;font-weight:700;
     padding:14px 8px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;
   }
@@ -66,11 +69,11 @@
   .btn.secondary{background:var(--ink);}
 
   .status-msg{margin-top:10px;padding:9px 10px;border-radius:8px;font-size:0.82rem;font-weight:700;text-align:center;}
-  .status-msg.ok{background:#DCF3E4;color:var(--green-ok);}
-  .status-msg.err{background:#FBE4DA;color:var(--coral);}
+  .status-msg.ok{background:#123524;color:#8FE3B0;}
+  .status-msg.err{background:#3A1D14;color:#FFB199;}
 
   .round-chip{
-    display:inline-block;background:rgba(240,196,0,0.14);border:1px solid rgba(240,196,0,0.4);
+    display:inline-block;background:rgba(122,82,238,0.16);border:1px solid rgba(122,82,238,0.4);
     color:var(--gold);font-weight:800;font-size:0.8rem;padding:5px 12px;border-radius:20px;margin-bottom:14px;
   }
 
