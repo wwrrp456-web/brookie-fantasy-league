@@ -452,7 +452,9 @@
     background:#2E2E2E;
   }
   tr.tier-gold .pos-cell::before{background:#16A6EA;box-shadow:0 0 8px rgba(22,166,234,0.5);}
-  tr.tier-silver .pos-cell::before{background:#3B9EFF;box-shadow:0 0 8px rgba(59,158,255,0.4);}
+  /* لون منطقة المطاردة (تصدر بنفسجي بدل الأزرق القريب جدًا من لون الصدارة —
+     طلب المستخدم 6 سبتمبر 2026 بعد ملاحظته صعوبة التمييز بينهما بالعين). */
+  tr.tier-silver .pos-cell::before{background:#7A52EE;box-shadow:0 0 8px rgba(122,82,238,0.5);}
   tr.tier-danger .pos-cell::before{background:#FF4438;box-shadow:0 0 8px rgba(255,68,56,0.4);}
 
   /* خانة اللاعب */
@@ -3820,7 +3822,7 @@ function renderStandings(){
   html += '</tbody></table></div>';
   html += `<div class="table-legend">
     <div class="legend-item"><span class="legend-swatch" style="background:#16A6EA;"></span>مراكز الصدارة</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#3B9EFF;"></span>منطقة المطاردة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#7A52EE;"></span>منطقة المطاردة</div>
     <div class="legend-item"><span class="legend-swatch" style="background:#FF4438;"></span>المراكز الأخيرة</div>
   </div>`;
   if(!hasRounds){
