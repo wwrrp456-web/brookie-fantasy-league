@@ -393,6 +393,17 @@
   .status-pill.off{background:rgba(255,255,255,0.06);color:var(--muted);}
   html.light-mode .status-pill.on{background:#E4F1EA;color:#1F8A54;}
 
+  /* مؤشر اكتمال حيّ لكل مشارك بنموذج إدخال الجولة — بدل ما يكتشف المنظم
+     النواقص كلها دفعة وحدة بعد الضغط على "حفظ الجولة" (طلب المستخدم 6 سبتمبر 2026) */
+  .completion-badge{font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-inline-start:8px;}
+  .completion-badge.complete{background:rgba(60,190,120,0.16);color:#3CBE78;}
+  .completion-badge.incomplete{background:rgba(255,111,82,0.14);color:var(--coral);}
+  html.light-mode .completion-badge.complete{background:#E4F1EA;color:#1F8A54;}
+
+  /* زر نسخ صغير (رمز مشارك / رابط QR) — يعطي تأكيدًا بصريًا مؤقتًا "✅ تم النسخ"
+     بدل الاعتماد على تحديد النص يدويًا (طلب المستخدم 6 سبتمبر 2026) */
+  .copy-btn{font-size:0.68rem!important;padding:3px 9px!important;}
+
   /* رقاقات "الجولات المحفوظة" — اضغط عليها للانتقال مباشرة لتعديل جولة سابقة
      بدل الحاجة لتذكّر رقمها وكتابته يدويًا (طلب المستخدم 6 سبتمبر 2026: أحيانًا
      تُكتشف أخطاء بحسابات جولة ماضية وتحتاج تصحيح بعد إدخالها بفترة) */
@@ -960,6 +971,7 @@
             <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">🗓️ جولات محفوظة — اضغط على أي واحدة لتعديل بياناتها (لو اكتشفت خطأ بحساباتها بعد إدخالها):</div>
             <div id="pastRoundsChips" class="row" style="flex-wrap:wrap;gap:6px;"></div>
           </div>
+          <div id="roundCompletionSummary" style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;"></div>
           <div id="roundFormBox"></div>
         </div>
       </details>
@@ -1055,15 +1067,17 @@
 
           <div class="admin-subsection">
             <div class="admin-subsection-title">📱 روابط سريعة (QR)</div>
-            <p style="margin:0 0 8px;font-size:0.85rem;">امسح أو صوّر أي كود عشان تشاركه بسرعة — أسهل من نسخ الرابط يدويًا.</p>
+            <p style="margin:0 0 8px;font-size:0.85rem;">امسح الكود بالكاميرا، أو انسخ الرابط نصًا لو الطرف الآخر ما يقدر يمسح الكود وقتها.</p>
             <div class="row" style="gap:20px;">
               <div style="text-align:center;">
                 <div id="qrSite" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">الموقع الرئيسي</div>
+                <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="site" style="margin-top:6px;">🔗 نسخ الرابط</button>
               </div>
               <div style="text-align:center;">
                 <div id="qrReport" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">ساهم بالبيانات</div>
+                <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="report" style="margin-top:6px;">🔗 نسخ الرابط</button>
               </div>
             </div>
           </div>
@@ -4707,11 +4721,55 @@ document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{
     return;
   }
   box.innerHTML = PARTICIPANTS.map(p=>`
-    <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);">
-      <span>${p.name}</span><span style="font-weight:800;letter-spacing:1px;">${PARTICIPANT_CODES[p.id] || '—'}</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dotted var(--line);">
+      <span>${p.name}</span>
+      <span style="display:flex;align-items:center;gap:8px;">
+        <span style="font-weight:800;letter-spacing:1px;">${PARTICIPANT_CODES[p.id] || '—'}</span>
+        <button type="button" class="btn ghost copy-btn copy-code-btn" data-code="${PARTICIPANT_CODES[p.id] || ''}">📋 نسخ</button>
+      </span>
     </div>`).join('');
   box.style.display = '';
   btn.textContent = '🙈 إخفاء الرموز';
+});
+
+// نسخ نص للحافظة مع تأكيد بصري مؤقت على نفس الزر — بدل تحديد النص يدويًا
+// بالماوس قبل نسخه (طلب المستخدم 6 سبتمبر 2026: رموز المشاركين وروابط QR
+// تُرسَل يدويًا واحدًا واحدًا بواتساب، فالنسخ السريع يوفّر خطوة متكررة).
+async function copyToClipboardWithFeedback(text, btn){
+  if(!text) return;
+  let ok = true;
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    // بديل لو الحافظة غير متاحة (مثلاً بدون HTTPS بمتصفح قديم)
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }catch(e2){ ok = false; }
+  }
+  if(btn){
+    const original = btn.textContent;
+    btn.textContent = ok ? '✅ تم النسخ' : '⚠️ تعذّر النسخ';
+    btn.disabled = true;
+    setTimeout(()=>{ btn.textContent = original; btn.disabled = false; }, 1500);
+  }
+}
+document.getElementById('participantCodesBox').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.copy-code-btn');
+  if(!btn) return;
+  copyToClipboardWithFeedback(btn.dataset.code, btn);
+});
+document.querySelectorAll('.copy-link-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const url = btn.dataset.link === 'report' ? REPORT_URL : SITE_URL;
+    copyToClipboardWithFeedback(url, btn);
+  });
 });
 
 // ---------- رموز QR لرابطي الموقع وصفحة المساهمة ----------
@@ -4771,6 +4829,34 @@ function syncSharedClub(sourceTeamBlock){
     tb.querySelector('.match-rows').innerHTML = rowsData.map(r=>matchRowHTML(r)).join('');
     refreshRemoveButtons(tb);
   });
+  recomputeRoundCompletion();
+}
+
+// مؤشر اكتمال حيّ لكل مشارك بنموذج إدخال الجولة + عداد إجمالي أعلى النموذج —
+// بدل ما يكتشف المنظم النواقص كلها دفعة وحدة بعد الضغط على "حفظ الجولة" فقط
+// (طلب المستخدم 6 سبتمبر 2026). يُستدعى من syncSharedClub() فيغطي كل الأحداث
+// اللي ممكن تغيّر نتيجة مباراة (تعديل مباشر، إضافة/حذف صف، أو مزامنة نادٍ
+// مشترك تغيّر نتائج مشاركين آخرين لم يلمسوا هم أنفسهم شيئًا)، ومن prepareRoundForm
+// مباشرة عند فتح النموذج أول مرة.
+function recomputeRoundCompletion(){
+  const box = document.getElementById('roundFormBox');
+  if(!box) return;
+  const cards = box.querySelectorAll('.round-entry-card');
+  let completeCount = 0;
+  cards.forEach(card=>{
+    const selects = card.querySelectorAll('.res-select');
+    const missing = Array.from(selects).filter(s=>!s.value).length;
+    const isComplete = selects.length > 0 && missing === 0;
+    if(isComplete) completeCount++;
+    const badge = card.querySelector('.completion-badge');
+    if(badge){
+      badge.textContent = isComplete ? '✅ مكتمل' : (missing > 0 ? `⚠️ ${missing} ناقصة` : '');
+      badge.className = 'completion-badge ' + (isComplete ? 'complete' : 'incomplete');
+    }
+  });
+  const summaryEl = document.getElementById('roundCompletionSummary');
+  if(summaryEl && cards.length) summaryEl.textContent = `${completeCount} من ${cards.length} مشارك مكتمل`;
+  else if(summaryEl) summaryEl.textContent = '';
 }
 
 // صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم (اختياري، نص حر لأن
@@ -4853,7 +4939,7 @@ function prepareRoundForm(num){
 
   let html = `<div id="roundForm" data-num="${num}">`;
   PARTICIPANTS.forEach(p=>{
-    html += `<details class="round-entry-card"><summary>${p.name}</summary>`;
+    html += `<details class="round-entry-card"><summary>${p.name}<span class="completion-badge" data-pid="${p.id}"></span></summary>`;
     p.teams.forEach((team, ti)=>{
       const prevEntries = existing && existing.entries && existing.entries[p.id]
         ? getTeamRoundEntries(existing.entries[p.id], ti)
@@ -4900,6 +4986,7 @@ function prepareRoundForm(num){
       }
     });
   })();
+  recomputeRoundCompletion();
 
   // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
   // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
