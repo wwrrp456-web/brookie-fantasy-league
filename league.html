@@ -385,6 +385,32 @@
   .admin-subsection:first-child{border-top:none;padding-top:4px;}
   .admin-subsection-title{font-weight:800;font-size:0.88rem;margin-bottom:8px;}
 
+  /* شارات حالة صغيرة (مفعّل/معطّل) بجانب عنوان "إعدادات الجولة الحالية" —
+     تلخّص حالة التوقعات وتحدي المواجهة بنظرة وحدة بدون فتح القسم (6 سبتمبر 2026) */
+  .round-status-badges{margin-inline-start:auto;display:flex;gap:6px;flex-wrap:wrap;}
+  .status-pill{font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+  .status-pill.on{background:rgba(60,190,120,0.16);color:#3CBE78;}
+  .status-pill.off{background:rgba(255,255,255,0.06);color:var(--muted);}
+  html.light-mode .status-pill.on{background:#E4F1EA;color:#1F8A54;}
+
+  /* رقاقات "الجولات المحفوظة" — اضغط عليها للانتقال مباشرة لتعديل جولة سابقة
+     بدل الحاجة لتذكّر رقمها وكتابته يدويًا (طلب المستخدم 6 سبتمبر 2026: أحيانًا
+     تُكتشف أخطاء بحسابات جولة ماضية وتحتاج تصحيح بعد إدخالها بفترة) */
+  .past-round-chip{font-size:0.74rem!important;padding:4px 11px!important;}
+
+  /* نافذة تأكيد مخصّصة بهوية الموقع بدل نافذة confirm() الرمادية الافتراضية
+     للمتصفح (6 سبتمبر 2026) — تُستخدم لكل إجراء حذف/استبدال لا رجعة فيه */
+  .custom-confirm-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+  }
+  .custom-confirm-box{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:20px;max-width:420px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.35);
+  }
+  .custom-confirm-msg{font-size:0.86rem;line-height:1.7;color:var(--text);margin-bottom:18px;}
+  .custom-confirm-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
+
   .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
   .team-input-row{
     display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
@@ -917,20 +943,35 @@
     <div id="adminPanel" style="display:none;">
       <div class="status-msg ok">أنت مسجّل الدخول كمنظم ✅</div>
 
+      <div class="row" style="margin-bottom:12px;justify-content:flex-end;">
+        <button type="button" class="btn ghost" id="expandAllAdminBtn">⬇️ فتح كل الأقسام</button>
+        <button type="button" class="btn ghost" id="collapseAllAdminBtn">⬆️ طيّ كل الأقسام</button>
+      </div>
+
       <details class="admin-accordion" open>
-        <summary>إضافة جولة جديدة</summary>
+        <summary>➕ إضافة أو تعديل جولة</summary>
         <div class="acc-body">
           <div class="row" style="margin-bottom:10px;">
             <label class="field-label">رقم الجولة:</label>
             <input type="number" id="roundNumber" style="max-width:80px;" min="1">
             <button class="btn secondary" id="startRoundBtn">تجهيز نموذج الجولة</button>
           </div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">🗓️ جولات محفوظة — اضغط على أي واحدة لتعديل بياناتها (لو اكتشفت خطأ بحساباتها بعد إدخالها):</div>
+            <div id="pastRoundsChips" class="row" style="flex-wrap:wrap;gap:6px;"></div>
+          </div>
           <div id="roundFormBox"></div>
         </div>
       </details>
 
       <details class="admin-accordion">
-        <summary>⚙️ إعدادات الجولة الحالية</summary>
+        <summary>
+          <span>⚙️ إعدادات الجولة الحالية</span>
+          <span class="round-status-badges">
+            <span id="predStatusPill" class="status-pill off">🔮 —</span>
+            <span id="duelStatusPill" class="status-pill off">⚔️ —</span>
+          </span>
+        </summary>
         <div class="acc-body">
           <div class="admin-subsection">
             <div class="admin-subsection-title">⏰ عداد الجولة القادمة</div>
@@ -996,6 +1037,7 @@
               <button class="btn ghost" id="importBackupBtn">⬆️ استيراد نسخة احتياطية</button>
               <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
             </div>
+            <div id="lastBackupLabel" style="font-size:0.76rem;color:var(--muted);margin-bottom:6px;"></div>
             <div id="backupMsg"></div>
           </div>
 
@@ -4102,6 +4144,101 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
 });
 
 // ---------- Admin login ----------
+// نافذة تأكيد مخصّصة بهوية الموقع بدل confirm() الافتراضي القبيح للمتصفح —
+// طلب المستخدم (6 سبتمبر 2026) ضمن تنظيف لوحة المنظم. تُرجع Promise<boolean>
+// بدل قيمة فورية، فكل استدعاء لها لازم يكون بـawait داخل دالة async.
+function customConfirm(message, opts={}){
+  return new Promise(resolve=>{
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-confirm-overlay';
+    overlay.innerHTML = `
+      <div class="custom-confirm-box">
+        <div class="custom-confirm-msg">${message.replace(/\n/g,'<br>')}</div>
+        <div class="custom-confirm-actions">
+          <button type="button" class="btn ghost cc-cancel">إلغاء</button>
+          <button type="button" class="btn cc-confirm" style="background:var(--coral);border-color:var(--coral);color:#fff;">${opts.confirmText || 'تأكيد'}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    function cleanup(result){
+      overlay.remove();
+      document.removeEventListener('keydown', onKey);
+      resolve(result);
+    }
+    function onKey(e){ if(e.key === 'Escape') cleanup(false); }
+    overlay.querySelector('.cc-cancel').addEventListener('click', ()=>cleanup(false));
+    overlay.querySelector('.cc-confirm').addEventListener('click', ()=>cleanup(true));
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) cleanup(false); });
+    document.addEventListener('keydown', onKey);
+  });
+}
+
+// شارتا حالة "مفعّل/معطّل" بجانب عنوان "⚙️ إعدادات الجولة الحالية" — تلخّصان
+// حالة التوقعات وتحدي المواجهة بنظرة وحدة بدون فتح القسم (6 سبتمبر 2026).
+function updateRoundSettingsStatus(){
+  const predPill = document.getElementById('predStatusPill');
+  if(predPill){
+    const on = !!PRED_DATA.enabled;
+    predPill.textContent = on ? '🔮 مفعّل' : '🔮 معطّل';
+    predPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const duelPill = document.getElementById('duelStatusPill');
+  if(duelPill){
+    const on = DATA.duelsEnabled !== false;
+    duelPill.textContent = on ? '⚔️ مفعّل' : '⚔️ معطّل';
+    duelPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+}
+
+// رقاقات "الجولات المحفوظة" داخل قسم "➕ إضافة أو تعديل جولة" — تسمح للمنظم
+// يرجع يعدّل بيانات جولة ماضية باكتشاف خطأ بحساباتها بعد إدخالها، بضغطة وحدة
+// بدل ما يحتاج يتذكر رقمها ويكتبه يدويًا بالحقل (طلب المستخدم 6 سبتمبر 2026).
+// التعديل الفعلي كان موجودًا أصلًا (كتابة رقم جولة محفوظة تفتحها للتعديل) —
+// هذي الرقاقات فقط تكشف الإمكانية وتغني عن الكتابة اليدوية.
+function renderPastRoundsChips(){
+  const box = document.getElementById('pastRoundsChips');
+  if(!box) return;
+  if(!DATA.rounds || !DATA.rounds.length){
+    box.innerHTML = '<div style="font-size:0.78rem;color:var(--muted);">لا توجد جولات محفوظة بعد.</div>';
+    return;
+  }
+  box.innerHTML = DATA.rounds.slice().sort((a,b)=>b.number-a.number).map(r=>
+    `<button type="button" class="btn ghost past-round-chip" data-round="${r.number}">✏️ الجولة ${r.number}</button>`
+  ).join('');
+}
+document.getElementById('pastRoundsChips').addEventListener('click', (e)=>{
+  const chip = e.target.closest('.past-round-chip');
+  if(!chip) return;
+  const num = Number(chip.dataset.round);
+  document.getElementById('roundNumber').value = num;
+  prepareRoundForm(num);
+});
+
+// تذكير "آخر نسخة احتياطية" بجانب زر التنزيل — يُخزَّن الوقت محليًا بمتصفح
+// المنظم فقط (لا علاقة له بقاعدة البيانات)، بدل الاعتماد على الذاكرة لمعرفة
+// هل نزّلها بعد آخر جولة أو نسيها (طلب المستخدم 6 سبتمبر 2026).
+function updateLastBackupLabel(){
+  const el = document.getElementById('lastBackupLabel');
+  if(!el) return;
+  try{
+    const ts = localStorage.getItem('brookie_last_backup_at');
+    el.textContent = ts
+      ? 'آخر نسخة نزّلتها من هذا الجهاز: ' + new Date(Number(ts)).toLocaleString('ar')
+      : 'لم تُنزَّل أي نسخة بعد من هذا الجهاز.';
+  }catch(e){
+    el.textContent = '';
+  }
+}
+
+// فتح/طيّ كل أقسام لوحة المنظم دفعة واحدة — مفيد وقت المراجعة الشاملة
+// (طلب المستخدم 6 سبتمبر 2026).
+document.getElementById('expandAllAdminBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('#adminPanel details.admin-accordion').forEach(d=> d.open = true);
+});
+document.getElementById('collapseAllAdminBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('#adminPanel details.admin-accordion').forEach(d=> d.open = false);
+});
+
 document.getElementById('loginBtn').addEventListener('click', ()=>{
   const val = document.getElementById('pinInput').value.trim();
   const msg = document.getElementById('loginMsg');
@@ -4133,6 +4270,14 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     if(predToggle) predToggle.checked = !!PRED_DATA.enabled;
     const duelsToggle = document.getElementById('duelsEnabledToggle');
     if(duelsToggle) duelsToggle.checked = DATA.duelsEnabled !== false;
+    updateRoundSettingsStatus();
+    // تعبئة رقم الجولة تلقائيًا برقم الجولة القادمة — توفّر خطوة يدوية متكررة
+    // كل أسبوع (طلب المستخدم 6 سبتمبر 2026). رقاقات "الجولات المحفوظة" تحت
+    // الحقل تسمح بتجاوز هذا وفتح جولة سابقة للتعديل بضغطة وحدة.
+    const roundNumEl = document.getElementById('roundNumber');
+    if(roundNumEl) roundNumEl.value = getCurrentRoundNumber() + 1;
+    renderPastRoundsChips();
+    updateLastBackupLabel();
     loadCommunityReports();
     renderQuickLinkCodes();
   }else{
@@ -4187,6 +4332,7 @@ document.getElementById('predictionsEnabledToggle').addEventListener('change', a
     PRED_DATA.enabled = !newVal;
     msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
   }
+  updateRoundSettingsStatus();
 });
 
 // ---------- تفعيل/إخفاء قسم "تحدي مواجهة الجولة" (لوحة المنظم) ----------
@@ -4214,6 +4360,7 @@ document.getElementById('duelsEnabledToggle').addEventListener('change', async (
     DATA.duelsEnabled = prevVal;
     msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
   }
+  updateRoundSettingsStatus();
 });
 
 // ---------- نسخة احتياطية: تصدير واستيراد ----------
@@ -4241,6 +4388,8 @@ document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
   setTimeout(()=>URL.revokeObjectURL(url), 2000);
   const msg = document.getElementById('backupMsg');
   if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية ✅</div>';
+  try{ localStorage.setItem('brookie_last_backup_at', String(Date.now())); }catch(e){}
+  updateLastBackupLabel();
 });
 
 document.getElementById('importBackupBtn').addEventListener('click', ()=>{
@@ -4268,10 +4417,11 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
     }
     const roundsCount = Array.isArray(parsed.data.rounds) ? parsed.data.rounds.length : 0;
     const exportedLabel = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ar') : 'غير معروف';
-    const sure = confirm(
+    const sure = await customConfirm(
       `تحذير: هذا الإجراء يستبدل كل بيانات الجولات والتوقعات الحالية على الموقع الحي لكل الزوار بمحتوى هذا الملف.\n\n` +
       `تاريخ تصدير الملف: ${exportedLabel}\nعدد الجولات في الملف: ${roundsCount}\n\n` +
-      `هل أنت متأكد إنك تبي تستعيد هذه النسخة الآن؟`
+      `هل أنت متأكد إنك تبي تستعيد هذه النسخة الآن؟`,
+      {confirmText: 'استعادة النسخة'}
     );
     if(!sure) return;
 
@@ -4283,6 +4433,10 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
     renderAll();
     renderPredictions();
     renderMyDashboard();
+    updateRoundSettingsStatus();
+    renderPastRoundsChips();
+    const roundNumEl2 = document.getElementById('roundNumber');
+    if(roundNumEl2) roundNumEl2.value = getCurrentRoundNumber() + 1;
 
     msg.innerHTML = (okData && okPred)
       ? '<div class="status-msg ok">تم استعادة النسخة الاحتياطية بنجاح ✅</div>'
@@ -4517,7 +4671,7 @@ document.getElementById('communityMatchesBox').addEventListener('click', async (
   if(deleteBtn){
     const row = deleteBtn.closest('.community-report-row');
     const { id, round } = row.dataset;
-    const sure = confirm('هل أنت متأكد إنك تبي تحذف هذا التقرير نهائيًا؟ هذا الإجراء لا يمكن التراجع عنه.');
+    const sure = await customConfirm('هل أنت متأكد إنك تبي تحذف هذا التقرير نهائيًا؟ هذا الإجراء لا يمكن التراجع عنه.', {confirmText: '🗑️ حذف'});
     if(!sure) return;
     deleteBtn.disabled = true;
     try{
@@ -4687,19 +4841,13 @@ document.getElementById('roundFormBox').addEventListener('change', (e)=>{
   }
 });
 
-document.getElementById('startRoundBtn').addEventListener('click', ()=>{
-  const rawNum = document.getElementById('roundNumber').value;
-  const num = parseInt(rawNum);
-  // لازم رقم صحيح أكبر من CURRENT_BASE_ROUND (=2، وهي الجولتان المدمجتان في carry).
-  // بدون هذا الشرط كان ممكن يكتب المنظم بالغلط "2" أو "1" أو رقمًا سالبًا فيُنشأ
-  // كسجل جولة جديد فوق نقاط carry المدمجة أصلاً — يضاعف نقاط تلك الجولة على كل
-  // الـ18 مشاركًا ويكسر منطق "فترة الجسر" في الترتيب وحركة المراكز (خطأ اكتُشف
-  // ومنع 3 سبتمبر 2026).
-  if(!Number.isInteger(num) || num <= CURRENT_BASE_ROUND){
-    alert(`رقم الجولة لازم يكون رقمًا صحيحًا أكبر من ${CURRENT_BASE_ROUND} (الجولة القادمة هي رقم ${CURRENT_BASE_ROUND+1} فأعلى).`);
-    return;
-  }
-
+// جهّز نموذج جولة (جديدة أو موجودة مسبقًا للتعديل) — دالة مستقلة بدل كودها
+// مباشرة داخل مستمع النقر، عشان تُستدعى أيضًا من رقاقات "الجولات المحفوظة"
+// (renderPastRoundsChips) بضغطة وحدة بدل الحاجة لكتابة رقم الجولة يدويًا
+// بالحقل (طلب المستخدم 6 سبتمبر 2026: أحيانًا يُكتشف خطأ بحسابات جولة ماضية
+// ويحتاج تصحيحها بعد إدخالها بفترة — الإمكانية كانت موجودة أصلًا (كتابة رقم
+// جولة محفوظة تفتحها للتعديل) لكن غير واضحة، فهذي الرقاقات تكشفها).
+function prepareRoundForm(num){
   let existing = DATA.rounds.find(r=>r.number===num);
   const box = document.getElementById('roundFormBox');
 
@@ -4759,13 +4907,14 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
   const deleteBtn = document.getElementById('deleteRoundBtn');
   if(deleteBtn){
     deleteBtn.addEventListener('click', async ()=>{
-      const sure = confirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها نهائيًا من بيانات كل الزوار ولا يمكن التراجع عنه إلا باستعادة نسخة احتياطية.`);
+      const sure = await customConfirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها نهائيًا من بيانات كل الزوار ولا يمكن التراجع عنه إلا باستعادة نسخة احتياطية.`, {confirmText: '🗑️ حذف الجولة'});
       if(!sure) return;
       DATA.rounds = DATA.rounds.filter(r=>r.number!==num);
       DATA.updatedAt = Date.now();
       deleteBtn.disabled = true;
       const ok = await saveData();
       renderAll();
+      renderPastRoundsChips();
       const saveMsg = document.getElementById('saveRoundMsg');
       if(saveMsg) saveMsg.innerHTML = ok
         ? `<div class="status-msg ok">تم حذف الجولة ${num} بنجاح ✅</div>`
@@ -4774,7 +4923,7 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
         setTimeout(()=>{
           box.innerHTML = '';
           const numInput = document.getElementById('roundNumber');
-          if(numInput) numInput.value = '';
+          if(numInput) numInput.value = getCurrentRoundNumber() + 1;
         }, 1500);
       }
     });
@@ -4822,7 +4971,23 @@ document.getElementById('startRoundBtn').addEventListener('click', ()=>{
       ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div>'
       : '<div class="status-msg err">تعذّر الحفظ المشترك. النتائج ظاهرة عندك الآن لكنها لن تصل للآخرين — أعد المحاولة.</div>';
     renderAll();
+    renderPastRoundsChips();
   });
+}
+
+document.getElementById('startRoundBtn').addEventListener('click', ()=>{
+  const rawNum = document.getElementById('roundNumber').value;
+  const num = parseInt(rawNum);
+  // لازم رقم صحيح أكبر من CURRENT_BASE_ROUND (=2، وهي الجولتان المدمجتان في carry).
+  // بدون هذا الشرط كان ممكن يكتب المنظم بالغلط "2" أو "1" أو رقمًا سالبًا فيُنشأ
+  // كسجل جولة جديد فوق نقاط carry المدمجة أصلاً — يضاعف نقاط تلك الجولة على كل
+  // الـ18 مشاركًا ويكسر منطق "فترة الجسر" في الترتيب وحركة المراكز (خطأ اكتُشف
+  // ومنع 3 سبتمبر 2026).
+  if(!Number.isInteger(num) || num <= CURRENT_BASE_ROUND){
+    alert(`رقم الجولة لازم يكون رقمًا صحيحًا أكبر من ${CURRENT_BASE_ROUND} (الجولة القادمة هي رقم ${CURRENT_BASE_ROUND+1} فأعلى).`);
+    return;
+  }
+  prepareRoundForm(num);
 });
 
 // ---------- Refresh (manual re-read of all rounds & re-rank) ----------
