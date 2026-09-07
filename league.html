@@ -449,6 +449,10 @@
   .team-input-row select, .team-input-row input{
     font-family:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;font-size:0.82rem;
   }
+  /* عمود الخصم: قائمة منسدلة بأندية التطبيق + حقل نصي إضافي يظهر فقط عند
+     اختيار "غير ذلك" (فريق خارج القائمة) — طلب المستخدم 7 سبتمبر 2026. */
+  .opp-field{display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .opp-field select, .opp-field input{width:100%;}
   .team-input-row .remove-match-btn{
     background:none;border:1px solid var(--coral);color:var(--coral);border-radius:6px;
     cursor:pointer;font-size:0.72rem;padding:5px 0;line-height:1;
@@ -4999,7 +5003,7 @@ function collectRoundFormEntries(){
     const result = row.querySelector('.res-select').value;
     const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
     const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
-    const opp = row.querySelector('.opp-input').value.trim();
+    const opp = getOppValue(row);
     if(!entries[pid]) entries[pid] = [];
     entries[pid].push({ti, opp: opp || null, result, gf, ga});
   });
@@ -5020,6 +5024,36 @@ function loadRoundDraft(num){
 function clearRoundDraft(num){
   try{ localStorage.removeItem(roundDraftKey(num)); }catch(e){}
 }
+
+// ---------- مسودة مشتركة عبر Firebase (زر يدوي، طلب المستخدم 7 سبتمبر 2026) ----------
+// بخلاف المسودة التلقائية أعلاه (localStorage، تحمي من إغلاق نفس المتصفح
+// بالغلط فقط)، هذه تُحفظ يدويًا بضغطة زر إلى قاعدة البيانات المشتركة — تصل
+// لأي جهاز/متصفح يفتح المنظم منه لاحقًا، ولا تُفقد بمسح بيانات المتصفح.
+// طلب المستخدم: "مستحيل أسجّل بيانات كل المتسابقين بجلسة واحدة" — فيحتاج
+// يحفظ تقدّمه الجزئي (حتى لو ناقصًا) ويكمل لاحقًا من أي مكان. تُخزَّن بمسار
+// Firebase منفصل تمامًا عن DATA.rounds العلنية (لا تصل للزوار ولا تدخل حسابات
+// الترتيب أبدًا مهما كانت ناقصة) — عبر window.storage نفسها المستخدمة لبقية
+// بيانات الموقع (shared:true).
+function organizerDraftKey(num){ return `organizer_draft_round_${num}`; }
+async function saveSharedRoundDraft(num){
+  try{
+    const ok = await window.storage.set(organizerDraftKey(num), {entries: collectRoundFormEntries(), savedAt: Date.now()}, true);
+    return !!ok;
+  }catch(e){
+    console.warn('تعذّر حفظ المسودة المشتركة:', e);
+    return false;
+  }
+}
+async function loadSharedRoundDraft(num){
+  try{
+    const res = await window.storage.get(organizerDraftKey(num), true);
+    return (res && res.value) ? res.value : null;
+  }catch(e){ return null; }
+}
+async function clearSharedRoundDraft(num){
+  try{ await window.storage.set(organizerDraftKey(num), null, true); }catch(e){}
+}
+
 function scheduleDraftSave(num){
   if(!num || suppressDraftTracking) return;
   roundFormDirty = true;
@@ -5039,19 +5073,65 @@ function syncSharedClub(sourceTeamBlock){
   const club = sourceTeamBlock.dataset.team;
   if(!club) return;
   const rowsData = Array.from(sourceTeamBlock.querySelectorAll('.match-rows .team-input-row')).map(row=>({
-    opp: row.querySelector('.opp-input').value,
+    opp: getOppValue(row),
     result: row.querySelector('.res-select').value,
     gf: row.querySelector('.gf-input').value,
     ga: row.querySelector('.ga-input').value,
   }));
   document.querySelectorAll('#roundForm .team-block').forEach(tb=>{
     if(tb === sourceTeamBlock || tb.dataset.team !== club) return;
-    tb.querySelector('.match-rows').innerHTML = rowsData.map(r=>matchRowHTML(r)).join('');
+    tb.querySelector('.match-rows').innerHTML = rowsData.map(r=>matchRowHTML(r, club)).join('');
     refreshRemoveButtons(tb);
   });
   recomputeRoundCompletion();
   const formEl = document.getElementById('roundForm');
   if(formEl) scheduleDraftSave(Number(formEl.dataset.num));
+}
+
+// مزامنة "المباراة الداخلية" تلقائيًا: لو خصم نادٍ ما (بصندوق مشارك) هو نادٍ
+// آخر من ضمن أندية المشاركين نفسها (وليس فريقًا خارجيًا بنص حر)، فتسجيل نتيجة
+// طرف هو فعليًا نفس المباراة من الطرف الآخر — فنعكس النتيجة والأهداف تلقائيًا
+// بصندوق ذلك الخصم عند كل من يملكه من المشاركين، بدل ما يحتاج المنظم يفتح
+// صندوق الخصم يدويًا ويسجّل نفس المباراة معكوسة بنفسه (طلب المستخدم 7 سبتمبر
+// 2026: "الاتحاد والنصر لعبوا، سجّلت نتيجة الاتحاد، أبى النصر يتسجّل تلقائي
+// أنه خسر ضد الاتحاد"). تعمل بالاتجاهين: تعديل صندوق الاتحاد يحدّث النصر،
+// وتعديل صندوق النصر مباشرة يحدّث الاتحاد بنفس الطريقة، لأنها تُستدعى من كل
+// تعديل بأي صندوق (انظر مستمعي input/change بالأسفل).
+function mirrorInternalOpponent(sourceTeamBlock){
+  const club = sourceTeamBlock.dataset.team;
+  if(!club) return;
+  const rows = Array.from(sourceTeamBlock.querySelectorAll('.match-rows .team-input-row'));
+  rows.forEach(row=>{
+    const opp = getOppValue(row);
+    if(!opp || opp === club || !CLUBS.includes(opp)) return;
+    const result = row.querySelector('.res-select').value;
+    if(!result) return;
+    const gf = row.querySelector('.gf-input').value;
+    const ga = row.querySelector('.ga-input').value;
+    const invResult = invertMatchResult(result);
+    const targets = Array.from(document.querySelectorAll('#roundForm .team-block')).filter(tb=>tb.dataset.team===opp);
+    if(!targets.length) return;
+    // صندوق واحد يكفي كمصدر تحديث لنادي الخصم — مزامنة الأندية المشتركة
+    // (syncSharedClub) بالأسفل تتكفّل بنشره على بقية المشاركين المالكين لنفس
+    // ذلك النادي، فلا داعٍ لتكرار المنطق لكل صندوق مطابق على حدة.
+    const primaryTarget = targets[0];
+    const targetRows = Array.from(primaryTarget.querySelectorAll('.match-rows .team-input-row'));
+    const targetRow = targetRows.find(r=>getOppValue(r)===club) || targetRows[0];
+    if(!targetRow) return;
+    // حارس ضد التكرار اللانهائي: لو الصف الهدف مطابق أصلًا للقيمة المطلوبة
+    // (حالة شائعة لأن syncSharedClub الداخلية بالأسفل تستدعي نفسها لاحقًا على
+    // الطرف الآخر)، لا داعٍ لإعادة الكتابة ولا لإعادة النشر.
+    const already = getOppValue(targetRow)===club
+      && targetRow.querySelector('.res-select').value===invResult
+      && String(targetRow.querySelector('.gf-input').value)===String(ga)
+      && String(targetRow.querySelector('.ga-input').value)===String(gf);
+    if(already) return;
+    setOppValue(targetRow, club);
+    targetRow.querySelector('.res-select').value = invResult;
+    targetRow.querySelector('.gf-input').value = ga;
+    targetRow.querySelector('.ga-input').value = gf;
+    syncSharedClub(primaryTarget);
+  });
 }
 
 // مؤشر اكتمال حيّ لكل مشارك بنموذج إدخال الجولة + عداد إجمالي أعلى النموذج —
@@ -5089,16 +5169,32 @@ function recomputeRoundCompletion(){
   if(stickyEl) stickyEl.textContent = summaryText;
 }
 
-// صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم (اختياري، نص حر لأن
-// الخصم قد لا يكون من أندية المشاركين) والنتيجة والأهداف، وزر حذف الصف (يظهر
-// فقط إذا كان أكثر من صف واحد لنفس النادي).
-function matchRowHTML(prev){
+// صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم والنتيجة والأهداف،
+// وزر حذف الصف (يظهر فقط إذا كان أكثر من صف واحد لنفس النادي).
+// الخصم أصبح قائمة منسدلة بأندية التطبيق (CLUBS) بدل نص حر بالكامل (طلب
+// المستخدم 7 سبتمبر 2026: كان يكتب اسم الخصم يدويًا في كل مرة رغم أن أغلب
+// الخصوم أصلاً من ضمن أندية المشاركين) — مع خيار أخير "غير ذلك" يكشف حقل نص
+// حر لخصم من خارج القائمة (فرق ليست ضمن أندية المشاركين الـ31). اختيار خصم
+// من القائمة هو ما يُفعّل مزامنة "المباراة الداخلية" التلقائية (mirrorInternalOpponent
+// بالأسفل) — خصم بنص حر لا يمكن مطابقته بنادٍ آخر فلا يُشغّلها.
+function matchRowHTML(prev, club){
   const selResult = prev ? prev.result : '';
   const gf = prev ? prev.gf : '';
   const ga = prev ? prev.ga : '';
   const opp = prev && prev.opp ? prev.opp : '';
+  const isCustomOpp = !!(opp && !CLUBS.includes(opp));
+  const oppOptions = CLUBS.filter(c=>c!==club).map(c=>
+    `<option value="${c}" ${opp===c?'selected':''}>${c}</option>`
+  ).join('');
   return `<div class="team-input-row">
-    <input type="text" class="opp-input" placeholder="الخصم (اختياري)" value="${opp.replace(/"/g,'&quot;')}">
+    <div class="opp-field">
+      <select class="opp-select">
+        <option value="" ${!opp?'selected':''}>اختر الخصم (اختياري)</option>
+        ${oppOptions}
+        <option value="__other__" ${isCustomOpp?'selected':''}>غير ذلك (فريق خارج القائمة)</option>
+      </select>
+      <input type="text" class="opp-custom-input" placeholder="اكتب اسم الفريق" value="${isCustomOpp ? opp.replace(/"/g,'&quot;') : ''}" style="${isCustomOpp ? '' : 'display:none;'}">
+    </div>
     <select class="res-select">
       <option value="" ${selResult===''?'selected':''} disabled>اختر النتيجة</option>
       <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
@@ -5109,6 +5205,37 @@ function matchRowHTML(prev){
     <input type="number" class="ga-input" placeholder="عليه" min="0" value="${ga}">
     <button type="button" class="remove-match-btn" title="حذف هذه المباراة">✕</button>
   </div>`;
+}
+
+// قيمة الخصم الفعلية لصفّ ما: اسم النادي من القائمة، أو نص الحقل الحر لو
+// اختار المنظم "غير ذلك"، أو فارغ لو لم يُحدَّد خصم بعد.
+function getOppValue(row){
+  const sel = row.querySelector('.opp-select');
+  if(!sel) return '';
+  if(sel.value === '__other__'){
+    const custom = row.querySelector('.opp-custom-input');
+    return custom ? custom.value.trim() : '';
+  }
+  return sel.value;
+}
+// يضبط خصم صفّ برمجيًا (تستخدمها مزامنة الأندية المشتركة ومزامنة المباراة
+// الداخلية بالأسفل) — يختار من القائمة لو القيمة نادٍ معروف، وإلا يفعّل
+// "غير ذلك" ويعبّئ الحقل الحر.
+function setOppValue(row, value){
+  const sel = row.querySelector('.opp-select');
+  const custom = row.querySelector('.opp-custom-input');
+  if(!sel) return;
+  const isKnown = value && Array.from(sel.options).some(o=>o.value===value);
+  if(isKnown){
+    sel.value = value;
+    if(custom){ custom.style.display='none'; custom.value=''; }
+  }else if(value){
+    sel.value = '__other__';
+    if(custom){ custom.style.display=''; custom.value=value; }
+  }else{
+    sel.value = '';
+    if(custom){ custom.style.display='none'; custom.value=''; }
+  }
 }
 
 // إظهار/إخفاء زر حذف الصف: يظهر فقط عند وجود أكثر من مباراة واحدة لنفس النادي
@@ -5127,9 +5254,10 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
   const addBtn = e.target.closest('.add-match-btn');
   if(addBtn){
     const teamBlock = addBtn.closest('.team-block');
-    teamBlock.querySelector('.match-rows').insertAdjacentHTML('beforeend', matchRowHTML(null));
+    teamBlock.querySelector('.match-rows').insertAdjacentHTML('beforeend', matchRowHTML(null, teamBlock.dataset.team));
     refreshRemoveButtons(teamBlock);
     syncSharedClub(teamBlock);
+    mirrorInternalOpponent(teamBlock);
     return;
   }
   const removeBtn = e.target.closest('.remove-match-btn');
@@ -5138,6 +5266,7 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     removeBtn.closest('.team-input-row').remove();
     refreshRemoveButtons(teamBlock);
     syncSharedClub(teamBlock);
+    mirrorInternalOpponent(teamBlock);
     return;
   }
   // طيّ/فتح كل بطاقات المشاركين (details.round-entry-card) داخل نموذج الجولة
@@ -5170,21 +5299,49 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     if(n){ clearRoundDraft(n); prepareRoundForm(n, {ignoreDraft:true}); }
     return;
   }
+  // بانر المسودة المشتركة (Firebase) — "استخدامها" يعيد بناء النموذج ببياناتها
+  // (طلب المستخدم 7 سبتمبر 2026: متابعة تجهيز الجولة من جهاز آخر).
+  const applySharedDraftBtn = e.target.closest('#applySharedDraftBtn');
+  if(applySharedDraftBtn){
+    const formEl = document.getElementById('roundForm');
+    const n = formEl ? Number(formEl.dataset.num) : null;
+    if(n){
+      applySharedDraftBtn.disabled = true;
+      loadSharedRoundDraft(n).then(shared=>{
+        if(shared) prepareRoundForm(n, {useSharedDraft:true, sharedEntries: shared.entries});
+      });
+    }
+    return;
+  }
 });
 
-// مزامنة حيّة أثناء الكتابة/الاختيار: أي تغيير بحقل خصم/أهداف (input) أو نتيجة
-// (change، لأنه <select>) داخل أي صندوق نادٍ يُنشر فورًا على كل صناديق نفس
-// النادي عند بقية المشاركين (انظر تعليق syncSharedClub أعلاه).
+// مزامنة حيّة أثناء الكتابة/الاختيار: أي تغيير بحقل خصم (اختيار من القائمة أو
+// كتابة بالحقل الحر عند "غير ذلك") أو أهداف (input)، أو نتيجة (change، لأنه
+// <select>) داخل أي صندوق نادٍ يُنشر فورًا على صناديق نفس النادي عند بقية
+// المشاركين (syncSharedClub)، وعلى صندوق الخصم لو كان نفس المباراة "داخلية"
+// (mirrorInternalOpponent) — انظر تعليقات الدالتين أعلاه.
 document.getElementById('roundFormBox').addEventListener('input', (e)=>{
-  if(e.target.matches('.opp-input, .gf-input, .ga-input')){
+  if(e.target.matches('.opp-custom-input, .gf-input, .ga-input')){
     const teamBlock = e.target.closest('.team-block');
-    if(teamBlock) syncSharedClub(teamBlock);
+    if(teamBlock){ syncSharedClub(teamBlock); mirrorInternalOpponent(teamBlock); }
   }
 });
 document.getElementById('roundFormBox').addEventListener('change', (e)=>{
+  if(e.target.matches('.opp-select')){
+    // إظهار/إخفاء حقل "اسم الفريق" الحر عند اختيار/إلغاء "غير ذلك".
+    const row = e.target.closest('.team-input-row');
+    const custom = row ? row.querySelector('.opp-custom-input') : null;
+    if(custom){
+      if(e.target.value === '__other__'){ custom.style.display=''; custom.focus(); }
+      else{ custom.style.display='none'; custom.value=''; }
+    }
+    const teamBlock = e.target.closest('.team-block');
+    if(teamBlock){ syncSharedClub(teamBlock); mirrorInternalOpponent(teamBlock); }
+    return;
+  }
   if(e.target.matches('.res-select')){
     const teamBlock = e.target.closest('.team-block');
-    if(teamBlock) syncSharedClub(teamBlock);
+    if(teamBlock){ syncSharedClub(teamBlock); mirrorInternalOpponent(teamBlock); }
     return;
   }
   // فلتر "عرض الناقص فقط" — إعادة تطبيقه فورًا عند تبديل الخانة (طلب المستخدم
@@ -5209,9 +5366,12 @@ function prepareRoundForm(num, opts={}){
   // مسودة قديمة دون علمه (طلب المستخدم 7 سبتمبر 2026).
   const draft = opts.ignoreDraft ? null : loadRoundDraft(num);
   const useDraftData = !!(opts.useDraft && draft);
+  const useSharedDraftData = !!(opts.useSharedDraft && opts.sharedEntries);
   const sourceEntries = useDraftData
     ? draft.entries
-    : (existing && existing.entries ? existing.entries : null);
+    : useSharedDraftData
+      ? opts.sharedEntries
+      : (existing && existing.entries ? existing.entries : null);
 
   let html = `<div id="roundForm" data-num="${num}">`;
   if(draft && !opts.useDraft && !opts.ignoreDraft){
@@ -5246,7 +5406,7 @@ function prepareRoundForm(num, opts={}){
         : '';
       html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}">
         <div class="team-block-head">${clubCrestSVG(team, 22)}<span>${team}</span>${sharedBadge}</div>
-        <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev)).join('')}</div>
+        <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev, team)).join('')}</div>
         <button type="button" class="btn ghost add-match-btn">+ إضافة مباراة أخرى لهذا النادي</button>
       </div>`;
     });
@@ -5255,6 +5415,7 @@ function prepareRoundForm(num, opts={}){
   html += `<div class="round-sticky-bar">
     <span id="roundStickyCounter"></span>
     <span style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn ghost" id="savePartialRoundBtn" title="يحفظ تقدّمك الحالي (حتى لو ناقصًا) على قاعدة البيانات المشتركة فقط، دون نشره للزوار — تقدر تكمله لاحقًا من أي جهاز">☁️ حفظ التقدّم كمسودة مشتركة</button>
       <button class="btn" id="saveRoundBtn">حفظ الجولة</button>
       ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>` : ''}
     </span>
@@ -5280,14 +5441,37 @@ function prepareRoundForm(num, opts={}){
       if(hasData){
         seenClubs.add(club);
         syncSharedClub(tb);
+        mirrorInternalOpponent(tb);
       }
     });
   })();
   recomputeRoundCompletion();
   suppressDraftTracking = false;
-  // لو استخدمنا بيانات مسودة غير محفوظة رسميًا لتعبئة النموذج، فهو فعليًا
-  // "غير محفوظ" منذ اللحظة الأولى (حتى لو المنظم لم يعدّل شيئًا بعد فتحه).
-  roundFormDirty = useDraftData;
+  // لو استخدمنا بيانات مسودة (محلية أو مشتركة) غير محفوظة رسميًا لتعبئة
+  // النموذج، فهو فعليًا "غير محفوظ" منذ اللحظة الأولى (حتى لو المنظم لم يعدّل
+  // شيئًا بعد فتحه).
+  roundFormDirty = useDraftData || useSharedDraftData;
+
+  // تحقّق (غير متزامن) من وجود مسودة مشتركة سحابيًا لهذه الجولة — تُعرض كبانر
+  // إضافي إن وُجدت، بلا استبدال تلقائي لبيانات النموذج الحالية (طلب المستخدم
+  // 7 سبتمبر 2026). لا تُستخدَم تلقائيًا حتى لا تُفاجئ المنظم ببيانات من جهاز
+  // آخر تحل محل ما يراه أمامه الآن.
+  if(!useSharedDraftData){
+    loadSharedRoundDraft(num).then(shared=>{
+      if(!shared) return;
+      const formEl = document.getElementById('roundForm');
+      if(!formEl || Number(formEl.dataset.num) !== num) return; // المنظم بدّل الجولة بالأثناء
+      if(document.getElementById('sharedDraftBanner')) return;
+      const banner = document.createElement('div');
+      banner.className = 'draft-banner';
+      banner.id = 'sharedDraftBanner';
+      banner.innerHTML = `☁️ فيه مسودة محفوظة سحابيًا لهذه الجولة (${timeAgoLabel(shared.savedAt)}) — يمكنك المتابعة منها من هنا أو من أي جهاز آخر.
+        <div class="row" style="margin-top:8px;">
+          <button type="button" class="btn secondary" id="applySharedDraftBtn">استخدام المسودة السحابية</button>
+        </div>`;
+      box.insertBefore(banner, box.firstChild);
+    });
+  }
 
   // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
   // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
@@ -5309,6 +5493,7 @@ function prepareRoundForm(num, opts={}){
         : '<div class="status-msg err">تعذّر الحذف، حاول مرة ثانية.</div>';
       if(ok){
         clearRoundDraft(num);
+        clearSharedRoundDraft(num);
         roundFormDirty = false;
         setTimeout(()=>{
           box.innerHTML = '';
@@ -5318,6 +5503,29 @@ function prepareRoundForm(num, opts={}){
       }
     });
   }
+
+  // "حفظ التقدّم كمسودة مشتركة" — يحفظ الحالة الحالية للنموذج (حتى لو ناقصة)
+  // على قاعدة البيانات المشتركة مباشرة، بدون شرط اكتمال كل المباريات (بخلاف
+  // زر "حفظ الجولة" الرسمي بالأسفل). لا تلمس DATA.rounds العلنية إطلاقًا —
+  // فلا تصل للزوار ولا تدخل حسابات الترتيب مهما كانت ناقصة (طلب المستخدم 7
+  // سبتمبر 2026: "مستحيل أسجّل كل المتسابقين بجلسة واحدة").
+  document.getElementById('savePartialRoundBtn').addEventListener('click', async ()=>{
+    const btn = document.getElementById('savePartialRoundBtn');
+    btn.disabled = true;
+    const ok = await saveSharedRoundDraft(num);
+    btn.disabled = false;
+    const msgEl = document.getElementById('saveRoundMsg');
+    if(msgEl) msgEl.innerHTML = ok
+      ? '<div class="status-msg ok">تم حفظ تقدّمك الحالي سحابيًا ✅ — تقدر تكمل لاحقًا من أي جهاز (لن يظهر للزوار حتى تضغط "حفظ الجولة" لاحقًا).</div>'
+      : '<div class="status-msg err">تعذّر الحفظ السحابي، حاول مرة ثانية.</div>';
+    if(ok){
+      // محفوظ الآن سحابيًا فلا خطر من فقدانه — إغلاق الصفحة آمن حتى لو الجولة
+      // نفسها لم تُحفَظ رسميًا بعد (لا تحذير beforeunload).
+      roundFormDirty = false;
+      const banner = document.getElementById('sharedDraftBanner');
+      if(banner) banner.remove();
+    }
+  });
 
   document.getElementById('saveRoundBtn').addEventListener('click', async ()=>{
     // تحقق قبل الحفظ: أي مباراة بدون نتيجة مختارة تمنع الحفظ بالكامل — بدل ما كانت
@@ -5361,6 +5569,7 @@ function prepareRoundForm(num, opts={}){
       : '<div class="status-msg err">تعذّر الحفظ المشترك. النتائج ظاهرة عندك الآن لكنها لن تصل للآخرين — أعد المحاولة.</div>';
     if(ok){
       clearRoundDraft(num);
+      clearSharedRoundDraft(num);
       roundFormDirty = false;
     }
     renderAll();
