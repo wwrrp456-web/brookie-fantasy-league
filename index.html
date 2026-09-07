@@ -4048,12 +4048,20 @@ function r2ResBadge(res){
 // كرت "الجولة 2" الكامل لكل مشارك: كل نادٍ ومبارياته الحقيقية ضمن نافذة
 // الجولة (تاريخ/خصم/نتيجة/أهداف)، من ROUND2_MATCHES مباشرة
 function renderRound2Section(){
-  // نستثني من هذا الأرشيف التاريخي أي مشارك لم يكن ضمن المسابقة أصلًا خلال
-  // نافذة الجولة 2 (JOINED_AFTER_ROUND2، مثل محمد عثمان الملتحق بالجولة 3
-  // مباشرة) — عرض كرت له هنا كان سيُظهر "0 نقطة" وهميّة لجولة لم يشارك فيها
-  // إطلاقًا (7 سبتمبر 2026).
-  const rows = PARTICIPANTS.filter(p=>!JOINED_AFTER_ROUND2[p.id]).map(p=>({p, r2: computeRound2ForParticipant(p)}));
+  // كل مشارك يظهر بهذا الأرشيف التاريخي — حتى من التحق بعد نافذة الجولة 2
+  // (JOINED_AFTER_ROUND2، مثل محمد عثمان الملتحق بالجولة 3 مباشرة). بدل
+  // استثنائه بالكامل من القائمة (كما كان سابقًا) أو عرض كرت مباريات وهمي
+  // له، يظهر اسمه بصف "لم يلتحق بعد بالمسابقة" — بنفس نمط renderRound1Section
+  // أدناه — حتى يبقى موجودًا دائمًا بقائمة الجولات (7 سبتمبر 2026، بطلب المستخدم).
+  const rows = PARTICIPANTS.map(p=>({
+    p,
+    joined: !JOINED_AFTER_ROUND2[p.id],
+    r2: JOINED_AFTER_ROUND2[p.id] ? null : computeRound2ForParticipant(p)
+  }));
   rows.sort((a,b)=>{
+    if(!a.joined && !b.joined) return 0;
+    if(!a.joined) return 1;
+    if(!b.joined) return -1;
     if(b.r2.points !== a.r2.points) return b.r2.points - a.r2.points;
     return a.p.name.localeCompare(b.p.name, 'ar');
   });
@@ -4062,7 +4070,16 @@ function renderRound2Section(){
   html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. 👑 بطل الجولة: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة).</p>`;
   html += roundTitlesHTML((computeRoundTitlesArchive())[2]);
 
-  rows.forEach(({p, r2})=>{
+  rows.forEach(({p, r2, joined})=>{
+    if(!joined){
+      html += `<div class="r2-card">
+        <div class="r2-head">
+          <div class="r2-name">${p.name}</div>
+          <div class="r2-pts"><span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div>
+        </div>
+      </div>`;
+      return;
+    }
     const isChamp = p.id === ROUND_HERO_OVERRIDE[2];
     html += `<div class="r2-card${isChamp?' is-champion':''}">
       <div class="r2-head">
