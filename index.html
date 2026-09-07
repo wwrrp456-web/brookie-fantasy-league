@@ -1152,6 +1152,11 @@ const PARTICIPANTS = [
   {id:16, name:'أبو أوس', carry:31, teams:['الهلال','برشلونة','آيندهوفن']},
   {id:17, name:'أيوب', carry:27, teams:['الهلال','برشلونة','روما']},
   {id:18, name:'أبو صالح', carry:14, teams:['الشباب','ريال مدريد','ليفربول']},
+  // محمد عثمان التحق بالمسابقة عند بداية الجولة 3 (7 سبتمبر 2026) — رصيده
+  // الافتتاحي (21) = مجموع نقاط أنديته الثلاثة بدورياتها المحلية من بداية
+  // الموسم حتى تاريخ التحاقه (بحث حقيقي عبر 365Scores/FilGoal، تفاصيله
+  // بملف التسليم القسم 9.39): ريال مدريد 9 + الأهلي السعودي 9 + مارسيليا 3.
+  {id:19, name:'محمد عثمان', carry:21, teams:['ريال مدريد','الأهلي السعودي','مارسيليا']},
 ];
 
 // قائمة الأندية الـ27 المشاركة (نفس بناء CLUBS بصفحة report.html حرفيًا) —
@@ -1193,7 +1198,9 @@ const CLUB_STYLE = {
   'آيندهوفن':          {bg:'#EE2A24', fg:'#fff',    pattern:'halves',  short:'آيندهوفن', accent:'#FFFFFF'},
   'روما':              {bg:'#8E1F2F', fg:'#E7C158', pattern:'solid',   short:'روما', accent:'#F0BC42'},
   'الشباب':            {bg:'#FFFFFF', fg:'#000',    pattern:'solid',   short:'الشباب', accent:'#000000', border:'#111'},
-  'ليفربول':           {bg:'#C8102E', fg:'#fff',    pattern:'solid',   short:'ليفربول', accent:'#00B2A9'}
+  'ليفربول':           {bg:'#C8102E', fg:'#fff',    pattern:'solid',   short:'ليفربول', accent:'#00B2A9'},
+  'الأهلي السعودي':    {bg:'#00693E', fg:'#fff',    pattern:'solid',   short:'الأهلي', accent:'#FFFFFF'},
+  'مارسيليا':          {bg:'#2FAEE0', fg:'#fff',    pattern:'solid',   short:'مارسيليا', accent:'#00285E'}
 };
 
 // بيانات موسم كل نادٍ الحقيقية (لعب/فاز/تعادل/خسر) في دوريه المحلي فقط،
@@ -1230,7 +1237,13 @@ const CLUB_SEASON_STATS = {
   'سلتيك':             {played:3, w:3, d:0, l:0, pts:9},
   'رينجرز':            {played:3, w:1, d:1, l:1, pts:4},
   'غلطة سراي':         {played:3, w:2, d:1, l:0, pts:7},
-  'فنربخشة':           {played:3, w:2, d:0, l:1, pts:6}
+  'فنربخشة':           {played:3, w:2, d:0, l:1, pts:6},
+  // نادي محمد عثمان الجديدان — بيانات حقيقية حتى 7 سبتمبر 2026 (بحث مباشر
+  // عبر 365Scores/FilGoal وقت التحاقه بالمسابقة، تفاصيلها بملف التسليم
+  // القسم 9.39). بخلاف بقية الجدول أعلاه (مجمَّد على 2 سبتمبر 2026)، هذان
+  // الرقمان بتاريخ لاحق بأيام قليلة لأنهما حُسبا عند انضمامه فعليًا لا قبله.
+  'الأهلي السعودي':    {played:5, w:3, d:0, l:2, pts:9},
+  'مارسيليا':          {played:3, w:1, d:0, l:2, pts:3}
 };
 
 // رقم "الجولة" الأساس: نتائج الأندية المتراكمة حتى 2 سبتمبر 2026 تقابل
@@ -1251,7 +1264,14 @@ const ROUND1_POINTS = {
   10:13, 11:15, 12:10, 13:17, 14:11, 15:17, 16:16, 17:12,
   18:0
 };
-const JOINED_AFTER_ROUND1 = {18:true};
+const JOINED_AFTER_ROUND1 = {18:true, 19:true};
+// محمد عثمان (id:19) التحق بالمسابقة عند بداية الجولة 3 مباشرة (7 سبتمبر
+// 2026) — أي بعد انتهاء الجولتين 1 و2 كلتيهما، بخلاف أبو صالح (id:18) الذي
+// كان لا يزال ضمن المسابقة فعليًا خلال نافذة الجولة 2. لذلك يُستثنى من كليهما
+// (JOINED_AFTER_ROUND1 يكفي لاستثناء الجولة 1 فقط؛ هذا العلم الإضافي يستثنيه
+// من كل حسابات "جسر الجولة 2" أيضًا حتى لا يُحتسب رصيده الافتتاحي بالغلط
+// كنقاط جولة فعلية قد تُتوّجه "بطل الجولة" تاريخيًا أو تُدخله بأرشيف الجولة 2).
+const JOINED_AFTER_ROUND2 = {19:true};
 
 // أهداف الجولة 2 (تسجيل/استقبال) لكل مشارك — مطلوبة فقط لكسر تعادلات الترتيب
 // العام حين يتساوى المجموع الكلي ونقاط الجولة 2 معًا (رصيد الجولة الثانية لا
@@ -1668,7 +1688,11 @@ function getMovements(){
     const before = getRound1RankMap();
     const mv = {};
     PARTICIPANTS.forEach(p=>{
-      mv[p.id] = (before[p.id] || 0) - (now[p.id] || 0); // موجب = صعود
+      // JOINED_AFTER_ROUND2 (محمد عثمان): لا يملك ترتيبًا حقيقيًا بالجولة 1
+      // ليُقارَن بترتيبه الحالي — أي فرق هنا وهمي بالكامل (يقارن رتبة افتراضية
+      // بصفر نقطة برتبته الفعلية المبنية على رصيده الافتتاحي الحقيقي)، فسهمه
+      // يبقى محايدًا (بلا حركة) لحين دخول أول جولة حقيقية فعلية له (7 سبتمبر 2026).
+      mv[p.id] = JOINED_AFTER_ROUND2[p.id] ? 0 : (before[p.id] || 0) - (now[p.id] || 0); // موجب = صعود
     });
     return mv;
   }
@@ -1698,7 +1722,11 @@ function getCurrentRoundPointsMap(){
     const stats = computeRoundStats(last);
     PARTICIPANTS.forEach(p=> map[p.id] = stats[p.id].points);
   } else {
-    PARTICIPANTS.forEach(p=> map[p.id] = (p.carry||0) - (ROUND1_POINTS[p.id]||0));
+    // JOINED_AFTER_ROUND2 (محمد عثمان): لم يكن ضمن المسابقة إطلاقًا خلال جسر
+    // الجولة 2، فرصيده الافتتاحي الكامل ليس "نقاط جولة حالية" حقيقية — 0 هنا
+    // هو الصحيح (لم يلعب أي جولة فانتازي فعلية بعد)، وإلا كان سيُتوَّج بالغلط
+    // "بطل الجولة" حاليًا بمجرد انضمامه (خطأ اكتُشف ومنع 7 سبتمبر 2026).
+    PARTICIPANTS.forEach(p=> map[p.id] = JOINED_AFTER_ROUND2[p.id] ? 0 : (p.carry||0) - (ROUND1_POINTS[p.id]||0));
   }
   return map;
 }
@@ -1711,7 +1739,10 @@ function getCurrentRoundPointsMap(){
 // دخول الجولة 3 (خطأ ثانٍ مرتبط، اكتُشف وأُصلح 3 سبتمبر 2026 أثناء اختبار الإصلاح الأول).
 function getRound2BridgePointsMap(){
   const map = {};
-  PARTICIPANTS.forEach(p=> map[p.id] = (p.carry||0) - (ROUND1_POINTS[p.id]||0));
+  // نفس استثناء JOINED_AFTER_ROUND2 أعلاه — يمنع دخول رصيد محمد عثمان الافتتاحي
+  // ضمن أرشيف "بطل الجولة 2" التاريخي أو "أفضل أداء بجولة واحدة" بملخص الموسم
+  // (7 سبتمبر 2026).
+  PARTICIPANTS.forEach(p=> map[p.id] = JOINED_AFTER_ROUND2[p.id] ? 0 : (p.carry||0) - (ROUND1_POINTS[p.id]||0));
   return map;
 }
 
@@ -1730,8 +1761,13 @@ function getAllRoundsHistory(pid){
   if(!JOINED_AFTER_ROUND1[pid]){
     rounds.push({round:1, points: ROUND1_POINTS[pid]||0, gf:null, ga:null});
   }
-  const r2 = computeRound2ForParticipant(p);
-  rounds.push({round:2, points:r2.points, gf:r2.gf, ga:r2.ga});
+  // محمد عثمان (JOINED_AFTER_ROUND2) لم يشارك في الجولة 2 فعليًا هو الآخر —
+  // يُستثنى بنفس منطق استثناء الجولة 1 أعلاه، وإلا احتُسبت له "ممة" وهمية أو
+  // رقم قياسي لجولة لم يلعبها أصلاً (7 سبتمبر 2026).
+  if(!JOINED_AFTER_ROUND2[pid]){
+    const r2 = computeRound2ForParticipant(p);
+    rounds.push({round:2, points:r2.points, gf:r2.gf, ga:r2.ga});
+  }
   DATA.rounds.forEach(r=>{
     if(!round_has_entries(r, pid)) return;
     const stats = computeRoundStats(r)[pid];
@@ -2066,6 +2102,10 @@ function getAllMovementsHistory(){
   const r1 = getRound1RankMap();
   const rBridge = getRankMap(0);
   PARTICIPANTS.forEach(p=>{
+    // نفس استثناء JOINED_AFTER_ROUND2 بـgetMovements() — يمنع دخول فرق مركز
+    // وهمي لمحمد عثمان ضمن أرشيف الحركة (يُستخدم لأرقام قياسية كـ"أكبر صعود
+    // بجولة واحدة" — كان سيُدرجه بالغلط بسبب مقارنة رتبة لم يملكها أصلاً).
+    if(JOINED_AFTER_ROUND2[p.id]) return;
     result.push({round:2, pid:p.id, name:p.name, delta:(r1[p.id]||0)-(rBridge[p.id]||0)});
   });
   for(let i=1;i<=DATA.rounds.length;i++){
@@ -3949,7 +3989,10 @@ function renderStandings(){
               ${JOINED_AFTER_ROUND1[s.id]
                 ? `<tr><td>الجولة 1</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>`
                 : `<tr><td>الجولة 1</td><td>${(ROUND1_POINTS[s.id]||0)}</td><td>${(ROUND1_POINTS[s.id]||0)}</td></tr>`}
-              <tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>
+              ${JOINED_AFTER_ROUND2[s.id]
+                ? `<tr><td>الجولة 2</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>
+                   <tr><td>الرصيد الافتتاحي</td><td>${s.carry}</td><td>${s.carry}</td></tr>`
+                : `<tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>`}
               ${buildParticipantHistory(s.id).map(h=>`<tr><td>${h.number}</td><td>${h.points}${h.points===0?' <span class="mumma">ممة</span>':''}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
             </tbody>
           </table>
@@ -3996,7 +4039,11 @@ function r2ResBadge(res){
 // كرت "الجولة 2" الكامل لكل مشارك: كل نادٍ ومبارياته الحقيقية ضمن نافذة
 // الجولة (تاريخ/خصم/نتيجة/أهداف)، من ROUND2_MATCHES مباشرة
 function renderRound2Section(){
-  const rows = PARTICIPANTS.map(p=>({p, r2: computeRound2ForParticipant(p)}));
+  // نستثني من هذا الأرشيف التاريخي أي مشارك لم يكن ضمن المسابقة أصلًا خلال
+  // نافذة الجولة 2 (JOINED_AFTER_ROUND2، مثل محمد عثمان الملتحق بالجولة 3
+  // مباشرة) — عرض كرت له هنا كان سيُظهر "0 نقطة" وهميّة لجولة لم يشارك فيها
+  // إطلاقًا (7 سبتمبر 2026).
+  const rows = PARTICIPANTS.filter(p=>!JOINED_AFTER_ROUND2[p.id]).map(p=>({p, r2: computeRound2ForParticipant(p)}));
   rows.sort((a,b)=>{
     if(b.r2.points !== a.r2.points) return b.r2.points - a.r2.points;
     return a.p.name.localeCompare(b.p.name, 'ar');
@@ -4781,7 +4828,8 @@ document.getElementById('communityMatchesBox').addEventListener('click', async (
 const PARTICIPANT_CODES = {
   1:'2679', 2:'9935', 3:'4582', 4:'1488', 5:'4657', 6:'1434',
   7:'5506', 8:'5012', 9:'2824', 10:'7912', 11:'4257', 12:'1409',
-  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279'
+  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279',
+  19:'4738'
 };
 
 document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{

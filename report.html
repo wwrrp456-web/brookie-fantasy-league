@@ -230,6 +230,7 @@ const PARTICIPANTS = [
   {id:16, name:'أبو أوس', teams:['الهلال','برشلونة','آيندهوفن']},
   {id:17, name:'أيوب', teams:['الهلال','برشلونة','روما']},
   {id:18, name:'أبو صالح', teams:['الشباب','ريال مدريد','ليفربول']},
+  {id:19, name:'محمد عثمان', teams:['ريال مدريد','الأهلي السعودي','مارسيليا']},
 ];
 
 const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>a.localeCompare(b,'ar'));
@@ -241,7 +242,8 @@ const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>
 const PARTICIPANT_CODES = {
   1:'2679', 2:'9935', 3:'4582', 4:'1488', 5:'4657', 6:'1434',
   7:'5506', 8:'5012', 9:'2824', 10:'7912', 11:'4257', 12:'1409',
-  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279'
+  13:'2535', 14:'1520', 15:'2424', 16:'4811', 17:'3286', 18:'9279',
+  19:'4738'
 };
 
 let targetRound = null;
