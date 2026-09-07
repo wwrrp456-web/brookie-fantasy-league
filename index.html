@@ -404,6 +404,20 @@
      بدل الاعتماد على تحديد النص يدويًا (طلب المستخدم 6 سبتمبر 2026) */
   .copy-btn{font-size:0.68rem!important;padding:3px 9px!important;}
 
+  /* شريط أدوات نموذج الجولة (فلتر الناقص + طيّ/فتح كل المشاركين) وبانر المسودة
+     التلقائية — إضافات 7 سبتمبر 2026 */
+  .round-form-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:0.82rem;}
+  .round-form-toolbar label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .round-form-toolbar input[type="checkbox"]{width:17px;height:17px;cursor:pointer;}
+  .draft-banner{background:rgba(255,193,7,0.14);border:1px solid #FFC107;color:var(--text);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.84rem;line-height:1.7;}
+  html.light-mode .draft-banner{background:#FFF6DC;}
+
+  /* شريط سفلي ثابت لزر "حفظ الجولة" مع عداد الاكتمال — يبقى ظاهرًا أثناء
+     التمرير بنموذج جولة طويل بدل النزول للأسفل كل مرة (طلب المستخدم 7 سبتمبر
+     2026) */
+  .round-sticky-bar{position:sticky;bottom:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;box-shadow:0 -6px 16px rgba(0,0,0,0.18);z-index:20;}
+  html.light-mode .round-sticky-bar{box-shadow:0 -6px 16px rgba(0,0,0,0.08);}
+
   /* رقاقات "الجولات المحفوظة" — اضغط عليها للانتقال مباشرة لتعديل جولة سابقة
      بدل الحاجة لتذكّر رقمها وكتابته يدويًا (طلب المستخدم 6 سبتمبر 2026: أحيانًا
      تُكتشف أخطاء بحسابات جولة ماضية وتحتاج تصحيح بعد إدخالها بفترة) */
@@ -1023,8 +1037,12 @@
             رابط منفصل يقدر أي عضو بالجروب يفتحه ويسجّل فيه نتائج مباريات يعرفها أو نقاطه المحسوبة بنفسه —
             بدون أي تأثير على بيانات الموسم الرسمية. هذي القراءة للمراجعة اليدوية فقط، ما تدخل تلقائيًا بالترتيب.
           </p>
-          <div class="row" style="margin-bottom:10px;">
+          <div class="row" style="margin-bottom:10px;align-items:center;">
             <button class="btn secondary" id="refreshCommunityBtn">🔄 تحديث تقارير الجولة القادمة</button>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;">
+              <input type="checkbox" id="showConflictsOnlyToggle" style="width:17px;height:17px;cursor:pointer;">
+              عرض التعارضات فقط
+            </label>
           </div>
           <div id="communityMsg"></div>
           <div style="margin-top:10px;">
@@ -1061,6 +1079,7 @@
             </p>
             <div class="row" style="margin-bottom:10px;">
               <button class="btn ghost" id="toggleCodesBtn">👁️ إظهار الرموز</button>
+              <button class="btn ghost copy-btn" id="copyAllCodesBtn">📋 نسخ كل الرموز دفعة وحدة</button>
             </div>
             <div id="participantCodesBox" style="display:none;font-size:0.85rem;"></div>
           </div>
@@ -1072,12 +1091,18 @@
               <div style="text-align:center;">
                 <div id="qrSite" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">الموقع الرئيسي</div>
-                <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="site" style="margin-top:6px;">🔗 نسخ الرابط</button>
+                <div class="row" style="justify-content:center;margin-top:6px;">
+                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="site">🔗 نسخ الرابط</button>
+                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="site">⬇️ تنزيل الصورة</button>
+                </div>
               </div>
               <div style="text-align:center;">
                 <div id="qrReport" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div style="font-size:0.76rem;color:var(--muted);margin-top:4px;">ساهم بالبيانات</div>
-                <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="report" style="margin-top:6px;">🔗 نسخ الرابط</button>
+                <div class="row" style="justify-content:center;margin-top:6px;">
+                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="report">🔗 نسخ الرابط</button>
+                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="report">⬇️ تنزيل الصورة</button>
+                </div>
               </div>
             </div>
           </div>
@@ -4209,6 +4234,23 @@ function updateRoundSettingsStatus(){
 // بدل ما يحتاج يتذكر رقمها ويكتبه يدويًا بالحقل (طلب المستخدم 6 سبتمبر 2026).
 // التعديل الفعلي كان موجودًا أصلًا (كتابة رقم جولة محفوظة تفتحها للتعديل) —
 // هذي الرقاقات فقط تكشف الإمكانية وتغني عن الكتابة اليدوية.
+// تقريب فرق زمني بصيغة عربية مبسّطة ("قبل 3 أيام"، "قبل ساعتين"...) — يُستخدم
+// لرقاقات الجولات المحفوظة (تاريخ آخر تعديل) ولبانر المسودة التلقائية غير
+// المحفوظة (طلب المستخدم 7 سبتمبر 2026). تقريب مقصود وليس دقيقًا لغويًا
+// بكل صيغ الجمع العربية — كافٍ لأداة إدارية داخلية.
+function timeAgoLabel(ts){
+  if(!ts) return '';
+  const diff = Date.now() - ts;
+  if(diff < 0) return 'الآن';
+  const min = Math.floor(diff / 60000);
+  if(min < 1) return 'قبل لحظات';
+  if(min < 60) return `قبل ${min} دقيقة`;
+  const hr = Math.floor(min / 60);
+  if(hr < 24) return `قبل ${hr} ساعة`;
+  const day = Math.floor(hr / 24);
+  return `قبل ${day} يوم`;
+}
+
 function renderPastRoundsChips(){
   const box = document.getElementById('pastRoundsChips');
   if(!box) return;
@@ -4216,9 +4258,15 @@ function renderPastRoundsChips(){
     box.innerHTML = '<div style="font-size:0.78rem;color:var(--muted);">لا توجد جولات محفوظة بعد.</div>';
     return;
   }
-  box.innerHTML = DATA.rounds.slice().sort((a,b)=>b.number-a.number).map(r=>
-    `<button type="button" class="btn ghost past-round-chip" data-round="${r.number}">✏️ الجولة ${r.number}</button>`
-  ).join('');
+  // تاريخ آخر تعديل لكل جولة محفوظة بجانب رقاقتها — يساعد المنظم يميّز الجولات
+  // اللي عُدِّلت مؤخرًا (طلب المستخدم 7 سبتمبر 2026). r.lastModified غير متوفر
+  // للجولات المحفوظة قبل هذا التحديث، فتظهر بدون تاريخ.
+  box.innerHTML = DATA.rounds.slice().sort((a,b)=>b.number-a.number).map(r=>{
+    const modLabel = r.lastModified
+      ? `<span style="font-size:0.68rem;opacity:0.75;">— آخر تعديل ${timeAgoLabel(r.lastModified)}</span>`
+      : '';
+    return `<button type="button" class="btn ghost past-round-chip" data-round="${r.number}">✏️ الجولة ${r.number} ${modLabel}</button>`;
+  }).join('');
 }
 document.getElementById('pastRoundsChips').addEventListener('click', (e)=>{
   const chip = e.target.closest('.past-round-chip');
@@ -4559,10 +4607,16 @@ async function loadCommunityReports(){
         // تسجيل الطرف الآخر (byMatch[opponent|club]) ونقارنه بدل التعامل مع
         // كل تسجيل كمباراة منفصلة لا علاقة لها بالأخرى.
         let matchBadge = '';
+        // hasIssue يجمع كل حالات "يحتاج مراجعة المنظم": تعارض صريح بين تقريرين
+        // لنفس المباراة، مباراة داخلية بانتظار تسجيل الطرف الآخر، أو مباراة
+        // داخلية لا تُطابق تسجيل الطرف الآخر — يُستخدم بفلتر "عرض التعارضات
+        // فقط" أدناه (طلب المستخدم 7 سبتمبر 2026).
+        let hasIssue = conflict;
         if(opponent && CLUBS.includes(opponent)){
           const mirror = byMatch[`${opponent}|${club}`];
           if(!mirror){
             matchBadge = `<span class="match-badge match-badge-info">⚔️ داخلية — بانتظار تسجيل ${opponent}</span>`;
+            hasIssue = true;
           }else{
             const rep = reports[0];
             const mirrorRep = mirror.reports[0];
@@ -4571,12 +4625,13 @@ async function loadCommunityReports(){
             matchBadge = matches
               ? `<span class="match-badge match-badge-ok">⚔️ داخلية — تُطابق تسجيل ${opponent} ✅</span>`
               : `<span class="match-badge match-badge-warn">⚔️ داخلية — ⚠️ لا تُطابق تسجيل ${opponent}</span>`;
+            if(!matches) hasIssue = true;
           }
         }else if(opponent){
           matchBadge = `<span class="match-badge match-badge-external">🌍 خصم خارجي</span>`;
         }
 
-        html += `<div style="padding:8px 0;border-bottom:1px dotted var(--line);">
+        html += `<div data-issue="${hasIssue?1:0}" style="padding:8px 0;border-bottom:1px dotted var(--line);">
           <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
           ${matchBadge ? `<div style="margin:3px 0 2px;">${matchBadge}</div>` : ''}`;
         reports.forEach(r=>{
@@ -4608,6 +4663,7 @@ async function loadCommunityReports(){
         html += `</div>`;
       });
       matchesBox.innerHTML = html;
+      applyConflictFilter();
     }
 
     // نقاط ذاتية — تُعرض كقائمة بسيطة، ومن لم يُرسل بعد يُذكر بالاسم كتذكير
@@ -4640,6 +4696,23 @@ async function loadCommunityReports(){
 }
 
 document.getElementById('refreshCommunityBtn').addEventListener('click', loadCommunityReports);
+
+// فلتر "عرض التعارضات فقط" بتقارير الأعضاء — يخفي المباريات المؤكدة/المتطابقة
+// ويُبقي فقط ما يحتاج مراجعة المنظم (تعارض، أو مباراة داخلية بانتظار الطرف
+// الآخر أو غير مطابقة له) — بدل التمرير بكل القائمة بحثًا عنها (طلب المستخدم
+// 7 سبتمبر 2026). لا يعيد تحميل البيانات، فقط يبدّل ظهور العناصر المُعلَّمة
+// مسبقًا بـ data-issue أثناء البناء بالأعلى.
+function applyConflictFilter(){
+  const cb = document.getElementById('showConflictsOnlyToggle');
+  const onlyConflicts = !!(cb && cb.checked);
+  document.querySelectorAll('#communityMatchesBox [data-issue]').forEach(el=>{
+    el.style.display = (onlyConflicts && el.dataset.issue === '0') ? 'none' : '';
+  });
+}
+const showConflictsOnlyToggleEl = document.getElementById('showConflictsOnlyToggle');
+if(showConflictsOnlyToggleEl){
+  showConflictsOnlyToggleEl.addEventListener('change', applyConflictFilter);
+}
 
 // تعديل/حذف تقرير مباراة فردي مُرسَل من زائر أو متسابق (5 سبتمبر 2026) — بطلب
 // المستخدم بعد ما لاحظ نتيجة خاطئة بتقارير المجتمع وما كان عنده وسيلة لتصحيحها
@@ -4772,6 +4845,17 @@ document.querySelectorAll('.copy-link-btn').forEach(btn=>{
   });
 });
 
+// نسخ كل رموز المشاركين دفعة وحدة كنص واحد منسّق (اسم: رمز بكل سطر) — بدل
+// نسخ كل رمز على حدة عند الحاجة لإرسالها كلها لجهة ما (طلب المستخدم 7 سبتمبر
+// 2026).
+const copyAllCodesBtnEl = document.getElementById('copyAllCodesBtn');
+if(copyAllCodesBtnEl){
+  copyAllCodesBtnEl.addEventListener('click', ()=>{
+    const text = PARTICIPANTS.map(p=>`${p.name}: ${PARTICIPANT_CODES[p.id] || '—'}`).join('\n');
+    copyToClipboardWithFeedback(text, copyAllCodesBtnEl);
+  });
+}
+
 // ---------- رموز QR لرابطي الموقع وصفحة المساهمة ----------
 // تُولَّد مرة واحدة فقط (guard بمتغيّر) عند أول تسجيل دخول ناجح — إعادة توليدها
 // مع كل دخول كانت ستكرّر عناصر canvas داخل نفس الصندوق.
@@ -4786,6 +4870,32 @@ function renderQuickLinkCodes(){
   new QRCode(reportBox, { text: REPORT_URL, width: 120, height: 120, colorDark: '#040421', colorLight: '#ffffff' });
   _qrCodesRendered = true;
 }
+
+// تنزيل كود QR كصورة PNG — مكتبة qrcodejs ترسم بـ canvas ثم تولّد فوقه <img>
+// بنفس المحتوى (بديل توافق لأجهزة قديمة)، فنفضّل الـ img.src الجاهز (data
+// URL) ونرجع لـ canvas.toDataURL لو ما وُجد (طلب المستخدم 7 سبتمبر 2026).
+function downloadQrPng(boxId, filename){
+  const box = document.getElementById(boxId);
+  if(!box) return;
+  const img = box.querySelector('img');
+  const canvas = box.querySelector('canvas');
+  let dataUrl = null;
+  if(img && img.src) dataUrl = img.src;
+  else if(canvas) dataUrl = canvas.toDataURL('image/png');
+  if(!dataUrl) return;
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+document.querySelectorAll('.download-qr-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const isReport = btn.dataset.qr === 'report';
+    downloadQrPng(isReport ? 'qrReport' : 'qrSite', isReport ? 'brookie-report-qr.png' : 'brookie-site-qr.png');
+  });
+});
 
 // ---------- Round form ----------
 // يرجع كل مباريات نادٍ معيّن (بموضعه ti ضمن أندية المشارك) خلال جولة، بدعم
@@ -4815,6 +4925,63 @@ function clubParticipantCount(club){
 // "ريال مدريد" مشترك بين 6 مشاركين ويحتاج تكرار الإدخال 6 مرات لكل جولة).
 // آخر صندوق عدّله المنظم فعليًا هو "مصدر الحقيقة" لحظة التعديل — لو عدّل صندوق
 // آخر لنفس النادي بعدها (تصحيح مثلاً) ينعكس هو الآخر على البقية بنفس الطريقة.
+// ---------- مسودة تلقائية لنموذج الجولة (localStorage) ----------
+// تُحفظ أثناء التعبئة لكل رقم جولة على حدة، حتى لا تُفقد البيانات لو انغلق
+// المتصفح أو حدث عطل قبل الضغط على "حفظ الجولة" (طلب المستخدم 7 سبتمبر 2026).
+// roundFormDirty يتتبّع وجود بيانات غير محفوظة رسميًا حاليًا بالنموذج، ويُستخدم
+// أيضًا لتحذير إغلاق الصفحة (beforeunload) بالأسفل. suppressDraftTracking يمنع
+// تسجيل تغييرات "برمجية" (كإعادة بناء النموذج نفسه أو مزامنة الأندية المشتركة
+// عند فتح جولة محفوظة) كأنها تعديل حقيقي من المنظم.
+let roundFormDirty = false;
+let suppressDraftTracking = false;
+let _draftSaveTimer = null;
+function roundDraftKey(num){ return `brookie_round_draft_${num}`; }
+function collectRoundFormEntries(){
+  const entries = {};
+  document.querySelectorAll('#roundForm .team-input-row').forEach(row=>{
+    const teamBlock = row.closest('.team-block');
+    if(!teamBlock) return;
+    const pid = Number(teamBlock.dataset.pid);
+    const ti = Number(teamBlock.dataset.ti);
+    const result = row.querySelector('.res-select').value;
+    const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
+    const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
+    const opp = row.querySelector('.opp-input').value.trim();
+    if(!entries[pid]) entries[pid] = [];
+    entries[pid].push({ti, opp: opp || null, result, gf, ga});
+  });
+  return entries;
+}
+function saveRoundDraft(num){
+  if(!num) return;
+  try{
+    localStorage.setItem(roundDraftKey(num), JSON.stringify({entries: collectRoundFormEntries(), savedAt: Date.now()}));
+  }catch(e){}
+}
+function loadRoundDraft(num){
+  try{
+    const raw = localStorage.getItem(roundDraftKey(num));
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function clearRoundDraft(num){
+  try{ localStorage.removeItem(roundDraftKey(num)); }catch(e){}
+}
+function scheduleDraftSave(num){
+  if(!num || suppressDraftTracking) return;
+  roundFormDirty = true;
+  clearTimeout(_draftSaveTimer);
+  _draftSaveTimer = setTimeout(()=> saveRoundDraft(num), 600);
+}
+// تحذير قبل إغلاق الصفحة لو فيه بيانات جولة غير محفوظة (طلب المستخدم 7
+// سبتمبر 2026) — يمنع فقدان تعديلات لم تُحفَظ بعد بسبب إغلاق التبويب بالغلط.
+window.addEventListener('beforeunload', function(e){
+  if(roundFormDirty){
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
 function syncSharedClub(sourceTeamBlock){
   const club = sourceTeamBlock.dataset.team;
   if(!club) return;
@@ -4830,6 +4997,8 @@ function syncSharedClub(sourceTeamBlock){
     refreshRemoveButtons(tb);
   });
   recomputeRoundCompletion();
+  const formEl = document.getElementById('roundForm');
+  if(formEl) scheduleDraftSave(Number(formEl.dataset.num));
 }
 
 // مؤشر اكتمال حيّ لكل مشارك بنموذج إدخال الجولة + عداد إجمالي أعلى النموذج —
@@ -4842,6 +5011,10 @@ function recomputeRoundCompletion(){
   const box = document.getElementById('roundFormBox');
   if(!box) return;
   const cards = box.querySelectorAll('.round-entry-card');
+  // فلتر "عرض الناقص فقط" — يخفي المشاركين المكتملين مؤقتًا أثناء تعبئة جولة
+  // طويلة بدل التمرير بينهم للوصول للناقص (طلب المستخدم 7 سبتمبر 2026).
+  const filterEl = document.getElementById('showIncompleteOnlyToggle');
+  const hideComplete = !!(filterEl && filterEl.checked);
   let completeCount = 0;
   cards.forEach(card=>{
     const selects = card.querySelectorAll('.res-select');
@@ -4853,10 +5026,14 @@ function recomputeRoundCompletion(){
       badge.textContent = isComplete ? '✅ مكتمل' : (missing > 0 ? `⚠️ ${missing} ناقصة` : '');
       badge.className = 'completion-badge ' + (isComplete ? 'complete' : 'incomplete');
     }
+    card.style.display = (hideComplete && isComplete) ? 'none' : '';
   });
+  const summaryText = cards.length ? `${completeCount} من ${cards.length} مشارك مكتمل` : '';
   const summaryEl = document.getElementById('roundCompletionSummary');
-  if(summaryEl && cards.length) summaryEl.textContent = `${completeCount} من ${cards.length} مشارك مكتمل`;
-  else if(summaryEl) summaryEl.textContent = '';
+  if(summaryEl) summaryEl.textContent = summaryText;
+  // نسخة من نفس العداد داخل الشريط السفلي الثابت (طلب المستخدم 7 سبتمبر 2026)
+  const stickyEl = document.getElementById('roundStickyCounter');
+  if(stickyEl) stickyEl.textContent = summaryText;
 }
 
 // صف مباراة واحدة داخل نموذج إدخال الجولة — يشمل الخصم (اختياري، نص حر لأن
@@ -4908,6 +5085,37 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     removeBtn.closest('.team-input-row').remove();
     refreshRemoveButtons(teamBlock);
     syncSharedClub(teamBlock);
+    return;
+  }
+  // طيّ/فتح كل بطاقات المشاركين (details.round-entry-card) داخل نموذج الجولة
+  // نفسه فقط — منفصل عن أزرار طيّ/فتح كل أقسام لوحة المنظم (طلب المستخدم 7
+  // سبتمبر 2026).
+  const expandAllP = e.target.closest('#expandAllParticipantsBtn');
+  if(expandAllP){
+    document.querySelectorAll('#roundForm .round-entry-card').forEach(d=> d.open = true);
+    return;
+  }
+  const collapseAllP = e.target.closest('#collapseAllParticipantsBtn');
+  if(collapseAllP){
+    document.querySelectorAll('#roundForm .round-entry-card').forEach(d=> d.open = false);
+    return;
+  }
+  // بانر المسودة التلقائية: "استخدامها" يعيد بناء النموذج ببيانات المسودة غير
+  // المحفوظة، و"تجاهل" يمسحها ويعيد البناء من آخر بيانات محفوظة رسميًا
+  // (طلب المستخدم 7 سبتمبر 2026).
+  const applyDraftBtn = e.target.closest('#applyDraftBtn');
+  if(applyDraftBtn){
+    const formEl = document.getElementById('roundForm');
+    const n = formEl ? Number(formEl.dataset.num) : null;
+    if(n) prepareRoundForm(n, {useDraft:true});
+    return;
+  }
+  const discardDraftBtn = e.target.closest('#discardDraftBtn');
+  if(discardDraftBtn){
+    const formEl = document.getElementById('roundForm');
+    const n = formEl ? Number(formEl.dataset.num) : null;
+    if(n){ clearRoundDraft(n); prepareRoundForm(n, {ignoreDraft:true}); }
+    return;
   }
 });
 
@@ -4924,6 +5132,12 @@ document.getElementById('roundFormBox').addEventListener('change', (e)=>{
   if(e.target.matches('.res-select')){
     const teamBlock = e.target.closest('.team-block');
     if(teamBlock) syncSharedClub(teamBlock);
+    return;
+  }
+  // فلتر "عرض الناقص فقط" — إعادة تطبيقه فورًا عند تبديل الخانة (طلب المستخدم
+  // 7 سبتمبر 2026).
+  if(e.target.id === 'showIncompleteOnlyToggle'){
+    recomputeRoundCompletion();
   }
 });
 
@@ -4933,16 +5147,39 @@ document.getElementById('roundFormBox').addEventListener('change', (e)=>{
 // بالحقل (طلب المستخدم 6 سبتمبر 2026: أحيانًا يُكتشف خطأ بحسابات جولة ماضية
 // ويحتاج تصحيحها بعد إدخالها بفترة — الإمكانية كانت موجودة أصلًا (كتابة رقم
 // جولة محفوظة تفتحها للتعديل) لكن غير واضحة، فهذي الرقاقات تكشفها).
-function prepareRoundForm(num){
+function prepareRoundForm(num, opts={}){
   let existing = DATA.rounds.find(r=>r.number===num);
   const box = document.getElementById('roundFormBox');
 
+  // مسودة تلقائية غير محفوظة لنفس رقم الجولة (إن وُجدت) — تُعرض كخيار للمنظم
+  // بدل استخدامها تلقائيًا، حتى لا تُستبدَل بيانات محفوظة رسميًا ببيانات
+  // مسودة قديمة دون علمه (طلب المستخدم 7 سبتمبر 2026).
+  const draft = opts.ignoreDraft ? null : loadRoundDraft(num);
+  const useDraftData = !!(opts.useDraft && draft);
+  const sourceEntries = useDraftData
+    ? draft.entries
+    : (existing && existing.entries ? existing.entries : null);
+
   let html = `<div id="roundForm" data-num="${num}">`;
+  if(draft && !opts.useDraft && !opts.ignoreDraft){
+    html += `<div class="draft-banner">
+      🕒 فيه مسودة محفوظة تلقائيًا لهذه الجولة (${timeAgoLabel(draft.savedAt)}) لم تُحفظ نهائيًا بعد.
+      <div class="row" style="margin-top:8px;">
+        <button type="button" class="btn secondary" id="applyDraftBtn">استخدام المسودة</button>
+        <button type="button" class="btn ghost" id="discardDraftBtn">تجاهل والبدء من المحفوظ</button>
+      </div>
+    </div>`;
+  }
+  html += `<div class="round-form-toolbar">
+    <label><input type="checkbox" id="showIncompleteOnlyToggle"> عرض الناقص فقط</label>
+    <button type="button" class="btn ghost" id="expandAllParticipantsBtn">⬇️ فتح كل المشاركين</button>
+    <button type="button" class="btn ghost" id="collapseAllParticipantsBtn">⬆️ طيّ كل المشاركين</button>
+  </div>`;
   PARTICIPANTS.forEach(p=>{
     html += `<details class="round-entry-card"><summary>${p.name}<span class="completion-badge" data-pid="${p.id}"></span></summary>`;
     p.teams.forEach((team, ti)=>{
-      const prevEntries = existing && existing.entries && existing.entries[p.id]
-        ? getTeamRoundEntries(existing.entries[p.id], ti)
+      const prevEntries = sourceEntries && sourceEntries[p.id]
+        ? getTeamRoundEntries(sourceEntries[p.id], ti)
         : [];
       // لو النادي لعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) تُعرض كل
       // مبارياته كصف مستقل — وإلا صف فارغ واحد افتراضيًا كالسابق.
@@ -4962,14 +5199,21 @@ function prepareRoundForm(num){
     });
     html += `</details>`;
   });
-  html += `<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-    <button class="btn" id="saveRoundBtn">حفظ الجولة</button>
-    ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>` : ''}
+  html += `<div class="round-sticky-bar">
+    <span id="roundStickyCounter"></span>
+    <span style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn" id="saveRoundBtn">حفظ الجولة</button>
+      ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>` : ''}
+    </span>
     </div>
     <div id="saveRoundMsg"></div></div>`;
   box.innerHTML = html;
   box.querySelectorAll('.team-block').forEach(refreshRemoveButtons);
 
+  // بناء النموذج وأي مزامنة أولية لأندية مشتركة هو تغيير "برمجي" وليس تعديلاً
+  // حقيقيًا من المنظم — suppressDraftTracking يمنع اعتباره كذلك (لا يُعلَّم
+  // النموذج "غير محفوظ" ولا يُنشئ مسودة فورًا لمجرد فتح جولة محفوظة أصلاً).
+  suppressDraftTracking = true;
   // عند فتح جولة محفوظة مسبقًا للتعديل: لو نادٍ مشترك كان له بيانات مختلفة
   // قليلاً بين مشاركين (بيانات قديمة من قبل ميزة المزامنة أعلاه) نوحّدها فورًا
   // بأخذ أول صندوق فيه نتيجة مختارة فعليًا كمصدر ونشرها على البقية — بدل ما
@@ -4987,6 +5231,10 @@ function prepareRoundForm(num){
     });
   })();
   recomputeRoundCompletion();
+  suppressDraftTracking = false;
+  // لو استخدمنا بيانات مسودة غير محفوظة رسميًا لتعبئة النموذج، فهو فعليًا
+  // "غير محفوظ" منذ اللحظة الأولى (حتى لو المنظم لم يعدّل شيئًا بعد فتحه).
+  roundFormDirty = useDraftData;
 
   // زر حذف الجولة بالكامل — يظهر فقط عند تعديل جولة موجودة أصلاً (خطأ بالإدخال
   // مثلاً)، ويحتاج تأكيدًا صريحًا لأنه إجراء لا رجعة فيه على بيانات مشتركة مع
@@ -5007,6 +5255,8 @@ function prepareRoundForm(num){
         ? `<div class="status-msg ok">تم حذف الجولة ${num} بنجاح ✅</div>`
         : '<div class="status-msg err">تعذّر الحذف، حاول مرة ثانية.</div>';
       if(ok){
+        clearRoundDraft(num);
+        roundFormDirty = false;
         setTimeout(()=>{
           box.innerHTML = '';
           const numInput = document.getElementById('roundNumber');
@@ -5024,39 +5274,42 @@ function prepareRoundForm(num){
     if(missing > 0){
       document.getElementById('saveRoundMsg').innerHTML =
         `<div class="status-msg err">فيه ${missing} مباراة بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div>`;
+      // القفز التلقائي لأول مشارك ناقص — بدل ترك المنظم يمرّر يدويًا على الـ18
+      // مشاركًا بحثًا عن الناقص وسط عدد كبير من العدّاد النصّي فقط (طلب
+      // المستخدم 7 سبتمبر 2026).
+      const firstMissingSelect = Array.from(document.querySelectorAll('#roundForm .res-select')).find(s=>!s.value);
+      if(firstMissingSelect){
+        const card = firstMissingSelect.closest('.round-entry-card');
+        if(card){
+          card.open = true;
+          card.style.display = '';
+          card.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      }
       return;
     }
-    const entries = {};
-    document.querySelectorAll('#roundForm .team-input-row').forEach(row=>{
-      const teamBlock = row.closest('.team-block');
-      const pid = Number(teamBlock.dataset.pid);
-      const ti = Number(teamBlock.dataset.ti);
-      const result = row.querySelector('.res-select').value;
-      // نمنع الأهداف السالبة عند الحفظ (الحقل يقبلها رغم min="0" لأنه مجرد تلميح
-      // للمتصفح وليس تحققًا فعليًا) — قيمة سالبة كانت تكسر فرق الأهداف في كسر
-      // التعادل بصمت (خطأ اكتُشف ومنع 3 سبتمبر 2026).
-      const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
-      const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
-      const opp = row.querySelector('.opp-input').value.trim();
-      if(!entries[pid]) entries[pid] = [];
-      // .ti صريحة على كل عنصر — تسمح بدعم أكثر من مباراة لنفس النادي بنفس
-      // الجولة (منذ 5 سبتمبر 2026) وتُستخدم لاحقًا بكل دوال العرض بدل الاعتماد
-      // على الموضع المباشر بالمصفوفة (getTeamRoundEntries).
-      entries[pid].push({ti, opp: opp || null, result, gf, ga});
-    });
+    const entries = collectRoundFormEntries();
 
     let round = DATA.rounds.find(r=>r.number===num);
     if(round){
       round.entries = entries;
     }else{
-      DATA.rounds.push({number:num, entries});
+      round = {number:num, entries};
+      DATA.rounds.push(round);
       DATA.rounds.sort((a,b)=>a.number-b.number);
     }
+    // تاريخ آخر تعديل لهذه الجولة — يُعرض بجانب رقاقتها بالجولات المحفوظة
+    // (طلب المستخدم 7 سبتمبر 2026).
+    round.lastModified = Date.now();
     DATA.updatedAt = Date.now();
     const ok = await saveData();
     document.getElementById('saveRoundMsg').innerHTML = ok
       ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div>'
       : '<div class="status-msg err">تعذّر الحفظ المشترك. النتائج ظاهرة عندك الآن لكنها لن تصل للآخرين — أعد المحاولة.</div>';
+    if(ok){
+      clearRoundDraft(num);
+      roundFormDirty = false;
+    }
     renderAll();
     renderPastRoundsChips();
   });
