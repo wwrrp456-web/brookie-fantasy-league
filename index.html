@@ -360,6 +360,11 @@
   .match-badge-external{background:rgba(255,255,255,0.05);color:var(--muted);}
   html.light-mode .match-badge-ok{background:#E4F1EA;color:var(--text2);}
   html.light-mode .match-badge-warn{background:#FBE4DA;color:var(--coral);}
+  .official-check-note{font-size:0.72rem;font-weight:700;margin:2px 0 4px;}
+  .official-check-note.ok{color:#8FE3B0;}
+  .official-check-note.warn{color:#FFB199;}
+  html.light-mode .official-check-note.ok{color:#1E8E4B;}
+  html.light-mode .official-check-note.warn{color:var(--coral);}
 
   /* لوحة المنظم كـaccordion قابل للطي بدل ثمانية أقسام مفتوحة دفعة واحدة —
      طلب المستخدم (6 سبتمبر 2026) تنظيف القائمة. نفس نمط .faq-item الموجود
@@ -1047,6 +1052,7 @@
           </p>
           <div class="row" style="margin-bottom:10px;align-items:center;">
             <button class="btn secondary" id="refreshCommunityBtn">🔄 تحديث تقارير الجولة القادمة</button>
+            <button class="btn ghost copy-btn" id="copyReminderMsgBtn">📋 نسخ رسالة تذكير للواتساب</button>
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;">
               <input type="checkbox" id="showConflictsOnlyToggle" style="width:17px;height:17px;cursor:pointer;">
               عرض التعارضات فقط
@@ -1077,6 +1083,17 @@
             </div>
             <div id="lastBackupLabel" style="font-size:0.76rem;color:var(--muted);margin-bottom:6px;"></div>
             <div id="backupMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🔒 تغيير رمز دخول المنظم</div>
+            <p style="margin:0 0 8px;font-size:0.85rem;">الرمز الحالي محفوظ بأمان على قاعدة البيانات المشتركة — تغييره هنا يحدّثه فورًا لكل الأجهزة، بدون حاجة لتعديل أي كود.</p>
+            <div class="row" style="margin-bottom:8px;">
+              <input type="password" id="newPinInput" placeholder="رمز جديد (4 أرقام على الأقل)" inputmode="numeric" style="max-width:220px;">
+              <input type="password" id="confirmPinInput" placeholder="تأكيد الرمز الجديد" inputmode="numeric" style="max-width:220px;">
+              <button class="btn secondary" id="changePinBtn">💾 حفظ الرمز الجديد</button>
+            </div>
+            <div id="changePinMsg"></div>
           </div>
 
           <div class="admin-subsection">
@@ -1132,6 +1149,17 @@ document.getElementById("logoImg").src = LOGO_BASE64;
 
 const STORAGE_KEY = 'brookie-fantasy-s2-data';
 const ADMIN_PIN = '2580';
+// رمز الدخول الفعلي المستخدَم بالتحقق — يبدأ بقيمة ADMIN_PIN الثابتة أعلاه،
+// ويُستبدَل عند الإقلاع بأي رمز مخصّص محفوظ على Firebase (مفتاح
+// "organizer_pin") إن وُجد — يسمح للمنظم بتغيير رمز الدخول من داخل اللوحة
+// نفسها بدل تعديل الكود مباشرة (طلب المستخدم 7 سبتمبر 2026).
+let CURRENT_ADMIN_PIN = ADMIN_PIN;
+async function loadAdminPin(){
+  try{
+    const res = await window.storage.get('organizer_pin', true);
+    if(res && res.value && String(res.value).trim()) CURRENT_ADMIN_PIN = String(res.value).trim();
+  }catch(e){ /* يبقى الرمز الافتراضي عند تعذّر القراءة */ }
+}
 const SITE_URL = 'https://wwrrp456-web.github.io/brookie-fantasy-league/';
 const REPORT_URL = 'https://wwrrp456-web.github.io/brookie-fantasy-league/report.html';
 
@@ -4377,7 +4405,7 @@ document.getElementById('collapseAllAdminBtn').addEventListener('click', ()=>{
 document.getElementById('loginBtn').addEventListener('click', ()=>{
   const val = document.getElementById('pinInput').value.trim();
   const msg = document.getElementById('loginMsg');
-  if(val === ADMIN_PIN){
+  if(val === CURRENT_ADMIN_PIN){
     isAdmin = true;
     document.getElementById('loginBox').style.display='none';
     document.getElementById('adminPanel').style.display='block';
@@ -4583,6 +4611,38 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
   reader.readAsText(file);
 });
 
+// تغيير رمز دخول المنظم من داخل اللوحة — يُحفظ على Firebase (مفتاح
+// "organizer_pin")، فيرفع الأمان شويًا (بدل رمز ثابت بالكود لأي شخص يشوف
+// الملف) ويسمح بتغييره لو انتشر بين ناس مو مفروض يشوفونه، بدون أي تعديل كود
+// (طلب المستخدم 7 سبتمبر 2026).
+document.getElementById('changePinBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('changePinMsg');
+  const newPin = document.getElementById('newPinInput').value.trim();
+  const confirmPin = document.getElementById('confirmPinInput').value.trim();
+  if(newPin.length < 4){
+    msg.innerHTML = '<div class="status-msg err">الرمز الجديد لازم يكون 4 أرقام على الأقل.</div>';
+    return;
+  }
+  if(newPin !== confirmPin){
+    msg.innerHTML = '<div class="status-msg err">الرمزان غير متطابقين — تأكد من كتابتهما بنفس الشكل.</div>';
+    return;
+  }
+  const sure = await customConfirm(
+    `سيتم تغيير رمز دخول المنظم فورًا لكل الأجهزة إلى "${newPin}". تأكد إنك حافظه بمكان آمن قبل المتابعة.`,
+    {confirmText: 'تغيير الرمز'}
+  );
+  if(!sure) return;
+  try{
+    await window.storage.set('organizer_pin', newPin, true);
+    CURRENT_ADMIN_PIN = newPin;
+    document.getElementById('newPinInput').value = '';
+    document.getElementById('confirmPinInput').value = '';
+    msg.innerHTML = '<div class="status-msg ok">تم تغيير رمز الدخول بنجاح ✅ استخدم الرمز الجديد من الآن.</div>';
+  }catch(e){
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، تحقق من الاتصال وحاول مرة ثانية.</div>';
+  }
+});
+
 // ---------- تقارير الأعضاء (تجريبي) ----------
 // صفحة منفصلة (report.html) تسمح لأي عضو بالجروب يسجّل نتيجة مباراة يعرفها
 // أو نقاطه المحسوبة بنفسه، بمسار Firebase معزول تمامًا عن بيانات الموسم
@@ -4704,10 +4764,29 @@ async function loadCommunityReports(){
           matchBadge = `<span class="match-badge match-badge-external">🌍 خصم خارجي</span>`;
         }
 
+        // فحص تناسق تلقائي مع الجولة الرسمية المحفوظة (إن وُجدت) — يقارن كل
+        // تقرير مُرسَل من الأعضاء بما حفظه المنظم فعليًا بنموذج الجولة الرسمي
+        // لنفس النادي (وبنفس الخصم تحديدًا إن كان له أكثر من مباراة بالجولة)،
+        // فيكتشف أي خطأ إدخال يدوي تلقائيًا بدل الاعتماد على مراجعة كل تقرير
+        // يدويًا (طلب المستخدم 7 سبتمبر 2026). لا شيء يظهر إن كانت الجولة لسه
+        // ما تحفظت رسميًا (الحالة الشائعة، لأن التقارير تُعرض للجولة القادمة
+        // تحديدًا) — الفحص يفيد أساسًا بعد ما يحفظ المنظم الجولة ويرجع يراجع
+        // التقارير للتأكد من عدم وجود خطأ كتابي بإدخاله.
+        const official = getOfficialClubEntry(targetRound, club, opponent);
+        const officialNotes = reports.map(r=>{
+          if(!official) return '';
+          const matchesOfficial = official.result===r.result
+            && Number(official.gf)===Number(r.gf) && Number(official.ga)===Number(r.ga);
+          if(!matchesOfficial) hasIssue = true;
+          return matchesOfficial
+            ? `<div class="official-check-note ok">📋 يطابق الجولة الرسمية المحفوظة ✅</div>`
+            : `<div class="official-check-note warn">📋 ⚠️ يختلف عن الرسمية المحفوظة: ${RESULT_LABEL_COMMUNITY[official.result]||official.result} (${official.gf}-${official.ga})</div>`;
+        });
+
         html += `<div data-issue="${hasIssue?1:0}" style="padding:8px 0;border-bottom:1px dotted var(--line);">
           <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
           ${matchBadge ? `<div style="margin:3px 0 2px;">${matchBadge}</div>` : ''}`;
-        reports.forEach(r=>{
+        reports.forEach((r,ri)=>{
           // كل تقرير له وضع عرض (view) ووضع تعديل (edit) — يبدأ العرض فقط
           // ظاهرًا، وزر "✏️ تعديل" يبدّل بينهما (المنظم اكتشف نتيجة خاطئة
           // مُرسَلة من زائر/متسابق ويحتاج يصححها أو يحذفها بلا رجوع للمُرسِل).
@@ -4719,6 +4798,7 @@ async function loadCommunityReports(){
                 <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف</button>
               </span>
             </div>
+            ${officialNotes[ri] || ''}
             <div class="community-report-edit">
               <input type="text" class="edit-opp-input" placeholder="الخصم" value="${(r.opponent||'').replace(/"/g,'&quot;')}">
               <select class="edit-res-select">
@@ -4919,6 +4999,20 @@ document.querySelectorAll('.copy-link-btn').forEach(btn=>{
   });
 });
 
+// رسالة تذكير جاهزة للواتساب — تنسخ نصًا كاملًا (رقم الجولة القادمة + رابط
+// صفحة "ساهم بالبيانات") يقدر المنظم يلصقه مباشرة بجروب الواتساب بدل كتابته
+// يدويًا كل أسبوع (طلب المستخدم 7 سبتمبر 2026).
+const copyReminderMsgBtnEl = document.getElementById('copyReminderMsgBtn');
+if(copyReminderMsgBtnEl){
+  copyReminderMsgBtnEl.addEventListener('click', ()=>{
+    const nextRound = getCurrentRoundNumber() + 1;
+    const msg = `⚽ تذكير دوري بروكي الفانتازي — الجولة ${nextRound}\n\n`
+      + `مين عنده نتيجة أي نادٍ من أندية الجولة، يسجّلها من هنا (يستغرق دقيقة):\n${REPORT_URL}\n\n`
+      + `يساعدنا نطلع الترتيب أسرع وأدق 🙏`;
+    copyToClipboardWithFeedback(msg, copyReminderMsgBtnEl);
+  });
+}
+
 // نسخ كل رموز المشاركين دفعة وحدة كنص واحد منسّق (اسم: رمز بكل سطر) — بدل
 // نسخ كل رمز على حدة عند الحاجة لإرسالها كلها لجهة ما (طلب المستخدم 7 سبتمبر
 // 2026).
@@ -4981,6 +5075,28 @@ function getTeamRoundEntries(entries, ti){
   const tagged = entries.filter(e => e && typeof e.ti === 'number');
   if(tagged.length) return tagged.filter(e=>e.ti===ti);
   return entries[ti] ? [entries[ti]] : [];
+}
+
+// يرجع تسجيل نادٍ معيّن كما حفظه المنظم فعليًا بنموذج الجولة الرسمي (إن كانت
+// الجولة محفوظة أصلًا)، بحث عن أول مشارك يملك هذا النادي ويملك تسجيلًا له
+// بتلك الجولة — تُستخدم لمقارنة تقارير الأعضاء بالبيانات الرسمية تلقائيًا
+// (لوحة المنظم، قسم "تقارير الأعضاء" — 7 سبتمبر 2026). النادي المشترك بين
+// عدة مشاركين تُضمن نتيجته موحّدة بينهم عبر syncSharedClub() أصلًا، فيكفي
+// إيجاد أول تسجيل موجود. يرجع null إن لم تكن الجولة محفوظة بعد أو لا يوجد
+// تسجيل لهذا النادي فيها.
+function getOfficialClubEntry(roundNumber, club, opponent){
+  const r = DATA.rounds.find(rr=>rr.number===roundNumber);
+  if(!r) return null;
+  for(const p of PARTICIPANTS){
+    const ti = p.teams.indexOf(club);
+    if(ti===-1) continue;
+    const entries = (r.entries && r.entries[p.id]) || [];
+    const es = getTeamRoundEntries(entries, ti);
+    if(!es.length) continue;
+    const match = (opponent && es.length>1) ? es.find(e=>e.opp===opponent) : es[0];
+    if(match) return match;
+  }
+  return null;
 }
 
 // عدد المشاركين المالكين لنفس النادي — يُستخدم لعرض شارة "مشترك" وتفعيل
@@ -5650,6 +5766,7 @@ initMePicker();
 loadMyId();
 loadData();
 loadPredictions();
+loadAdminPin();
 startRealtimeSync();
 
 // تسجيل service worker لدعم "أضف للشاشة الرئيسية" (PWA) — فشل التسجيل (مثلاً
