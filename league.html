@@ -289,6 +289,219 @@
   .my-dash-label{display:block;font-size:0.68rem;color:var(--muted);margin-top:2px;}
   .my-dash-rival{font-size:0.8rem;color:var(--text2);margin-bottom:4px;}
   .my-dash-pred{font-size:0.82rem;color:var(--gold-light);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .my-dash-need{font-size:0.82rem;color:#00C9A7;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px;}
+  .my-dash-need-row{display:flex;justify-content:space-between;align-items:center;}
+  .my-dash-need-badge{background:rgba(0,201,167,0.15);border:1px solid rgba(0,201,167,0.4);border-radius:20px;padding:1px 8px;font-size:0.76rem;font-weight:700;color:#00C9A7;}
+
+  /* لوحة الشرف */
+  .honor-board{background:var(--paper);border:1px solid var(--gold);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .honor-board-title{font-weight:800;font-size:0.98rem;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .honor-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+  .honor-card{background:linear-gradient(135deg,rgba(184,134,47,0.1),rgba(184,134,47,0.05));border:1px solid rgba(184,134,47,0.3);border-radius:10px;padding:10px 12px;text-align:center;}
+  .honor-card-emoji{font-size:1.4rem;display:block;margin-bottom:4px;}
+  .honor-card-label{font-size:0.65rem;color:var(--muted);display:block;margin-bottom:4px;}
+  .honor-card-name{font-weight:800;font-size:0.82rem;color:var(--text);display:block;}
+  .honor-card-val{font-size:0.7rem;color:var(--gold);display:block;margin-top:2px;}
+
+  /* شريط تقدم الموسم */
+  .season-progress-bar{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:14px;}
+  .season-progress-label{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .season-progress-track{background:rgba(0,0,0,0.15);border-radius:20px;height:10px;overflow:hidden;}
+  .season-progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.5s ease;}
+
+  /* بطاقات أبرز الجولات */
+  .rounds-insights{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+  .rounds-insight-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center;}
+  .rounds-insight-card.best{border-color:rgba(0,180,70,0.4);}
+  .rounds-insight-card.worst{border-color:rgba(201,85,44,0.4);}
+  .rounds-insight-icon{font-size:1.2rem;display:block;margin-bottom:4px;}
+  .rounds-insight-label{font-size:0.65rem;color:var(--muted);display:block;margin-bottom:4px;}
+  .rounds-insight-val{font-size:1.1rem;font-weight:800;color:var(--text);display:block;}
+  .rounds-insight-sub{font-size:0.7rem;color:var(--muted);display:block;margin-top:2px;}
+
+  /* ملخص ذكي بعد التحديث */
+  .refresh-summary{background:var(--paper);border:1px solid rgba(0,180,115,0.4);border-radius:12px;padding:12px 16px;margin-bottom:12px;font-size:0.84rem;}
+  .refresh-summary-title{font-weight:800;color:#3DD47E;margin-bottom:8px;font-size:0.9rem;}
+  .refresh-summary-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--line);color:var(--text);}
+  .refresh-summary-row:last-child{border-bottom:none;}
+
+  /* بانر جولة جديدة */
+  .new-round-banner{background:linear-gradient(90deg,var(--gold),var(--gold-light));color:#1a0e00;text-align:center;padding:10px 16px;border-radius:10px;margin-bottom:12px;font-weight:800;font-size:0.9rem;cursor:pointer;animation:pulseBanner 1.5s ease-in-out 2;}
+  @keyframes pulseBanner{0%,100%{transform:scale(1);}50%{transform:scale(1.02);}}
+
+  /* صفحة عن الدوري */
+  .about-league{padding:4px 0;}
+
+  /* قصة الموسم */
+  .story-wrap{margin-top:16px;}
+  .story-chapter{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden;}
+  .story-chapter::before{content:attr(data-num);position:absolute;font-size:5rem;font-weight:900;color:rgba(203,162,68,0.06);right:8px;top:-8px;line-height:1;pointer-events:none;}
+  .story-chapter-title{font-size:0.82rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+  .story-chapter-body{font-size:0.84rem;color:var(--text2);line-height:1.8;}
+  .story-chapter-body b{color:var(--text);}
+  .story-share-btn{margin-top:10px;padding:8px 16px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+  .story-highlight{display:inline-block;background:rgba(203,162,68,0.15);border:1px solid rgba(203,162,68,0.3);border-radius:6px;padding:1px 7px;font-weight:700;color:var(--gold);}
+  .about-section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+  .about-section-title{font-weight:800;font-size:0.95rem;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .about-stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;}
+  .about-stat{text-align:center;background:rgba(184,134,47,0.08);border-radius:8px;padding:8px 6px;}
+  .about-stat-num{display:block;font-size:1.4rem;font-weight:800;color:var(--text);}
+  .about-stat-label{display:block;font-size:0.65rem;color:var(--muted);margin-top:2px;}
+
+  /* تفاصيل سريعة في توسيع الصف */
+  .quick-hist{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+  .quick-hist-pill{min-width:34px;padding:3px 6px;border-radius:6px;text-align:center;font-size:0.7rem;font-weight:700;background:rgba(255,255,255,0.08);color:#E0E0E0;}
+  .quick-hist-pill.hi{background:rgba(61,212,126,0.2);color:#3DD47E;}
+  .quick-hist-pill.mumma{background:rgba(201,85,44,0.2);color:#FF6B5E;}
+  .quick-hist-mini-label{font-size:0.62rem;color:#8A8A8A;margin-bottom:4px;}
+
+  /* سجل نشاط المنظم */
+  .activity-log-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);font-size:0.8rem;}
+  .activity-log-row:last-child{border-bottom:none;}
+
+  /* ثيم ألوان المشاركين */
+  .participant-card[data-pcolor]{border-right:3px solid var(--pcolor);}
+  .p-color-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:5px;flex-shrink:0;}
+
+  /* بصمة الموسم (sparkline مخصصة) */
+  .fingerprint-bar{display:inline-block;width:7px;border-radius:3px 3px 0 0;vertical-align:bottom;transition:height 0.3s;}
+
+  /* لوحة المفاجآت */
+  .surprises-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0 22px;}
+  .surprise-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .surprise-emoji{font-size:1.8rem;margin-bottom:4px;}
+  .surprise-title{font-size:0.74rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
+  .surprise-name{font-size:0.9rem;font-weight:800;color:var(--text);}
+  .surprise-detail{font-size:0.72rem;color:var(--gold);margin-top:2px;}
+
+  /* وضع ليلة الجولة */
+  .night-mode-banner{background:linear-gradient(135deg,#1a0533,#0d1f44);border:1px solid #4B2080;border-radius:12px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden;animation:nightPulse 3s ease-in-out infinite;}
+  .night-mode-banner::before{content:'⚽';position:absolute;font-size:5rem;opacity:0.07;right:-10px;top:-5px;}
+  @keyframes nightPulse{0%,100%{box-shadow:0 0 0 0 rgba(123,52,255,0.2);}50%{box-shadow:0 0 0 8px rgba(123,52,255,0);}}
+  .night-title{font-size:1.05rem;font-weight:900;color:#E0C4FF;margin-bottom:4px;}
+  .night-sub{font-size:0.8rem;color:#9F80CC;}
+
+  /* تعليق المشارك */
+  .round-comment-section{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+  .round-comments-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+  .round-comment-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.8rem;}
+  .rc-author{font-weight:700;color:var(--gold);min-width:70px;flex-shrink:0;}
+  .rc-text{color:var(--text);flex:1;}
+  .rc-time{font-size:0.68rem;color:var(--muted);white-space:nowrap;}
+  .rc-add-form{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .rc-input{flex:1;min-width:140px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
+  .rc-submit{padding:5px 12px;border-radius:8px;font-size:0.78rem;font-weight:700;background:var(--gold);color:#000;border:none;cursor:pointer;}
+  .rc-locked{font-size:0.75rem;color:var(--muted);font-style:italic;}
+
+  /* لوحة الميداليات */
+  .medals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:12px 0 22px;}
+  .medal-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;position:relative;}
+  .medal-icon{font-size:1.6rem;line-height:1;margin-bottom:4px;}
+  .medal-name{font-size:0.85rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+  .medal-count{font-size:0.72rem;color:var(--muted);}
+  .medal-gold{border-color:var(--gold);background:rgba(203,162,68,0.08);}
+  .medal-silver{border-color:#CFC3AA;background:rgba(207,195,170,0.06);}
+  .medal-bronze{border-color:#D6A868;background:rgba(214,168,104,0.06);}
+  .medal-star{position:absolute;top:-7px;right:-7px;font-size:0.75rem;background:var(--paper);border:1px solid var(--line);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+
+  /* تاريخ تبادل المراكز */
+  .rank-history{overflow-x:auto;margin:12px 0 22px;}
+  .rank-history table{border-collapse:collapse;font-size:0.74rem;min-width:480px;}
+  .rank-history th{background:var(--paper);color:var(--muted);font-weight:700;padding:5px 8px;text-align:center;border-bottom:2px solid var(--line);white-space:nowrap;}
+  .rank-history td{padding:5px 7px;text-align:center;border-bottom:1px dotted var(--line);}
+  .rank-history td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:80px;}
+  .rh-up{color:#3DD47E;font-weight:700;}
+  .rh-down{color:var(--coral);font-weight:700;}
+  .rh-same{color:var(--muted);}
+  .rh-first{background:rgba(203,162,68,0.1);color:var(--gold);font-weight:900;}
+
+  /* لوحة قيادة الترتيب */
+  .rank-leaderboard{overflow-x:auto;margin:12px 0 22px;}
+  .rank-leaderboard table{width:100%;border-collapse:collapse;font-size:0.75rem;min-width:520px;}
+  .rank-leaderboard th{background:var(--paper);color:var(--muted);font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid var(--line);white-space:nowrap;}
+  .rank-leaderboard td{padding:5px 7px;text-align:center;border-bottom:1px dotted var(--line);white-space:nowrap;}
+  .rank-leaderboard td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:90px;}
+  .rank-leaderboard tr:hover td{background:rgba(255,255,255,0.04);}
+  .rl-cell-1{color:var(--gold);font-weight:900;}
+  .rl-cell-2{color:#CFC3AA;font-weight:800;}
+  .rl-cell-3{color:#D6A868;font-weight:800;}
+  .rl-mumma{color:var(--coral);font-weight:700;}
+  .rl-stable{color:#3DD47E;font-weight:700;}
+
+  /* خريطة الممات */
+  .death-map{overflow-x:auto;margin:12px 0 22px;}
+  .death-map table{width:100%;border-collapse:collapse;font-size:0.75rem;min-width:480px;}
+  .death-map th{background:var(--paper);color:var(--muted);font-weight:700;padding:5px 8px;text-align:center;border-bottom:2px solid var(--line);}
+  .death-map td{padding:4px 6px;text-align:center;border-bottom:1px dotted var(--line);}
+  .death-map td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:80px;}
+  .dm-alive{background:rgba(61,212,126,0.12);color:#3DD47E;font-size:0.9rem;}
+  .dm-dead{background:rgba(201,85,44,0.18);color:#FF6B5E;font-size:1rem;font-weight:900;}
+  .dm-none{color:var(--muted);font-size:0.7rem;}
+  .death-map tr:hover td{background:rgba(255,255,255,0.03);}
+  .dm-total-cell{font-weight:900;color:var(--coral);}
+  .dm-zero-cell{font-weight:700;color:#3DD47E;}
+
+  /* حاسبة ماذا لو */
+  .whatif-box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0 22px;}
+  .whatif-title{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:12px;}
+  .whatif-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;}
+  .whatif-label{font-size:0.8rem;color:var(--muted);white-space:nowrap;}
+  .whatif-select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
+  .whatif-input{width:72px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;text-align:center;}
+  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
+  .whatif-result{display:flex;flex-direction:column;gap:4px;}
+  .whatif-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;font-size:0.82rem;transition:background 0.2s;}
+  .whatif-row.changed{background:rgba(203,162,68,0.12);border:1px solid rgba(203,162,68,0.3);}
+  .whatif-rank{min-width:24px;font-weight:900;color:var(--muted);}
+  .whatif-name{flex:1;font-weight:700;}
+  .whatif-pts{font-weight:800;color:var(--gold);}
+  .whatif-delta{font-size:0.75rem;font-weight:700;min-width:40px;text-align:left;}
+
+  /* رادار الموسم */
+  .radar-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:12px 0 22px;}
+  .radar-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .radar-name{font-size:0.78rem;font-weight:800;color:var(--text);margin-bottom:6px;}
+
+  /* سباق الترتيب */
+  .race-wrap{margin:12px 0 22px;}
+  .race-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+  .race-name{font-size:0.76rem;font-weight:700;color:var(--text);min-width:70px;text-align:right;}
+  .race-bar-wrap{flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:20px;overflow:hidden;position:relative;}
+  .race-bar{height:100%;border-radius:20px;transition:width 0.8s ease;display:flex;align-items:center;padding:0 6px;}
+  .race-pts{font-size:0.68rem;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.5);}
+  .race-slider{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .race-slider label{font-size:0.8rem;color:var(--muted);}
+  .race-slider input[type=range]{flex:1;min-width:120px;}
+  .race-round-label{font-size:0.78rem;font-weight:700;color:var(--gold);min-width:50px;}
+
+  /* خريطة الأندية بالدوريات */
+  .club-map{margin:12px 0 22px;}
+  .club-map-league{margin-bottom:14px;}
+  .club-map-league-name{font-size:0.8rem;font-weight:800;color:var(--muted);margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid var(--line);}
+  .club-map-clubs{display:flex;flex-wrap:wrap;gap:6px;}
+  .club-map-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:var(--paper);border:1px solid var(--line);font-size:0.78rem;}
+  .club-map-chip.owned{border-color:var(--gold);background:rgba(203,162,68,0.08);}
+  .club-map-owners{font-size:0.68rem;color:var(--muted);}
+  .club-map-chip.owned .club-map-owners{color:var(--gold);}
+
+  /* تحدي التوقعات */
+  .pred-challenge{margin:12px 0 22px;}
+  .pred-challenge-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+  .pred-challenge-table th{background:var(--paper);color:var(--muted);font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid var(--line);}
+  .pred-challenge-table td{padding:5px 8px;text-align:center;border-bottom:1px dotted var(--line);}
+  .pred-challenge-table td:first-child{text-align:right;font-weight:700;}
+  .pred-ch-correct{color:#3DD47E;font-weight:800;}
+  .pred-ch-wrong{color:var(--coral);}
+  .pred-ch-miss{color:var(--muted);}
+
+  /* كفاءة الأندية */
+  .club-eff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:12px 0 22px;}
+  .club-eff-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .club-eff-name{font-size:0.82rem;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .club-eff-bar-wrap{background:rgba(255,255,255,0.06);border-radius:20px;height:8px;margin:4px 0;}
+  .club-eff-bar{height:100%;border-radius:20px;background:var(--gold);}
+  .club-eff-stats{font-size:0.72rem;color:var(--muted);display:flex;justify-content:space-between;}
+  .activity-log-time{color:var(--muted);font-size:0.72rem;white-space:nowrap;margin-inline-start:8px;}
 
   /* توقعات بطل الجولة القادمة */
   .predict-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
@@ -826,6 +1039,7 @@
   <button data-tab="rounds">الجولات</button>
   <button data-tab="stats">الإحصائيات</button>
   <button data-tab="rules">اللائحة</button>
+  <button data-tab="about">عن الدوري</button>
   <button data-tab="admin">المنظم</button>
 </nav>
 
@@ -863,9 +1077,18 @@
     <div id="copyBox"></div>
     <div id="standingsImgBox"></div>
 
+    <div id="refreshSummaryBox"></div>
+    <div id="newRoundBannerBox"></div>
+
     <div id="standingsBox" class="loading">جارٍ تحميل البيانات...</div>
 
+    <div id="honorBoardBox"></div>
     <div id="badgesBox"></div>
+    <div id="medalsBox"></div>
+    <div id="rankHistoryBox"></div>
+    <div id="surprisesBox"></div>
+    <div id="myAchievementsBox"></div>
+    <div id="nightModeBox"></div>
 
     <div id="weeklyDuelsBox"></div>
 
@@ -890,6 +1113,10 @@
     </div>
     <div id="roundsImgMsg"></div>
     <div id="roundsCapture">
+      <div id="seasonProgressBox"></div>
+      <div id="roundsInsightsBox"></div>
+      <div id="roundCommentsBox"></div>
+      <div id="roundChallengeBox"></div>
       <h2 class="section-title">🏆 أرشيف أبطال الجولات</h2>
       <div id="championsArchiveBox"></div>
       <h2 class="section-title" style="margin-top:22px;">سجل الجولات</h2>
@@ -900,15 +1127,26 @@
   <section class="panel" id="panel-stats">
     <div class="toolbar" id="statsToolbar" style="display:none;">
       <button class="btn secondary" id="dlStatsBtn">⬇️ تحميل الإحصائيات كصورة</button>
+      <button class="btn" id="printReportBtn" onclick="printSeasonReport()">🖨️ تقرير الموسم</button>
     </div>
     <div id="statsImgMsg"></div>
     <div id="statsCapture">
       <h2 class="section-title">تطوّر الترتيب</h2>
       <div id="chartBox"></div>
+      <div id="whatIfBox"></div>
+      <div id="scenarioBox"></div>
+      <div id="rankLeaderboardBox"></div>
+      <div id="deathMapBox"></div>
       <div id="recordsBox"></div>
       <div id="h2hBox" style="display:none;"></div>
       <div id="predictionAccuracyBox"></div>
+      <div id="predChallengeBox"></div>
+      <div id="radarBox"></div>
+      <div id="smartProfileBox"></div>
+      <div id="raceBox"></div>
       <h2 class="section-title" style="margin-top:22px;">أداء الأندية</h2>
+      <div id="clubEfficiencyBox"></div>
+      <div id="clubMapBox"></div>
       <div id="clubStatsBox"></div>
     </div>
   </section>
@@ -965,6 +1203,11 @@
         </details>
       </div>
     </div>
+  </section>
+
+  <section class="panel" id="panel-about">
+    <div id="aboutLeagueBox"></div>
+    <div id="seasonStoryBox"></div>
   </section>
 
   <section class="panel" id="panel-admin">
@@ -1138,6 +1381,13 @@
               </div>
             </div>
           </div>
+        </div>
+      </details>
+
+      <details class="admin-accordion">
+        <summary>📅 سجل نشاط المنظم</summary>
+        <div class="acc-body">
+          <div id="adminActivityLog" style="font-size:0.82rem;color:var(--text);"></div>
         </div>
       </details>
     </div>
@@ -2126,7 +2376,7 @@ function computeBadges(){
 function renderBadges(){
   const box = document.getElementById('badgesBox');
   if(!box) return;
-  const badges = computeBadges();
+  const badges = [...computeBadges(), ...computeExtendedBadges()];
   if(!badges.length){ box.innerHTML=''; return; }
   let html = '<h2 class="section-title" style="margin-top:22px;">🏅 أوسمة الموسم</h2>';
   html += '<div class="badges-grid">';
@@ -2676,12 +2926,14 @@ function codeMatchesParticipant(pid, code){
 async function applyMyId(id){
   MY_ID = id;
   meVerifiedId = id ? String(id) : '';
+  window._verifiedPid = id ? Number(id) : null; // للتعليقات وغيرها
   try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
   const mainSel = document.getElementById('mePicker');
   if(mainSel) mainSel.value = id || '';
   renderStandings();
   renderPredictions();
   renderMyDashboard();
+  renderRoundComments();
 }
 
 function initMePicker(){
@@ -2762,6 +3014,7 @@ async function loadMyId(){
     if(r && r.value !== undefined && r.value !== null){
       MY_ID = Number(typeof r.value==='string' ? JSON.parse(r.value) : r.value);
       meVerifiedId = String(MY_ID);
+      window._verifiedPid = MY_ID;
       const sel = document.getElementById('mePicker');
       if(sel) sel.value = MY_ID;
       renderPredictions();
@@ -2817,6 +3070,8 @@ function renderMyDashboard(){
       : `<div class="my-dash-pred">لسه ما توقعت بطل الجولة ${targetRound} 🔮</div>`;
   }
 
+  const whatINeedHtml = buildWhatINeedHTML(meRow, st, idx);
+
   box.style.display = 'block';
   box.innerHTML = `
     <div class="my-dash-card">
@@ -2827,6 +3082,7 @@ function renderMyDashboard(){
         <div class="my-dash-stat"><span class="my-dash-num" style="color:${moveColor};">${moveLabel}</span><span class="my-dash-label">حركتك</span></div>
       </div>
       ${rivalHtml}
+      ${whatINeedHtml}
       ${predHtml}
       <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
     </div>`;
@@ -3934,17 +4190,1742 @@ async function downloadElementAsImage(elementId, filename, msgBoxId, btnId){
   }
 }
 
+// =====================================================================
+// ===== 9.47 — الميزات الجديدة: لوحة الشرف، شريط التقدم، ماذا أحتاج؟،
+//              جولات أبرز، صفحة عن الدوري، ملخص التحديث، بانر الجولة الجديدة
+// =====================================================================
+
+// ---------- لوحة الشرف النهائية ----------
+function renderHonorBoard(){
+  const box = document.getElementById('honorBoardBox');
+  if(!box) return;
+  const st = computeStandings();
+  if(!st.length){ box.innerHTML=''; return; }
+  const histMap = getAllParticipantsRoundsHistory();
+
+  // أعلى نقطة في جولة واحدة
+  let bestSingle = {name:'', pts:0};
+  PARTICIPANTS.forEach(p=>{
+    const rounds = histMap[p.id] || [];
+    rounds.forEach(r=>{
+      if(r.points > bestSingle.pts) bestSingle = {name:p.name, pts:r.points, round:r.round};
+    });
+  });
+
+  // أكثر ثباتاً (أقل انحراف معياري — فقط لمن لديه 3 جولات أو أكثر)
+  let mostStable = {name:'', std:Infinity};
+  PARTICIPANTS.forEach(p=>{
+    const rounds = histMap[p.id] || [];
+    if(rounds.length < 3) return;
+    const pts = rounds.map(r=>r.points);
+    const avg = pts.reduce((a,b)=>a+b,0)/pts.length;
+    const std = Math.sqrt(pts.reduce((a,b)=>a+(b-avg)**2,0)/pts.length);
+    if(std < mostStable.std) mostStable = {name:p.name, std: Math.round(std*10)/10};
+  });
+
+  // أقل ممات
+  let leastMumma = {name:'', mumma:Infinity};
+  st.forEach(s=>{ if(s.mummaCount < leastMumma.mumma) leastMumma = {name:s.name, mumma:s.mummaCount}; });
+
+  // أطول سلسلة
+  let longestStreak = {name:'', streak:0};
+  st.forEach(s=>{ if(s.bestStreak > longestStreak.streak) longestStreak = {name:s.name, streak:s.bestStreak}; });
+
+  // أعلى نقاط إجمالية (متصدر الآن)
+  const leader = st[0];
+
+  const cards = [
+    {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:`${leader.total} نقطة`},
+    {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name||'—', val:bestSingle.pts ? `${bestSingle.pts} ن. (ج${bestSingle.round})` : '—'},
+    {emoji:'💀', label:'أقل ممات', name:leastMumma.name||'—', val:`${leastMumma.mumma===Infinity?'—':leastMumma.mumma} ممة`},
+    {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.streak>0?longestStreak.name:'—', val:longestStreak.streak>0?`${longestStreak.streak} جولات متتالية`:'—'},
+    {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.std===Infinity?'—':mostStable.name, val:mostStable.std===Infinity?'—':`انحراف ±${mostStable.std}`},
+  ];
+
+  box.innerHTML = `
+    <div class="honor-board">
+      <div class="honor-board-title">🎖️ لوحة الشرف</div>
+      <div class="honor-cards">
+        ${cards.map(c=>`
+          <div class="honor-card">
+            <span class="honor-card-emoji">${c.emoji}</span>
+            <span class="honor-card-label">${c.label}</span>
+            <span class="honor-card-name">${c.name}</span>
+            <span class="honor-card-val">${c.val}</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ---------- شريط تقدم الموسم ----------
+const SEASON_TOTAL_ROUNDS = 30; // عدد الجولات الإجمالي المتوقع للموسم
+function renderSeasonProgress(){
+  const box = document.getElementById('seasonProgressBox');
+  if(!box) return;
+  const done = getCurrentRoundNumber();
+  const pct = Math.min(100, Math.round((done / SEASON_TOTAL_ROUNDS)*100));
+  box.innerHTML = `
+    <div class="season-progress-bar">
+      <div class="season-progress-label">
+        <span>تقدّم الموسم</span>
+        <span>${done} / ${SEASON_TOTAL_ROUNDS} جولة (${pct}%)</span>
+      </div>
+      <div class="season-progress-track">
+        <div class="season-progress-fill" style="width:${pct}%;"></div>
+      </div>
+    </div>`;
+}
+
+// ---------- أبرز جولات (أكثر تنافسية وأكثر تفاوتاً) ----------
+function renderRoundsInsights(){
+  const box = document.getElementById('roundsInsightsBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  let mostCompetitive = {round:null, spread:Infinity};
+  let mostDivergent = {round:null, spread:0};
+
+  DATA.rounds.forEach(r=>{
+    const stats = computeRoundStats(r);
+    const pts = PARTICIPANTS.map(p=>stats[p.id].points);
+    const mn = Math.min(...pts), mx = Math.max(...pts);
+    const spread = mx - mn;
+    if(spread < mostCompetitive.spread) mostCompetitive = {round:r.number, spread};
+    if(spread > mostDivergent.spread) mostDivergent = {round:r.number, spread, min:mn, max:mx};
+  });
+
+  box.innerHTML = `
+    <div class="rounds-insights">
+      <div class="rounds-insight-card best">
+        <span class="rounds-insight-icon">⚔️</span>
+        <span class="rounds-insight-label">الجولة الأكثر تنافسية</span>
+        <span class="rounds-insight-val">جولة ${mostCompetitive.round||'—'}</span>
+        <span class="rounds-insight-sub">فارق ${mostCompetitive.spread} نقطة فقط</span>
+      </div>
+      <div class="rounds-insight-card worst">
+        <span class="rounds-insight-icon">📊</span>
+        <span class="rounds-insight-label">الجولة الأكثر تفاوتاً</span>
+        <span class="rounds-insight-val">جولة ${mostDivergent.round||'—'}</span>
+        <span class="rounds-insight-sub">فارق ${mostDivergent.spread} نقطة</span>
+      </div>
+    </div>`;
+}
+
+// ---------- قصة الموسم ----------
+function renderSeasonStory(){
+  const box = document.getElementById('seasonStoryBox');
+  if(!box) return;
+  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
+
+  const n = DATA.rounds.length;
+  const histMap = getAllParticipantsRoundsHistory();
+  const st = computeStandings();
+  const leader = st[0];
+  const last = st[st.length-1];
+
+  // ---- مساعدات ----
+  const hl = t => `<span class="story-highlight">${t}</span>`;
+  const name = id => (PARTICIPANTS.find(p=>p.id===id)||{}).name||'—';
+
+  // ---- فصل 1: الافتتاحية ----
+  const totalPts = st.reduce((a,s)=>a+s.total,0);
+  const totalMum = st.reduce((a,s)=>a+s.mummaCount,0);
+  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(PARTICIPANTS.length+' مشاركاً')} يتنافسون بـ${hl(CLUBS.length+' نادياً')} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(n+' جولات')} أُنتجت فيها ${hl(totalPts+' نقطة')} إجمالية، وشهدت ${hl(totalMum+' ممة')} مؤلمة.`;
+
+  // ---- فصل 2: الصدارة وتاريخها ----
+  const leaderRounds = {};
+  PARTICIPANTS.forEach(p=>leaderRounds[p.id]=0);
+  for(let i=1;i<=n;i++){
+    const top = computeStandings(i)[0];
+    if(top) leaderRounds[top.id]++;
+  }
+  const topLeader = PARTICIPANTS.slice().sort((a,b)=>(leaderRounds[b.id]||0)-(leaderRounds[a.id]||0))[0];
+  const changes = [];
+  let prevLeaderId = null;
+  for(let i=1;i<=n;i++){
+    const cur = computeStandings(i)[0];
+    if(cur && cur.id !== prevLeaderId){ changes.push({round:DATA.rounds[i-1].number, name:cur.name}); prevLeaderId=cur.id; }
+  }
+  const gap = st.length>=2 ? leader.total - st[1].total : 0;
+  let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${n}. `;
+  if(changes.length > 1){
+    chap2 += `شهد الموسم ${hl(changes.length+' تغييرات')} في قيادة الترتيب — `;
+    chap2 += changes.map(c=>`${c.name} (ج${c.round})`).join(' ← ');
+    chap2 += '. ';
+  } else {
+    chap2 += `القيادة لم تتغير — ${hl(changes[0]?.name||leader.name)} يقود منذ البداية. `;
+  }
+  chap2 += `المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب بـ${hl(gap+' نقطة')}.`;
+
+  // ---- فصل 3: المعارك الحامية ----
+  // أقرب فارق بين مشاركَين بآخر جولة
+  let tightestGap=Infinity, tightPair=[];
+  for(let i=0;i<st.length-1;i++){
+    const g=st[i].total-st[i+1].total;
+    if(g<tightestGap){ tightestGap=g; tightPair=[st[i].name,st[i+1].name]; }
+  }
+  // أكبر فارق في نقاط جولة واحدة
+  let biggestRoundGap=0, biggestRound=0;
+  DATA.rounds.forEach(r=>{
+    const stats=computeRoundStats(r);
+    const pts=PARTICIPANTS.map(p=>stats[p.id]?.points||0).filter(v=>v>=0);
+    const g=Math.max(...pts)-Math.min(...pts.filter(v=>v>0||true));
+    if(g>biggestRoundGap){biggestRoundGap=g;biggestRound=r.number;}
+  });
+  let chap3 = `أشرس المعارك كانت بين ${hl(tightPair[0])} و${hl(tightPair[1])} — الفارق بينهما ${hl(tightestGap+' نقطة')} فقط. `;
+  chap3 += `الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(biggestRoundGap+' نقطة')} بين الأعلى والأدنى.`;
+
+  // ---- فصل 4: نجوم ومفاجآت ----
+  // أعلى نقطة جولة واحدة
+  let bestPts=0, bestRoundN=0, bestPid=null;
+  PARTICIPANTS.forEach(p=>{
+    histMap[p.id].forEach(h=>{ if(h.points>bestPts){bestPts=h.points;bestPid=p.id;bestRoundN=h.number;} });
+  });
+  // أكثر صعودًا من الجولة 1 حتى الآن
+  const startRanks={}, nowRanks={};
+  computeStandings(1).forEach((s,i)=>startRanks[s.id]=i+1);
+  st.forEach((s,i)=>nowRanks[s.id]=i+1);
+  let bigClimber=null, bigClimb=0;
+  PARTICIPANTS.forEach(p=>{
+    if(JOINED_AFTER_ROUND1[p.id]||JOINED_AFTER_ROUND2[p.id]) return;
+    const d=(startRanks[p.id]||0)-(nowRanks[p.id]||0);
+    if(d>bigClimb){bigClimb=d;bigClimber=p.id;}
+  });
+  let chap4=`أعلى حصاد في جولة واحدة طوال الموسم سجّله ${hl(name(bestPid))} بـ${hl(bestPts+' نقطة')} في الجولة ${bestRoundN}. `;
+  if(bigClimber && bigClimb>0){
+    chap4 += `أبرز تحسّن في الترتيب عبر الموسم حقّقه ${hl(name(bigClimber))} الذي صعد ${hl(bigClimb+' مراكز')}.`;
+  }
+
+  // ---- فصل 5: الممات والثبات ----
+  const zeroMum = PARTICIPANTS.filter(p=>histMap[p.id].length>=2 && histMap[p.id].every(h=>h.points>0));
+  let mostMumPid=null, mostMumVal=0;
+  PARTICIPANTS.forEach(p=>{
+    const m=histMap[p.id].filter(h=>h.points===0).length;
+    if(m>mostMumVal){mostMumVal=m;mostMumPid=p.id;}
+  });
+  let chap5='';
+  if(zeroMum.length){
+    chap5 += `${hl(zeroMum.map(p=>p.name).join(' و'))} ${zeroMum.length>1?'يحافظون':'يحافظ'} على سجل نظيف — بلا ممات حتى الآن 🧊. `;
+  }
+  if(mostMumPid && mostMumVal>0){
+    chap5 += `في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(mostMumVal+' ممات')} — الأكثر في الموسم.`;
+  }
+
+  // ---- فصل 6: نهاية الموسم المتوقعة ----
+  const roundsLeft = SEASON_TOTAL_ROUNDS - n;
+  const avgByPid={};
+  PARTICIPANTS.forEach(p=>{
+    const hist=histMap[p.id];
+    avgByPid[p.id]=hist.length?hist.reduce((a,h)=>a+h.points,0)/hist.length:0;
+  });
+  const projected = st.map(s=>({
+    id:s.id, name:s.name,
+    projected: Math.round(s.total + avgByPid[s.id]*roundsLeft)
+  })).sort((a,b)=>b.projected-a.projected);
+  const projLeader = projected[0];
+  const projSecond = projected[1];
+  const projGap = projLeader.projected - projSecond.projected;
+  let chap6=`إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(roundsLeft+' جولة')}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا بـ${hl(projLeader.projected+' نقطة')} `;
+  chap6 += `متقدمًا على ${hl(projSecond.name)} بـ${hl(projGap+' نقطة')}.`;
+  if(projLeader.id !== leader.id){
+    chap6 += ` ⚠️ المتصدر الحالي ${hl(leader.name)} في خطر!`;
+  }
+
+  // ---- تجميع الفصول ----
+  const chapters = [
+    {num:'١', icon:'🏁', title:'الافتتاحية', body:chap1},
+    {num:'٢', icon:'👑', title:'معركة الصدارة', body:chap2},
+    {num:'٣', icon:'⚔️', title:'المعارك الحامية', body:chap3},
+    {num:'٤', icon:'🌟', title:'نجوم ومفاجآت', body:chap4},
+    {num:'٥', icon:'💀', title:'الممات والثبات', body:chap5},
+    {num:'٦', icon:'🔮', title:'ماذا يُخبئ الموسم؟', body:chap6},
+  ].filter(c=>c.body);
+
+  let html = '<div class="story-wrap">';
+  html += '<h2 class="section-title" style="margin-top:22px;">📖 قصة الموسم</h2>';
+  html += `<p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;">سرد تلقائي مُولَّد من البيانات — يتحدّث نفسه مع كل جولة جديدة</p>`;
+
+  chapters.forEach(c=>{
+    html += `<div class="story-chapter" data-num="${c.num}">
+      <div class="story-chapter-title">${c.icon} الفصل ${c.num}: ${c.title}</div>
+      <div class="story-chapter-body">${c.body}</div>
+    </div>`;
+  });
+
+  // زر مشاركة القصة في الواتساب
+  const storyText = chapters.map(c=>`*${c.icon} ${c.title}*\n${c.body.replace(/<[^>]+>/g,'')}`).join('\n\n');
+  const waText = encodeURIComponent(`📖 *قصة دوري بروكي الفانتازي — الموسم الثاني*\n\n${storyText}\n\n${SITE_URL}`);
+  html += `<a href="https://wa.me/?text=${waText}" target="_blank" class="story-share-btn">📤 شارك القصة في واتساب</a>`;
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- صفحة "عن الدوري" ----------
+function renderAboutLeague(){
+  const box = document.getElementById('aboutLeagueBox');
+  if(!box) return;
+  const st = computeStandings();
+  const histMap = getAllParticipantsRoundsHistory();
+  const roundsDone = getCurrentRoundNumber();
+  const totalPoints = st.reduce((a,s)=>a+s.total,0);
+  const totalMummas = st.reduce((a,s)=>a+s.mummaCount,0);
+  let bestSinglePts = 0;
+  PARTICIPANTS.forEach(p=>{ (histMap[p.id]||[]).forEach(r=>{ if(r.points>bestSinglePts) bestSinglePts=r.points; }); });
+  const uniqueLeagues = new Set(Object.values(CLUBS).map(c=>c.league||''));
+  uniqueLeagues.delete('');
+
+  const leagueNames = {
+    'Premier League':'الدوري الإنجليزي',
+    'La Liga':'الدوري الإسباني',
+    'Bundesliga':'الدوري الألماني',
+    'Serie A':'الدوري الإيطالي',
+    'Ligue 1':'الدوري الفرنسي',
+    'Saudi Pro League':'الدوري السعودي',
+  };
+
+  box.innerHTML = `
+    <div class="about-league">
+      <div class="about-section">
+        <div class="about-section-title">🏆 دوري بروكي الفانتازي — الموسم الثاني</div>
+        <div class="about-stat-grid">
+          <div class="about-stat"><span class="about-stat-num">${PARTICIPANTS.length}</span><span class="about-stat-label">مشارك</span></div>
+          <div class="about-stat"><span class="about-stat-num">${Object.keys(CLUBS).length}</span><span class="about-stat-label">نادٍ</span></div>
+          <div class="about-stat"><span class="about-stat-num">${uniqueLeagues.size}</span><span class="about-stat-label">دوري</span></div>
+          <div class="about-stat"><span class="about-stat-num">${roundsDone}</span><span class="about-stat-label">جولة مكتملة</span></div>
+          <div class="about-stat"><span class="about-stat-num">${totalPoints}</span><span class="about-stat-label">نقطة إجمالية</span></div>
+          <div class="about-stat"><span class="about-stat-num">${totalMummas}</span><span class="about-stat-label">ممة إجمالية</span></div>
+          <div class="about-stat"><span class="about-stat-num">${bestSinglePts||'—'}</span><span class="about-stat-label">أعلى نقطة جولة</span></div>
+          <div class="about-stat"><span class="about-stat-num">${SEASON_TOTAL_ROUNDS}</span><span class="about-stat-label">جولة متوقعة</span></div>
+        </div>
+      </div>
+      <div class="about-section">
+        <div class="about-section-title">📋 معلومات الموسم</div>
+        <p style="margin:0;font-size:0.85rem;color:var(--text2);line-height:1.8;">
+          🗓️ انطلق الموسم الثاني في أغسطس 2026<br>
+          ⚽ كل مشارك لديه 3 أندية من 3 دوريات مختلفة<br>
+          📊 نقاط الفوز: 3 · التعادل: 1 · الخسارة: 0<br>
+          💀 الممة: صفر نقطة في الجولة كاملة<br>
+          🔗 <a href="${SITE_URL}" target="_blank" style="color:var(--gold);">رابط الدوري</a>
+        </p>
+      </div>
+    </div>`;
+}
+
+// ---------- سجل نشاط المنظم ----------
+// سيُخزَّن في DATA.activityLog = [{time, action}]
+function logAdminActivity(action){
+  if(!isAdmin) return;
+  if(!DATA.activityLog) DATA.activityLog = [];
+  DATA.activityLog.unshift({time: new Date().toISOString(), action});
+  if(DATA.activityLog.length > 50) DATA.activityLog = DATA.activityLog.slice(0,50);
+  renderAdminActivityLog();
+}
+function renderAdminActivityLog(){
+  const box = document.getElementById('adminActivityLog');
+  if(!box) return;
+  const log = DATA.activityLog || [];
+  if(!log.length){
+    box.innerHTML = '<div style="color:var(--muted);font-size:0.8rem;">لا يوجد سجل نشاط بعد.</div>';
+    return;
+  }
+  box.innerHTML = log.map(entry=>{
+    const d = new Date(entry.time);
+    const timeStr = d.toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    return `<div class="activity-log-row"><span>${entry.action}</span><span class="activity-log-time">${timeStr}</span></div>`;
+  }).join('');
+}
+
+// ---------- ملخص ذكي بعد التحديث + بانر جولة جديدة ----------
+let _prevStandings = null;
+let _prevRoundCount = null;
+function capturePreRefreshState(){
+  _prevStandings = computeStandings().map(s=>({id:s.id,name:s.name,total:s.total}));
+  _prevRoundCount = DATA.rounds.length;
+}
+function renderRefreshSummary(){
+  const box = document.getElementById('refreshSummaryBox');
+  const bannerBox = document.getElementById('newRoundBannerBox');
+  if(!box || !bannerBox) return;
+
+  // بانر جولة جديدة
+  if(_prevRoundCount !== null && DATA.rounds.length > _prevRoundCount){
+    const newRound = getCurrentRoundNumber();
+    bannerBox.innerHTML = `<div class="new-round-banner" onclick="this.parentElement.innerHTML=''">🎉 جولة ${newRound} أُضيفت! اضغط للإغلاق</div>`;
+  } else {
+    bannerBox.innerHTML = '';
+  }
+
+  // ملخص التغييرات
+  if(!_prevStandings || !_prevStandings.length){ box.innerHTML=''; return; }
+  const cur = computeStandings();
+  const changes = [];
+  cur.forEach((s,i)=>{
+    const prev = _prevStandings.find(x=>x.id===s.id);
+    if(!prev) return;
+    const prevRank = _prevStandings.findIndex(x=>x.id===s.id)+1;
+    const curRank = i+1;
+    if(prevRank !== curRank){
+      const dir = curRank < prevRank ? '🔼' : '🔽';
+      changes.push(`${dir} <b>${s.name}</b>: من ${prevRank} إلى ${curRank}`);
+    }
+  });
+  if(!changes.length){ box.innerHTML=''; return; }
+  box.innerHTML = `
+    <div class="refresh-summary">
+      <div class="refresh-summary-title">📊 ما تغيّر بعد التحديث</div>
+      ${changes.map(c=>`<div class="refresh-summary-row">${c}</div>`).join('')}
+    </div>`;
+}
+
+// ---------- رابط مباشر لكل مشارك (#participant-N) ----------
+function handleParticipantHash(){
+  const hash = window.location.hash;
+  const m = hash.match(/^#participant-(\d+)$/);
+  if(!m) return;
+  const pid = Number(m[1]);
+  if(!PARTICIPANTS.find(p=>p.id===pid)) return;
+  // الانتقال لتبويب المشاركين
+  document.querySelectorAll('nav.tabs button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab==='participants');
+  });
+  document.querySelectorAll('section.panel').forEach(p=>{
+    p.classList.toggle('active', p.id==='panel-participants');
+  });
+  // فتح بروفايل المشارك (scroll into view)
+  setTimeout(()=>{
+    const card = document.getElementById(`participant-card-${pid}`);
+    if(card){ card.scrollIntoView({behavior:'smooth',block:'center'}); card.style.outline='2px solid var(--gold)'; setTimeout(()=>card.style.outline='',2000); }
+  }, 400);
+}
+
+// ---------- "ماذا أحتاج؟" مُضافة لـ renderMyDashboard ----------
+function buildWhatINeedHTML(meRow, st, idx){
+  if(!DATA.rounds.length) return '';
+  const above = idx>0 ? st[idx-1] : null;
+  const below = idx<st.length-1 ? st[idx+1] : null;
+  const myLast = meRow.lastPoints || 0;
+
+  let rows = '';
+  if(above){
+    const gap = above.total - meRow.total;
+    const needed = gap + 1;
+    rows += `<div class="my-dash-need-row"><span>للتقدم فوق <b>${above.name}</b></span><span class="my-dash-need-badge">+${needed} ن. على الأقل</span></div>`;
+  }
+  if(below){
+    const gap = meRow.total - below.total;
+    rows += `<div class="my-dash-need-row"><span>للبقاء أمام <b>${below.name}</b></span><span class="my-dash-need-badge">+${gap} ن. كافية</span></div>`;
+  }
+  if(!rows) return '';
+  return `<div class="my-dash-need"><b>🎯 الجولة القادمة:</b>${rows}</div>`;
+}
+
+// ---------- ألوان المشاركين ----------
+// لون ثابت مخصص لكل مشارك (pid→ hsl) — يظهر كشريط جانبي في كرته
+const PARTICIPANT_COLORS = {
+  1:'#E94E4E', 2:'#E97B4E', 3:'#E9C34E', 4:'#8EE94E', 5:'#4EE97D',
+  6:'#4EE9D5', 7:'#4EA8E9', 8:'#4E5AE9', 9:'#9B4EE9', 10:'#D44EE9',
+  11:'#E94EAA', 12:'#E94E74', 13:'#99D44E', 14:'#4ED4C2', 15:'#E9904E',
+  16:'#7A4EE9', 17:'#E94E90', 18:'#4EE9B0', 19:'#D4C44E'
+};
+
+// ---------- بصمة الموسم ----------
+// sparkline ملوّن داخل كرت المشارك
+function buildFingerprintHTML(pid){
+  const hist = buildParticipantHistory(pid);
+  if(hist.length < 2) return '';
+  const color = PARTICIPANT_COLORS[pid] || 'var(--gold)';
+  const maxPts = Math.max(...hist.map(h=>h.points), 1);
+  const BAR_H = 28; // ارتفاع أقصى للشريط
+
+  const bars = hist.map(h=>{
+    const h2 = h.points===0 ? 4 : Math.max(5, Math.round((h.points/maxPts)*BAR_H));
+    const clr = h.points===0 ? 'var(--coral)' : color;
+    return `<div class="fingerprint-bar" style="height:${h2}px;background:${clr};opacity:0.85;" title="ج${h.number}: ${h.points} ن"></div>`;
+  }).join('');
+
+  return `<div style="display:flex;align-items:flex-end;gap:2px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);">${bars}</div>`;
+}
+
+// ---------- وضع ليلة الجولة ----------
+// يظهر تلقائيًا أيام الجمعة والسبت والأحد
+function renderNightMode(){
+  const box = document.getElementById('nightModeBox');
+  if(!box) return;
+  const day = new Date().getDay(); // 0=أحد,5=جمعة,6=سبت
+  if(day !== 5 && day !== 6 && day !== 0){ box.innerHTML=''; return; }
+  const st = computeStandings();
+  const leader = st[0];
+  const dayNames = {5:'الجمعة',6:'السبت',0:'الأحد'};
+  const dayName = dayNames[day];
+  box.innerHTML = `<div class="night-mode-banner">
+    <div class="night-title">🌙 ليلة الجولة — ${dayName}</div>
+    <div class="night-sub">
+      المتصدر الحالي: <b style="color:#E0C4FF;">${leader ? leader.name : '—'}</b>
+      بـ <b style="color:#E0C4FF;">${leader ? leader.total : 0}</b> نقطة
+      · الفارق عن التالي: <b style="color:#E0C4FF;">${leader && st[1] ? leader.total-st[1].total : 0}</b> ن
+    </div>
+  </div>`;
+}
+
+// ---------- لوحة المفاجآت ----------
+// تحسب من آخر جولة: من فاق توقعاته، من تراجع، أكبر مفاجأة
+function renderSurprises(){
+  const box = document.getElementById('surprisesBox');
+  if(!box) return;
+  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
+
+  const histMap = getAllParticipantsRoundsHistory();
+  const n = DATA.rounds.length;
+  const cards = [];
+
+  // بيانات آخر جولة
+  const lastRound = DATA.rounds[n-1];
+  const lastStats = {};
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    if(!hist.length) return;
+    const last = hist[hist.length-1];
+    const prevHist = hist.slice(0,-1);
+    const avg = prevHist.length ? prevHist.reduce((a,h)=>a+h.points,0)/prevHist.length : last.points;
+    lastStats[p.id] = {name:p.name, last:last.points, avg, diff:last.points-avg};
+  });
+
+  // أكبر مفاجأة صعود: أعلى فرق إيجابي عن المتوسط
+  const overperformers = Object.values(lastStats).sort((a,b)=>b.diff-a.diff);
+  if(overperformers.length && overperformers[0].diff > 1){
+    const top = overperformers[0];
+    cards.push({emoji:'🚀',title:'تجاوز المتوقع',name:top.name,detail:`+${Math.round(top.diff*10)/10} عن متوسطه`});
+  }
+
+  // أكبر خيبة أمل: أعلى فرق سلبي
+  const underperformers = Object.values(lastStats).sort((a,b)=>a.diff-b.diff);
+  if(underperformers.length && underperformers[0].diff < -1){
+    const bot = underperformers[0];
+    cards.push({emoji:'😤',title:'تحت المتوقع',name:bot.name,detail:`${Math.round(bot.diff*10)/10} عن متوسطه`});
+  }
+
+  // المتصدر المفاجئ: من لم يكن في المركز الأول بالجولة الفائتة لكنه صعد
+  if(n >= 2){
+    const prevList = computeStandings(n-1);
+    const curList = computeStandings(n);
+    const prevLeader = prevList[0];
+    const curLeader = curList[0];
+    if(prevLeader && curLeader && prevLeader.id !== curLeader.id){
+      const prevRank = prevList.findIndex(s=>s.id===curLeader.id)+1;
+      cards.push({emoji:'👑',title:'انقلاب الصدارة',name:curLeader.name,detail:`صعد من المركز ${prevRank}`});
+    }
+  }
+
+  // الثابت: أقرب نقطة لمتوسطه الموسمي
+  const mostConsistent = Object.values(lastStats)
+    .filter(s=>s.avg>0)
+    .sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff));
+  if(mostConsistent.length){
+    const mc = mostConsistent[0];
+    cards.push({emoji:'🎯',title:'الأكثر ثباتًا هذا الأسبوع',name:mc.name,detail:`${mc.last} ن (متوسطه ${Math.round(mc.avg*10)/10})`});
+  }
+
+  // الانتعاشة: ممة ثم نقاط هذا الأسبوع
+  const bouncebacks = Object.values(lastStats).filter(s=>{
+    const hist = histMap[PARTICIPANTS.find(p=>p.name===s.name)?.id];
+    return hist && hist.length>=2 && hist[hist.length-2].points===0 && hist[hist.length-1].points>0;
+  }).sort((a,b)=>b.last-a.last);
+  if(bouncebacks.length){
+    cards.push({emoji:'💪',title:'انتعاش بعد الممة',name:bouncebacks[0].name,detail:`${bouncebacks[0].last} نقطة هذا الأسبوع`});
+  }
+
+  if(!cards.length){ box.innerHTML=''; return; }
+  const roundNum = lastRound.number;
+  let html = `<h2 class="section-title" style="margin-top:22px;">🎪 مفاجآت الجولة ${roundNum}</h2>`;
+  html += '<div class="surprises-board">';
+  cards.forEach(c=>{
+    html += `<div class="surprise-card">
+      <div class="surprise-emoji">${c.emoji}</div>
+      <div class="surprise-title">${c.title}</div>
+      <div class="surprise-name">${c.name}</div>
+      <div class="surprise-detail">${c.detail}</div>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- تعليق المشارك على جولته ----------
+// يُخزَّن في DATA.roundComments = { [roundNum]: { [pid]: {text,time,name} } }
+function renderRoundComments(){
+  const box = document.getElementById('roundCommentsBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  const n = DATA.rounds.length;
+  const roundNum = DATA.rounds[n-1].number;
+  const comments = (DATA.roundComments && DATA.roundComments[roundNum]) || {};
+  const myPid = window._verifiedPid || null;
+  const myName = myPid ? (PARTICIPANTS.find(p=>p.id===myPid)||{}).name : null;
+
+  // قائمة التعليقات الحالية
+  let commentsHTML = '';
+  Object.values(comments).sort((a,b)=>new Date(a.time)-new Date(b.time)).forEach(c=>{
+    const t = new Date(c.time).toLocaleDateString('ar',{month:'short',day:'numeric'});
+    commentsHTML += `<div class="round-comment-item">
+      <span class="rc-author">${c.name}</span>
+      <span class="rc-text">${c.text}</span>
+      <span class="rc-time">${t}</span>
+    </div>`;
+  });
+
+  // حقل الإضافة (فقط للمشارك المُسجَّل دخوله)
+  let formHTML = '';
+  if(myPid && myName){
+    const alreadyCommented = !!comments[myPid];
+    if(alreadyCommented){
+      formHTML = `<span class="rc-locked">✅ أضفت تعليقك على الجولة ${roundNum}</span>`;
+    } else {
+      formHTML = `<div class="rc-add-form">
+        <input type="text" class="rc-input" id="rcInput_${roundNum}" maxlength="80" placeholder="رأيك عن جولتك... (حتى 80 حرف)">
+        <button class="rc-submit" onclick="submitRoundComment(${roundNum},${myPid})">إرسال</button>
+      </div>`;
+    }
+  } else {
+    formHTML = `<span class="rc-locked">🔒 اختر اسمك وأدخل رمزك للتعليق</span>`;
+  }
+
+  box.innerHTML = `<div class="round-comment-section">
+    <div style="font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:8px;">💬 تعليقات الجولة ${roundNum}</div>
+    ${commentsHTML ? `<div class="round-comments-list">${commentsHTML}</div>` : '<div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px;">لا تعليقات بعد — كن أول من يعلّق!</div>'}
+    ${formHTML}
+  </div>`;
+}
+
+async function submitRoundComment(roundNum, pid){
+  const input = document.getElementById(`rcInput_${roundNum}`);
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text){ input.focus(); return; }
+  const name = (PARTICIPANTS.find(p=>p.id===pid)||{}).name || '?';
+  if(!DATA.roundComments) DATA.roundComments = {};
+  if(!DATA.roundComments[roundNum]) DATA.roundComments[roundNum] = {};
+  DATA.roundComments[roundNum][pid] = {text, name, time: new Date().toISOString()};
+  await saveData();
+  renderRoundComments();
+}
+
+// ---------- حاسبة "ماذا لو؟" ----------
+let _whatifRendered = false;
+function renderWhatIf(){
+  const box = document.getElementById('whatIfBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  const st = computeStandings();
+  const opts = st.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+
+  // نحتاج نرندر مرة واحدة فقط، ثم نحدّث النتيجة عند الضغط
+  if(!_whatifRendered){
+    box.innerHTML = `<div class="whatif-box">
+      <div class="whatif-title">🧮 حاسبة "ماذا لو؟" — تخيّل الجولة القادمة</div>
+      <div class="whatif-controls">
+        <span class="whatif-label">لو حصل</span>
+        <select class="whatif-select" id="wiPid">${opts}</select>
+        <span class="whatif-label">على</span>
+        <input type="number" class="whatif-input" id="wiPts" min="0" max="9" value="3" placeholder="نقاط">
+        <span class="whatif-label">نقطة الجولة القادمة</span>
+        <button class="whatif-btn" onclick="calcWhatIf()">احسب ▶</button>
+      </div>
+      <div id="wiResult"></div>
+    </div>`;
+    _whatifRendered = true;
+  }
+}
+
+function calcWhatIf(){
+  const pid = Number(document.getElementById('wiPid').value);
+  const addPts = Number(document.getElementById('wiPts').value) || 0;
+  const result = document.getElementById('wiResult');
+  if(!result) return;
+
+  const current = computeStandings();
+  // نسخة افتراضية: زوّد نقاط المشارك المختار
+  const simulated = current.map(s=>({
+    id: s.id, name: s.name,
+    total: s.id===pid ? s.total+addPts : s.total
+  })).sort((a,b)=>{
+    if(b.total!==a.total) return b.total-a.total;
+    return a.name.localeCompare(b.name,'ar');
+  });
+
+  // ترتيب حالي
+  const curRanks = {};
+  current.forEach((s,i)=> curRanks[s.id]=i+1);
+  const simRanks = {};
+  simulated.forEach((s,i)=> simRanks[s.id]=i+1);
+
+  const changedName = (current.find(s=>s.id===pid)||{}).name||'?';
+  let html = `<div class="whatif-result">
+    <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;">
+      الترتيب المتوقع لو <b style="color:var(--gold);">${changedName}</b> حصل على <b style="color:var(--gold);">${addPts}</b> نقطة الجولة القادمة:
+    </div>`;
+
+  simulated.forEach((s,i)=>{
+    const rank = i+1;
+    const prev = curRanks[s.id];
+    const isChanged = s.id === pid;
+    const delta = prev - rank; // موجب = صعود
+    let deltaHTML = '';
+    if(delta>0) deltaHTML=`<span class="whatif-delta" style="color:#3DD47E;">▲${delta}</span>`;
+    else if(delta<0) deltaHTML=`<span class="whatif-delta" style="color:var(--coral);">▼${Math.abs(delta)}</span>`;
+    else deltaHTML=`<span class="whatif-delta" style="color:var(--muted);">—</span>`;
+
+    const rankIcon = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':`${rank}.`;
+    html += `<div class="whatif-row${isChanged?' changed':''}">
+      <span class="whatif-rank">${rankIcon}</span>
+      <span class="whatif-name">${s.name}</span>
+      <span class="whatif-pts">${s.total} ن</span>
+      ${deltaHTML}
+    </div>`;
+  });
+  html += '</div>';
+  result.innerHTML = html;
+}
+
+// ---------- خريطة الأندية بالدوريات ----------
+// تجميع أندية الدوري في خريطة مرئية مع أصحابها
+const CLUB_LEAGUE_MAP = {
+  // السعودي
+  'الهلال':'الدوري السعودي','الاتحاد':'الدوري السعودي','النصر':'الدوري السعودي',
+  'الشباب':'الدوري السعودي','القادسية':'الدوري السعودي','الأهلي السعودي':'الدوري السعودي',
+  // الإسباني
+  'برشلونة':'الدوري الإسباني','ريال مدريد':'الدوري الإسباني','أتلتيكو مدريد':'الدوري الإسباني',
+  // الإنجليزي
+  'مانشستر سيتي':'الدوري الإنجليزي','تشيلسي':'الدوري الإنجليزي','أرسنال':'الدوري الإنجليزي',
+  'ليفربول':'الدوري الإنجليزي',
+  // الإيطالي
+  'ميلان':'الدوري الإيطالي','يوفنتوس':'الدوري الإيطالي','روما':'الدوري الإيطالي',
+  // الألماني
+  'بوروسيا دورتموند':'الدوري الألماني','بايرن ميونيخ':'الدوري الألماني',
+  // الفرنسي
+  'باريس سان جيرمان':'الدوري الفرنسي','مارسيليا':'الدوري الفرنسي',
+  // البرتغالي
+  'بنفيكا':'الدوري البرتغالي','بورتو':'الدوري البرتغالي','سبورتينغ لشبونة':'الدوري البرتغالي',
+  // هولندا
+  'أياكس':'الدوري الهولندي','آيندهوفن':'الدوري الهولندي','فاينورد':'الدوري الهولندي',
+  // تركي
+  'غلطة سراي':'الدوري التركي','فنربخشة':'الدوري التركي',
+  // أسكتلندا
+  'سلتيك':'الدوري الأسكتلندي','رينجرز':'الدوري الأسكتلندي',
+  // كرواتيا
+  'دينامو زغرب':'الدوري الكرواتي',
+};
+
+function renderClubMap(){
+  const box = document.getElementById('clubMapBox');
+  if(!box) return;
+
+  // حساب أصحاب كل ناد
+  const clubOwners = {};
+  PARTICIPANTS.forEach(p=>{
+    p.teams.forEach(t=>{
+      if(!clubOwners[t]) clubOwners[t]=[];
+      clubOwners[t].push(p.name);
+    });
+  });
+
+  // تجميع حسب الدوري
+  const byLeague = {};
+  const allClubs = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams)));
+  allClubs.forEach(club=>{
+    const league = CLUB_LEAGUE_MAP[club] || 'أخرى';
+    if(!byLeague[league]) byLeague[league]=[];
+    byLeague[league].push(club);
+  });
+
+  // ترتيب الدوريات: السعودي أولًا ثم ألفبائي
+  const leagueOrder = ['الدوري السعودي','الدوري الإسباني','الدوري الإنجليزي','الدوري الإيطالي','الدوري الألماني','الدوري الفرنسي','الدوري البرتغالي','الدوري الهولندي','الدوري التركي','الدوري الأسكتلندي','الدوري الكرواتي','أخرى'];
+  const leagueFlags = {'الدوري السعودي':'🇸🇦','الدوري الإسباني':'🇪🇸','الدوري الإنجليزي':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','الدوري الإيطالي':'🇮🇹','الدوري الألماني':'🇩🇪','الدوري الفرنسي':'🇫🇷','الدوري البرتغالي':'🇵🇹','الدوري الهولندي':'🇳🇱','الدوري التركي':'🇹🇷','الدوري الأسكتلندي':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','الدوري الكرواتي':'🇭🇷'};
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">🗺️ خريطة الأندية بالدوريات</h2>';
+  html += '<div class="club-map">';
+
+  leagueOrder.forEach(league=>{
+    if(!byLeague[league]) return;
+    const flag = leagueFlags[league]||'🌍';
+    html += `<div class="club-map-league">
+      <div class="club-map-league-name">${flag} ${league} (${byLeague[league].length} أندية)</div>
+      <div class="club-map-clubs">`;
+    byLeague[league].sort().forEach(club=>{
+      const owners = clubOwners[club]||[];
+      const isOwned = owners.length>0;
+      const ownersStr = isOwned ? owners.map(n=>n.split(' ')[0]).join('، ') : '';
+      html += `<div class="club-map-chip${isOwned?' owned':''}">
+        ${clubCrestSVG(club,18)}
+        <span>${club}</span>
+        ${isOwned?`<span class="club-map-owners">(${ownersStr})</span>`:''}
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- تحدي التوقعات الموسعي ----------
+// يُظهر سجل توقعات كل مشارك جولةً بجولة مع ✅/❌
+function renderPredChallenge(){
+  const box = document.getElementById('predChallengeBox');
+  if(!box) return;
+  if(!DATA.rounds || !DATA.predictions || !Object.keys(DATA.predictions).length){
+    box.innerHTML=''; return;
+  }
+
+  // اجمع أرقام الجولات التي فيها توقعات محسومة
+  const roundsWithPred = DATA.rounds.filter(r=>{
+    const entries = DATA.predictions[r.number];
+    return entries && Object.keys(entries).length>0;
+  }).sort((a,b)=>a.number-b.number);
+
+  if(!roundsWithPred.length){ box.innerHTML=''; return; }
+
+  // لكل جولة، من هو البطل الفعلي؟
+  function getRoundChampionId(roundNum){
+    const idx = DATA.rounds.findIndex(r=>r.number===roundNum);
+    if(idx<0) return null;
+    const stats = computeRoundStats(DATA.rounds[idx]);
+    let best=-1, champ=null;
+    PARTICIPANTS.forEach(p=>{
+      const s=stats[p.id];
+      if(s && s.points>best){ best=s.points; champ=p.id; }
+    });
+    // يتحقق من ROUND_HERO_OVERRIDE
+    return (typeof ROUND_HERO_OVERRIDE!=='undefined' && ROUND_HERO_OVERRIDE[roundNum]) || champ;
+  }
+
+  // بناء جدول: مشارك × جولة
+  const scores = {}; // pid -> {correct,total}
+  PARTICIPANTS.forEach(p=>scores[p.id]={correct:0,total:0});
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">🎲 تحدي التوقعات — السجل الكامل</h2>';
+  html += '<div style="overflow-x:auto;"><table class="pred-challenge-table">';
+  html += '<tr><th>المشارك</th>';
+  roundsWithPred.forEach(r=> html+=`<th>ج${r.number}</th>`);
+  html += '<th>صح</th><th>إجمالي</th><th>نسبة</th></tr>';
+
+  PARTICIPANTS.forEach(p=>{
+    const row = [''];
+    let correct=0, total=0;
+    roundsWithPred.forEach(r=>{
+      const pred = DATA.predictions[r.number];
+      if(!pred || pred[p.id]===undefined){
+        row.push(`<td class="pred-ch-miss">—</td>`);
+        return;
+      }
+      total++;
+      scores[p.id].total++;
+      const champId = getRoundChampionId(r.number);
+      const isCorrect = champId && Number(pred[p.id])===champId;
+      if(isCorrect){ correct++; scores[p.id].correct++; }
+      const predName = (PARTICIPANTS.find(x=>x.id===Number(pred[p.id]))||{}).name||'?';
+      const short = predName.split(' ')[0];
+      row.push(`<td class="${isCorrect?'pred-ch-correct':'pred-ch-wrong'}" title="${predName}">${isCorrect?'✅':'❌'} ${short}</td>`);
+    });
+    const pct = total>0?Math.round(correct/total*100):0;
+    html += `<tr>
+      <td>${p.name}</td>
+      ${row.slice(1).join('')}
+      <td class="pred-ch-correct">${correct}</td>
+      <td>${total}</td>
+      <td style="font-weight:800;color:${pct>=50?'#3DD47E':'var(--coral)'};">${pct}%</td>
+    </tr>`;
+  });
+
+  html += '</table></div>';
+  box.innerHTML = html;
+}
+
+// ---------- تقرير الموسم الكامل (قابل للطباعة) ----------
+function printSeasonReport(){
+  const st = computeStandings();
+  const histMap = getAllParticipantsRoundsHistory();
+  const n = DATA.rounds.length;
+  const badges = [...computeBadges(), ...computeExtendedBadges()];
+
+  let body = `
+  <html dir="rtl"><head><meta charset="utf-8">
+  <title>تقرير الموسم — دوري بروكي الفانتازي</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:system-ui,Arial,sans-serif;background:#fff;color:#111;padding:24px;direction:rtl;}
+    h1{font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:4px;}
+    .sub{text-align:center;color:#666;font-size:0.85rem;margin-bottom:20px;}
+    h2{font-size:1rem;font-weight:800;border-bottom:2px solid #eee;padding-bottom:4px;margin:20px 0 10px;}
+    table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:16px;}
+    th{background:#f5f5f5;font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid #ddd;}
+    td{padding:5px 8px;text-align:center;border-bottom:1px solid #eee;}
+    td:first-child{text-align:right;font-weight:700;}
+    .gold{color:#B8902A;font-weight:900;}
+    .muted{color:#888;}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;}
+    .badge{border:1px solid #eee;border-radius:8px;padding:8px 12px;font-size:0.8rem;min-width:140px;}
+    .badge-icon{font-size:1.4rem;display:block;margin-bottom:3px;}
+    .badge-title{font-weight:800;color:#B8902A;}
+    @media print{body{padding:10px;} @page{margin:15mm;}}
+  </style></head><body>
+  <h1>🏆 دوري بروكي الفانتازي — الموسم الثاني</h1>
+  <div class="sub">تقرير الموسم حتى الجولة ${n} · ${new Date().toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'})}</div>
+
+  <h2>📊 الترتيب العام</h2>
+  <table>
+    <tr><th>#</th><th style="text-align:right;">المشارك</th><th>نقاط</th><th>ممات</th><th>أفضل جولة</th><th>معدل</th></tr>`;
+
+  st.forEach((s,i)=>{
+    const hist = histMap[s.id]||[];
+    const best = hist.length?Math.max(...hist.map(h=>h.points)):0;
+    const avg = hist.length?Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10:0;
+    const rank = i+1;
+    const medal = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'';
+    body += `<tr>
+      <td>${medal||rank}</td>
+      <td style="text-align:right;">${s.name}</td>
+      <td class="${rank<=3?'gold':''}">${s.total}</td>
+      <td>${s.mummaCount}</td>
+      <td>${best}</td>
+      <td class="muted">${avg}</td>
+    </tr>`;
+  });
+
+  body += `</table>
+  <h2>🏅 أوسمة الموسم</h2>
+  <div class="badges">`;
+  badges.forEach(b=>{
+    body += `<div class="badge">
+      <span class="badge-icon">${b.icon}</span>
+      <span class="badge-title">${b.title}</span><br>
+      <span>${b.names}</span><br>
+      <span class="muted">${b.detail}</span>
+    </div>`;
+  });
+  body += `</div>`;
+
+  // جدول تاريخ الجولات
+  body += `<h2>📅 تاريخ الجولات</h2>
+  <table><tr><th style="text-align:right;">المشارك</th>`;
+  DATA.rounds.slice().sort((a,b)=>a.number-b.number).forEach(r=> body+=`<th>ج${r.number}</th>`);
+  body += '<th>المجموع</th></tr>';
+  st.forEach(s=>{
+    const hist = histMap[s.id]||[];
+    const byRound = {};
+    hist.forEach(h=>byRound[h.number]=h.points);
+    body += `<tr><td style="text-align:right;">${s.name}</td>`;
+    DATA.rounds.slice().sort((a,b)=>a.number-b.number).forEach(r=>{
+      const pts = byRound[r.number];
+      body += `<td style="color:${pts===0?'#c0392b':pts===undefined?'#aaa':'inherit'}">${pts===undefined?'—':pts}</td>`;
+    });
+    body += `<td style="font-weight:800;">${s.total}</td></tr>`;
+  });
+  body += `</table></body></html>`;
+
+  const win = window.open('','_blank','width=900,height=700');
+  if(win){
+    win.document.write(body);
+    win.document.close();
+    win.focus();
+    setTimeout(()=>win.print(), 600);
+  }
+}
+
+// ---------- رادار الموسم الكامل ----------
+// SVG spider/radar chart لكل مشارك يُظهر 5 أبعاد
+function buildRadarSVG(pid, color){
+  const hist = buildParticipantHistory(pid);
+  if(!hist.length) return '';
+
+  const allHist = getAllParticipantsRoundsHistory();
+  const allPoints = Object.values(allHist).flat().map(h=>h.points);
+  const maxTotal = computeStandings()[0]?.total || 1;
+  const myTotal = computeStandings().find(s=>s.id===pid)?.total || 0;
+
+  // 5 أبعاد: نسبة 0–1 لكل واحد
+  const n = hist.length;
+  const avg = n ? hist.reduce((a,h)=>a+h.points,0)/n : 0;
+  const globalAvg = allPoints.length ? allPoints.reduce((a,b)=>a+b,0)/allPoints.length : 1;
+  const maxPts = Math.max(...allPoints, 1);
+  const myBest = Math.max(...hist.map(h=>h.points), 0);
+  const mumCount = hist.filter(h=>h.points===0).length;
+  const mumRate = n ? mumCount/n : 0;
+
+  // سلسلة أطول بلا ممات
+  let streak=0, bestStreak=0;
+  hist.forEach(h=>{ if(h.points>0){ streak++; bestStreak=Math.max(bestStreak,streak); } else streak=0; });
+
+  const dims = [
+    Math.min(1, myTotal/maxTotal),          // نقاط الموسم
+    Math.min(1, avg/globalAvg/2),            // معدل الجولة
+    Math.min(1, myBest/maxPts),              // أعلى جولة
+    Math.max(0, 1-mumRate*2),               // خلو من الممات
+    Math.min(1, bestStreak/n)               // أطول سلسلة
+  ];
+  const labels = ['نقاط','معدل','ذروة','ثبات','سلسلة'];
+
+  const cx=60, cy=60, r=44, N=5;
+  const pts = dims.map((v,i)=>{
+    const angle = (i/N)*2*Math.PI - Math.PI/2;
+    const rv = r*v;
+    return [cx+rv*Math.cos(angle), cy+rv*Math.sin(angle)];
+  });
+
+  // شبكة خلفية
+  let gridLines = '';
+  [0.25,0.5,0.75,1].forEach(scale=>{
+    const gPts = Array.from({length:N},(_,i)=>{
+      const angle=(i/N)*2*Math.PI-Math.PI/2;
+      return `${cx+r*scale*Math.cos(angle)},${cy+r*scale*Math.sin(angle)}`;
+    }).join(' ');
+    gridLines += `<polygon points="${gPts}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>`;
+  });
+
+  // محاور
+  let axes = '';
+  labels.forEach((_,i)=>{
+    const angle=(i/N)*2*Math.PI-Math.PI/2;
+    axes += `<line x1="${cx}" y1="${cy}" x2="${cx+r*Math.cos(angle)}" y2="${cy+r*Math.sin(angle)}" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>`;
+  });
+
+  // تسميات
+  let labelsHTML = '';
+  labels.forEach((lbl,i)=>{
+    const angle=(i/N)*2*Math.PI-Math.PI/2;
+    const lx = cx+(r+10)*Math.cos(angle);
+    const ly = cy+(r+10)*Math.sin(angle);
+    labelsHTML += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="6" fill="rgba(255,255,255,0.5)" font-family="inherit">${lbl}</text>`;
+  });
+
+  const polyPts = pts.map(([x,y])=>`${x},${y}`).join(' ');
+
+  return `<svg viewBox="0 0 120 120" width="100%" style="max-width:140px;">
+    ${gridLines}${axes}
+    <polygon points="${polyPts}" fill="${color}" fill-opacity="0.25" stroke="${color}" stroke-width="1.5"/>
+    ${labelsHTML}
+    ${pts.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2" fill="${color}"/>`).join('')}
+  </svg>`;
+}
+
+function renderRadar(){
+  const box = document.getElementById('radarBox');
+  if(!box) return;
+  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
+
+  const st = computeStandings();
+  let html = '<h2 class="section-title" style="margin-top:22px;">🕸️ رادار الموسم الكامل</h2>';
+  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">5 أبعاد: نقاط الموسم · معدل الجولة · أعلى جولة · الثبات · أطول سلسلة</div>';
+  html += '<div class="radar-wrap">';
+  st.forEach(s=>{
+    const color = PARTICIPANT_COLORS[s.id] || 'var(--gold)';
+    const svg = buildRadarSVG(s.id, color);
+    html += `<div class="radar-card">
+      <div class="radar-name"><span class="p-color-dot" style="background:${color};"></span>${s.name}</div>
+      ${svg}
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- سباق الترتيب المتحرك ----------
+// شريط تقدمي تفاعلي — المستخدم يسحب السلايدر لمشاهدة الترتيب جولةً بجولة
+let _raceInit = false;
+function renderRace(){
+  const box = document.getElementById('raceBox');
+  if(!box) return;
+  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
+
+  const n = DATA.rounds.length;
+  const maxTotal = computeStandings(n)[0]?.total || 1;
+
+  if(!_raceInit){
+    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2>
+      <div class="race-slider">
+        <label>الجولة:</label>
+        <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1">
+        <span class="race-round-label" id="raceLabel">ج${DATA.rounds[n-1].number}</span>
+      </div>
+      <div id="raceBars"></div>`;
+    document.getElementById('raceSlider').addEventListener('input', updateRaceBars);
+    _raceInit = true;
+  } else {
+    // تحديث الحد الأقصى إذا أُضيفت جولات
+    const sl = document.getElementById('raceSlider');
+    if(sl){ sl.max = n; if(Number(sl.value)>n) sl.value=n; }
+  }
+  updateRaceBars();
+}
+
+function updateRaceBars(){
+  const sl = document.getElementById('raceSlider');
+  const label = document.getElementById('raceLabel');
+  const barsBox = document.getElementById('raceBars');
+  if(!sl||!barsBox) return;
+
+  const idx = Number(sl.value);
+  const st = computeStandings(idx);
+  const maxTotal = st[0]?.total || 1;
+
+  if(label){
+    if(idx===0) label.textContent='البداية';
+    else{ const r=DATA.rounds[idx-1]; label.textContent = r ? `ج${r.number}` : `${idx}`; }
+  }
+
+  let html = '';
+  st.forEach((s,i)=>{
+    const pct = Math.round((s.total/maxTotal)*100);
+    const color = PARTICIPANT_COLORS[s.id] || 'var(--gold)';
+    const rankIcon = i===0?'👑':i===1?'🥈':i===2?'🥉':'';
+    html += `<div class="race-row">
+      <span class="race-name">${rankIcon}${s.name}</span>
+      <div class="race-bar-wrap">
+        <div class="race-bar" style="width:${pct}%;background:${color};">
+          <span class="race-pts">${s.total} ن</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  barsBox.innerHTML = html;
+}
+
+// ---------- كفاءة الاستفادة من الأندية ----------
+// لكل ناد: عدد المشاركين الذين يملكونه، مجموع نقاطهم بسببه
+function renderClubEfficiency(){
+  const box = document.getElementById('clubEfficiencyBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  // نجمع نتائج كل ناد عبر كل الجولات
+  const clubStats = {}; // clubName -> {wins,draws,losses,points,appearances}
+  PARTICIPANTS.forEach(p=>{
+    const hist = buildParticipantHistory(p.id);
+    hist.forEach(h=>{
+      h.teamResults.forEach(tr=>{
+        const club = tr.team;
+        if(!clubStats[club]) clubStats[club]={wins:0,draws:0,losses:0,points:0,appearances:0};
+        const cs = clubStats[club];
+        const results = tr.results && tr.results.length ? tr.results : (tr.result?[tr.result]:[]);
+        results.forEach(res=>{
+          cs.appearances++;
+          if(res==='win'){ cs.wins++; cs.points+=3; }
+          else if(res==='draw'){ cs.draws++; cs.points+=1; }
+          else if(res==='loss'){ cs.losses++; }
+        });
+      });
+    });
+  });
+
+  const entries = Object.entries(clubStats)
+    .filter(([,s])=>s.appearances>0)
+    .sort(([,a],[,b])=>(b.points/b.appearances)-(a.points/a.appearances));
+
+  if(!entries.length){ box.innerHTML=''; return; }
+
+  const maxAvg = Math.max(...entries.map(([,s])=>s.appearances?s.points/s.appearances:0), 1);
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
+  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">مرتبة حسب متوسط النقاط لكل ظهور — يشمل جولات الموسم المُسجَّلة فقط</div>';
+  html += '<div class="club-eff-grid">';
+  entries.slice(0,18).forEach(([club, s])=>{
+    const avg = s.appearances ? s.points/s.appearances : 0;
+    const pct = Math.round((avg/maxAvg)*100);
+    const winRate = s.appearances ? Math.round(s.wins/s.appearances*100) : 0;
+    html += `<div class="club-eff-card">
+      <div class="club-eff-name">${club}</div>
+      <div class="club-eff-bar-wrap"><div class="club-eff-bar" style="width:${pct}%;"></div></div>
+      <div class="club-eff-stats">
+        <span>معدل ${Math.round(avg*10)/10} ن/ظهور</span>
+        <span>${s.wins}ف ${s.draws}ت ${s.losses}خ</span>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- لوحة الميداليات ----------
+// تحسب كم مرة حصل كل مشارك على المركز الأول والثاني والثالث عبر الجولات
+function renderMedals(){
+  const box = document.getElementById('medalsBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  // لكل جولة، احسب الترتيب
+  const medals = {}; // pid -> {gold, silver, bronze}
+  PARTICIPANTS.forEach(p=> medals[p.id]={gold:0, silver:0, bronze:0, name:p.name});
+
+  const n = DATA.rounds.length;
+  for(let i=1; i<=n; i++){
+    const list = computeStandings(i);
+    if(list[0]) medals[list[0].id].gold++;
+    if(list[1]) medals[list[1].id].silver++;
+    if(list[2]) medals[list[2].id].bronze++;
+  }
+
+  // ترتيب: أكثر ذهبًا، ثم فضة، ثم برونز
+  const sorted = PARTICIPANTS.slice().sort((a,b)=>{
+    const ma=medals[a.id], mb=medals[b.id];
+    if(mb.gold!==ma.gold) return mb.gold-ma.gold;
+    if(mb.silver!==ma.silver) return mb.silver-ma.silver;
+    return mb.bronze-ma.bronze;
+  });
+
+  // عرض من لديه ميدالية واحدة على الأقل
+  const withMedals = sorted.filter(p=> medals[p.id].gold+medals[p.id].silver+medals[p.id].bronze > 0);
+  if(!withMedals.length){ box.innerHTML=''; return; }
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">🥇 لوحة الميداليات</h2>';
+  html += '<div class="medals-grid">';
+  withMedals.forEach((p,i)=>{
+    const m = medals[p.id];
+    const total = m.gold + m.silver + m.bronze;
+    let cls = i===0 ? 'medal-gold' : i===1 ? 'medal-silver' : i===2 ? 'medal-bronze' : '';
+    const icon = m.gold>0 ? '🥇' : m.silver>0 ? '🥈' : '🥉';
+    const medal_text = [
+      m.gold > 0 ? `${m.gold}🥇` : '',
+      m.silver > 0 ? `${m.silver}🥈` : '',
+      m.bronze > 0 ? `${m.bronze}🥉` : ''
+    ].filter(Boolean).join(' ');
+    html += `<div class="medal-card ${cls}">
+      <div class="medal-icon">${icon}</div>
+      <div class="medal-name">${p.name}</div>
+      <div class="medal-count">${medal_text}</div>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ---------- تاريخ تبادل المراكز ----------
+// يُبيّن كيف تغيّر مركز الصدارة بين المشاركين جولةً بجولة
+function renderRankHistory(){
+  const box = document.getElementById('rankHistoryBox');
+  if(!box) return;
+  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
+
+  const n = DATA.rounds.length;
+  // المركز 1 في كل جولة
+  const leaders = []; // {round, pid, name}
+  for(let i=1; i<=n; i++){
+    const list = computeStandings(i);
+    if(list[0]) leaders.push({round: DATA.rounds[i-1].number, pid:list[0].id, name:list[0].name, total:list[0].total});
+  }
+
+  if(!leaders.length){ box.innerHTML=''; return; }
+
+  // تحديد فترات الصدارة (متى تغيّر القائد)
+  const changes = []; // {from, to, pid, name, total}
+  let cur = leaders[0];
+  leaders.forEach((l,i)=>{
+    if(i===0){ changes.push({round:l.round, pid:l.pid, name:l.name, total:l.total, isNew:true}); return; }
+    if(l.pid !== cur.pid){
+      changes.push({round:l.round, pid:l.pid, name:l.name, total:l.total, isNew:true, prevName:cur.name});
+      cur = l;
+    } else {
+      changes.push({round:l.round, pid:l.pid, name:l.name, total:l.total, isNew:false});
+    }
+  });
+
+  // حساب عدد جولات الصدارة لكل مشارك
+  const leaderRounds = {};
+  PARTICIPANTS.forEach(p=> leaderRounds[p.id]=0);
+  leaders.forEach(l=> leaderRounds[l.pid]++);
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">🔁 تاريخ الصدارة</h2>';
+
+  // جدول مدة الصدارة
+  const topLeaders = PARTICIPANTS.filter(p=>leaderRounds[p.id]>0)
+    .sort((a,b)=>leaderRounds[b.id]-leaderRounds[a.id]);
+
+  html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">';
+  topLeaders.forEach(p=>{
+    const rounds = leaderRounds[p.id];
+    const pct = Math.round(rounds/n*100);
+    html += `<div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:0.8rem;">
+      <b>${p.name}</b> — <span style="color:var(--gold);">${rounds} جولة</span> في الصدارة (${pct}%)
+    </div>`;
+  });
+  html += '</div>';
+
+  // جدول التغييرات
+  const changeEvents = changes.filter(c=>c.isNew);
+  if(changeEvents.length > 0){
+    html += '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">تاريخ تغييرات الصدارة:</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">';
+    changeEvents.forEach(c=>{
+      const prev = c.prevName ? `<span style="color:var(--muted);">← ${c.prevName}</span> ` : '';
+      html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--paper);border-radius:8px;border:1px solid var(--line);">
+        <span style="font-size:0.75rem;color:var(--muted);min-width:50px;">ج${c.round}</span>
+        ${prev}
+        <span style="font-weight:700;color:var(--gold);">👑 ${c.name}</span>
+        <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${c.total} ن</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  box.innerHTML = html;
+}
+
+// ---------- لوحة قيادة الترتيب ----------
+// تُظهر مركز كل مشارك في كل جولة عبر الموسم — بصريًا وتفاعليًا
+function renderRankLeaderboard(){
+  const box = document.getElementById('rankLeaderboardBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  // بناء مصفوفة المراكز لكل جولة
+  const rounds = DATA.rounds.slice().sort((a,b)=>a.number-b.number);
+  const roundNums = rounds.map(r=>r.number);
+
+  // مرحلة الـ carry (قبل الجولة 1): الترتيب من computeStandings(0)
+  const carryRanks = {};
+  const carryList = computeStandings(0);
+  carryList.forEach((s,i)=> carryRanks[s.id]=i+1);
+
+  // بناء جدول مراكز: pid -> [rank per round 0..n]
+  const ranksByRound = {}; // roundIndex (0=carry,1=round1...) -> {pid->rank}
+  ranksByRound[0] = carryRanks;
+  rounds.forEach((r,i)=>{
+    const rm = {};
+    const list = computeStandings(i+1);
+    list.forEach((s,j)=> rm[s.id]=j+1);
+    ranksByRound[i+1] = rm;
+  });
+
+  const finalRanks = ranksByRound[rounds.length];
+  // ترتيب المشاركين بحسب المركز النهائي
+  const sorted = PARTICIPANTS.slice().sort((a,b)=>(finalRanks[a.id]||99)-(finalRanks[b.id]||99));
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">👑 لوحة قيادة الترتيب</h2>';
+  html += '<div class="rank-leaderboard"><table>';
+  html += '<tr><th>المشارك</th>';
+  if(rounds.length > 0) html += '<th>قبل</th>';
+  roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
+  html += '</tr>';
+
+  sorted.forEach(p=>{
+    html += `<tr><td>${p.name}</td>`;
+    for(let i=0; i<=rounds.length; i++){
+      if(i===0 && rounds.length===0) continue;
+      const rm = ranksByRound[i];
+      const rank = rm && rm[p.id] ? rm[p.id] : '-';
+      let cls = '';
+      if(rank===1) cls='rl-cell-1';
+      else if(rank===2) cls='rl-cell-2';
+      else if(rank===3) cls='rl-cell-3';
+      html += `<td class="${cls}">${rank}</td>`;
+    }
+    html += '</tr>';
+  });
+  html += '</table></div>';
+  box.innerHTML = html;
+}
+
+// ---------- خريطة الممات ----------
+// جدول يُبيّن كل مشارك × كل جولة: ✅ أو ☠️
+function renderDeathMap(){
+  const box = document.getElementById('deathMapBox');
+  if(!box) return;
+  if(!DATA.rounds.length){ box.innerHTML=''; return; }
+
+  const histMap = getAllParticipantsRoundsHistory();
+  const rounds = DATA.rounds.slice().sort((a,b)=>a.number-b.number);
+  const roundNums = rounds.map(r=>r.number);
+
+  // ترتيب المشاركين بحسب عدد الممات تصاعديًا (الأقل ممات أولًا)
+  const sorted = PARTICIPANTS.slice().sort((a,b)=>{
+    const ma = histMap[a.id].filter(r=>r.points===0).length;
+    const mb = histMap[b.id].filter(r=>r.points===0).length;
+    return ma - mb;
+  });
+
+  let html = '<h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2>';
+  html += '<div class="death-map"><table>';
+  html += '<tr><th>المشارك</th>';
+  roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
+  html += '<th>المجموع</th></tr>';
+
+  sorted.forEach(p=>{
+    const hist = histMap[p.id];
+    const histByRound = {};
+    hist.forEach(h=> histByRound[h.number]=h.points);
+    const mumCount = hist.filter(h=>h.points===0).length;
+
+    html += `<tr><td>${p.name}</td>`;
+    roundNums.forEach(n=>{
+      const pts = histByRound[n];
+      if(pts === undefined){
+        html += `<td class="dm-none">-</td>`;
+      } else if(pts === 0){
+        html += `<td class="dm-dead">☠️</td>`;
+      } else {
+        html += `<td class="dm-alive">✓</td>`;
+      }
+    });
+    const totCls = mumCount===0 ? 'dm-zero-cell' : 'dm-total-cell';
+    html += `<td class="${totCls}">${mumCount===0?'🧊':mumCount}</td>`;
+    html += '</tr>';
+  });
+
+  // صف المجموع
+  html += '<tr style="border-top:2px solid var(--line);"><td style="color:var(--muted);font-size:0.72rem;">ممات الجولة</td>';
+  roundNums.forEach(n=>{
+    const count = PARTICIPANTS.filter(p=>{
+      const hist = histMap[p.id];
+      const h = hist.find(x=>x.number===n);
+      return h && h.points===0;
+    }).length;
+    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count||'-'}</td>`;
+  });
+  html += '<td></td></tr>';
+  html += '</table></div>';
+  box.innerHTML = html;
+}
+
+// ---------- إنجازات موسمية موسّعة ----------
+// تُضاف إضافات على computeBadges الموجودة أو تُوسّع renderBadges
+function computeExtendedBadges(){
+  const histMap = getAllParticipantsRoundsHistory();
+  const extra = [];
+
+  // أعلى متوسط في الموسم (يحتاج جولتين فأكثر)
+  let bestAvgVal = -1, bestAvgNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    if(hist.length < 2) return;
+    const avg = hist.reduce((a,h)=>a+h.points,0) / hist.length;
+    if(avg > bestAvgVal){ bestAvgVal=avg; bestAvgNames=[p.name]; }
+    else if(Math.abs(avg-bestAvgVal)<0.01 && bestAvgVal>0){ bestAvgNames.push(p.name); }
+  });
+  if(bestAvgVal > 0){
+    extra.push({icon:'📈', title:'أعلى متوسط في الموسم', names: bestAvgNames.join('، '), detail:`${Math.round(bestAvgVal*10)/10} نقطة كمعدل`});
+  }
+
+  // أطول سلسلة صعود (نقاط أعلى من الجولة السابقة)
+  let bestRisingVal = 0, bestRisingNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    if(hist.length < 3) return;
+    let cur=0, best=0;
+    for(let i=1;i<hist.length;i++){
+      if(hist[i].points > hist[i-1].points){ cur++; best=Math.max(best,cur); }
+      else cur=0;
+    }
+    if(best > bestRisingVal){ bestRisingVal=best; bestRisingNames=[p.name]; }
+    else if(best===bestRisingVal && best>0){ bestRisingNames.push(p.name); }
+  });
+  if(bestRisingVal >= 2){
+    extra.push({icon:'⬆️', title:'أطول صعود متواصل', names: bestRisingNames.join('، '), detail:`${bestRisingVal} جولات متتالية`});
+  }
+
+  // أكبر انتعاشة (أعلى نقطة بعد ممة مباشرة)
+  let bestBouncePts = 0, bestBounceNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    for(let i=1;i<hist.length;i++){
+      if(hist[i-1].points===0 && hist[i].points>bestBouncePts){
+        bestBouncePts=hist[i].points; bestBounceNames=[p.name];
+      } else if(hist[i-1].points===0 && hist[i].points===bestBouncePts && bestBouncePts>0){
+        if(!bestBounceNames.includes(p.name)) bestBounceNames.push(p.name);
+      }
+    }
+  });
+  if(bestBouncePts > 0){
+    extra.push({icon:'💪', title:'أقوى انتعاشة بعد الممة', names: bestBounceNames.join('، '), detail:`${bestBouncePts} نقطة بعد ممة`});
+  }
+
+  // المنتج الأكثر استمرارية: أعلى حد أدنى للنقاط في أي جولة (min across rounds)
+  let bestFloorVal = -1, bestFloorNames = [];
+  PARTICIPANTS.forEach(p=>{
+    const hist = histMap[p.id];
+    if(hist.length < 2) return;
+    const floor = Math.min(...hist.map(h=>h.points));
+    if(floor > bestFloorVal){ bestFloorVal=floor; bestFloorNames=[p.name]; }
+    else if(floor===bestFloorVal && floor>=0){ bestFloorNames.push(p.name); }
+  });
+  if(bestFloorVal > 0){
+    extra.push({icon:'🛡️', title:'الأكثر استمرارية', names: bestFloorNames.join('، '), detail:`لم ينزل عن ${bestFloorVal} نقطة`});
+  }
+
+  return extra;
+}
+
+// ---------- إنجازاتي الشخصية (ميزة 6) ----------
+function renderMyAchievements(){
+  const box = document.getElementById('myAchievementsBox');
+  if(!box) return;
+  const pid = window._verifiedPid;
+  if(!pid || !DATA.rounds.length){ box.innerHTML=''; return; }
+  const hist = buildParticipantHistory(pid);
+  if(!hist.length){ box.innerHTML=''; return; }
+  const pts = hist.map(h=>h.points);
+  const best = Math.max(...pts);
+  const worst = Math.min(...pts);
+  const bestRound = hist.find(h=>h.points===best);
+  const worstRound = hist.find(h=>h.points===worst);
+  const avg = pts.reduce((a,b)=>a+b,0)/pts.length;
+  let streak=0, maxStreak=0;
+  pts.forEach(p=>{ if(p>=avg){streak++;maxStreak=Math.max(maxStreak,streak);}else{streak=0;} });
+  const stands = DATA.rounds.map((_,i)=>{
+    const s = computeStandings(i+1);
+    return s.findIndex(x=>x.pid===pid)+1;
+  });
+  const bestRank = Math.min(...stands);
+  const worstRank = Math.max(...stands);
+  const timesFirst = stands.filter(r=>r===1).length;
+  const clubCount = {};
+  DATA.rounds.forEach(r=>{
+    const entries = r.entries&&r.entries[pid]?r.entries[pid]:[];
+    entries.forEach(e=>{ const c=e.club||e; clubCount[c]=(clubCount[c]||0)+1; });
+  });
+  const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
+  const p = PARTICIPANTS.find(x=>x.id===pid);
+  const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
+  const tiles = [
+    ['🔥','أفضل جولة',`${best} نقطة`,`جولة ${bestRound?.number||'–'}`],
+    ['📉','أضعف جولة',`${worst} نقطة`,`جولة ${worstRound?.number||'–'}`],
+    ['📊','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
+    ['🏆','أفضل مركز',`#${bestRank}`,''],
+    ['😓','أسوأ مركز',`#${worstRank}`,''],
+    ['👑','مرات في الصدارة',`${timesFirst}`,timesFirst===0?'لم تتصدر بعد':'مرة'],
+    ['💪','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
+    ['⚽','ناديك المفضل',favClub?favClub[0]:'—',favClub?`${favClub[1]} مرات`:''],
+  ];
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">⭐ إنجازاتي الشخصية</h2>
+    <div style="background:var(--paper);border-radius:14px;padding:16px;border:2px solid ${pc}44;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
+        <strong style="color:${pc};">${p?.name||''}</strong>
+        <span style="color:var(--muted);font-size:0.82rem;">— ${DATA.rounds.length} جولات</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
+        ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:1.3rem;">${ic}</div>
+          <div style="font-size:0.7rem;color:var(--muted);margin:2px 0;">${label}</div>
+          <div style="font-size:0.98rem;font-weight:800;color:var(--gold);">${val}</div>
+          ${sub?`<div style="font-size:0.68rem;color:var(--muted);">${sub}</div>`:''}
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ---------- محاكاة السيناريوهات (ميزة 10) ----------
+let _scenarioRendered=false;
+function renderScenario(){
+  const box=document.getElementById('scenarioBox');
+  if(!box) return;
+  if(DATA.rounds.length<2){box.innerHTML='';return;}
+  const remaining=SEASON_TOTAL_ROUNDS-DATA.rounds.length;
+  if(remaining<=0){box.innerHTML='';return;}
+  if(_scenarioRendered) return;
+  _scenarioRendered=true;
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🎲 محاكاة السيناريوهات</h2>
+    <div style="background:var(--paper);border-radius:14px;padding:16px;">
+      <p style="color:var(--muted);margin:0 0 12px;font-size:0.87rem;">ماذا لو حصل المتصدر على نقاط أقل في الجولات الـ${remaining} القادمة؟</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
+        <label style="font-size:0.88rem;color:var(--text2);">نقاط المتصدر/جولة:</label>
+        <input type="range" id="scenarioSlider" min="0" max="12" value="6" style="flex:1;min-width:120px;accent-color:var(--gold);">
+        <span id="scenarioSliderVal" style="font-weight:800;color:var(--gold);min-width:28px;text-align:center;">6</span>
+      </div>
+      <div id="scenarioResult"></div>
+    </div>`;
+  function calcScenario(lp){
+    const cur=computeStandings();
+    const lid=cur[0].pid;
+    const rows=cur.map(s=>({...s,proj:s.total+(s.pid===lid?lp*remaining:0)})).sort((a,b)=>b.proj-a.proj);
+    const newLead=rows[0];
+    const nl=PARTICIPANTS.find(x=>x.id===newLead.pid);
+    const ol=PARTICIPANTS.find(x=>x.id===lid);
+    return `<div style="overflow-x:auto;margin-top:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.84rem;">
+        <thead><tr style="background:var(--ink);color:var(--gold);">
+          <th style="padding:6px;text-align:center;">#</th>
+          <th style="padding:6px;text-align:right;">المشارك</th>
+          <th style="padding:6px;text-align:center;">الحالي</th>
+          <th style="padding:6px;text-align:center;">المتوقع</th>
+        </tr></thead>
+        <tbody>${rows.slice(0,6).map((s,i)=>{
+          const pp=PARTICIPANTS.find(x=>x.id===s.pid);
+          const pc2=PARTICIPANT_COLORS[s.pid]||'var(--gold)';
+          const hl=s.pid===newLead.pid?`background:${pc2}22;`:'';
+          return `<tr style="border-bottom:1px solid var(--line);${hl}">
+            <td style="padding:6px;text-align:center;font-weight:800;color:${pc2};">${i+1}</td>
+            <td style="padding:6px;">${pp?.name||''}</td>
+            <td style="padding:6px;text-align:center;color:var(--muted);">${s.total}</td>
+            <td style="padding:6px;text-align:center;font-weight:700;color:${pc2};">${s.proj}</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table>
+      ${newLead.pid!==lid
+        ?`<div style="margin-top:10px;padding:8px;background:var(--gold)22;border-radius:8px;color:var(--gold);font-size:0.87rem;text-align:center;">⚡ في هذا السيناريو، <strong>${nl?.name}</strong> يتصدر بدلاً من <strong>${ol?.name}</strong>!</div>`
+        :`<div style="margin-top:10px;padding:8px;background:var(--cream);border-radius:8px;color:var(--muted);font-size:0.85rem;text-align:center;">${ol?.name} يظل في الصدارة حتى في هذا السيناريو.</div>`
+      }
+    </div>`;
+  }
+  const sl=document.getElementById('scenarioSlider');
+  const sv=document.getElementById('scenarioSliderVal');
+  const sr=document.getElementById('scenarioResult');
+  function upd(){const v=parseInt(sl.value);sv.textContent=v;sr.innerHTML=calcScenario(v);}
+  sl.addEventListener('input',upd);
+  upd();
+}
+
+// ---------- التحليل الذكي (ميزة 8) ----------
+function buildSmartProfile(pid){
+  const hist=buildParticipantHistory(pid);
+  if(!hist.length) return '';
+  const pts=hist.map(h=>h.points);
+  const avg=pts.reduce((a,b)=>a+b,0)/pts.length;
+  const std=Math.sqrt(pts.reduce((a,b)=>a+(b-avg)**2,0)/pts.length);
+  const stands=DATA.rounds.map((_,i)=>{ const s=computeStandings(i+1); return s.findIndex(x=>x.pid===pid)+1; });
+  const avgRank=stands.reduce((a,b)=>a+b,0)/stands.length;
+  const last3=stands.slice(-3);
+  const trend=last3.length>=2?last3[last3.length-1]-last3[0]:0;
+  let style='';
+  if(std<1.5) style='🧱 المتسق — نقاطك منتظمة كالساعة';
+  else if(std<3) style='🎯 المستقر — ثابت مع تذبذب بسيط';
+  else if(std<5) style='🎢 المتقلب — إما قمة أو هاوية';
+  else style='🌪️ الفوضوي — لا يمكن التنبؤ بأدائك!';
+  let trendTxt='';
+  if(trend< -1) trendTxt='📈 في صعود مؤخراً';
+  else if(trend>1) trendTxt='📉 تراجع في الجولات الأخيرة';
+  else trendTxt='➡️ مستقر في مركزه';
+  let grade='';
+  if(avgRank<=3) grade='🥇 نخبة — من أقوى المشاركين';
+  else if(avgRank<=7) grade='💪 قوي — في النصف الأعلى باستمرار';
+  else if(avgRank<=12) grade='🌊 وسط الميدان — مباراته مفتوحة';
+  else grade='🔄 يبحث عن مستواه';
+  return `<div style="font-size:0.84rem;line-height:1.85;color:var(--text2);">
+    <span>${style}</span> &nbsp;·&nbsp; <span>${trendTxt}</span><br>
+    <span style="color:var(--gold-light);">${grade}</span>
+    <span style="color:var(--muted);font-size:0.78rem;margin-right:6px;">| معدل ${avg.toFixed(1)} | ثبات ±${std.toFixed(1)}</span>
+  </div>`;
+}
+
+function renderSmartProfile(){
+  const box=document.getElementById('smartProfileBox');
+  if(!box) return;
+  if(DATA.rounds.length<3){box.innerHTML='';return;}
+  const stands=computeStandings();
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🧠 التحليل الذكي</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${stands.map(s=>{
+        const p=PARTICIPANTS.find(x=>x.id===s.pid);
+        const pc=PARTICIPANT_COLORS[s.pid]||'var(--gold)';
+        return `<div style="background:var(--paper);border-radius:12px;padding:13px 14px;border-right:3px solid ${pc};">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-weight:800;color:${pc};">#${s.rank}</span>
+            <span style="font-weight:700;">${p?.name||''}</span>
+            <span style="color:var(--muted);font-size:0.8rem;">${s.total} نقطة</span>
+          </div>
+          ${buildSmartProfile(s.pid)}
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// ---------- تحدي الجولة التلقائي (ميزة 9) ----------
+function renderRoundChallenge(){
+  const box=document.getElementById('roundChallengeBox');
+  if(!box) return;
+  if(!DATA.rounds.length){box.innerHTML='';return;}
+  const lastRound=DATA.rounds[DATA.rounds.length-1];
+  const nextNum=lastRound.number+1;
+  const stands=computeStandings();
+  const pid=window._verifiedPid;
+  const cKey=`challenge_r${nextNum}`;
+  const votes=(DATA.roundComments&&DATA.roundComments[cKey])||{};
+  const myVote=pid?votes[pid]:null;
+  const voteCounts={};
+  Object.values(votes).forEach(v=>{ if(v&&v.vote) voteCounts[v.vote]=(voteCounts[v.vote]||0)+1; });
+  const totalVotes=Object.values(voteCounts).reduce((a,b)=>a+b,0);
+  const canVote=pid&&!myVote;
+  const myVotedName=myVote?PARTICIPANTS.find(x=>x.id==myVote.vote)?.name:'';
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🗳️ تحدي الجولة ${nextNum}</h2>
+    <div style="background:var(--paper);border-radius:14px;padding:16px;">
+      <p style="color:var(--text2);margin:0 0 12px;font-size:0.9rem;">
+        <strong>من سيتصدر الجولة ${nextNum}؟</strong>
+        ${!pid?'<br><span style="color:var(--muted);font-size:0.8rem;">سجّل دخولك للتصويت</span>':''}
+        ${myVote?`<br><span style="color:var(--gold);font-size:0.82rem;">✅ صوّتت لـ: ${myVotedName}</span>`:''}
+      </p>
+      ${canVote?`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px;">
+        ${stands.slice(0,6).map(s=>{
+          const pp=PARTICIPANTS.find(x=>x.id===s.pid);
+          const pc=PARTICIPANT_COLORS[s.pid]||'var(--gold)';
+          return `<button onclick="castChallengeVote(${s.pid})" style="padding:8px 6px;background:var(--cream);border:1.5px solid ${pc}55;border-radius:9px;color:var(--text);font-family:inherit;cursor:pointer;font-size:0.84rem;font-weight:700;transition:background .15s;">
+            <span style="color:${pc};">#${s.rank}</span> ${pp?.name||''}
+          </button>`;
+        }).join('')}
+      </div>`:''}
+      ${totalVotes>0
+        ?`<div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">${totalVotes} تصويت حتى الآن:</div>
+          ${Object.entries(voteCounts).sort((a,b)=>b[1]-a[1]).map(([vpid,cnt])=>{
+            const pp=PARTICIPANTS.find(x=>x.id==vpid);
+            const pc=PARTICIPANT_COLORS[parseInt(vpid)]||'var(--gold)';
+            const pct=Math.round(cnt/totalVotes*100);
+            return `<div style="margin-bottom:7px;">
+              <div style="display:flex;justify-content:space-between;font-size:0.84rem;">
+                <span style="color:${pc};">${pp?.name||''}</span><span>${cnt} (${pct}%)</span>
+              </div>
+              <div style="height:6px;background:var(--cream);border-radius:3px;margin-top:3px;">
+                <div style="height:100%;width:${pct}%;background:${pc};border-radius:3px;"></div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>`
+        :`<div style="color:var(--muted);font-size:0.85rem;">لا تصويتات بعد — كن أول من يصوّت!</div>`}
+    </div>`;
+}
+
+async function castChallengeVote(targetPid){
+  const pid=window._verifiedPid;
+  if(!pid) return;
+  const lastRound=DATA.rounds[DATA.rounds.length-1];
+  const cKey=`challenge_r${lastRound.number+1}`;
+  const voterName=PARTICIPANTS.find(x=>x.id===pid)?.name||'';
+  if(!DATA.roundComments) DATA.roundComments={};
+  if(!DATA.roundComments[cKey]) DATA.roundComments[cKey]={};
+  DATA.roundComments[cKey][pid]={vote:targetPid,name:voterName,time:Date.now()};
+  await saveData();
+  renderRoundChallenge();
+}
+
 // ---------- Rendering ----------
 function renderAll(){
   renderHeroes();
   renderStandings();
+  renderHonorBoard();
   renderBadges();
   renderWeeklyDuels();
   renderBottomRace();
   renderParticipants();
   renderRounds();
+  renderSeasonProgress();
+  renderRoundsInsights();
   renderChampionsArchive();
   renderChart();
+  renderMedals();
+  renderRankHistory();
+  renderSurprises();
+  renderMyAchievements();
+  renderNightMode();
+  renderWhatIf();
+  renderScenario();
+  renderRankLeaderboard();
+  renderDeathMap();
+  renderRadar();
+  renderSmartProfile();
+  renderRace();
+  renderClubEfficiency();
+  renderClubMap();
+  renderPredChallenge();
+  renderRoundComments();
+  renderRoundChallenge();
   renderRecords();
   renderH2H();
   renderPredictionAccuracy();
@@ -3954,6 +5935,9 @@ function renderAll(){
   renderPredictions();
   renderCountdown();
   renderMyDashboard();
+  renderAboutLeague();
+  renderSeasonStory();
+  renderAdminActivityLog();
 }
 
 function buildParticipantHistory(pid){
@@ -4027,6 +6011,21 @@ function renderStandings(){
     <tr class="detail-row" id="expand-${s.id}" style="display:none;">
       <td colspan="8">
         <div class="detail-inner">
+          ${(()=>{
+            const hist = buildParticipantHistory(s.id);
+            const last5 = hist.slice(-5);
+            if(!last5.length) return '';
+            const mx = Math.max(...hist.map(h=>h.points));
+            const pills = last5.map(h=>{
+              let cls = h.points===0 ? 'mumma' : h.points===mx ? 'hi' : '';
+              return `<div class="quick-hist-pill ${cls}" title="الجولة ${h.number}">${h.points}</div>`;
+            }).join('');
+            const avg = hist.length ? Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10 : 0;
+            return `<div>
+              <div class="quick-hist-mini-label">آخر ${last5.length} جولات | معدل الموسم: ${avg}</div>
+              <div class="quick-hist">${pills}</div>
+            </div>`;
+          })()}
           <div class="detail-clubs">${p.teams.map(t=>`
             <details class="club-toggle">
               <summary>${clubBadgeHTML(t,'sm')}</summary>
@@ -4064,14 +6063,99 @@ function renderStandings(){
 
 function renderParticipants(){
   const box = document.getElementById('participantsBox');
-  let html = '';
-  PARTICIPANTS.forEach(p=>{
-    html += `<div class="participant-card" data-name="${p.name.toLowerCase()}">
-      <h3>${p.name}</h3>
-      <div class="teams-row">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div>
+  const standings = computeStandings();
+  const rankMap = {};
+  standings.forEach((s, i) => {
+    rankMap[s.id] = { rank: i+1, total: s.total, mummaCount: s.mummaCount, bestStreak: s.bestStreak, lastPoints: s.lastPoints };
+  });
+  const totalCount = standings.length;
+
+  // حفظ وضع الفرز واستعادته بعد إعادة الرسم
+  const sortMode = box.dataset.sortMode || 'rank';
+
+  const sorted = [...PARTICIPANTS].sort((a, b) => {
+    if(sortMode === 'alpha') return a.name.localeCompare(b.name, 'ar');
+    if(sortMode === 'round') return (rankMap[b.id]?.lastPoints||0) - (rankMap[a.id]?.lastPoints||0);
+    return (rankMap[a.id]?.rank||99) - (rankMap[b.id]?.rank||99);
+  });
+
+  const sortLabels = {rank:'🏆 بالترتيب', alpha:'🔤 بالاسم', round:'⚡ آخر جولة'};
+  let html = `<div style="display:flex;gap:7px;margin-bottom:14px;">
+    ${['rank','alpha','round'].map(mode => {
+      const active = sortMode === mode;
+      return `<button onclick="document.getElementById('participantsBox').dataset.sortMode='${mode}';renderParticipants();"
+        style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${active?'var(--gold)':'var(--line)'};
+               background:${active?'var(--gold)':'var(--paper)'};color:${active?'#fff':'var(--text2)'};
+               font-family:inherit;font-size:0.75rem;font-weight:800;cursor:pointer;transition:all 0.15s;">${sortLabels[mode]}</button>`;
+    }).join('')}
+  </div>`;
+
+  sorted.forEach(p => {
+    const s = rankMap[p.id] || {};
+    const rank = s.rank !== undefined ? s.rank : '—';
+    const total = s.total !== undefined ? s.total : '—';
+    const mumma = s.mummaCount || 0;
+    const bestStreak = s.bestStreak || 0;
+    const lastPts = s.lastPoints;
+
+    // لون شارة الترتيب
+    const isTop = rank <= 3;
+    const isDanger = typeof rank === 'number' && rank > totalCount - 3;
+    const rankBg = rank === 1 ? 'var(--gold)' : isTop ? 'var(--sky)' : isDanger ? 'var(--coral)' : 'rgba(123,92,255,0.18)';
+    const rankClr = (isTop || isDanger) ? '#fff' : 'var(--text2)';
+
+    // sparkline — شريط نقاط كل جولة
+    const history = buildParticipantHistory(p.id);
+    const maxPts = history.length ? Math.max(...history.map(h=>h.points), 1) : 1;
+    const sparkHTML = history.map(h => {
+      const pct = h.points / maxPts;
+      const barH = Math.max(6, Math.round(pct * 28) + 4);
+      const barBg = h.points === 0 ? 'var(--coral)' :
+                    pct >= 0.8 ? 'var(--gold)' :
+                    pct >= 0.5 ? 'var(--sky)' : 'var(--muted)';
+      return `<span title="ج${h.number}: ${h.points} نقطة"
+        style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:default;">
+        <span style="display:block;width:20px;background:${barBg};border-radius:3px 3px 2px 2px;height:${barH}px;opacity:0.85;"></span>
+        <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">ج${h.number}</span>
+      </span>`;
+    }).join('');
+
+    // إحصائيات سريعة
+    const quickStats = [];
+    if(mumma > 0) quickStats.push(`💀 ${mumma} ممة`);
+    if(bestStreak >= 2) quickStats.push(`🔥 سلسلة ${bestStreak}`);
+    if(mumma === 0 && history.length > 0) quickStats.push(`✅ بلا ممات`);
+
+    // آخر جولة
+    const lastBadge = (lastPts !== undefined && history.length > 0)
+      ? `<span style="font-size:0.72rem;color:var(--sky);font-weight:700;white-space:nowrap;">${lastPts>0?'+':''}${lastPts} آخر جولة</span>`
+      : '';
+
+    const pColor = PARTICIPANT_COLORS[p.id] || 'var(--gold)';
+    const fingerprintHTML = buildFingerprintHTML(p.id);
+    html += `<div class="participant-card" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="min-width:36px;height:36px;border-radius:9px;background:${rankBg};color:${rankClr};
+                    font-size:0.95rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+            <span style="display:flex;align-items:center;gap:5px;font-size:0.98rem;font-weight:800;color:var(--text);">
+              <span class="p-color-dot" style="background:${pColor};"></span>${p.name}
+            </span>
+            <span style="font-size:1rem;font-weight:900;color:var(--gold);">${total} نقطة ${lastBadge}</span>
+          </div>
+          <div class="teams-row" style="margin-bottom:${history.length?'10px':'6px'};">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div>
+          ${history.length ? `<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>` : ''}
+          ${quickStats.length ? `<div style="display:flex;gap:10px;font-size:0.78rem;color:var(--muted);">${quickStats.map(x=>`<span>${x}</span>`).join('')}</div>` : ''}
+          ${fingerprintHTML}
+        </div>
+      </div>
     </div>`;
   });
+
   box.innerHTML = html;
+  box.dataset.sortMode = sortMode; // استعادة وضع الفرز بعد innerHTML
+
   // إعادة تطبيق البحث الحالي (إن وُجد) بعد أي إعادة رسم للقائمة
   const searchInput = document.getElementById('participantsSearchInput');
   if(searchInput && searchInput.value.trim()){
@@ -5733,6 +7817,7 @@ function prepareRoundForm(num, opts={}){
     // (طلب المستخدم 7 سبتمبر 2026).
     round.lastModified = Date.now();
     DATA.updatedAt = Date.now();
+    logAdminActivity(`💾 حفظ الجولة ${num}`);
     const ok = await saveData();
     document.getElementById('saveRoundMsg').innerHTML = ok
       ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div>'
@@ -5768,14 +7853,16 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('refreshMsg');
   btn.disabled = true;
   btn.textContent = '⏳ جارٍ التحديث...';
+  capturePreRefreshState();
   try{
     await loadData();
+    renderRefreshSummary();
     msg.innerHTML = '<div class="status-msg ok">تم تحديث ترتيب المتسابقين بأحدث نتائج الجولات ✅</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">حدث خطأ أثناء التحديث، حاول مجددًا.</div>';
   }
   btn.disabled = false;
-  btn.textContent = '🔄 تحديث الترتيب';
+  btn.textContent = '🔄 تحديث';
   setTimeout(()=>{ msg.innerHTML=''; }, 3000);
 });
 
@@ -5805,6 +7892,8 @@ loadData();
 loadPredictions();
 loadAdminPin();
 startRealtimeSync();
+// رابط مباشر لمشارك — يُطبَّق بعد تحميل البيانات والرسم
+setTimeout(handleParticipantHash, 800);
 
 // تسجيل service worker لدعم "أضف للشاشة الرئيسية" (PWA) — فشل التسجيل (مثلاً
 // متصفح قديم لا يدعمه) لا يوقف أي شيء آخر في الصفحة، فقط تظل خاصية التثبيت
