@@ -1088,7 +1088,14 @@
           <div class="admin-subsection">
             <div class="admin-subsection-title">🔒 تغيير رمز دخول المنظم</div>
             <p style="margin:0 0 8px;font-size:0.85rem;">الرمز الحالي محفوظ بأمان على قاعدة البيانات المشتركة — تغييره هنا يحدّثه فورًا لكل الأجهزة، بدون حاجة لتعديل أي كود.</p>
-            <div class="row" style="margin-bottom:8px;">
+            <div id="pinChangeLock">
+              <div class="row" style="margin-bottom:8px;">
+                <input type="password" id="superCodeInput" placeholder="الكود الخاص" style="max-width:220px;">
+                <button class="btn secondary" id="unlockPinChangeBtn">🔓 فتح</button>
+              </div>
+              <div id="unlockPinMsg"></div>
+            </div>
+            <div class="row" id="pinChangeFields" style="margin-bottom:8px;display:none;">
               <input type="password" id="newPinInput" placeholder="رمز جديد (4 أرقام على الأقل)" inputmode="numeric" style="max-width:220px;">
               <input type="password" id="confirmPinInput" placeholder="تأكيد الرمز الجديد" inputmode="numeric" style="max-width:220px;">
               <button class="btn secondary" id="changePinBtn">💾 حفظ الرمز الجديد</button>
@@ -1149,6 +1156,11 @@ document.getElementById("logoImg").src = LOGO_BASE64;
 
 const STORAGE_KEY = 'brookie-fantasy-s2-data';
 const ADMIN_PIN = '2580';
+// كود خاص ثابت بالكود — معروف للمستخدم الأساسي فقط — لازم إدخاله أولاً قبل
+// ما تنفتح حقول تغيير رمز دخول المنظم، عشان أي منظم آخر يشارك رمز الدخول
+// العادي ما يقدر يغيّره من دونه (طلب المستخدم 8 سبتمبر 2026).
+const SUPER_ADMIN_CODE = 'بروكي2';
+let pinChangeUnlocked = false;
 // رمز الدخول الفعلي المستخدَم بالتحقق — يبدأ بقيمة ADMIN_PIN الثابتة أعلاه،
 // ويُستبدَل عند الإقلاع بأي رمز مخصّص محفوظ على Firebase (مفتاح
 // "organizer_pin") إن وُجد — يسمح للمنظم بتغيير رمز الدخول من داخل اللوحة
@@ -4611,12 +4623,34 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
   reader.readAsText(file);
 });
 
+// قفل تغيير رمز المنظم بكود خاص إضافي (SUPER_ADMIN_CODE) — يمنع أي شخص
+// يعرف رمز دخول المنظم العادي فقط (لو كان مشتركًا بين عدة أشخاص) من تغيير
+// الرمز؛ فقط من يعرف الكود الخاص يقدر يفتح حقول التغيير (طلب المستخدم
+// 8 سبتمبر 2026).
+document.getElementById('unlockPinChangeBtn').addEventListener('click', ()=>{
+  const unlockMsg = document.getElementById('unlockPinMsg');
+  const code = document.getElementById('superCodeInput').value.trim();
+  if(code === SUPER_ADMIN_CODE){
+    pinChangeUnlocked = true;
+    document.getElementById('pinChangeFields').style.display = '';
+    document.getElementById('pinChangeLock').style.display = 'none';
+    document.getElementById('superCodeInput').value = '';
+    unlockMsg.innerHTML = '';
+  }else{
+    unlockMsg.innerHTML = '<div class="status-msg err">كود خاص غير صحيح.</div>';
+  }
+});
+
 // تغيير رمز دخول المنظم من داخل اللوحة — يُحفظ على Firebase (مفتاح
 // "organizer_pin")، فيرفع الأمان شويًا (بدل رمز ثابت بالكود لأي شخص يشوف
 // الملف) ويسمح بتغييره لو انتشر بين ناس مو مفروض يشوفونه، بدون أي تعديل كود
 // (طلب المستخدم 7 سبتمبر 2026).
 document.getElementById('changePinBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('changePinMsg');
+  if(!pinChangeUnlocked){
+    msg.innerHTML = '<div class="status-msg err">لازم تدخل الكود الخاص أولاً.</div>';
+    return;
+  }
   const newPin = document.getElementById('newPinInput').value.trim();
   const confirmPin = document.getElementById('confirmPinInput').value.trim();
   if(newPin.length < 4){
@@ -4637,6 +4671,9 @@ document.getElementById('changePinBtn').addEventListener('click', async ()=>{
     CURRENT_ADMIN_PIN = newPin;
     document.getElementById('newPinInput').value = '';
     document.getElementById('confirmPinInput').value = '';
+    pinChangeUnlocked = false;
+    document.getElementById('pinChangeFields').style.display = 'none';
+    document.getElementById('pinChangeLock').style.display = '';
     msg.innerHTML = '<div class="status-msg ok">تم تغيير رمز الدخول بنجاح ✅ استخدم الرمز الجديد من الآن.</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، تحقق من الاتصال وحاول مرة ثانية.</div>';
