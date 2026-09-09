@@ -998,6 +998,23 @@
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;}
   }
+
+  /* ════════════ قسم تكريم البطل — أنماط 16 الميزات (كلها معطّلة افتراضيًا) ════════════ */
+  .champion-badge{display:inline-flex;align-items:center;gap:3px;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--sky));color:#fff;margin-inline-start:6px;vertical-align:middle;white-space:nowrap;}
+  .champion-badge.reclaim{background:linear-gradient(135deg,var(--coral),#FF9A6E);}
+  .champion-banner{background:linear-gradient(90deg,var(--gold),var(--sky));color:#fff;text-align:center;font-weight:800;font-size:0.85rem;padding:10px 14px;margin:0 0 14px;}
+  .champion-crown{display:inline-block;margin-inline-start:6px;font-size:1.3rem;animation:crownFloat 2.2s ease-in-out infinite;}
+  @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-5px) rotate(4deg);}}
+  .participant-card.champion-golden{border:2px solid var(--gold)!important;box-shadow:0 0 0 1px var(--gold-light),0 4px 18px rgba(123,92,255,0.35);background:linear-gradient(180deg,rgba(123,92,255,0.10),transparent);}
+  .champion-hero-card{background:linear-gradient(135deg,rgba(123,92,255,0.14),rgba(0,180,255,0.08));border:1.5px solid var(--gold);border-radius:16px;padding:18px;margin:14px 0;}
+  .champion-defense-note{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+  .champion-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--paper);border:1.5px solid var(--gold);border-radius:14px;padding:14px 20px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:9998;max-width:90vw;text-align:center;font-size:0.85rem;color:var(--text);animation:champToastIn 0.3s ease;}
+  @keyframes champToastIn{from{opacity:0;transform:translate(-50%,20px);}to{opacity:1;transform:translate(-50%,0);}}
+  .hof-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:0.85rem;}
+  .weekly-beat-badge{background:var(--coral);color:#fff;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;}
+  @media (prefers-reduced-motion:reduce){
+    .champion-crown{animation:none!important;}
+  }
 </style>
 </head>
 <body>
@@ -1026,12 +1043,14 @@
 
 <header>
   <img id="logoImg" alt="شعار دوري بروكي الفانتازي" style="width:240px;height:auto;margin-bottom:10px;filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35));">
+  <span id="championCrown" class="champion-crown" hidden>👑</span>
   <p>الموسم الثاني</p>
   <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
     <button id="darkModeToggleBtn" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);" aria-pressed="false">☀️ الوضع الفاتح</button>
     <a href="report.html" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);text-decoration:none;display:inline-block;">🧾 ساهم بالبيانات</a>
   </div>
 </header>
+<div id="championBannerBox"></div>
 
 <nav class="tabs">
   <button data-tab="standings" class="active">الترتيب العام<span class="update-dot" id="standingsUpdateDot" hidden></span></button>
@@ -1060,6 +1079,8 @@
     <div id="myDashboardBox" style="display:none;"></div>
 
     <div id="predictionBox"></div>
+
+    <div id="championHeroBox"></div>
 
     <div id="heroesBox"></div>
 
@@ -1137,6 +1158,7 @@
       <div id="scenarioBox"></div>
       <div id="rankLeaderboardBox"></div>
       <div id="deathMapBox"></div>
+      <div id="hallOfFameBox"></div>
       <div id="recordsBox"></div>
       <div id="h2hBox" style="display:none;"></div>
       <div id="predictionAccuracyBox"></div>
@@ -1380,6 +1402,58 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="admin-accordion" id="championAccordion">
+        <summary>🏆 قسم تكريم البطل</summary>
+        <div class="acc-body">
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">👑 بطل الموسم الحالي</div>
+            <p style="margin:0 0 8px;font-size:0.85rem;">من تختاره هنا يظهر عليه كل الميزات المفعّلة أدناه. اختر "بدون بطل حاليًا" لإيقاف كل الميزات دفعة واحدة بضغطة وحدة.</p>
+            <select id="championSelect" style="max-width:260px;"><option value="">بدون بطل حاليًا</option></select>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🏛️ سجل الأبطال عبر المواسم</div>
+            <p style="margin:0 0 8px;font-size:0.85rem;">سجل تاريخي يدوي مستقل تمامًا عن الاختيار أعلاه — لا يُحذف تلقائيًا أبدًا، ويبقى دائمًا ظاهرًا وقابلًا للتعديل بغض النظر عن أي مفتاح آخر.</p>
+            <div id="championArchiveRows"></div>
+            <div class="row" style="margin-top:8px;flex-wrap:wrap;">
+              <input type="text" id="archiveSeasonInput" placeholder="اسم الموسم" style="max-width:150px;">
+              <input type="text" id="archiveNameInput" placeholder="اسم البطل" style="max-width:150px;">
+              <input type="number" id="archivePointsInput" placeholder="النقاط" style="max-width:90px;">
+              <button class="btn secondary" id="addArchiveRowBtn">➕ إضافة</button>
+            </div>
+            <div id="archiveMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🟢 أساسية</div>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_badge_standings" data-key="badge_standings" data-label="شارة البطل بالترتيب" style="width:18px;height:18px;"> 🛡️ شارة "حامل اللقب" بجدول الترتيب</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_top_banner" data-key="top_banner" data-label="بانر البطل العلوي" style="width:18px;height:18px;"> 📣 بانر تذكير بالبطل أعلى الصفحة</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;"><input type="checkbox" class="champion-feature-toggle" id="cf_golden_card" data-key="golden_card" data-label="الكرت الذهبي" style="width:18px;height:18px;"> 🥇 كرت ذهبي مميّز للبطل بتبويب المشاركين</label>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🟡 متوسطة</div>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_hero_card" data-key="hero_card" data-label="كرت المدافع عن اللقب" style="width:18px;height:18px;"> 🛡️ كرت "المدافع عن اللقب" بأعلى الترتيب العام</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_welcome_message" data-key="welcome_message" data-label="رسالة ترحيب البطل" style="width:18px;height:18px;"> 👋 رسالة ترحيب خاصة عند دخول البطل برمزه</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_golden_confetti" data-key="golden_confetti" data-label="كونفيتي ذهبي" style="width:18px;height:18px;"> 🎉 كونفيتي ذهبي عند دخول البطل</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_certificate" data-key="certificate" data-label="شهادة تكريم" style="width:18px;height:18px;"> 🎖️ زر شهادة تكريم قابلة للمشاركة (بكرت المدافع)</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;"><input type="checkbox" class="champion-feature-toggle" id="cf_whatsapp_line" data-key="whatsapp_line" data-label="سطر البطل بالواتساب" style="width:18px;height:18px;"> 📋 سطر إضافي عن البطل برسالة تذكير الواتساب</label>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🔴 متقدمة</div>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_defense_journey" data-key="defense_journey" data-label="رحلة الدفاع" style="width:18px;height:18px;"> 📊 شريط مقارنة بالنقاط مع الموسم الماضي (بكرت المدافع)</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_defense_path" data-key="defense_path" data-label="مسار الدفاع بالترتيب" style="width:18px;height:18px;"> 🏅 ملاحظة نتيجة الموسم الماضي تحت اسم البطل بجدول الترتيب</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_hall_of_fame" data-key="hall_of_fame" data-label="قاعة المشاهير" style="width:18px;height:18px;"> 🏛️ قسم "قاعة مشاهير الأبطال" بتبويب الإحصائيات</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_animated_crown" data-key="animated_crown" data-label="التاج المتحرك" style="width:18px;height:18px;"> 👑 تاج متحرك بجانب شعار الموقع</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_dynamic_badge" data-key="dynamic_badge" data-label="شارة ذكية" style="width:18px;height:18px;"> 🔄 شارة ذكية تتحول تلقائيًا لـ"يحاول استعادة العرش" عند تفوّق أحد بالمجموع</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_proximity_alert" data-key="proximity_alert" data-label="تنبيه الاقتراب" style="width:18px;height:18px;"> ⚠️ تنبيه بسجل النشاط عند اقتراب أحدهم من رقم البطل</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;margin-bottom:6px;"><input type="checkbox" class="champion-feature-toggle" id="cf_smart_summary_highlight" data-key="smart_summary_highlight" data-label="تمييز بالملخص الذكي" style="width:18px;height:18px;"> 📖 فقرة خاصة بالبطل ضمن "قصة الموسم" التلقائية</label>
+            <label class="row" style="align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;"><input type="checkbox" class="champion-feature-toggle" id="cf_weekly_challenge_notice" data-key="weekly_challenge_notice" data-label="تحدي الجولة" style="width:18px;height:18px;"> 🔥 تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه</label>
           </div>
         </div>
       </details>
@@ -2941,6 +3015,7 @@ async function applyMyId(id){
   renderPredictions();
   renderMyDashboard();
   renderRoundComments();
+  handleChampionIdentityWelcome(id);
 }
 
 function initMePicker(){
@@ -3197,6 +3272,28 @@ function startRealtimeSync(){
       renderPredictions();
       renderMyDashboard(); // سطر التوقع باللوحة الشخصية يتبع نفس مفتاح enabled
     }, err=>{ console.warn('انقطعت المزامنة اللحظية للتوقعات:', err); });
+
+    // قسم تكريم البطل — مزامنة لحظية لبطل الموسم الحالي، سجل أبطال المواسم،
+    // وأعلام الميزات الـ16 (كلها تصل فورًا لكل الزوار المفتوحين على الصفحة).
+    db.ref('brookie/currentChampionId').on('value', snap=>{
+      CHAMPION_ID = snap.exists() ? Number(snap.val()) : null;
+      renderAll();
+      syncChampionAdminUI();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية لبطل الموسم:', err); });
+
+    db.ref('brookie/seasonChampionsArchive').on('value', snap=>{
+      let v = snap.exists() ? snap.val() : [];
+      SEASON_CHAMPIONS_ARCHIVE = Array.isArray(v) ? v : Object.values(v||{});
+      renderAll();
+      syncChampionAdminUI();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية لسجل أبطال المواسم:', err); });
+
+    db.ref('brookie/championHonorFeatures').on('value', snap=>{
+      const loaded = snap.exists() ? snap.val() : {};
+      CHAMPION_FEATURE_KEYS.forEach(k=> CHAMPION_FEATURES[k] = !!loaded[k]);
+      renderAll();
+      syncChampionAdminUI();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية لميزات تكريم البطل:', err); });
 
     _realtimeSyncStarted = true;
   }catch(e){
@@ -3588,11 +3685,11 @@ async function buildStoryCanvas(sourceCanvas){
 // كونفيتي مبني ذاتيًا (بدون أي مكتبة خارجية) — يحترم تفضيل "تقليل الحركة"
 // في نظام المستخدم فلا يُنشئ أي عنصر إطلاقًا لمن فعّله، ويزيل نفسه من الصفحة
 // تلقائيًا بعد انتهاء الحركة (لا يترك أي أثر في الـ DOM).
-function fireConfetti(){
+function fireConfetti(colorsOverride){
   try{
     if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   }catch(e){}
-  const colors = ['#16A6EA','#9B7BF5','#3DD47E','#FF6B5E','#FFFFFF'];
+  const colors = colorsOverride || ['#16A6EA','#9B7BF5','#3DD47E','#FF6B5E','#FFFFFF'];
   const container = document.createElement('div');
   container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;';
   const count = 60;
@@ -4438,6 +4535,28 @@ function renderSeasonStory(){
     chap6 += ` ⚠️ المتصدر الحالي ${hl(leader.name)} في خطر!`;
   }
 
+  // ---- فصل تكريم البطل (قسم تكريم البطل — ميزة 15، معطّل افتراضيًا) ----
+  let chapChamp = '';
+  if(CHAMPION_FEATURES.smart_summary_highlight && CHAMPION_ID){
+    const champRow = st.find(s=>s.id===CHAMPION_ID);
+    const champHist = histMap[CHAMPION_ID] || [];
+    const lastEntry = champHist[champHist.length-1];
+    const champName = (PARTICIPANTS.find(p=>p.id===CHAMPION_ID)||{}).name || '';
+    if(champRow && lastEntry && champName){
+      if(lastEntry.points === 0){
+        chapChamp = `حتى حامل اللقب ${hl(champName)} لم يسلم من الممة في آخر جولة — تذكير أن العرش لا يُحمى بالماضي وحده.`;
+      } else {
+        const others = st.filter(s=>s.id!==CHAMPION_ID);
+        const avgOthersLast = others.length
+          ? others.reduce((a,s)=>{ const h=(histMap[s.id]||[]); return a+(h[h.length-1]?.points||0); },0)/others.length
+          : 0;
+        if(lastEntry.points >= avgOthersLast*1.5 && lastEntry.points > 0){
+          chapChamp = `حامل اللقب ${hl(champName)} أكّد جدارته بآخر جولة بحصاد ${hl(lastEntry.points+' نقطة')} — دفاع مقنع عن العرش حتى الآن.`;
+        }
+      }
+    }
+  }
+
   // ---- تجميع الفصول ----
   const chapters = [
     {num:'١', icon:'🏁', title:'الافتتاحية', body:chap1},
@@ -4446,6 +4565,7 @@ function renderSeasonStory(){
     {num:'٤', icon:'🌟', title:'نجوم ومفاجآت', body:chap4},
     {num:'٥', icon:'💀', title:'الممات والثبات', body:chap5},
     {num:'٦', icon:'🔮', title:'ماذا يُخبئ الموسم؟', body:chap6},
+    {num:'٧', icon:'🛡️', title:'دفاع البطل', body:chapChamp},
   ].filter(c=>c.body);
 
   let html = '<div class="story-wrap">';
@@ -5980,6 +6100,12 @@ function renderAll(){
   renderAboutLeague();
   renderSeasonStory();
   renderAdminActivityLog();
+  // قسم تكريم البطل — كل الميزات تفحص أعلامها الخاصة وتخرج فورًا إن كانت معطّلة
+  renderChampionBanner();
+  renderChampionCrown();
+  renderChampionHero();
+  renderHallOfFame();
+  checkChampionAlerts();
 }
 
 function buildParticipantHistory(pid){
@@ -6040,7 +6166,8 @@ function renderStandings(){
       <td>${movementHTML(mv[s.id])}</td>
       <td class="team-cell">
         <div>
-          <div class="team-cell-name">${s.name}</div>
+          <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}</div>
+          ${championDefensePathHTML(s.id)}
           <div class="team-cell-clubs">${clubs}</div>
         </div>
       </td>
@@ -6167,6 +6294,13 @@ function renderParticipants(){
     if(mumma > 0) quickStats.push(`💀 ${mumma} ممة`);
     if(bestStreak >= 2) quickStats.push(`🔥 سلسلة ${bestStreak}`);
     if(mumma === 0 && history.length > 0) quickStats.push(`✅ بلا ممات`);
+    // قسم تكريم البطل — ميزة 16: تنبيه لمن سجّل نقاط جولة أعلى من حامل اللقب
+    if(CHAMPION_FEATURES.weekly_challenge_notice && CHAMPION_ID && p.id !== CHAMPION_ID && history.length > 0){
+      const champInfo = rankMap[CHAMPION_ID];
+      if(champInfo && (lastPts||0) > (champInfo.lastPoints||0)){
+        quickStats.push(`<span class="weekly-beat-badge">🔥 تفوقت على حامل اللقب هالجولة</span>`);
+      }
+    }
 
     // آخر جولة
     const lastBadge = (lastPts !== undefined && history.length > 0)
@@ -6175,7 +6309,9 @@ function renderParticipants(){
 
     const pColor = PARTICIPANT_COLORS[p.id] || 'var(--gold)';
     const fingerprintHTML = buildFingerprintHTML(p.id);
-    html += `<div class="participant-card" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};">
+    // قسم تكريم البطل — ميزة 3: كرت ذهبي مميّز للبطل الحالي بتبويب المشاركين
+    const isGoldenChamp = CHAMPION_FEATURES.golden_card && CHAMPION_ID && p.id === CHAMPION_ID;
+    html += `<div class="participant-card${isGoldenChamp ? ' champion-golden' : ''}" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};">
       <div style="display:flex;align-items:flex-start;gap:10px;">
         <div style="min-width:36px;height:36px;border-radius:9px;background:${rankBg};color:${rankClr};
                     font-size:0.95rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div>
@@ -6582,6 +6718,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     loadCommunityReports();
     renderQuickLinkCodes();
     renderVisitorCount();
+    syncChampionAdminUI();
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
@@ -7170,9 +7307,14 @@ const copyReminderMsgBtnEl = document.getElementById('copyReminderMsgBtn');
 if(copyReminderMsgBtnEl){
   copyReminderMsgBtnEl.addEventListener('click', ()=>{
     const nextRound = getCurrentRoundNumber() + 1;
-    const msg = `⚽ تذكير دوري بروكي الفانتازي — الجولة ${nextRound}\n\n`
+    let msg = `⚽ تذكير دوري بروكي الفانتازي — الجولة ${nextRound}\n\n`
       + `مين عنده نتيجة أي نادٍ من أندية الجولة، يسجّلها من هنا (يستغرق دقيقة):\n${REPORT_URL}\n\n`
       + `يساعدنا نطلع الترتيب أسرع وأدق 🙏`;
+    // قسم تكريم البطل — ميزة 8: سطر إضافي عن حامل اللقب برسالة التذكير
+    if(CHAMPION_FEATURES.whatsapp_line && CHAMPION_ID){
+      const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
+      if(champ) msg += `\n\n🏆 حامل اللقب: ${champ.name}`;
+    }
     copyToClipboardWithFeedback(msg, copyReminderMsgBtnEl);
   });
 }
@@ -7187,6 +7329,347 @@ if(copyAllCodesBtnEl){
     copyToClipboardWithFeedback(text, copyAllCodesBtnEl);
   });
 }
+
+// ════════════════════════════════════════════════════════════════════════
+// قسم تكريم البطل (Champion Honor Section) — 8 سبتمبر 2026
+// بطل الموسم الحالي + سجل أبطال المواسم + 16 ميزة قابلة للتفعيل، كلها
+// معطّلة افتراضيًا (المجموعة لا تزال بفترة تجربة بـ5 منظمين). كل شيء يُخزَّن
+// بـFirebase عبر window.storage (shared=true) فيصل فورًا لكل الأجهزة، ونفس
+// مسار المزامنة اللحظية بـstartRealtimeSync يبقيه محدَّثًا بدون تحديث الصفحة.
+// ════════════════════════════════════════════════════════════════════════
+let CHAMPION_ID = null; // null = "بدون بطل حاليًا"
+let SEASON_CHAMPIONS_ARCHIVE = []; // [{season, name, points}] — سجل تاريخي يدوي مستقل
+const CHAMPION_FEATURE_KEYS = [
+  'badge_standings','top_banner','golden_card',
+  'hero_card','welcome_message','golden_confetti','certificate','whatsapp_line',
+  'defense_journey','defense_path','hall_of_fame','animated_crown','dynamic_badge',
+  'proximity_alert','smart_summary_highlight','weekly_challenge_notice'
+];
+const CHAMPION_FEATURES = {};
+CHAMPION_FEATURE_KEYS.forEach(k=>CHAMPION_FEATURES[k]=false);
+let _proximityAlertLoggedKey = null;
+let _weeklyChallengeLoggedRound = null;
+
+async function loadChampionData(){
+  try{
+    const res = await window.storage.get('currentChampionId', true);
+    CHAMPION_ID = (res && res.value !== null && res.value !== undefined && res.value !== '') ? Number(res.value) : null;
+  }catch(e){ CHAMPION_ID = null; }
+  try{
+    const res2 = await window.storage.get('seasonChampionsArchive', true);
+    const v = res2 && res2.value;
+    SEASON_CHAMPIONS_ARCHIVE = Array.isArray(v) ? v : (v ? Object.values(v) : []);
+  }catch(e){ SEASON_CHAMPIONS_ARCHIVE = []; }
+  try{
+    const res3 = await window.storage.get('championHonorFeatures', true);
+    const loaded = (res3 && res3.value) || {};
+    CHAMPION_FEATURE_KEYS.forEach(k=> CHAMPION_FEATURES[k] = !!loaded[k]);
+  }catch(e){ /* تبقى كل الميزات معطّلة افتراضيًا عند تعذّر القراءة */ }
+}
+
+// آخر إدخال بسجل أبطال المواسم يطابق اسم البطل الحالي — يُستخدم لميزتي
+// "رحلة الدفاع" و"مسار الدفاع بالترتيب". يرجع null بأمان إن لم يوجد تطابق
+// (تدهور رشيق بدل كسر الميزة).
+function findChampionLastSeasonEntry(){
+  if(!CHAMPION_ID) return null;
+  const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
+  if(!champ) return null;
+  const matches = SEASON_CHAMPIONS_ARCHIVE.filter(r=> r && r.name && String(r.name).trim() === champ.name.trim());
+  if(!matches.length) return null;
+  return matches[matches.length-1];
+}
+
+// ميزة 1 (شارة البطل) + ميزة 13 (شارة ذكية تتحول لـ"يحاول استعادة العرش")
+function championBadgeHTML(pid){
+  if(!CHAMPION_FEATURES.badge_standings || !CHAMPION_ID || pid !== CHAMPION_ID) return '';
+  let label = 'حامل اللقب', cls = '';
+  if(CHAMPION_FEATURES.dynamic_badge){
+    const st = computeStandings();
+    const champRow = st.find(s=>s.id===CHAMPION_ID);
+    const others = st.filter(s=>s.id!==CHAMPION_ID);
+    const maxOtherTotal = others.length ? Math.max(...others.map(s=>s.total)) : 0;
+    if(champRow && maxOtherTotal > champRow.total){ label = 'يحاول استعادة العرش'; cls = 'reclaim'; }
+  }
+  return `<span class="champion-badge ${cls}">🛡️ ${label}</span>`;
+}
+
+// ميزة 10: ملاحظة صغيرة تحت اسم البطل بجدول الترتيب العام بنتيجة الموسم الماضي
+function championDefensePathHTML(pid){
+  if(!CHAMPION_FEATURES.defense_path || !CHAMPION_ID || pid !== CHAMPION_ID) return '';
+  const entry = findChampionLastSeasonEntry();
+  if(!entry) return '';
+  return `<div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${entry.points} نقطة</div>`;
+}
+
+// ميزة 2: بانر تذكير بالبطل أعلى الصفحة
+function renderChampionBanner(){
+  const box = document.getElementById('championBannerBox');
+  if(!box) return;
+  if(!CHAMPION_FEATURES.top_banner || !CHAMPION_ID){ box.innerHTML=''; return; }
+  const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
+  if(!champ){ box.innerHTML=''; return; }
+  box.innerHTML = `<div class="champion-banner">🛡️ ${champ.name} — حامل لقب الموسم الحالي، والكل يطارده!</div>`;
+}
+
+// ميزة 12: تاج متحرك بجانب شعار الموقع
+function renderChampionCrown(){
+  const el = document.getElementById('championCrown');
+  if(!el) return;
+  el.hidden = !(CHAMPION_FEATURES.animated_crown && CHAMPION_ID);
+}
+
+// ميزة 11: قاعة مشاهير الأبطال بتبويب الإحصائيات — من سجل أبطال المواسم مباشرة
+function renderHallOfFame(){
+  const box = document.getElementById('hallOfFameBox');
+  if(!box) return;
+  if(!CHAMPION_FEATURES.hall_of_fame || !SEASON_CHAMPIONS_ARCHIVE.length){ box.innerHTML=''; return; }
+  const sorted = SEASON_CHAMPIONS_ARCHIVE.slice().sort((a,b)=>(b.points||0)-(a.points||0));
+  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2>
+    <div>${sorted.map(r=>`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${r.points} نقطة</span></div>`).join('')}</div>`;
+}
+
+// ميزة 7: شهادة تكريم قابلة للمشاركة — نفس أسلوب buildStandingsStoryCanvas
+async function buildChampionCertificateCanvas(){
+  const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID) || {name:'—'};
+  const st = computeStandings();
+  const row = st.find(s=>s.id===CHAMPION_ID) || {total:0};
+  const W=1080, H=1350;
+  const cv = document.createElement('canvas');
+  cv.width=W; cv.height=H;
+  const ctx = cv.getContext('2d');
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#0B0D1F'); g.addColorStop(1,'#3D2E99');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#7B5CFF'; ctx.lineWidth=10;
+  drawRoundedRect(ctx,30,30,W-60,H-60,30); ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=2;
+  drawRoundedRect(ctx,50,50,W-100,H-100,22); ctx.stroke();
+  ctx.textAlign='center';
+  ctx.fillStyle='#00B4FF'; ctx.font='700 30px Tajawal, Arial';
+  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 150);
+  ctx.fillStyle='#FFD76A'; ctx.font='900 42px Tajawal, Arial';
+  ctx.fillText('🏆 شهادة تكريم حامل اللقب 🏆', W/2, 230);
+  ctx.fillStyle='#FFFFFF';
+  const nameSize = fitFontSize(ctx, champ.name, W-200, {size:80}, 40);
+  ctx.font = `900 ${nameSize}px Tajawal, Arial`;
+  ctx.fillText(champ.name, W/2, 460);
+  ctx.fillStyle='#B9AEF5'; ctx.font='600 30px Tajawal, Arial';
+  ctx.fillText(`الرصيد الحالي: ${row.total} نقطة`, W/2, 540);
+  ctx.fillStyle='#9C9BC9'; ctx.font='500 24px Tajawal, Arial';
+  ctx.fillText(new Date().toLocaleDateString('ar-SA'), W/2, H-90);
+  return cv;
+}
+async function showChampionCertificate(){
+  const box = document.getElementById('championCertBox');
+  if(!box) return;
+  box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز الشهادة…</p>';
+  try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+  const cv = await buildChampionCertificateCanvas();
+  box.innerHTML='';
+  box.appendChild(cv);
+  if(CHAMPION_FEATURES.golden_confetti) fireConfetti(['#FFD76A','#FFB020','#FFF3C4','#FFFFFF']);
+  const acts = document.createElement('div');
+  acts.className='champ-actions';
+  acts.innerHTML = `<button class="btn" id="shareCertBtn">📤 مشاركة</button><button class="btn secondary" id="dlCertBtn">⬇️ تحميل</button>`;
+  box.appendChild(acts);
+  document.getElementById('dlCertBtn').addEventListener('click', ()=>downloadCanvasPNG(cv, `champion-certificate-${CHAMPION_ID||'x'}.png`));
+  document.getElementById('shareCertBtn').addEventListener('click', async ()=>{
+    const shared = await tryShareCanvas(cv, 'champion-certificate.png', 'شهادة تكريم البطل', 'دوري بروكي الفانتازي');
+    if(!shared) downloadCanvasPNG(cv, `champion-certificate-${CHAMPION_ID||'x'}.png`);
+  });
+}
+
+// ميزة 4 (كرت المدافع عن اللقب) + ميزة 9 (رحلة الدفاع) + زر ميزة 7 (الشهادة)
+function renderChampionHero(){
+  const box = document.getElementById('championHeroBox');
+  if(!box) return;
+  if(!CHAMPION_FEATURES.hero_card || !CHAMPION_ID){ box.innerHTML=''; return; }
+  const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
+  const st = computeStandings();
+  const idx = st.findIndex(s=>s.id===CHAMPION_ID);
+  if(!champ || idx===-1){ box.innerHTML=''; return; }
+  const row = st[idx];
+  const rank = idx+1;
+  const entry = findChampionLastSeasonEntry();
+  let journeyHTML = '';
+  if(CHAMPION_FEATURES.defense_journey && entry && entry.points>0){
+    const pct = Math.max(0, Math.min(100, Math.round(row.total/entry.points*100)));
+    journeyHTML = `<div style="margin-top:12px;">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:4px;">
+        <span>رحلة الدفاع عن اللقب</span><span>${row.total} / ${entry.points} نقطة (${entry.season})</span>
+      </div>
+      <div style="background:var(--line);border-radius:20px;height:10px;overflow:hidden;">
+        <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));"></div>
+      </div>
+    </div>`;
+  }
+  const certBtn = CHAMPION_FEATURES.certificate ? `<button class="btn secondary" id="championCertBtn" style="margin-top:10px;">🎖️ شهادة تكريم البطل</button>` : '';
+  box.innerHTML = `<div class="champion-hero-card">
+    <div style="font-size:0.75rem;color:var(--muted);font-weight:700;">🛡️ المدافع عن اللقب</div>
+    <div style="font-size:1.2rem;font-weight:900;margin:4px 0;">${champ.name}</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:0.85rem;color:var(--text2);">
+      <span>المركز الحالي: <b>${rank}</b></span>
+      <span>مجموع النقاط: <b>${row.total}</b></span>
+      <span>الممات: <b>${row.mummaCount}</b></span>
+    </div>
+    ${journeyHTML}
+    <div id="championCertBox"></div>
+    ${certBtn}
+  </div>`;
+  const btn = document.getElementById('championCertBtn');
+  if(btn) btn.addEventListener('click', showChampionCertificate);
+}
+
+// ميزتا 5 و6: رسالة ترحيب خاصة + كونفيتي ذهبي عند دخول البطل بنفسه (يتحقق
+// من الرمز الخاص أصلاً عبر applyMyId — لا نبني تحققًا جديدًا). مرة واحدة فقط
+// لكل جلسة متصفح (sessionStorage) حتى لا تتكرر عند كل إعادة رسم.
+function handleChampionIdentityWelcome(id){
+  if(!id) return;
+  const pid = Number(id);
+  if(!CHAMPION_ID || pid !== CHAMPION_ID) return;
+  if(!CHAMPION_FEATURES.welcome_message && !CHAMPION_FEATURES.golden_confetti) return;
+  let already = false;
+  try{ already = !!sessionStorage.getItem('brookie-champ-welcome-shown-'+pid); }catch(e){}
+  if(already) return;
+  try{ sessionStorage.setItem('brookie-champ-welcome-shown-'+pid, '1'); }catch(e){}
+  if(CHAMPION_FEATURES.golden_confetti) fireConfetti(['#FFD76A','#FFB020','#FFF3C4','#FFFFFF']);
+  if(CHAMPION_FEATURES.welcome_message){
+    const champ = PARTICIPANTS.find(p=>p.id===pid);
+    const toast = document.createElement('div');
+    toast.className = 'champion-toast';
+    toast.innerHTML = `👑 أهلًا ${champ?champ.name:''}! بصفتك حامل لقب الموسم الحالي، الكل يترقّب دفاعك عن العرش هالموسم 🛡️`;
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(), 5000);
+  }
+}
+
+// ميزتا 14 و16: تنبيهات سجل النشاط — تعمل فقط بمتصفح المنظم المسجّل دخوله
+// (logAdminActivity نفسها مقيّدة بـisAdmin أصلًا)، ومحمية بمفاتيح تفادي
+// (dedupe) حتى لا يتكرر نفس التنبيه مع كل إعادة رسم.
+function checkChampionAlerts(){
+  if(!isAdmin || !CHAMPION_ID || !DATA.rounds.length) return;
+  const st = computeStandings();
+  const champRow = st.find(s=>s.id===CHAMPION_ID);
+  if(!champRow) return;
+
+  if(CHAMPION_FEATURES.proximity_alert){
+    const PROXIMITY_MARGIN = 3; // هامش تقريب معقول لتنبيه "يقترب"
+    const others = st.filter(s=>s.id!==CHAMPION_ID);
+    const closest = others.length ? others.slice().sort((a,b)=>b.total-a.total)[0] : null;
+    if(closest && closest.total < champRow.total && (champRow.total - closest.total) <= PROXIMITY_MARGIN){
+      const key = `${closest.id}-${champRow.total}-${closest.total}`;
+      if(_proximityAlertLoggedKey !== key){
+        _proximityAlertLoggedKey = key;
+        logAdminActivity(`⚠️ ${closest.name} يقترب من كسر رقم البطل (${closest.total} مقابل ${champRow.total})`);
+        saveData();
+      }
+    }
+  }
+
+  if(CHAMPION_FEATURES.weekly_challenge_notice){
+    const roundNum = getCurrentRoundNumber();
+    const key2 = 'r'+roundNum;
+    if(roundNum > 0 && _weeklyChallengeLoggedRound !== key2){
+      const champLast = champRow.lastPoints || 0;
+      const beaters = st.filter(s=>s.id!==CHAMPION_ID && (s.lastPoints||0) > champLast);
+      if(beaters.length){
+        _weeklyChallengeLoggedRound = key2;
+        logAdminActivity(`🔥 ${beaters.map(b=>b.name).join('، ')} تفوّق على حامل اللقب هالجولة (الجولة ${roundNum})`);
+        saveData();
+      }
+    }
+  }
+}
+
+// ════════ لوحة المنظم: تعبئة القائمة المنسدلة، سجل الأبطال، ومفاتيح الميزات ════════
+function populateChampionSelect(){
+  const sel = document.getElementById('championSelect');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">بدون بطل حاليًا</option>' + PARTICIPANTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  sel.value = CHAMPION_ID ? String(CHAMPION_ID) : '';
+}
+function renderChampionArchiveAdmin(){
+  const box = document.getElementById('championArchiveRows');
+  if(!box) return;
+  if(!SEASON_CHAMPIONS_ARCHIVE.length){ box.innerHTML = '<div style="color:var(--muted);font-size:0.8rem;">لا يوجد أي موسم مسجّل بعد.</div>'; return; }
+  box.innerHTML = SEASON_CHAMPIONS_ARCHIVE.map((row,i)=>`
+    <div class="hof-row">
+      <span><b>${row.season}</b> — ${row.name} (${row.points} نقطة)</span>
+      <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">🗑️ حذف</button>
+    </div>`).join('');
+}
+function syncChampionAdminUI(){
+  populateChampionSelect();
+  renderChampionArchiveAdmin();
+  CHAMPION_FEATURE_KEYS.forEach(k=>{
+    const cb = document.getElementById('cf_'+k);
+    if(cb) cb.checked = !!CHAMPION_FEATURES[k];
+  });
+}
+
+const championSelectEl = document.getElementById('championSelect');
+if(championSelectEl){
+  championSelectEl.addEventListener('change', async ()=>{
+    const val = championSelectEl.value;
+    CHAMPION_ID = val ? Number(val) : null;
+    await window.storage.set('currentChampionId', CHAMPION_ID, true);
+    logAdminActivity(CHAMPION_ID ? `تعيين ${(PARTICIPANTS.find(p=>p.id===CHAMPION_ID)||{}).name||''} بطلًا للموسم الحالي` : 'إلغاء تعيين بطل الموسم الحالي');
+    await saveData();
+    renderAll();
+  });
+}
+
+const addArchiveRowBtnEl = document.getElementById('addArchiveRowBtn');
+if(addArchiveRowBtnEl){
+  addArchiveRowBtnEl.addEventListener('click', async ()=>{
+    const seasonInput = document.getElementById('archiveSeasonInput');
+    const nameInput = document.getElementById('archiveNameInput');
+    const pointsInput = document.getElementById('archivePointsInput');
+    const msg = document.getElementById('archiveMsg');
+    const season = seasonInput.value.trim();
+    const name = nameInput.value.trim();
+    const pts = Number(pointsInput.value);
+    if(!season || !name || !Number.isFinite(pts)){
+      msg.innerHTML = '<div class="status-msg err">عبّي اسم الموسم واسم البطل والنقاط أولاً.</div>';
+      return;
+    }
+    SEASON_CHAMPIONS_ARCHIVE.push({season, name, points:pts});
+    await window.storage.set('seasonChampionsArchive', SEASON_CHAMPIONS_ARCHIVE, true);
+    logAdminActivity(`إضافة ${name} لسجل أبطال المواسم (${season})`);
+    seasonInput.value=''; nameInput.value=''; pointsInput.value='';
+    msg.innerHTML = '<div class="status-msg ok">أُضيف بنجاح.</div>';
+    renderChampionArchiveAdmin();
+    renderHallOfFame();
+  });
+}
+
+const championArchiveRowsEl = document.getElementById('championArchiveRows');
+if(championArchiveRowsEl){
+  championArchiveRowsEl.addEventListener('click', async (e)=>{
+    const btn = e.target.closest('.archive-del-btn');
+    if(!btn) return;
+    const idx = Number(btn.dataset.idx);
+    const row = SEASON_CHAMPIONS_ARCHIVE[idx];
+    if(!row) return;
+    const ok = await customConfirm(`حذف "${row.name} — ${row.season}" من سجل أبطال المواسم؟`, {confirmText:'حذف'});
+    if(!ok) return;
+    SEASON_CHAMPIONS_ARCHIVE.splice(idx,1);
+    await window.storage.set('seasonChampionsArchive', SEASON_CHAMPIONS_ARCHIVE, true);
+    logAdminActivity('حذف صف من سجل أبطال المواسم');
+    renderChampionArchiveAdmin();
+    renderHallOfFame();
+  });
+}
+
+document.querySelectorAll('.champion-feature-toggle').forEach(cb=>{
+  cb.addEventListener('change', async ()=>{
+    const key = cb.dataset.key;
+    CHAMPION_FEATURES[key] = cb.checked;
+    await window.storage.set('championHonorFeatures', CHAMPION_FEATURES, true);
+    logAdminActivity(`${cb.checked?'تفعيل':'تعطيل'} ميزة تكريم البطل: ${cb.dataset.label||key}`);
+    renderAll();
+  });
+});
 
 // ---------- رموز QR لرابطي الموقع وصفحة المساهمة ----------
 // تُولَّد مرة واحدة فقط (guard بمتغيّر) عند أول تسجيل دخول ناجح — إعادة توليدها
@@ -7935,6 +8418,7 @@ loadData();
 loadPredictions();
 loadAdminPin();
 trackVisit();
+loadChampionData().then(()=>{ renderAll(); syncChampionAdminUI(); });
 startRealtimeSync();
 // رابط مباشر لمشارك — يُطبَّق بعد تحميل البيانات والرسم
 setTimeout(handleParticipantHash, 800);
@@ -8099,5 +8583,7 @@ document.getElementById('participantsSearchInput').addEventListener('input', (e)
 </script>
 </body>
 </html>
+
+  
 
   
