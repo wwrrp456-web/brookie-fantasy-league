@@ -1390,6 +1390,13 @@
           <div id="adminActivityLog" style="font-size:0.82rem;color:var(--text);"></div>
         </div>
       </details>
+
+      <details class="admin-accordion" id="visitorAccordion">
+        <summary>👁️ إحصائيات الزوار</summary>
+        <div class="acc-body">
+          <div id="visitorCountBox"></div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -4535,6 +4542,53 @@ function renderAdminActivityLog(){
   }).join('');
 }
 
+// ============ عداد الزوار ============
+async function trackVisit(){
+  try{
+    const db = _fbInit();
+    const isUnique = !localStorage.getItem('brookie-visited');
+    if(isUnique){
+      localStorage.setItem('brookie-visited','1');
+      await db.ref('brookie/visitors/unique').transaction(v=>(v||0)+1);
+    }
+    await db.ref('brookie/visitors/total').transaction(v=>(v||0)+1);
+  }catch(e){ /* بصمت */ }
+}
+async function renderVisitorCount(){
+  const box = document.getElementById('visitorCountBox');
+  if(!box) return;
+  box.innerHTML='<div style="color:var(--muted);font-size:0.82rem;">⏳ جاري التحميل...</div>';
+  try{
+    const db = _fbInit();
+    const snap = await db.ref('brookie/visitors').get();
+    const d = snap.exists() ? snap.val() : {};
+    const total  = d.total  || 0;
+    const unique = d.unique || 0;
+    const avg    = unique > 0 ? (total/unique).toFixed(1) : '—';
+    box.innerHTML=`
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:110px;text-align:center;">
+          <div style="font-size:2.2rem;font-weight:900;color:var(--gold);">${total.toLocaleString('ar-SA')}</div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">إجمالي الزيارات</div>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:110px;text-align:center;">
+          <div style="font-size:2.2rem;font-weight:900;color:var(--sky);">${unique.toLocaleString('ar-SA')}</div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">أجهزة فريدة</div>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:110px;text-align:center;">
+          <div style="font-size:2.2rem;font-weight:900;color:var(--coral);">${avg}</div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">متوسط زيارات/جهاز</div>
+        </div>
+      </div>
+      <div style="font-size:0.73rem;color:var(--muted);margin-bottom:10px;">⚠️ الجهاز الواحد يُحتسب مرة كزائر فريد — الأرقام تعكس كل من فتح الرابط من أي جهاز.</div>
+      <button class="btn ghost" id="refreshVisitorBtn" style="font-size:0.8rem;">🔄 تحديث الأرقام</button>
+    `;
+    document.getElementById('refreshVisitorBtn').onclick=renderVisitorCount;
+  }catch(e){
+    box.innerHTML='<div style="color:var(--coral);font-size:0.82rem;">تعذّر تحميل إحصائيات الزوار.</div>';
+  }
+}
+
 // ---------- ملخص ذكي بعد التحديث + بانر جولة جديدة ----------
 let _prevStandings = null;
 let _prevRoundCount = null;
@@ -6539,6 +6593,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     updateLastBackupLabel();
     loadCommunityReports();
     renderQuickLinkCodes();
+    renderVisitorCount();
   }else{
     msg.innerHTML = '<div class="status-msg err">رمز غير صحيح.</div>';
   }
@@ -7891,6 +7946,7 @@ loadMyId();
 loadData();
 loadPredictions();
 loadAdminPin();
+trackVisit();
 startRealtimeSync();
 // رابط مباشر لمشارك — يُطبَّق بعد تحميل البيانات والرسم
 setTimeout(handleParticipantHash, 800);
