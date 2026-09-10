@@ -707,6 +707,10 @@
   .r1-simple-row .r1-name{flex:1;font-weight:700;}
   .r1-simple-row .r1-pts{font-weight:800;color:var(--text2);}
   .rounds-subtitle{font-size:0.8rem;color:var(--muted);margin:14px 2px 8px;line-height:1.6;}
+  /* شارة "بطل الجولة" — نصية بلا إيموجي عمدًا، مميّزة عن تاج بطل الموسم
+     (championCrown) المحجوز حصرًا لبطل الموسم الكامل. تُثبَّت بجانب اسم بطل
+     كل جولة بكل مكان بتبويب الجولات (10 سبتمبر 2026). */
+  .round-champion-badge{display:inline-block;padding:2px 9px;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--sky));color:#fff;font-size:0.68rem;font-weight:800;white-space:nowrap;margin-inline-start:6px;vertical-align:middle;}
   .mini-table{width:100%;font-size:0.78rem;border-collapse:collapse;}
   .mini-table td{padding:3px 4px;border-bottom:1px dotted var(--line);}
 
@@ -2861,36 +2865,53 @@ function renderHeroes(){
 }
 
 // ---------- ملخص الواتساب ----------
-// قصة الجولة التلقائية: فقرة عربية قصيرة مبنية بالكامل من بيانات محسوبة
-// (بطل الجولة، أكبر صاعد، الممات) — تُضاف أعلى ملخص الواتساب لطابع صحفي
-// بدل الأرقام الجافة فقط. لا تحتاج أي بيانات إضافية غير موجودة أصلاً.
+// قصة الجولة التلقائية: فقرة عربية قصيرة مبنية بالكامل من بيانات محسوبة —
+// تتحدّث تحديدًا عن **جدول الترتيب العام** (الصدارة، الفارق، حركة المراكز
+// بنفس الجدول) لا عن ترتيب الجولة نفسها أو بطلها، لأن ملخصات أخرى بنفس
+// الرسالة (سطر "👑 بطل الجولة" وقائمة الجولة بالأسفل) تغطي تلك الزاوية أصلاً.
+// (أُعيد توجيهها 10 سبتمبر 2026 بطلب المستخدم — كانت تتكلم عن بطل الجولة
+// والممات بدل جدول الترتيب).
 function buildRoundStory(){
-  const h = getRoundHeroes();
-  if(!h) return '';
+  const st = computeStandings();
+  if(!st.length) return '';
   const mv = getMovements();
+  const rn = getCurrentRoundNumber();
 
-  // يجمع كل الأسماء المتعادلة على نفس القفزة (نفس إصلاح computeBadges أعلاه) بدل
-  // الاحتفاظ باسم واحد فقط عند تعادل حقيقي.
+  const leader = st[0];
+  const chaser = st[1];
+  const gap = chaser ? (leader.total - chaser.total) : null;
+
+  const parts = [];
+  let opener = `بعد الجولة ${rn}، *${leader.name}* يتصدّر جدول الترتيب العام برصيد ${leader.total} نقطة`;
+  if(gap !== null){
+    opener += gap > 0 ? ` بفارق ${gap} نقطة عن ${chaser.name}` : ` بتعادل النقاط مع ${chaser.name}`;
+  }
+  parts.push(opener + '.');
+
+  // يجمع كل الأسماء المتعادلة على نفس القفزة/التراجع (نفس إصلاح computeBadges
+  // أعلاه) بدل الاحتفاظ باسم واحد فقط عند تعادل حقيقي.
   let topClimberNames = [], topClimberVal = 0;
+  let topDropperNames = [], topDropperVal = 0;
   PARTICIPANTS.forEach(p=>{
     const v = mv[p.id]||0;
     if(v > topClimberVal){ topClimberVal = v; topClimberNames = [p.name]; }
     else if(v === topClimberVal && v > 0){ topClimberNames.push(p.name); }
+    if(v < topDropperVal){ topDropperVal = v; topDropperNames = [p.name]; }
+    else if(v === topDropperVal && v < 0){ topDropperNames.push(p.name); }
   });
-
-  const parts = [];
-  parts.push(`الجولة ${h.roundNumber} شهدت تربّع *${h.top.name}* على القمة بـ${h.top.points} نقطة${h.top.tieBreak ? ' بعد كسر تعادل مثير' : ''}.`);
 
   if(topClimberNames.length && topClimberVal >= 2){
     const climberLabel = topClimberNames.length<=3 ? topClimberNames.join('، ') : `${topClimberNames.length} مشاركين`;
-    parts.push(`${climberLabel} كان الأكثر صعودًا بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
+    parts.push(`${climberLabel} كان الأكثر صعودًا بجدول الترتيب بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
   }
 
-  if(h.mummat.length){
-    const names = h.mummat.length<=3 ? h.mummat.join('، ') : `${h.mummat.length} مشاركين`;
-    parts.push(`في المقابل، تعرّض ${names} لـ"ممة" هذه الجولة بصفر نقاط.`);
-  } else {
-    parts.push('الجميع سجّل نقاطًا هذه الجولة — لا ممات! 🎉');
+  if(topDropperNames.length && Math.abs(topDropperVal) >= 2){
+    const dropperLabel = topDropperNames.length<=3 ? topDropperNames.join('، ') : `${topDropperNames.length} مشاركين`;
+    parts.push(`بالمقابل، ${dropperLabel} تراجع ${Math.abs(topDropperVal)} مراكز بنفس الجدول.`);
+  }
+
+  if(!topClimberNames.length && !topDropperNames.length){
+    parts.push('جدول الترتيب العام لم يشهد أي تغيّر كبير بالمراكز هذه الجولة.');
   }
 
   return parts.join(' ');
@@ -3638,6 +3659,40 @@ function fitFontSize(ctx, text, maxWidth, fontSpec, minSize){
   return size;
 }
 
+// ---------- علامة شعار البطولة على كل بطاقة/شهادة/ستوري تُصدَّر كصورة ----------
+// تُثبَّت بالزاوية العلوية اليمنى لكل كرت يُصدَّره الموقع (بطل الجولة، الترتيب،
+// ملخص الموسم، شهادة البطل، نسخ الستوري)، عشان يبان واضح إنها بطاقات دوري
+// بروكي عند مشاركتها بستوريات واتساب/انستغرام. حجم صغير وزاوية فارغة دائمًا
+// (كل عناوين الكروت متمركزة نصيًا في المنتصف)، فلا تتعارض مع أي تصميم موجود
+// (10 سبتمبر 2026، بطلب المستخدم).
+let _cardLogoImg = null, _cardLogoPromise = null;
+function loadCardLogoImage(){
+  if(_cardLogoImg) return Promise.resolve(_cardLogoImg);
+  if(_cardLogoPromise) return _cardLogoPromise;
+  _cardLogoPromise = new Promise(resolve=>{
+    const img = new Image();
+    img.onload = ()=>{ _cardLogoImg = img; resolve(img); };
+    img.onerror = ()=> resolve(null);
+    // النسخة البيضاء من الشعار (نفس شعار الهيدر بالوضع الداكن) — كل كروت
+    // المشاركة بخلفية داكنة موحّدة (#040421 → #000000 أو مشابه).
+    img.src = LOGO_BASE64;
+  });
+  return _cardLogoPromise;
+}
+async function drawCardBrandMark(ctx, W, margin){
+  try{
+    const img = await loadCardLogoImage();
+    if(!img || !img.naturalWidth) return;
+    const m = margin===undefined ? 26 : margin;
+    const logoW = Math.max(56, Math.min(100, W*0.1));
+    const logoH = logoW * (img.naturalHeight / img.naturalWidth);
+    ctx.save();
+    ctx.globalAlpha = 0.92;
+    ctx.drawImage(img, W - m - logoW, m, logoW, logoH);
+    ctx.restore();
+  }catch(e){}
+}
+
 async function buildChampionCard(){
   const h = getRoundHeroes();
   if(!h) return null;
@@ -3668,6 +3723,8 @@ async function buildChampionCard(){
   // إطار ذهبي
   ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
   drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
+
+  await drawCardBrandMark(ctx, W);
 
   ctx.textAlign='center';
 
@@ -3764,6 +3821,8 @@ async function buildStoryCanvas(sourceCanvas){
   const g = ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
   ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  await drawCardBrandMark(ctx, W, 42);
 
   ctx.textAlign = 'center';
   ctx.fillStyle = '#9B7BF5'; ctx.font = '800 42px Tajawal, Arial';
@@ -3938,6 +3997,8 @@ async function buildSeasonWrapCard(){
   ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
   drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
 
+  await drawCardBrandMark(ctx, W);
+
   ctx.textAlign='center';
   ctx.fillStyle='#9B7BF5'; ctx.font='700 30px Tajawal, Arial';
   ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 82);
@@ -4055,6 +4116,8 @@ async function buildStandingsCard(){
   ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
   drawRoundedRect(ctx,14,14,W-28,H-28,22); ctx.stroke();
 
+  await drawCardBrandMark(ctx, W);
+
   ctx.textAlign='center';
 
   // العنوان
@@ -4159,6 +4222,8 @@ async function buildStandingsStoryCanvas(){
 
   ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
   drawRoundedRect(ctx,20,20,W-40,H-40,28); ctx.stroke();
+
+  await drawCardBrandMark(ctx, W, 42);
 
   ctx.textAlign='center';
   ctx.fillStyle='#9B7BF5'; ctx.font='700 34px Tajawal, Arial';
@@ -5563,53 +5628,35 @@ function updateRaceBars(){
 }
 
 // ---------- كفاءة الاستفادة من الأندية ----------
-// لكل ناد: عدد المشاركين الذين يملكونه، مجموع نقاطهم بسببه
+// لكل ناد: متوسط نقاطه بكل مباراة عبر كامل الموسم. كانت هذي الدالة تبني
+// أرقامها من جديد (buildParticipantHistory) بالاعتماد على DATA.rounds فقط —
+// أي أنها تتجاهل تمامًا الأساس الثابت (CLUB_SEASON_STATS، الجولتان 1-2)
+// وتعرض فقط مباريات الجولة 3 فصاعدًا، بينما جدول "أداء الأندية" (getClubStats())
+// يجمع الأساس + الجولات الحقيقية معًا — فكان يظهر تناقض بالأرقام بين
+// الجدولين لنفس النادي (مثال: سلتيك 6 مباريات بجدول، و2 فقط بالآخر). أُصلح
+// 10 سبتمبر 2026 باستخدام نفس المصدر الموحّد getClubStats() لكلا الجدولين،
+// فلا يمكن يصير تناقض بينهما مهما تغيّرت البيانات مستقبلاً.
 function renderClubEfficiency(){
   const box = document.getElementById('clubEfficiencyBox');
   if(!box) return;
-  if(!DATA.rounds.length){ box.innerHTML=''; return; }
 
-  // نجمع نتائج كل ناد عبر كل الجولات
-  const clubStats = {}; // clubName -> {wins,draws,losses,points,appearances}
-  PARTICIPANTS.forEach(p=>{
-    const hist = buildParticipantHistory(p.id);
-    hist.forEach(h=>{
-      h.teamResults.forEach(tr=>{
-        const club = tr.team;
-        if(!clubStats[club]) clubStats[club]={wins:0,draws:0,losses:0,points:0,appearances:0};
-        const cs = clubStats[club];
-        const results = tr.results && tr.results.length ? tr.results : (tr.result?[tr.result]:[]);
-        results.forEach(res=>{
-          cs.appearances++;
-          if(res==='win'){ cs.wins++; cs.points+=3; }
-          else if(res==='draw'){ cs.draws++; cs.points+=1; }
-          else if(res==='loss'){ cs.losses++; }
-        });
-      });
-    });
-  });
+  const list = getClubStats().filter(c=>c.played>0);
+  if(!list.length){ box.innerHTML=''; return; }
 
-  const entries = Object.entries(clubStats)
-    .filter(([,s])=>s.appearances>0)
-    .sort(([,a],[,b])=>(b.points/b.appearances)-(a.points/a.appearances));
-
-  if(!entries.length){ box.innerHTML=''; return; }
-
-  const maxAvg = Math.max(...entries.map(([,s])=>s.appearances?s.points/s.appearances:0), 1);
+  const entries = list.slice().sort((a,b)=> b.avg - a.avg);
+  const maxAvg = Math.max(...entries.map(c=>c.avg), 1);
 
   let html = '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
-  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">مرتبة حسب متوسط النقاط لكل ظهور — يشمل جولات الموسم المُسجَّلة فقط</div>';
+  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">مرتبة حسب متوسط النقاط لكل مباراة — نفس أرقام جدول "أداء الأندية" أعلاه بالضبط</div>';
   html += '<div class="club-eff-grid">';
-  entries.slice(0,18).forEach(([club, s])=>{
-    const avg = s.appearances ? s.points/s.appearances : 0;
-    const pct = Math.round((avg/maxAvg)*100);
-    const winRate = s.appearances ? Math.round(s.wins/s.appearances*100) : 0;
+  entries.slice(0,18).forEach(c=>{
+    const pct = Math.round((c.avg/maxAvg)*100);
     html += `<div class="club-eff-card">
-      <div class="club-eff-name">${club}</div>
+      <div class="club-eff-name">${c.name}</div>
       <div class="club-eff-bar-wrap"><div class="club-eff-bar" style="width:${pct}%;"></div></div>
       <div class="club-eff-stats">
-        <span>معدل ${Math.round(avg*10)/10} ن/ظهور</span>
-        <span>${s.wins}ف ${s.draws}ت ${s.losses}خ</span>
+        <span>معدل ${Math.round(c.avg*10)/10} ن/مباراة</span>
+        <span>${c.w}ف ${c.d}ت ${c.l}خ</span>
       </div>
     </div>`;
   });
@@ -5618,16 +5665,43 @@ function renderClubEfficiency(){
 }
 
 // ---------- لوحة الميداليات ----------
-// تحسب كم مرة حصل كل مشارك على المركز الأول والثاني والثالث عبر الجولات
+// تحسب كم مرة حصل كل مشارك على المركز الأول والثاني والثالث عبر الجولات،
+// بما فيها الجولتان 1 و2 (أُضيف 10 سبتمبر 2026 بطلب المستخدم — كانتا مستثناتين
+// سابقًا لأنهما بلا سجل جولة-بجولة حقيقي بـ`DATA.rounds`).
 function renderMedals(){
   const box = document.getElementById('medalsBox');
   if(!box) return;
-  if(!DATA.rounds.length){ box.innerHTML=''; return; }
 
-  // لكل جولة، احسب الترتيب
   const medals = {}; // pid -> {gold, silver, bronze}
   PARTICIPANTS.forEach(p=> medals[p.id]={gold:0, silver:0, bronze:0, name:p.name});
 
+  // الجولة 1: ترتيب مبني على ROUND1_POINTS مباشرة (لا بيانات أهداف/مباريات
+  // للجولة 1 لكسر تعادل حقيقي)، باستثناء من لم يكن مشاركًا بعد
+  // (JOINED_AFTER_ROUND1). عند التعادل على القمة يُطبَّق نفس اختيار المنظم
+  // المعتمد لبطل الجولة الأولى (ROUND_HERO_OVERRIDE[1])، وبقية التعادلات
+  // تُحسم أبجديًا (بلا معيار آخر متاح، بنفس منطق أرشيف أبطال الجولات).
+  const r1 = PARTICIPANTS.filter(p=> !JOINED_AFTER_ROUND1[p.id]).slice().sort((a,b)=>{
+    const pa = ROUND1_POINTS[a.id]||0, pb = ROUND1_POINTS[b.id]||0;
+    if(pb !== pa) return pb - pa;
+    if(ROUND_HERO_OVERRIDE[1]){
+      if(a.id === ROUND_HERO_OVERRIDE[1]) return -1;
+      if(b.id === ROUND_HERO_OVERRIDE[1]) return 1;
+    }
+    return a.name.localeCompare(b.name,'ar');
+  });
+  if(r1[0]) medals[r1[0].id].gold++;
+  if(r1[1]) medals[r1[1].id].silver++;
+  if(r1[2]) medals[r1[2].id].bronze++;
+
+  // الجولة 2: نفس لقطة "جسر الجولة 2" المستخدمة بالترتيب العام وأرشيف أبطال
+  // الجولات (computeStandings(0) — المجموع = carry فقط، بلا أي جولة حقيقية
+  // مُحتسَبة بعد)، مع استثناء من لم يكن مشاركًا وقتها أصلًا (JOINED_AFTER_ROUND2).
+  const r2 = computeStandings(0).filter(s=> !JOINED_AFTER_ROUND2[s.id]);
+  if(r2[0]) medals[r2[0].id].gold++;
+  if(r2[1]) medals[r2[1].id].silver++;
+  if(r2[2]) medals[r2[2].id].bronze++;
+
+  // الجولات 3+: نفس المنطق الأصلي — لقطة الترتيب العام عند نهاية كل جولة حقيقية
   const n = DATA.rounds.length;
   for(let i=1; i<=n; i++){
     const list = computeStandings(i);
@@ -6484,7 +6558,7 @@ function renderRound2Section(){
   });
 
   let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. 👑 بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر): أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "🏆 أرشيف أبطال الجولات" أعلاه.</p>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "🏆 أرشيف أبطال الجولات" أعلاه.</p>`;
   html += roundTitlesHTML((computeRoundTitlesArchive())[2]);
 
   rows.forEach(({p, r2, joined})=>{
@@ -6500,7 +6574,7 @@ function renderRound2Section(){
     const isChamp = p.id === ROUND_HERO_OVERRIDE[2];
     html += `<div class="r2-card${isChamp?' is-champion':''}">
       <div class="r2-head">
-        <div class="r2-name">${isChamp?'👑 ':''}${p.name}</div>
+        <div class="r2-name">${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
         <div class="r2-pts">${r2.points} نقطة <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${r2.gf}-${r2.ga})</span></div>
       </div>
       <div class="r2-clubs">
@@ -6534,12 +6608,13 @@ function renderRound1Section(){
   });
 
   let html = `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">🥇 الجولة 1 — ملخص النقاط (حتى 25 أغسطس 2026)</h4>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">ملخّص نقاط فقط من كشف الترتيب المعتمد بتاريخ 25 أغسطس 2026 — بلا تفاصيل مباريات لكل نادٍ.</p>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">ملخّص نقاط فقط من كشف الترتيب المعتمد بتاريخ 25 أغسطس 2026 — بلا تفاصيل مباريات لكل نادٍ. بطل الجولة الأولى تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه — حُسم باختيار المنظم عند تعادل ثلاثي تام بالنقاط (لا بيانات أهداف للجولة الأولى لكسر التعادل رقميًا).</p>`;
   html += `<div class="r1-simple-card">`;
   rows.forEach((row, i)=>{
+    const isChamp = row.joined && row.p.id === ROUND_HERO_OVERRIDE[1];
     html += `<div class="r1-simple-row">
       <div class="r1-rank">${i+1}</div>
-      <div class="r1-name">${row.p.name}</div>
+      <div class="r1-name">${row.p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
       <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
     </div>`;
   });
@@ -6631,7 +6706,7 @@ function renderChampionsArchive(){
     html += `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);">
       <div style="display:flex;align-items:center;gap:8px;">
         <span style="font-weight:800;font-size:0.8rem;color:var(--gold);min-width:60px;">الجولة ${row.round}</span>
-        <span style="font-weight:700;font-size:0.85rem;">👑 ${names}</span>
+        <span style="font-weight:700;font-size:0.85rem;">${names} <span class="round-champion-badge">بطل الجولة</span></span>
       </div>
       <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${row.points} نقطة</span>
     </div>`;
@@ -6658,13 +6733,17 @@ function renderRounds(){
         s: stats[p.id],
         entries: (r.entries && r.entries[p.id]) || []
       })).sort((a,b)=> b.s.points - a.s.points || a.p.name.localeCompare(b.p.name,'ar'));
+      // بطل هذه الجولة تحديدًا (تاريخي، لا يتغيّر) — نفس منطق getRoundChampionsArchive
+      // (يحترم ROUND_HERO_OVERRIDE إن وُجد، وإلا كسر تعادل تلقائي بالأهداف).
+      const roundChampId = getRoundChampion(r.number);
 
       html += `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">الجولة ${r.number}</h4>`;
       html += roundTitlesHTML(titlesArchive[r.number]);
       rows.forEach(({p, s, entries}, i)=>{
-        html += `<div class="r2-card">
+        const isChamp = p.id === roundChampId;
+        html += `<div class="r2-card${isChamp?' is-champion':''}">
           <div class="r2-head">
-            <div class="r2-name">#${i+1} ${p.name}</div>
+            <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
             <div class="r2-pts">${s.points} نقطة${s.points===0?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
           </div>
           <div class="r2-clubs">
@@ -7625,6 +7704,7 @@ async function buildChampionCertificateCanvas(){
   drawRoundedRect(ctx,30,30,W-60,H-60,30); ctx.stroke();
   ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=2;
   drawRoundedRect(ctx,50,50,W-100,H-100,22); ctx.stroke();
+  await drawCardBrandMark(ctx, W, 66);
   ctx.textAlign='center';
   ctx.fillStyle='#00B4FF'; ctx.font='700 30px Tajawal, Arial';
   ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 150);
