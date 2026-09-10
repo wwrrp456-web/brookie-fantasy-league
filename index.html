@@ -1203,7 +1203,7 @@
         <h4>٣. المباريات المؤجلة</h4>
         <p>إذا كان لأحد الفرق الثلاثة مباراة مؤجلة وتُلعب في نفس الأسبوع قبل بداية الجولة التالية، تُحسب لصالح المباريات السابقة، وننتظر نتائجها ضمن مباريات ذلك الأسبوع.</p>
         <h4>٤. كسر التعادل في جدول الترتيب</h4>
-        <p>عند تعادل المتسابقين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الأسبوع، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الأسبوع، ثم (د) الأقل استقبالًا للأهداف في الأسبوع.</p>
+        <p>عند تعادل المتسابقين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة.</p>
         <h4>٥. عدم تكرار الدوري الواحد</h4>
         <p>لا يمكن للمتسابق الجمع بين فريقين من نفس الدوري. إذا حدث ذلك في القرعة، يتم التبديل.</p>
         <h4>٦. توثيق النقاط</h4>
@@ -1549,19 +1549,23 @@ const PARTICIPANTS = [
   {id:8, name:'موسى (العجوز)', carry:21, teams:['الاتحاد','أتلتيكو مدريد','فنربخشة']},
   {id:9, name:'أبو رمزي', carry:28, teams:['النصر','ريال مدريد','أياكس']},
   {id:10, name:'أبو حمد', carry:20, teams:['الاتحاد','ميلان','أرسنال']},
-  {id:11, name:'مصطفى عبده', carry:27, teams:['الهلال','ميلان','سلتيك']},
+  {id:11, name:'مصطفى عبده', carry:30, teams:['الهلال','ميلان','سلتيك']},
   {id:12, name:'ليمان', carry:20, teams:['الاتحاد','ريال مدريد','بايرن ميونيخ']},
   {id:13, name:'سعيد', carry:25, teams:['الاتحاد','ريال مدريد','فاينورد']},
-  {id:14, name:'أبا عتاب', carry:21, teams:['الاتحاد','برشلونة','رينجرز']},
+  {id:14, name:'أبا عتاب', carry:24, teams:['الاتحاد','برشلونة','رينجرز']},
   {id:15, name:'علي قوول', carry:27, teams:['ريال مدريد','الاتحاد','سبورتينغ لشبونة']},
   {id:16, name:'أبو أوس', carry:31, teams:['الهلال','برشلونة','آيندهوفن']},
   {id:17, name:'أيوب', carry:27, teams:['الهلال','برشلونة','روما']},
   {id:18, name:'أبو صالح', carry:14, teams:['الشباب','ريال مدريد','ليفربول']},
   // محمد عثمان التحق بالمسابقة عند بداية الجولة 3 (7 سبتمبر 2026) — رصيده
-  // الافتتاحي (21) = مجموع نقاط أنديته الثلاثة بدورياتها المحلية من بداية
-  // الموسم حتى تاريخ التحاقه (بحث حقيقي عبر 365Scores/FilGoal، تفاصيله
-  // بملف التسليم القسم 9.39): ريال مدريد 9 + الأهلي السعودي 9 + مارسيليا 3.
-  {id:19, name:'محمد عثمان', carry:21, teams:['ريال مدريد','الأهلي السعودي','مارسيليا']},
+  // الافتتاحي (18) = مجموع نقاط أنديته الثلاثة بدورياتها المحلية من بداية
+  // الموسم حتى تاريخ التحاقه فقط (بحث حقيقي عبر 365Scores/FilGoal، تفاصيله
+  // بملف التسليم): ريال مدريد 9 + الأهلي السعودي 6 (فوز×2 خسارة×2، أربع
+  // مباريات قبل الالتحاق) + مارسيليا 3. صُحّح من 21 إلى 18 بتاريخ 10 سبتمبر
+  // 2026 بعد اكتشاف إن نقاط الأهلي كانت مدخلة بـ9 (تشمل بالغلط مباراتي
+  // الجولة 3 اللي أصلاً مُحتسَبتين بشكل منفصل ضمن بيانات الجولة 3 نفسها —
+  // تكرار كان يمنح 3 نقاط إضافية بالغلط).
+  {id:19, name:'محمد عثمان', carry:18, teams:['ريال مدريد','الأهلي السعودي','مارسيليا']},
 ];
 
 // قائمة الأندية الـ27 المشاركة (نفس بناء CLUBS بصفحة report.html حرفيًا) —
@@ -1639,15 +1643,22 @@ const CLUB_SEASON_STATS = {
   'فاينورد':           {played:4, w:2, d:2, l:0, pts:8},
   'أياكس':             {played:3, w:2, d:1, l:0, pts:7},
   'دينامو زغرب':       {played:4, w:3, d:1, l:0, pts:10},
-  'سلتيك':             {played:3, w:3, d:0, l:0, pts:9},
-  'رينجرز':            {played:3, w:1, d:1, l:1, pts:4},
+  // سلتيك ورينجرز: صُحّحا 10 سبتمبر 2026 بعد تدقيق حقيقي (365Scores) أظهر إن
+  // كل ناد فيهما لعب فعليًا 6 مباريات دوري لغاية الآن (مو 3) — الرقم القديم
+  // كان مجمَّدًا بتاريخ أبكر بالغلط. تفاصيل التصحيح بملف التسليم.
+  'سلتيك':             {played:6, w:6, d:0, l:0, pts:18},
+  'رينجرز':            {played:6, w:4, d:1, l:1, pts:13},
   'غلطة سراي':         {played:3, w:2, d:1, l:0, pts:7},
   'فنربخشة':           {played:3, w:2, d:0, l:1, pts:6},
   // نادي محمد عثمان الجديدان — بيانات حقيقية حتى 7 سبتمبر 2026 (بحث مباشر
   // عبر 365Scores/FilGoal وقت التحاقه بالمسابقة، تفاصيلها بملف التسليم
   // القسم 9.39). بخلاف بقية الجدول أعلاه (مجمَّد على 2 سبتمبر 2026)، هذان
   // الرقمان بتاريخ لاحق بأيام قليلة لأنهما حُسبا عند انضمامه فعليًا لا قبله.
-  'الأهلي السعودي':    {played:5, w:3, d:0, l:2, pts:9},
+  // صُحّح 10 سبتمبر 2026: 6 مباريات فعليًا (4 قبل التحاق محمد عثمان: فوز×2
+  // خسارة×2 = 6ن، +2 ضمن الجولة 3: فوز×1 خسارة×1 = 3ن) — كان مسجّلاً 5
+  // مباريات/3فوز/2خسارة بالغلط (نفس مجموع النقاط 9 بالمصادفة، لكن عدد
+  // المباريات وتوزيع الفوز/الخسارة كانا غير دقيقين).
+  'الأهلي السعودي':    {played:6, w:3, d:0, l:3, pts:9},
   'مارسيليا':          {played:3, w:1, d:0, l:2, pts:3}
 };
 
@@ -1664,9 +1675,12 @@ function getCurrentRoundNumber(){
 // أبو صالح (id:18) التحق بالمسابقة بعد الجولة الأولى، فلم يكن له رصيد فيها؛
 // لذلك قيمته هنا = 0 عمدًا (وليست نقصًا)، وكامل رصيده الحالي (14) محسوب من
 // لعب أنديته الفعلي طوال الموسم ويُحتسب بالكامل كنقاط "الجولة 2" له.
+// مصطفى عبده (11) وأبا عتاب (14): صُحّحت نقاط الجولة الأولى بعد تدقيق حقيقي
+// لسجل مباريات سلتيك ورينجرز (365Scores، 10 سبتمبر 2026) — تفاصيل التصحيح
+// الكاملة موثّقة بملف التسليم.
 const ROUND1_POINTS = {
   1:12, 2:10, 3:18, 4:14, 5:18, 6:14, 7:9, 8:14, 9:16,
-  10:13, 11:15, 12:10, 13:17, 14:11, 15:17, 16:16, 17:12,
+  10:13, 11:18, 12:10, 13:17, 14:14, 15:17, 16:16, 17:12,
   18:0
 };
 const JOINED_AFTER_ROUND1 = {18:true, 19:true};
@@ -2049,12 +2063,17 @@ function computeStandings(upTo){
     };
   });
 
+  // ترتيب كسر التعادل يطابق حرفيًا بند 4 من اللائحة: (أ) الأكثر حصادًا للنقاط
+  // في الجولة، ثم (ب) من وصل للنقاط أولًا (manualPriority، يحدده المنظم يدويًا
+  // لغياب توقيت آلي للمباريات)، ثم (ج) الأكثر أهدافًا، ثم (د) الأقل استقبالًا
+  // للأهداف. كان manualPriority (ب) بالغلط يُفحص بعد ج ود بدل قبلهما مباشرة
+  // (صُحّح 10 سبتمبر 2026).
   list.sort((a,b)=>{
     if(b.total !== a.total) return b.total - a.total;
     if(b.lastPoints !== a.lastPoints) return b.lastPoints - a.lastPoints;
+    if(a.manualPriority !== b.manualPriority) return a.manualPriority - b.manualPriority;
     if(b.lastGf !== a.lastGf) return b.lastGf - a.lastGf;
     if(a.lastGa !== b.lastGa) return a.lastGa - b.lastGa;
-    if(a.manualPriority !== b.manualPriority) return a.manualPriority - b.manualPriority;
     return a.name.localeCompare(b.name,'ar');
   });
   return list;
@@ -2687,7 +2706,7 @@ function getRoundHeroes(){
   PARTICIPANTS.forEach(p=>{
     const pts = roundPoints[p.id];
     if(pts > maxPts) maxPts = pts;
-    if(!JOINED_AFTER_ROUND1[p.id] || DATA.rounds.length>0){
+    if((!JOINED_AFTER_ROUND1[p.id] && !JOINED_AFTER_ROUND2[p.id]) || DATA.rounds.length>0){
       if(pts===0) mummat.push(p.name);
     }
   });
@@ -3062,6 +3081,8 @@ async function applyMyId(id){
   renderPredictions();
   renderMyDashboard();
   renderRoundComments();
+  renderRoundChallenge();
+  renderMyAchievements();
   handleChampionIdentityWelcome(id);
 }
 
@@ -3353,13 +3374,39 @@ function startRealtimeSync(){
 // بطل جولة معيّنة (2 فصاعدًا) — تُستخدم لتصحيح التوقعات القديمة تلقائيًا
 // بمجرد أن يصير رقم الجولة معروف النتيجة (سواء الجسر أو جولة حقيقية أدخلها
 // المنظم). ترجع null لجولة لسه ما اتلعبت (قادمة).
+// ملاحظة: الجولتان 1 و2 لا تملكان إدخالًا حقيقيًا أبدًا في DATA.rounds (الأولى
+// من ROUND1_POINTS، والثانية "جسر" من carry−ROUND1_POINTS) — لذلك لازم تُحسما
+// هنا بنفس منطق getRoundChampionsArchive() تمامًا، بدل الاعتماد على حالة
+// "الجولة الحالية" (DATA.rounds.length) اللي كانت تخليهما يرجعان null للأبد
+// بمجرد دخول الجولة 3 (خطأ اكتُشف بتدقيق شامل، أثّر على دقة توقعات الجولتين
+// 1 و2). وبكل الحالات لازم تُحترَم ROUND_HERO_OVERRIDE إن وُجدت.
 function getRoundChampion(roundNumber){
-  if(roundNumber === 2 && DATA.rounds.length === 0){
-    const h = getRoundHeroes();
-    return (h && h.top) ? h.top.id : null;
+  if(roundNumber === 1){
+    let maxR1 = -Infinity;
+    PARTICIPANTS.forEach(p=>{
+      if(JOINED_AFTER_ROUND1[p.id]) return;
+      const pts = ROUND1_POINTS[p.id] || 0;
+      if(pts > maxR1) maxR1 = pts;
+    });
+    if(maxR1 === -Infinity) return null;
+    const tied = PARTICIPANTS.filter(p=> !JOINED_AFTER_ROUND1[p.id] && (ROUND1_POINTS[p.id]||0) === maxR1);
+    if(!tied.length) return null;
+    const sorted = tied.slice().sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+    return sorted[0].id;
+  }
+  if(roundNumber === 2){
+    if(ROUND_HERO_OVERRIDE[2]) return ROUND_HERO_OVERRIDE[2];
+    const bridgePoints = getRound2BridgePointsMap();
+    let maxBridge = -Infinity;
+    PARTICIPANTS.forEach(p=>{ if(bridgePoints[p.id] > maxBridge) maxBridge = bridgePoints[p.id]; });
+    const tied = PARTICIPANTS.filter(p=>bridgePoints[p.id]===maxBridge);
+    if(!tied.length) return null;
+    const sorted = tied.slice().sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+    return sorted[0].id;
   }
   const round = DATA.rounds.find(r=>r.number===roundNumber);
   if(!round) return null;
+  if(ROUND_HERO_OVERRIDE[roundNumber]) return ROUND_HERO_OVERRIDE[roundNumber];
   const stats = computeRoundStats(round);
   let maxPts = -Infinity;
   PARTICIPANTS.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
@@ -5881,18 +5928,21 @@ function renderMyAchievements(){
   pts.forEach(p=>{ if(p>=avg){streak++;maxStreak=Math.max(maxStreak,streak);}else{streak=0;} });
   const stands = DATA.rounds.map((_,i)=>{
     const s = computeStandings(i+1);
-    return s.findIndex(x=>x.pid===pid)+1;
+    return s.findIndex(x=>x.id===pid)+1;
   });
   const bestRank = Math.min(...stands);
   const worstRank = Math.max(...stands);
   const timesFirst = stands.filter(r=>r===1).length;
+  const p = PARTICIPANTS.find(x=>x.id===pid);
   const clubCount = {};
   DATA.rounds.forEach(r=>{
     const entries = r.entries&&r.entries[pid]?r.entries[pid]:[];
-    entries.forEach(e=>{ const c=e.club||e; clubCount[c]=(clubCount[c]||0)+1; });
+    entries.forEach(e=>{
+      const c = (p && e && e.ti!==undefined) ? p.teams[e.ti] : null;
+      if(c) clubCount[c]=(clubCount[c]||0)+1;
+    });
   });
   const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
-  const p = PARTICIPANTS.find(x=>x.id===pid);
   const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
   const tiles = [
     ['🔥','أفضل جولة',`${best} نقطة`,`جولة ${bestRound?.number||'–'}`],
@@ -8695,4 +8745,3 @@ document.getElementById('participantsSearchInput').addEventListener('input', (e)
   
 
   
- 
