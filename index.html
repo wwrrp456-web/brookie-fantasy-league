@@ -2687,7 +2687,12 @@ function renderH2HResult(){
 //   أبو تغريد = ١٩ هدف (الهلال ٨ + برشلونة ٧ + مانشستر سيتي ٤)، استقبل ٤
 //   أبو شيخة  = ١٤ هدف (الهلال ٨ + ريال مدريد ٤ + دورتموند ٢)
 // أيوب يسبق أبو تغريد بتعادلهما على ١٩ هدفًا بمعيار "الأقل استقبالًا" (٣ مقابل ٤).
-const ROUND_HERO_OVERRIDE = { 2: 16 }; // أبو أوس بطل الجولة الثانية (راجع الشرح أعلاه)
+// الجولة 1: بعد تصحيح نقاط سلتيك/رينجرز (10 سبتمبر 2026) صار ثلاثة متعادلين
+// تمامًا على 18 نقطة (أبو يحيى، أبو عبيدة، مصطفى عبده) — الجولة الأولى لا
+// تملك بيانات أهداف/مباريات مفصّلة لكسر تعادل حقيقي (بخلاف الجولة 2)، فحسم
+// المنظم البطولة لصالح أبو عبيدة باختياره المباشر (بدون معيار رقمي مذكور،
+// بطلب صريح من المنظم بتاريخ 10 سبتمبر 2026).
+const ROUND_HERO_OVERRIDE = { 1: 5, 2: 16 }; // أبو عبيدة بطل الجولة الأولى (باختيار المنظم) · أبو أوس بطل الجولة الثانية (راجع الشرح أعلاه)
 
 function computeRoundGoals(round, pid){
   const entries = (round.entries && round.entries[pid]) || [];
@@ -3382,6 +3387,7 @@ function startRealtimeSync(){
 // 1 و2). وبكل الحالات لازم تُحترَم ROUND_HERO_OVERRIDE إن وُجدت.
 function getRoundChampion(roundNumber){
   if(roundNumber === 1){
+    if(ROUND_HERO_OVERRIDE[1]) return ROUND_HERO_OVERRIDE[1];
     let maxR1 = -Infinity;
     PARTICIPANTS.forEach(p=>{
       if(JOINED_AFTER_ROUND1[p.id]) return;
@@ -6469,7 +6475,7 @@ function renderRound2Section(){
   });
 
   let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. 👑 بطل الجولة: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة).</p>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. 👑 بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر): أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "🏆 أرشيف أبطال الجولات" أعلاه.</p>`;
   html += roundTitlesHTML((computeRoundTitlesArchive())[2]);
 
   rows.forEach(({p, r2, joined})=>{
@@ -6542,8 +6548,10 @@ function getRoundChampionsArchive(){
   const archive = [];
 
   // الجولة 1: نقاط فقط من ROUND1_POINTS — لا تتوفر تفاصيل مباريات/أهداف لكسر
-  // تعادل حقيقي (نفس القيد الموثَّق بملف التسليم، القسم 7)، فتُدرَج كل
-  // الأسماء المتعادلة بأعلى نقاط كأبطال مشتركين بدل اختيار عشوائي بينهم.
+  // تعادل حقيقي (نفس القيد الموثَّق بملف التسليم، القسم 7). بعد تصحيح
+  // سلتيك/رينجرز (10 سبتمبر 2026) صار ثلاثة متعادلين تمامًا على القمة، فحُسم
+  // بطل الجولة الأولى عبر ROUND_HERO_OVERRIDE[1] (اختيار المنظم المباشر).
+  // بدون Override كانت ستُدرَج كل الأسماء المتعادلة كأبطال مشتركين.
   // JOINED_AFTER_ROUND1 يُستثنى (لم يكونوا بالمسابقة أصلًا بالجولة 1).
   let maxR1 = -Infinity;
   PARTICIPANTS.forEach(p=>{
@@ -6551,9 +6559,15 @@ function getRoundChampionsArchive(){
     const pts = ROUND1_POINTS[p.id] || 0;
     if(pts > maxR1) maxR1 = pts;
   });
-  const r1Names = maxR1 === -Infinity ? [] : PARTICIPANTS
-    .filter(p=> !JOINED_AFTER_ROUND1[p.id] && (ROUND1_POINTS[p.id]||0) === maxR1)
-    .map(p=>p.name);
+  let r1Names;
+  if(ROUND_HERO_OVERRIDE[1]){
+    const w = PARTICIPANTS.find(p=>p.id===ROUND_HERO_OVERRIDE[1]);
+    r1Names = w ? [w.name] : [];
+  } else {
+    r1Names = maxR1 === -Infinity ? [] : PARTICIPANTS
+      .filter(p=> !JOINED_AFTER_ROUND1[p.id] && (ROUND1_POINTS[p.id]||0) === maxR1)
+      .map(p=>p.name);
+  }
   archive.push({round:1, champions:r1Names, points: maxR1 === -Infinity ? 0 : maxR1});
 
   const bridgePoints = getRound2BridgePointsMap();
