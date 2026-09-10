@@ -1008,10 +1008,15 @@
   /* التاج بعيد عن شعار الهيدر تمامًا — بالحافة القصوى اليسرى للهيدر (9 سبتمبر
      2026 كان ملاصقًا للشعار ويسبب ازدحامًا بصريًا؛ أُعيد وضعه هنا 10 سبتمبر
      2026 كعنصر position:absolute مستقل تمامًا عن تدفق الشعار/النص بالمنتصف). */
+  /* ملاحظة أمان: لا نضع display صراحةً هنا — قاعدة المتصفح الافتراضية
+     [hidden]{display:none} يتغلّب عليها أي display صريح بقاعدة أخرى بنفس
+     العنصر، وهذا بالضبط كان يجعل التاج يظهر بصريًا رغم hidden=true حتى قبل
+     نقله (خلل موجود أصلًا في الكود القديم اكتُشف أثناء التحقق البصري لهذا
+     الإصلاح، 10 سبتمبر 2026) — تركه بلا display يضمن احترام [hidden] فعليًا. */
   .champion-crown{
     position:absolute;
     left:16px;top:18px;
-    display:inline-block;margin-inline-start:0;font-size:1.6rem;
+    margin-inline-start:0;font-size:1.6rem;
     animation:crownFloat 2.2s ease-in-out infinite;
   }
   @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-5px) rotate(4deg);}}
