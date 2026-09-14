@@ -1,0 +1,136 @@
+/* الأساسيات: متغيرات الألوان، الوضع الداكن/الفاتح، الهيدر، شريط التبويبات، شاشة الترحيب */
+  :root{
+    /* هوية PROKI الجديدة (كحمي/بنفسجي/سماوي) — أصبحت المظهر الافتراضي للموقع.
+       --ink/--ink2 ثابتتان دائمًا (خلفيات الهيدر ورأس الجدول) بغض النظر عن
+       الوضع المختار، أما بقية المتغيرات فتتبدّل بين الوضع الداكن (الافتراضي)
+       والوضع الفاتح (الهوية القديمة، تُفعَّل بزر ☀️ وتُحفظ محليًا لكل جهاز). */
+    --ink:#0B0D1F;
+    --ink2:#3D2E99;
+    --cream:#0A0A24;
+    --paper:#10102E;
+    --gold:#7B5CFF;
+    --gold-light:#9B7BF5;
+    --sky:#00B4FF;
+    --coral:#FF6F52;
+    --line:rgba(123,92,255,0.22);
+    --muted:#9C9BC9;
+    --text:#EDEBFF;
+    --text2:#B9AEF5;
+  }
+  /* ===== الوضع الفاتح — نسخة فاتحة من هوية PROKI الرسمية (كحلي/بنفسجي/سماوي)،
+     اختياري ويُفعَّل بزر ☀️. كانت سابقًا تعرض الهوية القديمة (أخضر/ذهبي) قبل
+     توحيد الموقع بالكامل على دليل الهوية البصرية لسبتمبر 2026. */
+  html.light-mode{
+    --cream:#F3F1FA;
+    --paper:#FDFCFF;
+    --gold:#7B5CFF;
+    --gold-light:#A78BFA;
+    --sky:#00B4FF;
+    --coral:#C9552C;
+    --line:rgba(123,92,255,0.18);
+    --muted:#6E6690;
+    --text:#0B0D1F;
+    --text2:#3D2E99;
+  }
+  html.light-mode .status-msg.ok{background:#E4F1EA;color:var(--text2);}
+  html.light-mode .status-msg.err{background:#FBE4DA;color:var(--coral);}
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Tajawal',Arial,sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    line-height:1.6;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 0 60px;}
+
+  /* Header */
+  header{
+    position:relative;
+    background:radial-gradient(120% 140% at 50% 0%, var(--ink2) 0%, var(--ink) 70%);
+    color:var(--paper);
+    padding:28px 20px 22px;
+    text-align:center;
+    border-bottom:4px solid var(--gold);
+  }
+  header svg{width:96px;height:96px;display:block;margin:0 auto 10px;}
+  header h1{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:0.5px;}
+  header p{margin:6px 0 0;color:var(--gold-light);font-size:1.15rem;font-weight:600;}
+
+  /* Tabs */
+  nav.tabs{
+    display:flex;
+    overflow-x:auto;
+    background:var(--ink);
+    position:sticky;top:0;z-index:10;
+    border-bottom:3px solid var(--gold);
+  }
+  nav.tabs button{
+    position:relative;
+    flex:1 0 auto;
+    background:none;border:none;
+    color:#cfe0d8;
+    font-family:inherit;font-size:0.92rem;font-weight:700;
+    padding:13px 14px;
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+    margin-bottom:-3px;
+  }
+  /* شارة انقطاع الاتصال — تظهر فوق كل شيء لأن الصفحة صارت تعمل جزئيًا بدون
+     إنترنت (PWA)، فلازم الزائر يعرف إن الأرقام المعروضة قد تكون قديمة */
+  .offline-badge{
+    position:fixed;top:0;inset-inline:0;z-index:999;
+    background:var(--gold);color:#1a1400;
+    text-align:center;font-size:0.78rem;font-weight:800;
+    padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  }
+  /* شاشة ترحيب لأول زيارة (زائر/متسابق) — تظهر مرة واحدة فقط (localStorage) */
+  .onboard-overlay{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(4,4,33,0.72);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .onboard-overlay[hidden]{display:none;}
+  .onboard-card{
+    background:var(--paper);border-radius:16px;padding:22px 20px;
+    max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  }
+  .onboard-title{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;}
+  .onboard-hint{font-size:0.8rem;color:var(--muted);margin:0 0 16px;text-align:center;}
+  .onboard-card .btn{width:100%;}
+  .onboard-card select, .onboard-card input[type="text"]{
+    width:100%;font-family:inherit;padding:9px 10px;border:1px solid var(--line);
+    border-radius:6px;font-size:0.88rem;margin-bottom:8px;background:var(--paper);color:var(--text);
+  }
+  /* نقطة تنبيه تحديث جديد (لم يُشاهَد بعد) */
+  .update-dot{
+    position:absolute; top:7px; inset-inline-end:6px;
+    width:8px; height:8px; border-radius:50%;
+    background:var(--coral);
+    box-shadow:0 0 0 2px var(--ink);
+  }
+  nav.tabs button.active{
+    color:#fff;
+    background:var(--gold);
+    border-bottom-color:var(--sky);
+  }
+
+  section.panel{display:none;padding:18px 16px;}
+  section.panel.active{display:block;}
+
+  h2.section-title{
+    font-size:1.05rem;
+    font-weight:800;
+    margin:0 0 14px;
+    color:var(--text);
+    border-inline-start:5px solid var(--coral);
+    padding-inline-start:10px;
+  }
+
+  /* منع تجاوز العرض على أي جهاز */
+  html,body{max-width:100%;overflow-x:hidden;}
+  table{max-width:100%;}
+  img{max-width:100%;height:auto;}
+

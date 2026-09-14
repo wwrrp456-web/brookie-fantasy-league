@@ -1,0 +1,144 @@
+/* تبويب الجولات: تفاصيل الجولة الثانية، شارة بطل الجولة، أرشيف الأبطال، تحدي الجولة */
+  /* تحدي مواجهة الجولة */
+  .duels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+  .duel-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+  .duel-side{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px;border-radius:6px;}
+  .duel-side.duel-win{background:rgba(122,82,238,0.18);}
+  .duel-name{font-size:0.84rem;font-weight:700;color:var(--text);}
+  .duel-pts{font-size:0.84rem;font-weight:800;color:var(--gold);}
+  .duel-vs{text-align:center;font-size:0.68rem;font-weight:800;color:var(--muted);margin:2px 0;}
+  .duel-draw{text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);margin-top:2px;}
+  .duel-bye{display:flex;align-items:center;justify-content:center;min-height:64px;}
+  .duel-bye-text{font-size:0.82rem;font-weight:700;color:var(--muted);text-align:center;}
+
+  /* ألقاب الجولة */
+  .round-titles-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px;}
+  .round-title-chip{background:rgba(122,82,238,0.16);border:1px solid var(--line);border-radius:20px;padding:4px 10px;font-size:0.72rem;color:var(--text);}
+  .round-title-extra{color:var(--muted);}
+
+  /* شريط تقدم الموسم */
+  .season-progress-bar{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:14px;}
+  .season-progress-label{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .season-progress-track{background:rgba(0,0,0,0.15);border-radius:20px;height:10px;overflow:hidden;}
+  .season-progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.5s ease;}
+
+  /* بطاقات أبرز الجولات */
+  .rounds-insights{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+  .rounds-insight-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center;}
+  .rounds-insight-card.best{border-color:rgba(0,180,70,0.4);}
+  .rounds-insight-card.worst{border-color:rgba(201,85,44,0.4);}
+  .rounds-insight-icon{font-size:1.2rem;display:block;margin-bottom:4px;}
+  .rounds-insight-label{font-size:0.65rem;color:var(--muted);display:block;margin-bottom:4px;}
+  .rounds-insight-val{font-size:1.1rem;font-weight:800;color:var(--text);display:block;}
+  .rounds-insight-sub{font-size:0.7rem;color:var(--muted);display:block;margin-top:2px;}
+
+  /* وضع ليلة الجولة */
+  .night-mode-banner{background:linear-gradient(135deg,#1a0533,#0d1f44);border:1px solid #4B2080;border-radius:12px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden;animation:nightPulse 3s ease-in-out infinite;}
+  .night-mode-banner::before{content:'⚽';position:absolute;font-size:5rem;opacity:0.07;right:-10px;top:-5px;}
+  @keyframes nightPulse{0%,100%{box-shadow:0 0 0 0 rgba(123,52,255,0.2);}50%{box-shadow:0 0 0 8px rgba(123,52,255,0);}}
+  .night-title{font-size:1.05rem;font-weight:900;color:#E0C4FF;margin-bottom:4px;}
+  .night-sub{font-size:0.8rem;color:#9F80CC;}
+
+  /* تعليق المشارك */
+  .round-comment-section{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+  .round-comments-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+  .round-comment-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.8rem;}
+  .rc-author{font-weight:700;color:var(--gold);min-width:70px;flex-shrink:0;}
+  .rc-text{color:var(--text);flex:1;}
+  .rc-time{font-size:0.68rem;color:var(--muted);white-space:nowrap;}
+  .rc-add-form{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .rc-input{flex:1;min-width:140px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
+  .rc-submit{padding:5px 12px;border-radius:8px;font-size:0.78rem;font-weight:700;background:var(--gold);color:#000;border:none;cursor:pointer;}
+  .rc-locked{font-size:0.75rem;color:var(--muted);font-style:italic;}
+
+  /* توقعات بطل الجولة القادمة */
+  .predict-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+  .predict-title{font-weight:800;font-size:0.95rem;color:var(--text);margin-bottom:8px;}
+  .predict-hint{font-size:0.82rem;color:var(--muted);}
+  .predict-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .predict-row select{flex:1;min-width:140px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--cream);color:var(--text);font-family:inherit;font-size:0.85rem;}
+  .predict-current{font-size:0.82rem;color:var(--text2);margin-top:8px;}
+  .predict-count{font-size:0.76rem;color:var(--muted);margin-top:6px;}
+  .predict-leader-title{font-weight:800;font-size:0.82rem;color:var(--gold);margin-top:12px;margin-bottom:6px;}
+  .predict-leaderboard{display:flex;flex-direction:column;gap:4px;}
+  .predict-leader-row{display:flex;justify-content:space-between;font-size:0.83rem;background:var(--cream);border-radius:6px;padding:5px 10px;}
+
+  /* عداد تنازلي للجولة القادمة */
+  .countdown-card{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);color:#fff;border-radius:12px;padding:12px 16px;margin-bottom:14px;text-align:center;}
+  .countdown-label{font-size:0.78rem;opacity:0.85;margin-bottom:4px;}
+  .countdown-timer{font-size:1.3rem;font-weight:800;letter-spacing:0.5px;color:var(--gold-light);}
+
+  /* شارة تمييز مباراة داخلية (بين ناديين كلاهما مملوك لمشاركين بالبطولة، مثل
+     الاتحاد والنصر) عن مباراة خارجية (الخصم نادٍ خارج تجمّع الأندية الـ27) —
+     5 سبتمبر 2026. مباراة داخلية تعني نتيجة الطرفين مرآة لبعضها، فتُفحَص
+     تلقائيًا مقابل تسجيل الطرف الآخر إن وُجد. */
+  .match-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-top:3px;}
+  .match-badge-info{background:rgba(122,82,238,0.14);color:var(--gold-light);}
+  .match-badge-ok{background:#123524;color:#8FE3B0;}
+  .match-badge-warn{background:#3A1D14;color:#FFB199;}
+  .match-badge-external{background:rgba(255,255,255,0.05);color:var(--muted);}
+  html.light-mode .match-badge-ok{background:#E4F1EA;color:var(--text2);}
+  html.light-mode .match-badge-warn{background:#FBE4DA;color:var(--coral);}
+  .official-check-note{font-size:0.72rem;font-weight:700;margin:2px 0 4px;}
+  .official-check-note.ok{color:#8FE3B0;}
+  .official-check-note.warn{color:#FFB199;}
+  html.light-mode .official-check-note.ok{color:#1E8E4B;}
+  html.light-mode .official-check-note.warn{color:var(--coral);}
+
+  /* الجولة 2 - تفصيل كامل */
+  .r2-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
+  .r2-card.is-champion{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset;}
+  .r2-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;}
+  .r2-head .r2-name{font-weight:800;font-size:0.92rem;}
+  .r2-head .r2-pts{font-weight:800;font-size:0.95rem;color:var(--coral);white-space:nowrap;}
+  .r2-clubs{display:flex;flex-direction:column;gap:7px;}
+  .r2-club-row{display:flex;align-items:flex-start;gap:8px;}
+  .r2-club-row .crest{width:26px;height:29px;flex-shrink:0;margin-top:1px;}
+  .r2-club-matches{flex:1;min-width:0;}
+  .r2-club-matches .r2-club-name{font-size:0.75rem;font-weight:700;color:var(--text2);margin-bottom:2px;}
+  .r2-match-line{font-size:0.74rem;color:var(--muted);line-height:1.5;}
+  .r2-match-line b{color:var(--text);font-weight:700;}
+  .r2-res-win{color:#1E8E4B;font-weight:700;}
+  .r2-res-draw{color:var(--gold);font-weight:700;}
+  .r2-res-loss{color:var(--coral);font-weight:700;}
+  .r2-note{margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);font-size:0.7rem;color:var(--muted);line-height:1.5;}
+  .r1-simple-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:4px 14px;margin-bottom:8px;}
+  .r1-simple-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);font-size:0.84rem;}
+  .r1-simple-row:last-child{border-bottom:none;}
+  .r1-simple-row .r1-rank{color:var(--muted);font-weight:700;width:20px;flex-shrink:0;}
+  .r1-simple-row .r1-name{flex:1;font-weight:700;}
+  .r1-simple-row .r1-pts{font-weight:800;color:var(--text2);}
+  .rounds-subtitle{font-size:0.8rem;color:var(--muted);margin:14px 2px 8px;line-height:1.6;}
+  /* شارة "بطل الجولة" — نصية بلا إيموجي عمدًا، مميّزة عن تاج بطل الموسم
+     (championCrown) المحجوز حصرًا لبطل الموسم الكامل. تُثبَّت بجانب اسم بطل
+     كل جولة بكل مكان بتبويب الجولات (10 سبتمبر 2026). */
+  .round-champion-badge{display:inline-block;padding:2px 9px;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--sky));color:#fff;font-size:0.68rem;font-weight:800;white-space:nowrap;margin-inline-start:6px;vertical-align:middle;}
+  .mini-table{width:100%;font-size:0.78rem;border-collapse:collapse;}
+  .mini-table td{padding:3px 4px;border-bottom:1px dotted var(--line);}
+
+  .status-msg{font-size:0.82rem;padding:8px 10px;border-radius:6px;margin-top:8px;}
+  .status-msg.ok{background:#123524;color:#8FE3B0;}
+  .status-msg.err{background:#3A1D14;color:#FFB199;}
+
+  /* ===== شريط أبطال الجولة ===== */
+  .heroes-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:14px;}
+  .hero-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:10px;padding:10px 12px;color:var(--text);
+  }
+  .hero-card .hero-label{font-size:0.66rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
+  .hero-card .hero-name{font-size:0.92rem;font-weight:800;color:var(--text);line-height:1.3;}
+  .hero-card .hero-sub{font-size:0.72rem;color:var(--gold-light);margin-top:2px;}
+  .hero-card.gold{border-color:#16A6EA;background:var(--cream);}
+
+  /* ===== كرت بطل الجولة ===== */
+  #championCanvas{max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;
+    box-shadow:0 6px 22px rgba(0,0,0,0.3);}
+  .champ-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+
+  /* كونفيتي إعلان بطل الجولة (fireConfetti) */
+  @keyframes confettiFall{
+    to{ transform:translateY(105vh) rotate(600deg); }
+  }
+

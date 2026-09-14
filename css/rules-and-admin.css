@@ -1,0 +1,162 @@
+/* تبويب اللائحة/عن الدوري + لوحة المنظم بالكامل (نموذج الجولة، تقارير المجتمع) */
+  /* Rules */
+  .rules-list{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .rules-list h4{margin:14px 0 4px;font-size:0.92rem;color:var(--coral);}
+  .rules-list h4:first-child{margin-top:0;}
+  .rules-list p{margin:0 0 4px;font-size:0.87rem;color:var(--text);}
+
+  /* الأسئلة الشائعة */
+  .faq-item{
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;
+    padding:2px 14px;margin-bottom:8px;
+  }
+  .faq-item summary{
+    padding:11px 0;font-weight:700;font-size:0.88rem;color:var(--text);
+    cursor:pointer;list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::before{content:'❯';display:inline-block;margin-inline-end:8px;color:var(--gold);transition:transform 0.15s;}
+  .faq-item[open] summary::before{transform:rotate(90deg);}
+  .faq-item p{margin:0 0 12px;font-size:0.84rem;color:var(--muted);line-height:1.6;}
+
+  /* صفحة عن الدوري */
+  .about-league{padding:4px 0;}
+
+  /* قصة الموسم */
+  .story-wrap{margin-top:16px;}
+  .story-chapter{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden;}
+  .story-chapter::before{content:attr(data-num);position:absolute;font-size:5rem;font-weight:900;color:rgba(203,162,68,0.06);right:8px;top:-8px;line-height:1;pointer-events:none;}
+  .story-chapter-title{font-size:0.82rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+  .story-chapter-body{font-size:0.84rem;color:var(--text2);line-height:1.8;}
+  .story-chapter-body b{color:var(--text);}
+  .story-share-btn{margin-top:10px;padding:8px 16px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+  .story-highlight{display:inline-block;background:rgba(203,162,68,0.15);border:1px solid rgba(203,162,68,0.3);border-radius:6px;padding:1px 7px;font-weight:700;color:var(--gold);}
+  .about-section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+  .about-section-title{font-weight:800;font-size:0.95rem;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .about-stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;}
+  .about-stat{text-align:center;background:rgba(184,134,47,0.08);border-radius:8px;padding:8px 6px;}
+  .about-stat-num{display:block;font-size:1.4rem;font-weight:800;color:var(--text);}
+  .about-stat-label{display:block;font-size:0.65rem;color:var(--muted);margin-top:2px;}
+
+  /* سجل نشاط المنظم */
+  .activity-log-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);font-size:0.8rem;}
+  .activity-log-row:last-child{border-bottom:none;}
+
+  /* Admin */
+  .admin-box{background:var(--paper);border:1px dashed var(--gold);border-radius:10px;padding:14px;margin-bottom:16px;}
+  .admin-box input[type=password], .admin-box input[type=text], .admin-box input[type=number]{
+    font-family:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:0.9rem;
+    width:100%;
+  }
+  .btn{
+    background:var(--gold);color:#fff;border:none;border-radius:7px;
+    padding:9px 16px;font-family:inherit;font-weight:700;font-size:0.88rem;cursor:pointer;
+  }
+  .btn.secondary{background:var(--ink);}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+
+  .round-entry-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+  .round-entry-card summary{
+    padding:10px 12px;font-weight:700;cursor:pointer;font-size:0.9rem;
+    background:rgba(122,82,238,0.10);
+  }
+  .team-block{border-top:1px solid var(--line);padding-bottom:8px;}
+  .team-block-head{display:flex;align-items:center;gap:7px;padding:8px 12px 2px;font-size:0.85rem;}
+  .shared-club-badge{
+    font-size:0.68rem;font-weight:700;color:var(--gold-light);
+    background:rgba(122,82,238,0.16);border:1px solid var(--line);
+    border-radius:20px;padding:2px 8px;white-space:nowrap;
+  }
+
+  /* مراجعة تقارير المجتمع — تعديل/حذف كل تقرير على حدة (5 سبتمبر 2026) */
+  .community-report-row{padding:4px 0;}
+  .community-report-view{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);}
+  .community-report-view .actions{display:flex;gap:4px;flex-shrink:0;}
+  .community-report-view .actions button{font-size:0.68rem!important;padding:2px 8px!important;}
+  .community-report-edit{
+    display:none;grid-template-columns:1.4fr 1fr 44px 44px auto auto;gap:5px;
+    align-items:center;padding:6px 0;
+  }
+  .community-report-edit.open{display:grid;}
+  .community-report-edit select, .community-report-edit input{
+    font-family:inherit;padding:5px;border:1px solid var(--line);border-radius:6px;font-size:0.78rem;
+  }
+  .community-report-edit button{font-size:0.7rem!important;padding:5px 8px!important;white-space:nowrap;}
+
+  /* لوحة المنظم كـaccordion قابل للطي بدل ثمانية أقسام مفتوحة دفعة واحدة —
+     طلب المستخدم (6 سبتمبر 2026) تنظيف القائمة. نفس نمط .faq-item الموجود
+     مسبقًا بالأسئلة الشائعة. "إضافة جولة جديدة" فقط يبقى مفتوحًا افتراضيًا. */
+  .admin-accordion{
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;
+    padding:0 14px;margin-bottom:12px;
+  }
+  .admin-accordion summary{
+    padding:13px 0;font-weight:800;font-size:0.92rem;color:var(--text);
+    cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
+  }
+  .admin-accordion summary::-webkit-details-marker{display:none;}
+  .admin-accordion summary::before{content:'❯';color:var(--gold);transition:transform 0.15s;flex-shrink:0;}
+  .admin-accordion[open] summary::before{transform:rotate(90deg);}
+  .admin-accordion .acc-body{padding:2px 0 16px;}
+  /* شارة عدد التقارير الجديدة غير المُراجَعة بجانب عنوان "تقارير الأعضاء" —
+     تُخزَّن معرّفات التقارير المُشاهَدة بـlocalStorage الخاص بجهاز المنظم،
+     وتُصفَّر عند فتح القسم (شاهدها). */
+  .admin-badge{
+    margin-inline-start:auto;background:var(--coral);color:#fff;font-size:0.72rem;
+    font-weight:800;border-radius:20px;padding:2px 9px;line-height:1.5;
+  }
+  /* أقسام فرعية داخل accordion مُجمَّع (مثل "إعدادات الجولة الحالية" و"إعدادات
+     متقدمة") — كل قسم فرعي بعنوان بارز بدل h2 كامل مستقل */
+  .admin-subsection{padding:14px 0;border-top:1px dashed var(--line);}
+  .admin-subsection:first-child{border-top:none;padding-top:4px;}
+  .admin-subsection-title{font-weight:800;font-size:0.88rem;margin-bottom:8px;}
+
+  /* شارات حالة صغيرة (مفعّل/معطّل) بجانب عنوان "إعدادات الجولة الحالية" —
+     تلخّص حالة التوقعات وتحدي المواجهة بنظرة وحدة بدون فتح القسم (6 سبتمبر 2026) */
+  .round-status-badges{margin-inline-start:auto;display:flex;gap:6px;flex-wrap:wrap;}
+  .status-pill{font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+  .status-pill.on{background:rgba(60,190,120,0.16);color:#3CBE78;}
+  .status-pill.off{background:rgba(255,255,255,0.06);color:var(--muted);}
+  html.light-mode .status-pill.on{background:#E4F1EA;color:#1F8A54;}
+
+  /* مؤشر اكتمال حيّ لكل مشارك بنموذج إدخال الجولة — بدل ما يكتشف المنظم
+     النواقص كلها دفعة وحدة بعد الضغط على "حفظ الجولة" (طلب المستخدم 6 سبتمبر 2026) */
+  .completion-badge{font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-inline-start:8px;}
+  .completion-badge.complete{background:rgba(60,190,120,0.16);color:#3CBE78;}
+  .completion-badge.incomplete{background:rgba(255,111,82,0.14);color:var(--coral);}
+  html.light-mode .completion-badge.complete{background:#E4F1EA;color:#1F8A54;}
+
+  /* شريط أدوات نموذج الجولة (فلتر الناقص + طيّ/فتح كل المشاركين) وبانر المسودة
+     التلقائية — إضافات 7 سبتمبر 2026 */
+  .round-form-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:0.82rem;}
+  .round-form-toolbar label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .round-form-toolbar input[type="checkbox"]{width:17px;height:17px;cursor:pointer;}
+  .draft-banner{background:rgba(255,193,7,0.14);border:1px solid #FFC107;color:var(--text);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.84rem;line-height:1.7;}
+  html.light-mode .draft-banner{background:#FFF6DC;}
+
+  /* شريط سفلي ثابت لزر "حفظ الجولة" مع عداد الاكتمال — يبقى ظاهرًا أثناء
+     التمرير بنموذج جولة طويل بدل النزول للأسفل كل مرة (طلب المستخدم 7 سبتمبر
+     2026) */
+  .round-sticky-bar{position:sticky;bottom:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;box-shadow:0 -6px 16px rgba(0,0,0,0.18);z-index:20;}
+  html.light-mode .round-sticky-bar{box-shadow:0 -6px 16px rgba(0,0,0,0.08);}
+
+  /* رقاقات "الجولات المحفوظة" — اضغط عليها للانتقال مباشرة لتعديل جولة سابقة
+     بدل الحاجة لتذكّر رقمها وكتابته يدويًا (طلب المستخدم 6 سبتمبر 2026: أحيانًا
+     تُكتشف أخطاء بحسابات جولة ماضية وتحتاج تصحيح بعد إدخالها بفترة) */
+  .past-round-chip{font-size:0.74rem!important;padding:4px 11px!important;}
+
+  /* عمود الخصم: قائمة منسدلة بأندية التطبيق + حقل نصي إضافي يظهر فقط عند
+     اختيار "غير ذلك" (فريق خارج القائمة) — طلب المستخدم 7 سبتمبر 2026. */
+  .opp-field{display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .opp-field select, .opp-field input{width:100%;}
+  .team-input-row .remove-match-btn{
+    background:none;border:1px solid var(--coral);color:var(--coral);border-radius:6px;
+    cursor:pointer;font-size:0.72rem;padding:5px 0;line-height:1;
+  }
+  .field-label{font-size:0.72rem;color:var(--muted);}
+
+  .rounds-history{margin-top:18px;}
+  .round-history-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+  .round-history-card h4{margin:0 0 6px;font-size:0.88rem;}
+

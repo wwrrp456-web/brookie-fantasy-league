@@ -1,0 +1,27 @@
+/* نظام تكريم بطل الموسم */
+  /* ════════════ قسم تكريم البطل — أنماط 16 الميزات (كلها معطّلة افتراضيًا) ════════════ */
+  .champion-badge{display:inline-flex;align-items:center;gap:3px;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--sky));color:#fff;margin-inline-start:6px;vertical-align:middle;white-space:nowrap;}
+  .champion-badge.reclaim{background:linear-gradient(135deg,var(--coral),#FF9A6E);}
+  .champion-banner{background:linear-gradient(90deg,var(--gold),var(--sky));color:#fff;text-align:center;font-weight:800;font-size:0.85rem;padding:10px 14px;margin:0 0 14px;}
+  /* التاج بعيد عن شعار الهيدر تمامًا — بالحافة القصوى اليسرى للهيدر (9 سبتمبر
+     2026 كان ملاصقًا للشعار ويسبب ازدحامًا بصريًا؛ أُعيد وضعه هنا 10 سبتمبر
+     2026 كعنصر position:absolute مستقل تمامًا عن تدفق الشعار/النص بالمنتصف). */
+  /* ملاحظة أمان: لا نضع display صراحةً هنا — قاعدة المتصفح الافتراضية
+     [hidden]{display:none} يتغلّب عليها أي display صريح بقاعدة أخرى بنفس
+     العنصر، وهذا بالضبط كان يجعل التاج يظهر بصريًا رغم hidden=true حتى قبل
+     نقله (خلل موجود أصلًا في الكود القديم اكتُشف أثناء التحقق البصري لهذا
+     الإصلاح، 10 سبتمبر 2026) — تركه بلا display يضمن احترام [hidden] فعليًا. */
+  .champion-crown{
+    position:absolute;
+    left:16px;top:18px;
+    margin-inline-start:0;font-size:1.6rem;
+    animation:crownFloat 2.2s ease-in-out infinite;
+  }
+  @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-5px) rotate(4deg);}}
+  .participant-card.champion-golden{border:2px solid var(--gold)!important;box-shadow:0 0 0 1px var(--gold-light),0 4px 18px rgba(123,92,255,0.35);background:linear-gradient(180deg,rgba(123,92,255,0.10),transparent);}
+  .champion-hero-card{background:linear-gradient(135deg,rgba(123,92,255,0.14),rgba(0,180,255,0.08));border:1.5px solid var(--gold);border-radius:16px;padding:18px;margin:14px 0;}
+  .champion-defense-note{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+  .champion-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--paper);border:1.5px solid var(--gold);border-radius:14px;padding:14px 20px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:9998;max-width:90vw;text-align:center;font-size:0.85rem;color:var(--text);animation:champToastIn 0.3s ease;}
+  @keyframes champToastIn{from{opacity:0;transform:translate(-50%,20px);}to{opacity:1;transform:translate(-50%,0);}}
+  .hof-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:0.85rem;}
+  .weekly-beat-badge{background:var(--coral);color:#fff;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;}

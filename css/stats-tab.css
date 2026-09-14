@@ -1,0 +1,112 @@
+/* تبويب الإحصائيات: كفاءة/خريطة الأندية، الرادار، السباق، حاسبة ماذا لو، المواجهة المباشرة */
+  /* لوحة أدق المتوقعين */
+  .pred-leaderboard{display:flex;flex-direction:column;gap:6px;}
+  .pred-lb-row{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 12px;}
+  .pred-lb-rank{font-weight:800;min-width:26px;}
+  .pred-lb-name{flex:1;font-weight:700;font-size:0.86rem;color:var(--text);}
+  .pred-lb-score{font-weight:700;font-size:0.8rem;color:var(--text2);}
+  .pred-lb-pct{font-weight:800;font-size:0.84rem;color:var(--gold);min-width:44px;text-align:end;}
+
+  /* مواجهة مباشرة */
+  .h2h-picker{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .h2h-picker select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--text);font-family:inherit;font-size:0.85rem;}
+  .h2h-vs{font-weight:800;color:var(--muted);font-size:0.8rem;flex:0 0 auto;}
+  .h2h-table{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .h2h-row{display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);}
+  .h2h-row:last-child{border-bottom:none;}
+  .h2h-val{text-align:center;font-weight:800;font-size:0.95rem;color:var(--text);}
+  .h2h-val.h2h-win{color:var(--gold);}
+  .h2h-label{text-align:center;font-size:0.76rem;color:var(--muted);}
+
+  /* بصمة الموسم (sparkline مخصصة) */
+  .fingerprint-bar{display:inline-block;width:7px;border-radius:3px 3px 0 0;vertical-align:bottom;transition:height 0.3s;}
+
+  /* خريطة الممات */
+  .death-map{overflow-x:auto;margin:12px 0 22px;}
+  .death-map table{width:100%;border-collapse:collapse;font-size:0.75rem;min-width:480px;}
+  .death-map th{background:var(--paper);color:var(--muted);font-weight:700;padding:5px 8px;text-align:center;border-bottom:2px solid var(--line);}
+  .death-map td{padding:4px 6px;text-align:center;border-bottom:1px dotted var(--line);}
+  .death-map td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:80px;}
+  .dm-alive{background:rgba(61,212,126,0.12);color:#3DD47E;font-size:0.9rem;}
+  .dm-dead{background:rgba(201,85,44,0.18);color:#FF6B5E;font-size:1rem;font-weight:900;}
+  .dm-none{color:var(--muted);font-size:0.7rem;}
+  .death-map tr:hover td{background:rgba(255,255,255,0.03);}
+  .dm-total-cell{font-weight:900;color:var(--coral);}
+  .dm-zero-cell{font-weight:700;color:#3DD47E;}
+
+  /* حاسبة ماذا لو */
+  .whatif-box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0 22px;}
+  .whatif-title{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:12px;}
+  .whatif-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;}
+  .whatif-label{font-size:0.8rem;color:var(--muted);white-space:nowrap;}
+  .whatif-select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
+  .whatif-input{width:72px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;text-align:center;}
+  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
+  .whatif-result{display:flex;flex-direction:column;gap:4px;}
+  .whatif-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;font-size:0.82rem;transition:background 0.2s;}
+  .whatif-row.changed{background:rgba(203,162,68,0.12);border:1px solid rgba(203,162,68,0.3);}
+  .whatif-rank{min-width:24px;font-weight:900;color:var(--muted);}
+  .whatif-name{flex:1;font-weight:700;}
+  .whatif-pts{font-weight:800;color:var(--gold);}
+  .whatif-delta{font-size:0.75rem;font-weight:700;min-width:40px;text-align:left;}
+
+  /* رادار الموسم */
+  .radar-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:12px 0 22px;}
+  .radar-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .radar-name{font-size:0.78rem;font-weight:800;color:var(--text);margin-bottom:6px;}
+
+  /* سباق الترتيب */
+  .race-wrap{margin:12px 0 22px;}
+  .race-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+  .race-name{font-size:0.76rem;font-weight:700;color:var(--text);min-width:70px;text-align:right;}
+  .race-bar-wrap{flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:20px;overflow:hidden;position:relative;}
+  .race-bar{height:100%;border-radius:20px;transition:width 0.8s ease;display:flex;align-items:center;padding:0 6px;}
+  .race-pts{font-size:0.68rem;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.5);}
+  .race-slider{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .race-slider label{font-size:0.8rem;color:var(--muted);}
+  .race-slider input[type=range]{flex:1;min-width:120px;}
+  .race-round-label{font-size:0.78rem;font-weight:700;color:var(--gold);min-width:50px;}
+
+  /* خريطة الأندية بالدوريات */
+  .club-map{margin:12px 0 22px;}
+  .club-map-league{margin-bottom:14px;}
+  .club-map-league-name{font-size:0.8rem;font-weight:800;color:var(--muted);margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid var(--line);}
+  .club-map-clubs{display:flex;flex-wrap:wrap;gap:6px;}
+  .club-map-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:var(--paper);border:1px solid var(--line);font-size:0.78rem;}
+  .club-map-chip.owned{border-color:var(--gold);background:rgba(203,162,68,0.08);}
+  .club-map-owners{font-size:0.68rem;color:var(--muted);}
+  .club-map-chip.owned .club-map-owners{color:var(--gold);}
+
+  /* تحدي التوقعات */
+  .pred-challenge{margin:12px 0 22px;}
+  .pred-challenge-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+  .pred-challenge-table th{background:var(--paper);color:var(--muted);font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid var(--line);}
+  .pred-challenge-table td{padding:5px 8px;text-align:center;border-bottom:1px dotted var(--line);}
+  .pred-challenge-table td:first-child{text-align:right;font-weight:700;}
+  .pred-ch-correct{color:#3DD47E;font-weight:800;}
+  .pred-ch-wrong{color:var(--coral);}
+  .pred-ch-miss{color:var(--muted);}
+
+  /* كفاءة الأندية */
+  .club-eff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:12px 0 22px;}
+  .club-eff-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .club-eff-name{font-size:0.82rem;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .club-eff-bar-wrap{background:rgba(255,255,255,0.06);border-radius:20px;height:8px;margin:4px 0;}
+  .club-eff-bar{height:100%;border-radius:20px;background:var(--gold);}
+  .club-eff-stats{font-size:0.72rem;color:var(--muted);display:flex;justify-content:space-between;}
+  .activity-log-time{color:var(--muted);font-size:0.72rem;white-space:nowrap;margin-inline-start:8px;}
+
+  /* ===== الرسم البياني ===== */
+  .chart-wrap{background:#000;border-radius:10px;padding:12px 8px 8px;overflow-x:auto;}
+  .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:0.68rem;}
+  .chart-legend span{display:flex;align-items:center;gap:4px;color:var(--muted);}
+  .chart-legend i{width:12px;height:3px;border-radius:2px;display:inline-block;}
+
+  /* ===== جدول إحصائيات الأندية ===== */
+  .club-stats-table{width:100%;border-collapse:collapse;background:#000;border-radius:10px;overflow:hidden;}
+  .club-stats-table th{background:#141414;color:#9A9A9A;font-size:0.68rem;padding:9px 5px;font-weight:700;}
+  .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:#E8E8E8;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .club-stats-table td.cs-name{text-align:start;}
+  .cs-name-inner{display:flex;align-items:center;gap:7px;}
+  .cs-club-label{font-weight:700;font-size:0.78rem;color:#fff;}
+

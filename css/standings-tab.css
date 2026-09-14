@@ -1,0 +1,258 @@
+/* تبويب الترتيب العام: الجدول، الألوان حسب المركز، لوحتي الشخصية، الميداليات، سباق الهروب من القاع، المواجهات */
+  /* Standings table */
+  table.standings{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);}
+  table.standings th, table.standings td{padding:9px 8px;text-align:center;font-size:0.86rem;border-bottom:1px solid var(--line);}
+  table.standings th{background:var(--ink);color:var(--paper);font-weight:700;font-size:0.8rem;}
+  table.standings td.name{text-align:start;font-weight:700;}
+  table.standings tr:nth-child(1) td.name{color:var(--sky);}
+  table.standings tr:last-child td{border-bottom:none;}
+  .rank-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--gold-light);color:var(--ink);font-weight:800;font-size:0.78rem;
+  }
+  tr:nth-child(1) .rank-badge{background:var(--gold);}
+  tr:nth-child(2) .rank-badge{background:#CFC3AA;}
+  tr:nth-child(3) .rank-badge{background:#D6A868;}
+  .mumma{
+    display:inline-block;font-size:0.68rem;background:var(--coral);color:#fff;
+    padding:1px 6px;border-radius:10px;margin-inline-start:4px;
+  }
+
+  /* أوسمة الموسم */
+  .badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+  .badge-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .badge-icon{font-size:1.8rem;line-height:1;margin-bottom:4px;}
+  .badge-title{font-size:0.78rem;font-weight:800;color:var(--gold);margin-bottom:4px;}
+  .badge-names{font-size:0.87rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .badge-detail{font-size:0.74rem;color:var(--muted);}
+
+  /* سباق الهروب من القاع */
+  .bottom-race-list{display:flex;flex-direction:column;gap:6px;}
+  .bottom-race-row{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 12px;}
+  .bottom-race-rank{font-weight:800;color:var(--coral);min-width:18px;}
+  .bottom-race-name{flex:1;font-weight:700;font-size:0.86rem;color:var(--text);}
+  .bottom-race-pts{font-weight:800;font-size:0.84rem;color:var(--text);}
+  .bottom-race-gap{font-size:0.76rem;font-weight:700;color:var(--muted);min-width:110px;text-align:end;}
+  .bottom-race-gap.bottom-race-lead{color:var(--coral);}
+
+  /* لوحتي الشخصية */
+  .my-dash-card{
+    background:var(--paper);
+    border:1px solid var(--gold);border-radius:12px;
+    padding:14px 16px;margin-bottom:14px;color:var(--text);
+  }
+  .my-dash-head{font-weight:800;font-size:0.98rem;margin-bottom:10px;color:var(--gold-light);}
+  .my-dash-stats{display:flex;gap:10px;margin-bottom:10px;}
+  .my-dash-stat{
+    flex:1;text-align:center;background:rgba(123,92,255,0.10);
+    border-radius:10px;padding:8px 4px;
+  }
+  .my-dash-num{display:block;font-size:1.25rem;font-weight:800;color:var(--text);}
+  .my-dash-label{display:block;font-size:0.68rem;color:var(--muted);margin-top:2px;}
+  .my-dash-rival{font-size:0.8rem;color:var(--text2);margin-bottom:4px;}
+  .my-dash-pred{font-size:0.82rem;color:var(--gold-light);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .my-dash-need{font-size:0.82rem;color:#00C9A7;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px;}
+  .my-dash-need-row{display:flex;justify-content:space-between;align-items:center;}
+  .my-dash-need-badge{background:rgba(0,201,167,0.15);border:1px solid rgba(0,201,167,0.4);border-radius:20px;padding:1px 8px;font-size:0.76rem;font-weight:700;color:#00C9A7;}
+
+  /* لوحة الشرف */
+  .honor-board{background:var(--paper);border:1px solid var(--gold);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .honor-board-title{font-weight:800;font-size:0.98rem;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .honor-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+  .honor-card{background:linear-gradient(135deg,rgba(184,134,47,0.1),rgba(184,134,47,0.05));border:1px solid rgba(184,134,47,0.3);border-radius:10px;padding:10px 12px;text-align:center;}
+  .honor-card-emoji{font-size:1.4rem;display:block;margin-bottom:4px;}
+  .honor-card-label{font-size:0.65rem;color:var(--muted);display:block;margin-bottom:4px;}
+  .honor-card-name{font-weight:800;font-size:0.82rem;color:var(--text);display:block;}
+  .honor-card-val{font-size:0.7rem;color:var(--gold);display:block;margin-top:2px;}
+
+  /* تفاصيل سريعة في توسيع الصف */
+  .quick-hist{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+  .quick-hist-pill{min-width:34px;padding:3px 6px;border-radius:6px;text-align:center;font-size:0.7rem;font-weight:700;background:rgba(255,255,255,0.08);color:#E0E0E0;}
+  .quick-hist-pill.hi{background:rgba(61,212,126,0.2);color:#3DD47E;}
+  .quick-hist-pill.mumma{background:rgba(201,85,44,0.2);color:#FF6B5E;}
+  .quick-hist-mini-label{font-size:0.62rem;color:#8A8A8A;margin-bottom:4px;}
+
+  /* لوحة المفاجآت */
+  .surprises-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0 22px;}
+  .surprise-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;}
+  .surprise-emoji{font-size:1.8rem;margin-bottom:4px;}
+  .surprise-title{font-size:0.74rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
+  .surprise-name{font-size:0.9rem;font-weight:800;color:var(--text);}
+  .surprise-detail{font-size:0.72rem;color:var(--gold);margin-top:2px;}
+
+  /* لوحة الميداليات */
+  .medals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:12px 0 22px;}
+  .medal-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;position:relative;}
+  .medal-icon{font-size:1.6rem;line-height:1;margin-bottom:4px;}
+  .medal-name{font-size:0.85rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+  .medal-count{font-size:0.72rem;color:var(--muted);}
+  .medal-gold{border-color:var(--gold);background:rgba(203,162,68,0.08);}
+  .medal-silver{border-color:#CFC3AA;background:rgba(207,195,170,0.06);}
+  .medal-bronze{border-color:#D6A868;background:rgba(214,168,104,0.06);}
+  .medal-star{position:absolute;top:-7px;right:-7px;font-size:0.75rem;background:var(--paper);border:1px solid var(--line);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+
+  /* تاريخ تبادل المراكز */
+  .rank-history{overflow-x:auto;margin:12px 0 22px;}
+  .rank-history table{border-collapse:collapse;font-size:0.74rem;min-width:480px;}
+  .rank-history th{background:var(--paper);color:var(--muted);font-weight:700;padding:5px 8px;text-align:center;border-bottom:2px solid var(--line);white-space:nowrap;}
+  .rank-history td{padding:5px 7px;text-align:center;border-bottom:1px dotted var(--line);}
+  .rank-history td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:80px;}
+  .rh-up{color:#3DD47E;font-weight:700;}
+  .rh-down{color:var(--coral);font-weight:700;}
+  .rh-same{color:var(--muted);}
+  .rh-first{background:rgba(203,162,68,0.1);color:var(--gold);font-weight:900;}
+
+  /* لوحة قيادة الترتيب */
+  .rank-leaderboard{overflow-x:auto;margin:12px 0 22px;}
+  .rank-leaderboard table{width:100%;border-collapse:collapse;font-size:0.75rem;min-width:520px;}
+  .rank-leaderboard th{background:var(--paper);color:var(--muted);font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid var(--line);white-space:nowrap;}
+  .rank-leaderboard td{padding:5px 7px;text-align:center;border-bottom:1px dotted var(--line);white-space:nowrap;}
+  .rank-leaderboard td:first-child{text-align:right;font-weight:700;color:var(--text);min-width:90px;}
+  .rank-leaderboard tr:hover td{background:rgba(255,255,255,0.04);}
+  .rl-cell-1{color:var(--gold);font-weight:900;}
+  .rl-cell-2{color:#CFC3AA;font-weight:800;}
+  .rl-cell-3{color:#D6A868;font-weight:800;}
+  .rl-mumma{color:var(--coral);font-weight:700;}
+  .rl-stable{color:#3DD47E;font-weight:700;}
+
+  /* ===== جدول الترتيب بأسلوب تطبيقات المباريات ===== */
+  .league-table{
+    width:100%;
+    border-collapse:collapse;
+    background:#000000;
+    border-radius:10px;
+    overflow:hidden;
+    color:#F0F0F0;
+  }
+  .league-table thead th{
+    background:#141414;
+    color:#9A9A9A;
+    font-size:0.7rem;
+    font-weight:700;
+    padding:10px 6px;
+    text-align:center;
+    white-space:nowrap;
+  }
+  .league-table thead th.col-team{text-align:start;padding-inline-start:4px;}
+  .league-table tbody td{
+    padding:11px 6px;
+    text-align:center;
+    font-size:0.84rem;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .league-table tbody tr:last-child td{border-bottom:none;}
+  .league-table tbody tr.zebra td{background:#0C0C0C;}
+
+  /* شريط الحافة الملون حسب المركز */
+  .pos-cell{
+    position:relative;
+    width:38px;
+    font-weight:700;
+    color:#C4C4C4;
+    font-size:0.82rem;
+    padding-inline-start:12px!important;
+  }
+  .pos-cell::before{
+    content:'';
+    position:absolute;
+    inset-inline-start:0; top:0; bottom:0;
+    width:6px;
+    background:#2E2E2E;
+  }
+  tr.tier-gold .pos-cell::before{background:#16A6EA;box-shadow:0 0 8px rgba(22,166,234,0.5);}
+  /* لون منطقة المطاردة (تصدر بنفسجي بدل الأزرق القريب جدًا من لون الصدارة —
+     طلب المستخدم 6 سبتمبر 2026 بعد ملاحظته صعوبة التمييز بينهما بالعين). */
+  tr.tier-silver .pos-cell::before{background:#7A52EE;box-shadow:0 0 8px rgba(122,82,238,0.5);}
+  tr.tier-danger .pos-cell::before{background:#FF4438;box-shadow:0 0 8px rgba(255,68,56,0.4);}
+
+  /* خانة اللاعب */
+  .team-cell{
+    text-align:start!important;
+    padding-inline-start:2px!important;
+  }
+  .team-cell-inner{display:flex;align-items:center;gap:8px;}
+  .team-cell-name{font-weight:700;font-size:0.85rem;color:#fff;line-height:1.25;}
+  .team-cell-clubs{display:flex;gap:3px;margin-top:3px;}
+  .team-cell-clubs .crest{width:19px;height:21px;}
+
+  .stat-strong{font-weight:800;color:#fff;font-size:0.9rem;}
+  .stat-dim{color:#8A8A8A;font-size:0.8rem;}
+  .stat-new{color:#3DD47E;font-weight:700;}
+  .stat-new.zero{color:#7A7A7A;font-weight:400;}
+
+  .detail-toggle{
+    background:none;border:none;color:#8A8A8A;
+    cursor:pointer;font-size:0.95rem;padding:4px 6px;
+    font-family:inherit;
+  }
+  .detail-row td{
+    background:#161616;
+    padding:0!important;
+    border-bottom:1px solid rgba(255,255,255,0.08)!important;
+  }
+  .detail-inner{padding:12px 10px;}
+  .detail-clubs{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+  .detail-clubs .club-mini .club-name{color:#A8A8A8;}
+  .club-toggle{cursor:pointer;}
+  .club-toggle summary{list-style:none;cursor:pointer;}
+  .club-toggle summary::-webkit-details-marker{display:none;}
+  .club-toggle-stats{
+    margin-top:6px;font-size:0.62rem;color:#16A6EA;text-align:center;
+    background:rgba(22,166,234,0.12);border-radius:6px;padding:4px 6px;
+    max-width:80px;line-height:1.3;
+  }
+  .detail-table{width:100%;border-collapse:collapse;}
+  .detail-table th{
+    color:#8A8A8A;font-size:0.7rem;font-weight:700;
+    padding:5px 4px;text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .detail-table td{
+    color:#E0E0E0;font-size:0.76rem;
+    padding:6px 4px;text-align:center;
+    border-bottom:1px dotted rgba(255,255,255,0.09);
+  }
+  .table-legend{
+    display:flex;gap:14px;flex-wrap:wrap;
+    font-size:0.7rem;color:var(--muted);
+    margin-top:10px;padding:0 2px;
+  }
+  .legend-item{display:flex;align-items:center;gap:5px;}
+  .legend-swatch{width:10px;height:10px;border-radius:2px;}
+
+
+  /* ===== حركة المراكز ===== */
+  .mv{font-size:0.68rem;font-weight:800;display:inline-block;min-width:24px;}
+  .mv-up{color:#3DD47E;}
+  .mv-down{color:#FF6B5E;}
+  .mv-same{color:#5A5A5A;}
+
+  /* ===== تمييز "أنت" ===== */
+  tr.is-me td{background:rgba(22,166,234,0.16)!important;}
+  tr.is-me .team-cell-name::after{
+    content:'أنت';font-size:0.58rem;background:#16A6EA;color:#000;
+    padding:1px 5px;border-radius:8px;margin-inline-start:5px;font-weight:800;
+    vertical-align:middle;
+  }
+  .me-picker{
+    background:var(--paper);border:1px solid var(--line);border-radius:9px;
+    padding:10px 12px;margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  }
+  .me-picker select{
+    font-family:inherit;padding:7px 9px;border:1px solid var(--line);
+    border-radius:6px;font-size:0.85rem;flex:1 1 140px;
+  }
+  .me-picker .me-code-input{
+    font-family:inherit;padding:7px 9px;border:1px solid var(--line);
+    border-radius:6px;font-size:0.85rem;flex:1 1 130px;
+    background:var(--cream);color:var(--text);
+  }
+
+  /* ===== شريط الأدوات + آخر تحديث ===== */
+  .toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+  .updated-chip{
+    font-size:0.72rem;color:var(--muted);background:rgba(122,82,238,0.10);
+    padding:5px 10px;border-radius:14px;
+  }
+
