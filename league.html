@@ -418,6 +418,76 @@
         </div>
       </details>
 
+      <!-- بند ب: قفل الموسم الحالي وبدء موسم جديد — مقفل بـSUPER_ADMIN_CODE
+           بنفس نمط قفل "تغيير رمز دخول المنظم" أعلاه (seasonLockUnlocked،
+           seasonLockLock/seasonLockFields). المنطق الكامل في
+           js/features/admin-season-lock.js -->
+      <details class="admin-accordion" id="seasonLockAccordion">
+        <summary>🔒 قفل الموسم وبدء موسم جديد</summary>
+        <div class="acc-body">
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🚨 قفل الموسم الحالي وابدأ موسمًا جديدًا</div>
+            <p style="margin:0 0 8px;font-size:0.85rem;">
+              إجراء نهائي حساس (مثل تغيير رمز الدخول) — يتطلب الكود الخاص أولاً. يقوم بالترتيب:
+              (١) تنزيل نسخة احتياطية كاملة تلقائيًا، (٢) إضافة بطل الموسم الحالي لسجل أبطال المواسم
+              (مع اقتراح تلقائي قابل للتعديل)، (٣) بعد تأكيد ثانٍ، تصفير جولات الموسم الحالي بالكامل
+              استعدادًا لموسم جديد. لا يمسّ هذا أي من ملفات <code>js/data/season-2/*</code> — تبقى
+              كسجل تاريخي دائم.
+            </p>
+            <div id="seasonLockLock">
+              <div class="row" style="margin-bottom:8px;">
+                <input type="password" id="seasonLockSuperCodeInput" placeholder="الكود الخاص" style="max-width:220px;">
+                <button class="btn secondary" id="unlockSeasonLockBtn">🔓 فتح</button>
+              </div>
+              <div id="unlockSeasonLockMsg"></div>
+            </div>
+
+            <div id="seasonLockFields" class="season-lock-danger" style="display:none;">
+              <div class="row" style="margin-bottom:8px;flex-wrap:wrap;">
+                <input type="text" id="seasonLockSeasonNameInput" placeholder="اسم الموسم المنتهي (مثال: الموسم الثاني)" style="max-width:260px;">
+              </div>
+              <div id="seasonLockChampPreview" style="font-size:0.82rem;color:var(--muted);margin-bottom:8px;"></div>
+              <div class="row" style="margin-bottom:8px;flex-wrap:wrap;">
+                <input type="text" id="seasonLockChampNameInput" placeholder="اسم البطل" style="max-width:220px;">
+                <input type="number" id="seasonLockChampPointsInput" placeholder="النقاط" style="max-width:100px;">
+              </div>
+              <div class="row">
+                <button class="btn" id="startSeasonLockBtn" style="background:var(--coral);border-color:var(--coral);">🔒 قفل الموسم الحالي وابدأ موسمًا جديدًا</button>
+              </div>
+              <div id="seasonLockMsg"></div>
+            </div>
+          </div>
+
+          <div class="admin-subsection" id="newSeasonRosterSection" style="display:none;">
+            <div class="admin-subsection-title">🆕 تجهيز ملفات الموسم الجديد (مشاركون + أندية)</div>
+            <p style="margin:0 0 8px;font-size:0.85rem;">
+              الموقع بلا خادم — أي ملف جديد لازم يُرفَع يدويًا عبر واجهة GitHub. هذا القسم يجهّز لك
+              محتوى ملفات <code id="newSeasonParticipantsPath">js/data/season-3/participants.js</code>
+              و <code id="newSeasonClubsPath">js/data/season-3/clubs.js</code>
+              و <code id="newSeasonRoundsSeedPath">js/data/season-3/rounds-seed.js</code> جاهزة للتنزيل، ثم تبقى
+              خطوتان يدويتان بسيطتان: رفع الملفات الثلاثة لمجلد <code>season-3</code> على GitHub، وتغيير
+              <code>ACTIVE_SEASON</code> ومسارات <code>&lt;script&gt;</code> بملف
+              <code>js/data/season-config.js</code> (والمرجعين بـ<code>index.html</code>/<code>league.html</code>)
+              من <code>season-2</code> إلى <code>season-3</code>.
+            </p>
+            <div class="row" style="margin-bottom:10px;flex-wrap:wrap;">
+              <label class="field-label">معرّف مجلد الموسم الجديد (Season ID):</label>
+              <input type="text" id="newSeasonIdInput" value="season-3" style="max-width:140px;">
+              <label class="field-label">اسم الموسم للعرض:</label>
+              <input type="text" id="newSeasonLabelInput" placeholder="الموسم الثالث" style="max-width:180px;">
+            </div>
+            <div id="newSeasonParticipantsRows"></div>
+            <div class="row" style="margin-top:8px;">
+              <button class="btn ghost" id="addNewSeasonParticipantBtn">➕ إضافة مشارك</button>
+            </div>
+            <div class="row" style="margin-top:14px;">
+              <button class="btn secondary" id="generateSeasonFilesBtn">⬇️ توليد وتنزيل ملفَّي المشاركين والأندية</button>
+            </div>
+            <div id="newSeasonMsg"></div>
+          </div>
+        </div>
+      </details>
+
       <details class="admin-accordion" id="championAccordion">
         <summary>🏆 قسم تكريم البطل</summary>
         <div class="acc-body">
@@ -516,6 +586,7 @@
 <script src="js/features/admin-round-form.js"></script>
 <script src="js/features/admin-community-reports.js"></script>
 <script src="js/features/admin-champion-admin.js"></script>
+<script src="js/features/admin-season-lock.js"></script>
 <script src="js/ui/canvas-cards.js"></script>
 <script src="js/ui/navigation.js"></script>
 <script src="js/ui/theme-and-onboarding.js"></script>
