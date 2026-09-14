@@ -160,3 +160,26 @@
   .round-history-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
   .round-history-card h4{margin:0 0 6px;font-size:0.88rem;}
 
+  /* بند ب: قفل الموسم وبدء موسم جديد — نفس فكرة .admin-box (إطار متقطّع
+     بلون تحذيري) لكن بلون coral بدل gold لتمييز خطورة الإجراء بصريًا عن بقية
+     أقسام لوحة المنظم العادية. */
+  .season-lock-danger{
+    border:1px dashed var(--coral);border-radius:10px;padding:12px;margin-top:10px;
+  }
+  /* صف مشارك واحد بمولّد ملفات الموسم الجديد (اسم/رصيد/أندية الثلاثة) —
+     شبكة مرنة تتكسّر لسطر واحد بعرض الجوال بدل تجاوز عرض الشاشة. */
+  .new-season-participant-row{
+    display:grid;grid-template-columns:1.3fr 90px 1fr 1fr 1fr auto;gap:6px;
+    align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);
+  }
+  .new-season-participant-row input{
+    font-family:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:0.8rem;width:100%;
+  }
+  .new-season-participant-row .remove-participant-btn{
+    background:none;border:1px solid var(--coral);color:var(--coral);border-radius:6px;
+    cursor:pointer;font-size:0.72rem;padding:6px 8px;line-height:1;white-space:nowrap;
+  }
+  @media (max-width:640px){
+    .new-season-participant-row{grid-template-columns:1fr 1fr;}
+  }
+
