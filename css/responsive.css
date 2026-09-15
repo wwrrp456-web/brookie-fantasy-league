@@ -56,11 +56,19 @@
 
     section.panel{padding:12px 8px;}
 
-    /* إخفاء عمودي "لعب" و"ممة" لتوفير مساحة */
-    .league-table thead th:nth-child(3),
-    .league-table tbody td:nth-child(3),
+    /* إخفاء عمودي "الجولة" و"ممة" لتوفير مساحة على الشاشات الصغيرة جدًا.
+       ⚠️ تصحيح 15 سبتمبر 2026: كان هذا التحديد يستهدف nth-child(3)/(4) بناءً
+       على ترتيب أعمدة قديم (لعب/ممة)، لكن ترتيب الأعمدة الفعلي الحالي هو:
+       1=# 2=± 3=اللاعب(الاسم+شعارات الأندية) 4=الجولة 5=ممة 6=جديد 7=نقاط 8=السهم.
+       بسبب هذا الفرق، كان هذا القاعدة تُخفي عمود "اللاعب" بالكامل (الاسم
+       وشعارات الأندية الثلاثة) وعمود "الجولة" فعليًا على أي جوال بعرض ≤360px
+       (شائع بالجوالات المتوسطة/الضعيفة)، فيضطر المستخدم لتفعيل "وضع تصفح
+       الكمبيوتر" ليرى الجدول كاملاً — بلاغ المستخدم 15 سبتمبر 2026.
+       أُصلح بتصحيح الترقيم إلى nth-child(4)/(5) فعليًا. */
     .league-table thead th:nth-child(4),
-    .league-table tbody td:nth-child(4){display:none;}
+    .league-table tbody td:nth-child(4),
+    .league-table thead th:nth-child(5),
+    .league-table tbody td:nth-child(5){display:none;}
 
     .league-table thead th{padding:8px 3px;font-size:0.62rem;}
     .league-table tbody td{padding:9px 3px;font-size:0.76rem;}
