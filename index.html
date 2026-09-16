@@ -14,6 +14,20 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/standings-tab.css">
 <link rel="stylesheet" href="css/rounds-tab.css">
+<link rel="stylesheet" href="css/round-wall.css">
+<link rel="stylesheet" href="css/name-reactions.css">
+<link rel="stylesheet" href="css/season-duel.css">
+<link rel="stylesheet" href="css/round-story-card.css">
+<link rel="stylesheet" href="css/whats-new-card.css">
+<link rel="stylesheet" href="css/participant-profile.css">
+<link rel="stylesheet" href="css/round-poll.css">
+<link rel="stylesheet" href="css/sub-groups.css">
+<link rel="stylesheet" href="css/hot-cold-streaks.css">
+<link rel="stylesheet" href="css/badge-toast.css">
+<link rel="stylesheet" href="css/club-swap-lab.css">
+<link rel="stylesheet" href="css/personal-status-bar.css">
+<link rel="stylesheet" href="css/standings-row-animation.css">
+<link rel="stylesheet" href="css/live-focus-mode.css">
 <link rel="stylesheet" href="css/stats-tab.css">
 <link rel="stylesheet" href="css/rules-and-admin.css">
 <link rel="stylesheet" href="css/champion-honor.css">
@@ -22,6 +36,9 @@
 <body>
 
 <div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
+
+<div id="statusBarBox"></div>
+<div id="liveFocusOverlay"></div>
 
 <div id="onboardOverlay" class="onboard-overlay" hidden>
   <div class="onboard-card">
@@ -78,13 +95,21 @@
     </div>
     <div id="meCodeMsg"></div>
 
+    <div id="badgeToastBox"></div>
+
+    <div id="whatsNewCardBox"></div>
+
     <div id="myDashboardBox" style="display:none;"></div>
+
+    <div id="mySeasonDuelsBox"></div>
 
     <div id="predictionBox"></div>
 
     <div id="championHeroBox"></div>
 
     <div id="heroesBox"></div>
+
+    <div id="roundStoryCardBox"></div>
 
     <div class="toolbar">
       <button class="btn ghost" id="refreshBtn">🔄 تحديث</button>
@@ -94,6 +119,7 @@
       <button class="btn secondary" id="shareStandingsBtn" style="display:none;">📤 شارك في واتساب</button>
       <button class="btn secondary" id="dlStandingsStoryBtn" style="display:none;">📱 ترتيب كستوري</button>
       <button class="btn" id="seasonWrapBtn" style="display:none;">📊 ملخص الموسم</button>
+      <button class="btn ghost" id="liveFocusOpenBtn">🔴 وضع مباشر</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
     <div id="refreshMsg"></div>
@@ -139,7 +165,9 @@
       <div id="seasonProgressBox"></div>
       <div id="roundsInsightsBox"></div>
       <div id="roundCommentsBox"></div>
+      <div id="roundWallBox"></div>
       <div id="roundChallengeBox"></div>
+      <div id="roundPollBox"></div>
       <h2 class="section-title">🏆 أرشيف أبطال الجولات</h2>
       <div id="championsArchiveBox"></div>
       <h2 class="section-title" style="margin-top:22px;">سجل الجولات</h2>
@@ -158,11 +186,15 @@
       <div id="chartBox"></div>
       <div id="whatIfBox"></div>
       <div id="scenarioBox"></div>
+      <div id="clubSwapLabBox"></div>
       <div id="rankLeaderboardBox"></div>
       <div id="deathMapBox"></div>
       <div id="hallOfFameBox"></div>
       <div id="recordsBox"></div>
-      <div id="h2hBox" style="display:none;"></div>
+      <div id="subGroupsBox"></div>
+      <div id="hotColdStreaksBox"></div>
+      <div id="h2hBox"></div>
+      <div id="seasonDuelBox"></div>
       <div id="predictionAccuracyBox"></div>
       <div id="predChallengeBox"></div>
       <div id="radarBox"></div>
@@ -277,6 +309,20 @@
             <span id="predStatusPill" class="status-pill off">🔮 —</span>
             <span id="duelStatusPill" class="status-pill off">⚔️ —</span>
             <span id="roundChallengeStatusPill" class="status-pill off">🗳️ —</span>
+            <span id="roundWallStatusPill" class="status-pill off">🧱 —</span>
+            <span id="nameReactionsStatusPill" class="status-pill off">👏 —</span>
+            <span id="seasonDuelStatusPill" class="status-pill off">🥊 —</span>
+            <span id="roundStoryStatusPill" class="status-pill off">🎙️ —</span>
+            <span id="whatsNewStatusPill" class="status-pill off">🎁 —</span>
+            <span id="participantProfileStatusPill" class="status-pill off">📋 —</span>
+            <span id="roundPollStatusPill" class="status-pill off">🗳️ —</span>
+            <span id="subGroupsStatusPill" class="status-pill off">👥 —</span>
+            <span id="hotColdStreaksStatusPill" class="status-pill off">🔥 —</span>
+            <span id="badgeToastStatusPill" class="status-pill off">🏅 —</span>
+            <span id="clubSwapLabStatusPill" class="status-pill off">🔬 —</span>
+            <span id="statusBarStatusPill" class="status-pill off">📌 —</span>
+            <span id="standingsAnimationStatusPill" class="status-pill off">🎞️ —</span>
+            <span id="liveFocusModeStatusPill" class="status-pill off">🔴 —</span>
           </span>
         </summary>
         <div class="acc-body">
@@ -316,6 +362,146 @@
               <input type="checkbox" id="roundChallengeEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
             </div>
             <div id="roundChallengeEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🧱 جدار الجولة</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="roundWallEnabledToggle" style="cursor:pointer;">إظهار جدار الجولة (تعليقات + ردود فعل) للزوار:</label>
+              <input type="checkbox" id="roundWallEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="roundWallEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">👏 ردود فعل الأسماء بالترتيب</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="nameReactionsEnabledToggle" style="cursor:pointer;">إظهار ردود الفعل على الأسماء للزوار:</label>
+              <input type="checkbox" id="nameReactionsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="nameReactionsEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🥊 نزال الموسم</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="seasonDuelEnabledToggle" style="cursor:pointer;">إظهار قسم نزال الموسم للزوار:</label>
+              <input type="checkbox" id="seasonDuelEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="seasonDuelEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🎙️ قصة الجولة الساخرة</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="roundStoryEnabledToggle" style="cursor:pointer;">إظهار بطاقة قصة الجولة الساخرة للزوار:</label>
+              <input type="checkbox" id="roundStoryEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="roundStoryEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🎁 اللي فاتك</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="whatsNewEnabledToggle" style="cursor:pointer;">إظهار بطاقة "اللي فاتك" عند التعريف:</label>
+              <input type="checkbox" id="whatsNewEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="whatsNewEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">📋 الملف الشخصي الكامل</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="participantProfileEnabledToggle" style="cursor:pointer;">إظهار زر "الملف الكامل" بكروت المشاركين:</label>
+              <input type="checkbox" id="participantProfileEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="participantProfileEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🗳️ سؤال الجولة</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="roundPollEnabledToggle" style="cursor:pointer;">إظهار سؤال الجولة للزوار:</label>
+              <input type="checkbox" id="roundPollEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div class="round-poll-admin-form">
+              <input type="text" id="roundPollQuestionInput" placeholder="نص السؤال...">
+              <input type="text" id="roundPollOptionsInput" placeholder="الخيارات مفصولة بفواصل، مثال: نعم, لا, ما أدري">
+              <div class="row" style="gap:8px;">
+                <button type="button" class="btn secondary" id="publishRoundPollBtn">نشر السؤال 🗳️</button>
+                <button type="button" class="btn ghost" id="clearRoundPollBtn">مسح السؤال الحالي</button>
+              </div>
+            </div>
+            <div id="roundPollAdminMsg"></div>
+            <div id="roundPollEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">👥 المجموعات الفرعية</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="subGroupsEnabledToggle" style="cursor:pointer;">إظهار لوحات المجموعات الفرعية للزوار:</label>
+              <input type="checkbox" id="subGroupsEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="subGroupsAdminList" style="margin-bottom:10px;"></div>
+            <input type="text" id="subGroupNameInput" class="me-code-input" style="width:100%;margin-bottom:8px;" placeholder="اسم المجموعة الجديدة...">
+            <div id="subGroupMembersCheckboxes"></div>
+            <button type="button" class="btn secondary" id="createSubGroupBtn">➕ إنشاء المجموعة</button>
+            <div id="subGroupsAdminMsg"></div>
+            <div id="subGroupsEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🔥❄️ سلاسل الحظ</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="hotColdStreaksEnabledToggle" style="cursor:pointer;">إظهار سلاسل الحظ الساخن/البارد للزوار:</label>
+              <input type="checkbox" id="hotColdStreaksEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="hotColdStreaksEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🏅 أوسمة تلقائية</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="badgeToastEnabledToggle" style="cursor:pointer;">إظهار تنبيه الوسام الجديد عند التعريف:</label>
+              <input type="checkbox" id="badgeToastEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="badgeToastEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🔬 مختبر تبديل الأندية</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="clubSwapLabEnabledToggle" style="cursor:pointer;">إظهار مختبر سيناريوهات تبديل الأندية للزوار:</label>
+              <input type="checkbox" id="clubSwapLabEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="clubSwapLabEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">📌 شريط الحالة الشخصية</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="statusBarEnabledToggle" style="cursor:pointer;">إظهار الشريط الثابت لكل مشارك معرَّف:</label>
+              <input type="checkbox" id="statusBarEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="statusBarEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🎞️ حركة إعادة ترتيب الجدول</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="standingsAnimationEnabledToggle" style="cursor:pointer;">تحريك صفوف جدول الترتيب عند تغيّر المراكز:</label>
+              <input type="checkbox" id="standingsAnimationEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="standingsAnimationEnabledMsg"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection-title">🔴 وضع المباشر المُركَّز</div>
+            <div class="row" style="margin-bottom:10px;align-items:center;">
+              <label class="field-label" for="liveFocusModeEnabledToggle" style="cursor:pointer;">إتاحة زر "وضع مباشر" للزوار:</label>
+              <input type="checkbox" id="liveFocusModeEnabledToggle" style="width:20px;height:20px;cursor:pointer;">
+            </div>
+            <div id="liveFocusModeEnabledMsg"></div>
           </div>
         </div>
       </details>
@@ -579,6 +765,19 @@
 <script src="js/features/my-dashboard.js"></script>
 <script src="js/features/participants-tab.js"></script>
 <script src="js/features/rounds-tab.js"></script>
+<script src="js/features/round-wall.js"></script>
+<script src="js/features/name-reactions.js"></script>
+<script src="js/features/season-duel.js"></script>
+<script src="js/features/round-story-card.js"></script>
+<script src="js/features/whats-new-card.js"></script>
+<script src="js/features/participant-profile.js"></script>
+<script src="js/features/round-poll.js"></script>
+<script src="js/features/sub-groups.js"></script>
+<script src="js/features/hot-cold-streaks.js"></script>
+<script src="js/features/badge-toast.js"></script>
+<script src="js/features/club-swap-lab.js"></script>
+<script src="js/features/personal-status-bar.js"></script>
+<script src="js/features/live-focus-mode.js"></script>
 <script src="js/features/stats-tab.js"></script>
 <script src="js/features/rules-and-about.js"></script>
 <script src="js/features/champion-honor.js"></script>
