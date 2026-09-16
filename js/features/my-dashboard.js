@@ -63,11 +63,21 @@ async function applyMyId(id){
   try{ await window.storage.set('brookie-my-id', MY_ID, false); }catch(e){}
   const mainSel = document.getElementById('mePicker');
   if(mainSel) mainSel.value = id || '';
+  _h2hDefaultedToMe = false; // إعادة تعيين "أنت" تلقائيًا بالمواجهة المباشرة عند تبديل الهوية
   renderStandings();
+  renderNameReactions();
   renderPredictions();
   renderMyDashboard();
   renderRoundComments();
+  renderRoundWall();
+  renderH2H();
+  renderSeasonDuel();
+  renderMySeasonDuels();
+  renderWhatsNewCard();
+  renderBadgeToast();
+  renderPersonalStatusBar();
   renderRoundChallenge();
+  renderRoundPoll();
   renderMyAchievements();
   handleChampionIdentityWelcome(id);
 }

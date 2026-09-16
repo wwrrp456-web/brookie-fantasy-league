@@ -41,6 +41,90 @@ function updateRoundSettingsStatus(){
     duelPill.textContent = on ? '⚔️ مفعّل' : '⚔️ معطّل';
     duelPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
+  const wallPill = document.getElementById('roundWallStatusPill');
+  if(wallPill){
+    const on = DATA.roundWallEnabled !== false;
+    wallPill.textContent = on ? '🧱 مفعّل' : '🧱 معطّل';
+    wallPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const nrPill = document.getElementById('nameReactionsStatusPill');
+  if(nrPill){
+    const on = DATA.nameReactionsEnabled !== false;
+    nrPill.textContent = on ? '👏 مفعّل' : '👏 معطّل';
+    nrPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const sdPill = document.getElementById('seasonDuelStatusPill');
+  if(sdPill){
+    const on = DATA.seasonDuelEnabled !== false;
+    sdPill.textContent = on ? '🥊 مفعّل' : '🥊 معطّل';
+    sdPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const rsPill = document.getElementById('roundStoryStatusPill');
+  if(rsPill){
+    const on = DATA.roundStoryEnabled !== false;
+    rsPill.textContent = on ? '🎙️ مفعّل' : '🎙️ معطّل';
+    rsPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const wnPill = document.getElementById('whatsNewStatusPill');
+  if(wnPill){
+    const on = DATA.whatsNewEnabled !== false;
+    wnPill.textContent = on ? '🎁 مفعّل' : '🎁 معطّل';
+    wnPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const ppPill = document.getElementById('participantProfileStatusPill');
+  if(ppPill){
+    const on = DATA.participantProfileEnabled !== false;
+    ppPill.textContent = on ? '📋 مفعّل' : '📋 معطّل';
+    ppPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const rpPill = document.getElementById('roundPollStatusPill');
+  if(rpPill){
+    const on = DATA.roundPollEnabled !== false;
+    rpPill.textContent = on ? '🗳️ مفعّل' : '🗳️ معطّل';
+    rpPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const sgPill = document.getElementById('subGroupsStatusPill');
+  if(sgPill){
+    const on = DATA.subGroupsEnabled !== false;
+    sgPill.textContent = on ? '👥 مفعّل' : '👥 معطّل';
+    sgPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const hcPill = document.getElementById('hotColdStreaksStatusPill');
+  if(hcPill){
+    const on = DATA.hotColdStreaksEnabled !== false;
+    hcPill.textContent = on ? '🔥 مفعّل' : '🔥 معطّل';
+    hcPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const btPill = document.getElementById('badgeToastStatusPill');
+  if(btPill){
+    const on = DATA.badgeToastEnabled !== false;
+    btPill.textContent = on ? '🏅 مفعّل' : '🏅 معطّل';
+    btPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const cslPill = document.getElementById('clubSwapLabStatusPill');
+  if(cslPill){
+    const on = DATA.clubSwapLabEnabled !== false;
+    cslPill.textContent = on ? '🔬 مفعّل' : '🔬 معطّل';
+    cslPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const sbPill = document.getElementById('statusBarStatusPill');
+  if(sbPill){
+    const on = DATA.statusBarEnabled !== false;
+    sbPill.textContent = on ? '📌 مفعّل' : '📌 معطّل';
+    sbPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const saPill = document.getElementById('standingsAnimationStatusPill');
+  if(saPill){
+    const on = DATA.standingsAnimationEnabled !== false;
+    saPill.textContent = on ? '🎞️ مفعّل' : '🎞️ معطّل';
+    saPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
+  const lfPill = document.getElementById('liveFocusModeStatusPill');
+  if(lfPill){
+    const on = DATA.liveFocusModeEnabled !== false;
+    lfPill.textContent = on ? '🔴 مفعّل' : '🔴 معطّل';
+    lfPill.className = 'status-pill ' + (on ? 'on' : 'off');
+  }
   const rcPill = document.getElementById('roundChallengeStatusPill');
   if(rcPill){
     const on = DATA.roundChallengeEnabled !== false;
@@ -86,10 +170,10 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     // إلا بعد ما يدخل هنا ويرجع لذاك التبويب)
     document.getElementById('copySummaryBtn').style.display='';
     document.getElementById('champCardBtn').style.display='';
-    // قسم "المواجهة المباشرة" في تبويب الإحصائيات صار خاصًا بالمنظم فقط
-    // بطلب المستخدم (3 سبتمبر 2026) — يظهر فقط بعد تسجيل الدخول هنا.
-    const h2hBoxEl = document.getElementById('h2hBox');
-    if(h2hBoxEl) h2hBoxEl.style.display='';
+    // قسم "المواجهة المباشرة" فُتح لواجهة المشارك بتاريخ 15 سبتمبر 2026
+    // (ميزة 3 من حزمة التفاعل الاجتماعي) — لم يعد مقيّدًا بتسجيل دخول
+    // المنظم؛ renderH2H() نفسها تتحكم بظهوره حسب هوية الزائر.
+    renderH2H();
     document.getElementById('dlStandingsBtn').style.display='';
     document.getElementById('shareStandingsBtn').style.display='';
     document.getElementById('dlStandingsStoryBtn').style.display='';
@@ -107,6 +191,36 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     if(duelsToggle) duelsToggle.checked = DATA.duelsEnabled !== false;
     const rcToggle = document.getElementById('roundChallengeEnabledToggle');
     if(rcToggle) rcToggle.checked = DATA.roundChallengeEnabled !== false;
+    const wallToggle = document.getElementById('roundWallEnabledToggle');
+    if(wallToggle) wallToggle.checked = DATA.roundWallEnabled !== false;
+    const nrToggle = document.getElementById('nameReactionsEnabledToggle');
+    if(nrToggle) nrToggle.checked = DATA.nameReactionsEnabled !== false;
+    const sdToggle = document.getElementById('seasonDuelEnabledToggle');
+    if(sdToggle) sdToggle.checked = DATA.seasonDuelEnabled !== false;
+    const rsToggle = document.getElementById('roundStoryEnabledToggle');
+    if(rsToggle) rsToggle.checked = DATA.roundStoryEnabled !== false;
+    const wnToggle = document.getElementById('whatsNewEnabledToggle');
+    if(wnToggle) wnToggle.checked = DATA.whatsNewEnabled !== false;
+    const ppToggle = document.getElementById('participantProfileEnabledToggle');
+    if(ppToggle) ppToggle.checked = DATA.participantProfileEnabled !== false;
+    const rpToggle = document.getElementById('roundPollEnabledToggle');
+    if(rpToggle) rpToggle.checked = DATA.roundPollEnabled !== false;
+    const sgToggle = document.getElementById('subGroupsEnabledToggle');
+    if(sgToggle) sgToggle.checked = DATA.subGroupsEnabled !== false;
+    renderSubGroupMemberCheckboxes();
+    renderAdminSubGroupsList();
+    const hcToggle = document.getElementById('hotColdStreaksEnabledToggle');
+    if(hcToggle) hcToggle.checked = DATA.hotColdStreaksEnabled !== false;
+    const btToggle = document.getElementById('badgeToastEnabledToggle');
+    if(btToggle) btToggle.checked = DATA.badgeToastEnabled !== false;
+    const cslToggle = document.getElementById('clubSwapLabEnabledToggle');
+    if(cslToggle) cslToggle.checked = DATA.clubSwapLabEnabled !== false;
+    const sbToggle = document.getElementById('statusBarEnabledToggle');
+    if(sbToggle) sbToggle.checked = DATA.statusBarEnabled !== false;
+    const saToggle = document.getElementById('standingsAnimationEnabledToggle');
+    if(saToggle) saToggle.checked = DATA.standingsAnimationEnabled !== false;
+    const lfToggle = document.getElementById('liveFocusModeEnabledToggle');
+    if(lfToggle) lfToggle.checked = DATA.liveFocusModeEnabled !== false;
     updateRoundSettingsStatus();
     // تعبئة رقم الجولة تلقائيًا برقم الجولة القادمة — توفّر خطوة يدوية متكررة
     // كل أسبوع (طلب المستخدم 6 سبتمبر 2026). رقاقات "الجولات المحفوظة" تحت
@@ -227,17 +341,365 @@ document.getElementById('roundChallengeEnabledToggle').addEventListener('change'
   updateRoundSettingsStatus();
 });
 
+// ---------- تفعيل/إخفاء "🧱 جدار الجولة" (لوحة المنظم) ----------
+// نفس نمط بقية مفاتيح إظهار/إخفاء أقسام الجولة أعلاه، لميزة جدار الجولة
+// الاجتماعي الجديدة (تعليقات متعددة + ردود فعل — راجع js/features/round-wall.js).
+// القيمة (DATA.roundWallEnabled) مشتركة وتُحفظ مع بقية بيانات الجولات، لكن
+// رسائل الجدار نفسها منفصلة تمامًا بمسار Firebase خاص بها (لا تتأثر بهذا
+// المفتاح سوى بالظهور/الاختفاء عن الزوار).
+document.getElementById('roundWallEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('roundWallEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.roundWallEnabled;
+  DATA.roundWallEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderRoundWall();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار جدار الجولة للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء جدار الجولة عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.roundWallEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "👏 ردود فعل الأسماء بالترتيب" (لوحة المنظم) ----------
+document.getElementById('nameReactionsEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('nameReactionsEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.nameReactionsEnabled;
+  DATA.nameReactionsEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderNameReactions();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار ردود فعل الأسماء للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء ردود فعل الأسماء عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.nameReactionsEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🥊 نزال الموسم" (لوحة المنظم) ----------
+// نفس النمط تمامًا؛ نزالات الموسم نفسها بمسار Firebase منفصل
+// (brookie/season-duels) — هذا المفتاح يتحكم فقط بظهور القسم عن الزوار.
+document.getElementById('seasonDuelEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('seasonDuelEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.seasonDuelEnabled;
+  DATA.seasonDuelEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderSeasonDuel();
+  renderMySeasonDuels();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار نزال الموسم للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء نزال الموسم عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.seasonDuelEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🎙️ قصة الجولة الساخرة" (لوحة المنظم) ----------
+document.getElementById('roundStoryEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('roundStoryEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.roundStoryEnabled;
+  DATA.roundStoryEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderRoundStoryCard();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار قصة الجولة الساخرة للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء قصة الجولة الساخرة عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.roundStoryEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🎁 اللي فاتك" (لوحة المنظم) ----------
+document.getElementById('whatsNewEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('whatsNewEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.whatsNewEnabled;
+  DATA.whatsNewEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderWhatsNewCard();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم تفعيل بطاقة "اللي فاتك" ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء بطاقة "اللي فاتك".</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.whatsNewEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "📋 الملف الشخصي الكامل" (لوحة المنظم) ----------
+document.getElementById('participantProfileEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('participantProfileEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.participantProfileEnabled;
+  DATA.participantProfileEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderParticipants();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار الملف الكامل بكروت المشاركين ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء زر الملف الكامل.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.participantProfileEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🗳️ سؤال الجولة" (لوحة المنظم) ----------
+document.getElementById('roundPollEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('roundPollEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.roundPollEnabled;
+  DATA.roundPollEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderRoundPoll();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار سؤال الجولة للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء سؤال الجولة عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.roundPollEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "👥 المجموعات الفرعية" (لوحة المنظم) ----------
+document.getElementById('subGroupsEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('subGroupsEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.subGroupsEnabled;
+  DATA.subGroupsEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderSubGroups();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار المجموعات الفرعية للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء المجموعات الفرعية عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.subGroupsEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🔥❄️ سلاسل الحظ" (لوحة المنظم) ----------
+document.getElementById('hotColdStreaksEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('hotColdStreaksEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.hotColdStreaksEnabled;
+  DATA.hotColdStreaksEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderHotColdStreaks();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار سلاسل الحظ للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء سلاسل الحظ عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.hotColdStreaksEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🏅 أوسمة تلقائية" (لوحة المنظم) ----------
+document.getElementById('badgeToastEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('badgeToastEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.badgeToastEnabled;
+  DATA.badgeToastEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderBadgeToast();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم تفعيل تنبيه الأوسمة الجديدة ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء تنبيه الأوسمة الجديدة.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.badgeToastEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🔬 مختبر تبديل الأندية" (لوحة المنظم) ----------
+document.getElementById('clubSwapLabEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('clubSwapLabEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.clubSwapLabEnabled;
+  DATA.clubSwapLabEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderClubSwapLab();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إظهار مختبر تبديل الأندية للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء مختبر تبديل الأندية عن الجميع.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.clubSwapLabEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "📌 شريط الحالة الشخصية" (لوحة المنظم) ----------
+document.getElementById('statusBarEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('statusBarEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.statusBarEnabled;
+  DATA.statusBarEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderPersonalStatusBar();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم تفعيل شريط الحالة الشخصية ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء شريط الحالة الشخصية.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.statusBarEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🎞️ حركة إعادة ترتيب الجدول" (لوحة المنظم) ----------
+document.getElementById('standingsAnimationEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('standingsAnimationEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.standingsAnimationEnabled;
+  DATA.standingsAnimationEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم تفعيل حركة إعادة الترتيب ✅</div>'
+      : '<div class="status-msg ok">تم إيقاف حركة إعادة الترتيب.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.standingsAnimationEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
+// ---------- تفعيل/إخفاء "🔴 وضع المباشر المُركَّز" (لوحة المنظم) ----------
+document.getElementById('liveFocusModeEnabledToggle').addEventListener('change', async (e)=>{
+  const msg = document.getElementById('liveFocusModeEnabledMsg');
+  const newVal = e.target.checked;
+  const prevVal = DATA.liveFocusModeEnabled;
+  DATA.liveFocusModeEnabled = newVal;
+  e.target.disabled = true;
+  const ok = await saveData();
+  e.target.disabled = false;
+  renderLiveFocusToggleButton();
+  if(ok){
+    msg.innerHTML = newVal
+      ? '<div class="status-msg ok">تم إتاحة وضع المباشر للزوار ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء زر وضع المباشر عن الزوار.</div>';
+  }else{
+    e.target.checked = !newVal;
+    DATA.liveFocusModeEnabled = prevVal;
+    msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
+  }
+  updateRoundSettingsStatus();
+});
+
 // ---------- نسخة احتياطية: تصدير واستيراد ----------
 // بما إن قاعدة Firebase مفتوحة الصلاحيات بالكامل (أي شخص يعرف رابطها يقدر
 // يكتب فيها)، أي خطأ أو طارئ ممكن يخرّب بيانات الموسم كاملة. هذا الزرّان
 // يعطيان المنظم خط رجعة سريع: تنزيل كل البيانات (الجولات + التوقعات) كملف
 // JSON واحد بأي وقت، واستعادتها من نفس الملف لو صار خلل.
-document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
+// مسارات فايربيس خارج DATA (جدار الجولة، ردود فعل الأسماء، نزال الموسم —
+// ميزات 1، 2، 4 من حزمة التفاعل الاجتماعي) — أُبقيت خارج DATA عمدًا لتفادي
+// تعارض الكتابة مع saveData() التي تكتب DATA كاملة دفعة واحدة، لكن هذا يعني
+// أنها لا تُشمل تلقائيًا بالنسخة الاحتياطية القديمة. نضيفها هنا صراحة تحت
+// مفتاح "extra" بالملف المُصدَّر (طلب المستخدم صراحة عند حزمة الـ15 ميزة:
+// "اشمل كل البيانات الجديدة بالنسخة الاحتياطية والاستيراد" — 15 سبتمبر 2026).
+const BACKUP_EXTRA_PATHS = {
+  wall: 'brookie/wall',
+  nameReactions: 'brookie/name-reactions',
+  seasonDuels: 'brookie/season-duels'
+};
+
+async function fetchBackupExtras(){
+  const extra = {};
+  try{
+    const db = _fbInit();
+    await Promise.all(Object.entries(BACKUP_EXTRA_PATHS).map(async ([key, path])=>{
+      try{
+        const snap = await db.ref(path).get();
+        extra[key] = snap.exists() ? snap.val() : null;
+      }catch(e){ extra[key] = null; }
+    }));
+  }catch(e){ /* لا يوجد اتصال فايربيس — تُصدَّر النسخة بدون extra، أفضل من فشل التصدير كله */ }
+  return extra;
+}
+
+document.getElementById('exportBackupBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('backupMsg');
+  const btn = document.getElementById('exportBackupBtn');
+  btn.disabled = true;
+  if(msg) msg.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;">جارٍ تجهيز النسخة الاحتياطية…</div>';
+
+  const extra = await fetchBackupExtras();
   const backup = {
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     data: DATA,
-    predictions: PRED_DATA
+    predictions: PRED_DATA,
+    extra
   };
   const json = JSON.stringify(backup, null, 2);
   const blob = new Blob([json], {type:'application/json'});
@@ -250,8 +712,8 @@ document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
   a.click();
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(url), 2000);
-  const msg = document.getElementById('backupMsg');
-  if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية ✅</div>';
+  btn.disabled = false;
+  if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية (شاملة الجدار وردود الفعل ونزال الموسم) ✅</div>';
   try{ localStorage.setItem('brookie_last_backup_at', String(Date.now())); }catch(e){}
   updateLastBackupLabel();
 });
@@ -281,9 +743,13 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
     }
     const roundsCount = Array.isArray(parsed.data.rounds) ? parsed.data.rounds.length : 0;
     const exportedLabel = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ar') : 'غير معروف';
+    const hasExtra = parsed.extra && typeof parsed.extra === 'object';
+    const extraNote = hasExtra
+      ? '\nيشمل الملف أيضًا: جدار الجولة وردود فعل الأسماء ونزال الموسم — سيُستبدل محتواها الحالي أيضًا.'
+      : '\n(ملف قديم بلا جدار الجولة/ردود الفعل/نزال الموسم — هذه البيانات لن تتأثر بالاستعادة.)';
     const sure = await customConfirm(
       `تحذير: هذا الإجراء يستبدل كل بيانات الجولات والتوقعات الحالية على الموقع الحي لكل الزوار بمحتوى هذا الملف.\n\n` +
-      `تاريخ تصدير الملف: ${exportedLabel}\nعدد الجولات في الملف: ${roundsCount}\n\n` +
+      `تاريخ تصدير الملف: ${exportedLabel}\nعدد الجولات في الملف: ${roundsCount}${extraNote}\n\n` +
       `هل أنت متأكد إنك تبي تستعيد هذه النسخة الآن؟`,
       {confirmText: 'استعادة النسخة'}
     );
@@ -294,6 +760,17 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
 
     const okData = await saveData();
     const okPred = await savePredictions();
+
+    let okExtra = true;
+    if(hasExtra){
+      try{
+        const db = _fbInit();
+        await Promise.all(Object.entries(BACKUP_EXTRA_PATHS).map(([key, path])=>
+          db.ref(path).set(parsed.extra[key] === undefined ? null : parsed.extra[key])
+        ));
+      }catch(e){ okExtra = false; }
+    }
+
     renderAll();
     renderPredictions();
     renderMyDashboard();
@@ -302,7 +779,7 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
     const roundNumEl2 = document.getElementById('roundNumber');
     if(roundNumEl2) roundNumEl2.value = getCurrentRoundNumber() + 1;
 
-    msg.innerHTML = (okData && okPred)
+    msg.innerHTML = (okData && okPred && okExtra)
       ? '<div class="status-msg ok">تم استعادة النسخة الاحتياطية بنجاح ✅</div>'
       : '<div class="status-msg err">تعذّرت الاستعادة كاملة، تحقق من الاتصال وحاول مرة ثانية.</div>';
   };

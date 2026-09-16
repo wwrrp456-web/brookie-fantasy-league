@@ -135,6 +135,10 @@ function renderParticipants(){
           ${history.length ? `<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>` : ''}
           ${quickStats.length ? `<div style="display:flex;gap:10px;font-size:0.78rem;color:var(--muted);">${quickStats.map(x=>`<span>${x}</span>`).join('')}</div>` : ''}
           ${fingerprintHTML}
+          ${DATA.participantProfileEnabled !== false ? `
+          <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">📋 الملف الكامل</button>
+          <div class="participant-profile-detail" id="profile-detail-${p.id}" style="display:none;"></div>
+          ` : ''}
         </div>
       </div>
     </div>`;
@@ -148,6 +152,8 @@ function renderParticipants(){
   if(searchInput && searchInput.value.trim()){
     searchInput.dispatchEvent(new Event('input'));
   }
+
+  reopenParticipantProfiles();
 }
 
 // ---------- بحث سريع بالاسم في تبويب المشاركين ----------

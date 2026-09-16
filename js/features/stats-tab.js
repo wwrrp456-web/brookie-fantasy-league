@@ -23,23 +23,48 @@ function renderRecords(){
   box.innerHTML = html;
 }
 
-// ---------- مواجهة مباشرة ----------
+// ---------- مواجهة مباشرة (فُتحت لواجهة المشارك 15 سبتمبر 2026 — ميزة 3 من
+// حزمة التفاعل الاجتماعي؛ كانت خاصة بلوحة المنظم فقط، القسم 9.12-٠) ----------
+// أي زائر مُعرَّف (اختار اسمه ورمزه) يقدر يفتحها ويقارن نفسه بأي خصم، وتُختار
+// "أنت" تلقائيًا كطرف أول أول مرة فقط (بدون كسر اختياره اليدوي لاحقًا). ما
+// زالت متاحة أيضًا للمنظم بلا قيد (كانت كذلك أصلًا)، وأُضيف زر تحميل النتيجة
+// كصورة (نفس آلية downloadElementAsImage المستخدمة بتبويبات أخرى).
 let h2hA = null, h2hB = null;
+let _h2hDefaultedToMe = false;
 
 function renderH2H(){
   const box = document.getElementById('h2hBox');
   if(!box) return;
+
+  const myPid = window._verifiedPid || null;
+  if(!myPid && !isAdmin){
+    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>
+      <span class="rc-locked">🔒 اختر اسمك وأدخل رمزك لفتح المواجهة المباشرة مع أي خصم</span>`;
+    return;
+  }
+
   if(h2hA===null) h2hA = PARTICIPANTS[0].id;
   if(h2hB===null) h2hB = PARTICIPANTS[1].id;
+  if(myPid && !_h2hDefaultedToMe){
+    h2hA = myPid;
+    h2hB = PARTICIPANTS.find(p=>p.id!==myPid).id;
+    _h2hDefaultedToMe = true;
+  }
 
   const options = PARTICIPANTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
   let html = '<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>';
-  html += `<div class="h2h-picker">
-    <select id="h2hSelectA">${options}</select>
-    <span class="h2h-vs">ضد</span>
-    <select id="h2hSelectB">${options}</select>
+  html += `<div id="h2hCapture">
+    <div class="h2h-picker">
+      <select id="h2hSelectA">${options}</select>
+      <span class="h2h-vs">ضد</span>
+      <select id="h2hSelectB">${options}</select>
+    </div>
+    <div id="h2hResult"></div>
   </div>`;
-  html += `<div id="h2hResult"></div>`;
+  html += `<div class="toolbar" style="margin-top:8px;">
+    <button class="btn secondary" id="dlH2HBtn">⬇️ تحميل النتيجة كصورة</button>
+  </div>
+  <div id="h2hImgMsg"></div>`;
   box.innerHTML = html;
 
   const selA = document.getElementById('h2hSelectA');
@@ -48,6 +73,9 @@ function renderH2H(){
   selB.value = h2hB;
   selA.addEventListener('change', ()=>{ h2hA = Number(selA.value); renderH2HResult(); });
   selB.addEventListener('change', ()=>{ h2hB = Number(selB.value); renderH2HResult(); });
+  document.getElementById('dlH2HBtn').addEventListener('click', ()=>{
+    downloadElementAsImage('h2hCapture', `brookie-h2h-${h2hA}-vs-${h2hB}.png`, 'h2hImgMsg', 'dlH2HBtn');
+  });
 
   renderH2HResult();
 }

@@ -225,6 +225,20 @@ function renderStandings(){
   const hasRounds = DATA.rounds.length > 0;
   const mv = getMovements();
 
+  // إعادة ترتيب صفوف الجدول بالحركة (ميزة 14 من حزمة UX/الشكل — أُضيفت 15
+  // سبتمبر 2026): نلتقط موضع كل صف الحالي (بمعرّف المشارك) قبل إعادة البناء،
+  // ثم بعد استبدال innerHTML نطبّق تقنية FLIP (نبدأ الصف بمكانه القديم عبر
+  // transform ثم نُزيله بانتقال سلس) بدل قفزة صفوف الجدول فجأة لمواضعها
+  // الجديدة. يُحترَم prefers-reduced-motion ومفتاح إظهار/إخفاء بلوحة المنظم.
+  const animEnabled = DATA.standingsAnimationEnabled !== false
+    && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const oldRects = {};
+  if(animEnabled && box){
+    box.querySelectorAll('tr.standings-row[data-pid]').forEach(tr=>{
+      oldRects[tr.dataset.pid] = tr.getBoundingClientRect();
+    });
+  }
+
   let html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
   html += `<table class="league-table">
     <thead><tr>
@@ -249,12 +263,12 @@ function renderStandings(){
     const clubs = p.teams.map(t=>clubCrestSVG(t, 19)).join('');
 
     const meCls = (MY_ID === s.id) ? 'is-me' : '';
-    html += `<tr class="${tier} ${i%2?'zebra':''} ${meCls}">
+    html += `<tr class="standings-row ${tier} ${i%2?'zebra':''} ${meCls}" data-pid="${s.id}">
       <td class="pos-cell">${pos}</td>
       <td>${movementHTML(mv[s.id])}</td>
       <td class="team-cell">
         <div>
-          <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}</div>
+          <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}<span class="name-reaction-slot" data-pid="${s.id}"></span></div>
           ${championDefensePathHTML(s.id)}
           <div class="team-cell-clubs">${clubs}</div>
         </div>
@@ -316,6 +330,31 @@ function renderStandings(){
     html += '<p style="color:var(--muted);font-size:0.78rem;margin:10px 2px 0;">النقاط الحالية من كشف المطابقة المعتمد. عمود «جديد» يبدأ بالتحرك مع أول جولة تُسجَّل.</p>';
   }
   box.innerHTML = html;
+
+  if(animEnabled && Object.keys(oldRects).length){
+    // بعض بيئات الاختبار (jsdom) لا تنفّذ requestAnimationFrame — نتراجع
+    // لـsetTimeout بمهلة تقارب إطار شاشة واحد بدل رمي استثناء يوقف renderStandings.
+    const raf = (typeof requestAnimationFrame === 'function') ? requestAnimationFrame : (cb=>setTimeout(cb,16));
+    raf(()=>{
+      box.querySelectorAll('tr.standings-row[data-pid]').forEach(tr=>{
+        const old = oldRects[tr.dataset.pid];
+        if(!old) return; // مشارك جديد بلا موضع سابق — يظهر بمكانه مباشرة بلا حركة
+        const newRect = tr.getBoundingClientRect();
+        const dy = old.top - newRect.top;
+        if(Math.abs(dy) < 1) return;
+        tr.style.transition = 'none';
+        tr.style.transform = `translateY(${dy}px)`;
+        raf(()=>{
+          tr.style.transition = 'transform 0.4s ease';
+          tr.style.transform = '';
+          tr.addEventListener('transitionend', function cleanup(){
+            tr.style.transition = '';
+            tr.removeEventListener('transitionend', cleanup);
+          });
+        });
+      });
+    });
+  }
 }
 
 // ---------- Refresh (manual re-read of all rounds & re-rank) ----------
