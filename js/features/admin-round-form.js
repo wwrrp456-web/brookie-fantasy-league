@@ -94,9 +94,12 @@ function collectRoundFormEntries(){
     const pid = Number(teamBlock.dataset.pid);
     const ti = Number(teamBlock.dataset.ti);
     const result = row.querySelector('.res-select').value;
-    const gf = Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
-    const ga = Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
-    const opp = getOppValue(row);
+    const isNoMatch = result === 'no_match';
+    // "لا توجد مباراة": لا معنى لخصم أو أهداف، فتُحفظ صفرًا/فارغة دائمًا بصرف
+    // النظر عمّا تبقّى بحقول معطّلة قد تحمل قيمًا سابقة قبل اختيار هذا الخيار.
+    const gf = isNoMatch ? 0 : Math.max(0, parseInt(row.querySelector('.gf-input').value) || 0);
+    const ga = isNoMatch ? 0 : Math.max(0, parseInt(row.querySelector('.ga-input').value) || 0);
+    const opp = isNoMatch ? '' : getOppValue(row);
     if(!entries[pid]) entries[pid] = [];
     entries[pid].push({ti, opp: opp || null, result, gf, ga});
   });
@@ -198,7 +201,9 @@ function mirrorInternalOpponent(sourceTeamBlock){
     const opp = getOppValue(row);
     if(!opp || opp === club || !CLUBS.includes(opp)) return;
     const result = row.querySelector('.res-select').value;
-    if(!result) return;
+    // "لا توجد مباراة" ليست مباراة حقيقية بين طرفين، فلا تُعكَس/تُنسخ على أي
+    // خصم — تسجيل مستقل بحت لكل صندوق نادٍ (طلب المستخدم 16 سبتمبر 2026).
+    if(!result || result === 'no_match') return;
     const gf = row.querySelector('.gf-input').value;
     const ga = row.querySelector('.ga-input').value;
     const invResult = invertMatchResult(result);
@@ -272,6 +277,7 @@ function recomputeRoundCompletion(){
 // بالأسفل) — خصم بنص حر لا يمكن مطابقته بنادٍ آخر فلا يُشغّلها.
 function matchRowHTML(prev, club){
   const selResult = prev ? prev.result : '';
+  const isNoMatch = selResult === 'no_match';
   const gf = prev ? prev.gf : '';
   const ga = prev ? prev.ga : '';
   const opp = prev && prev.opp ? prev.opp : '';
@@ -279,9 +285,14 @@ function matchRowHTML(prev, club){
   const oppOptions = CLUBS.filter(c=>c!==club).map(c=>
     `<option value="${c}" ${opp===c?'selected':''}>${c}</option>`
   ).join('');
+  // خيار "لا توجد مباراة هذه الجولة": لبعض الأندية بعض الجولات بلا أي مباراة
+  // فعلية (استراحة/تأجيل)، فيحتاج المنظم طريقة لتسجيل ذلك صراحة بدل ترك النتيجة
+  // فارغة (يمنع حفظ الجولة) أو اختيار نتيجة غير حقيقية (يُفسد الترتيب/الممات/
+  // السلاسل وإحصائيات النادي) — طلب المستخدم 16 سبتمبر 2026. حقول الأهداف
+  // تُعطَّل وتُصفَّر تلقائيًا عند اختياره لأنها بلا معنى بلا مباراة فعلية.
   return `<div class="team-input-row">
     <div class="opp-field">
-      <select class="opp-select">
+      <select class="opp-select" ${isNoMatch?'disabled':''}>
         <option value="" ${!opp?'selected':''}>اختر الخصم (اختياري)</option>
         ${oppOptions}
         <option value="__other__" ${isCustomOpp?'selected':''}>غير ذلك (فريق خارج القائمة)</option>
@@ -293,11 +304,25 @@ function matchRowHTML(prev, club){
       <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
       <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option>
       <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option>
+      <option value="no_match" ${isNoMatch?'selected':''}>⏸️ لا توجد مباراة هذه الجولة</option>
     </select>
-    <input type="number" class="gf-input" placeholder="له" min="0" value="${gf}">
-    <input type="number" class="ga-input" placeholder="عليه" min="0" value="${ga}">
+    <input type="number" class="gf-input" placeholder="له" min="0" value="${isNoMatch?0:gf}" ${isNoMatch?'disabled':''}>
+    <input type="number" class="ga-input" placeholder="عليه" min="0" value="${isNoMatch?0:ga}" ${isNoMatch?'disabled':''}>
     <button type="button" class="remove-match-btn" title="حذف هذه المباراة">✕</button>
   </div>`;
+}
+
+// يفعّل/يعطّل حقول الخصم والأهداف بصفّ مباراة تبعًا لاختيار "لا توجد مباراة
+// هذه الجولة" — تُستدعى عند بناء الصف (matchRowHTML يضبط الحالة الابتدائية
+// فقط) وعند أي تغيير حيّ لاحق بقائمة النتيجة.
+function applyNoMatchRowState(row){
+  const isNoMatch = row.querySelector('.res-select').value === 'no_match';
+  const oppSelect = row.querySelector('.opp-select');
+  const gfInput = row.querySelector('.gf-input');
+  const gaInput = row.querySelector('.ga-input');
+  if(oppSelect) oppSelect.disabled = isNoMatch;
+  if(gfInput){ gfInput.disabled = isNoMatch; if(isNoMatch) gfInput.value = 0; }
+  if(gaInput){ gaInput.disabled = isNoMatch; if(isNoMatch) gaInput.value = 0; }
 }
 
 // قيمة الخصم الفعلية لصفّ ما: اسم النادي من القائمة، أو نص الحقل الحر لو
@@ -433,6 +458,8 @@ document.getElementById('roundFormBox').addEventListener('change', (e)=>{
     return;
   }
   if(e.target.matches('.res-select')){
+    const row = e.target.closest('.team-input-row');
+    if(row) applyNoMatchRowState(row);
     const teamBlock = e.target.closest('.team-block');
     if(teamBlock){ syncSharedClub(teamBlock); mirrorInternalOpponent(teamBlock); }
     return;

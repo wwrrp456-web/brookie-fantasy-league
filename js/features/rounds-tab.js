@@ -370,8 +370,9 @@ function toggleExpand(pid){
   if(row) row.style.display = row.style.display==='table-row' ? 'none' : 'table-row';
 }
 
-// شارة نتيجة صغيرة (فوز/تعادل/خسارة) بلون مناسب
+// شارة نتيجة صغيرة (فوز/تعادل/خسارة/لا توجد مباراة) بلون مناسب
 function r2ResBadge(res){
+  if(res==='no_match') return `<span class="r2-res-nomatch">⏸️ ${RESULT_LABEL[res]}</span>`;
   const cls = res==='win' ? 'r2-res-win' : res==='draw' ? 'r2-res-draw' : 'r2-res-loss';
   return `<span class="${cls}">${RESULT_LABEL[res]}</span>`;
 }
@@ -511,7 +512,7 @@ function renderRounds(){
         html += `<div class="r2-card${isChamp?' is-champion':''}">
           <div class="r2-head">
             <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-            <div class="r2-pts">${s.points} نقطة${s.points===0?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
+            <div class="r2-pts">${s.points} نقطة${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
           </div>
           <div class="r2-clubs">
             ${p.teams.map((t,ti)=>{
@@ -522,7 +523,9 @@ function renderRounds(){
                 ${clubCrestSVG(t, 26)}
                 <div class="r2-club-matches">
                   <div class="r2-club-name">${t}</div>
-                  ${es.length ? es.map(e=>`
+                  ${es.length ? es.map(e=> e.result==='no_match' ? `
+                    <div class="r2-match-line">${r2ResBadge(e.result)}</div>
+                  ` : `
                     <div class="r2-match-line">${e.opp?e.opp+' · ':''}${r2ResBadge(e.result)} <b>${Number(e.gf)||0}-${Number(e.ga)||0}</b></div>
                   `).join('') : `<div class="r2-match-line">لا يوجد تسجيل لهذه الجولة بعد</div>`}
                 </div>
