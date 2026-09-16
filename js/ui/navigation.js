@@ -32,7 +32,10 @@ function renderUpdateDot(){
 // ---------- Rendering ----------
 function renderAll(){
   renderHeroes();
+  renderRoundStoryCard();
+  renderWhatsNewCard();
   renderStandings();
+  renderNameReactions();
   renderHonorBoard();
   renderBadges();
   renderWeeklyDuels();
@@ -59,9 +62,20 @@ function renderAll(){
   renderClubMap();
   renderPredChallenge();
   renderRoundComments();
+  renderRoundWall();
   renderRoundChallenge();
+  renderRoundPoll();
   renderRecords();
+  renderSubGroups();
+  renderHotColdStreaks();
+  renderBadgeToast();
+  renderClubSwapLab();
+  renderPersonalStatusBar();
+  renderLiveFocusToggleButton();
+  renderLiveFocusMode();
   renderH2H();
+  renderSeasonDuel();
+  renderMySeasonDuels();
   renderPredictionAccuracy();
   renderClubStats();
   renderUpdatedChip();
