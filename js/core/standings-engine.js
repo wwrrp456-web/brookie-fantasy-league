@@ -1,7 +1,7 @@
 /* منطق حساب الترتيب والحركة وفواصل التعادل (بدون أي تعامل مع DOM) */
 
-const RESULT_POINTS = {win:3, draw:1, loss:0};
-const RESULT_LABEL = {win:'فوز', draw:'تعادل', loss:'خسارة'};
+const RESULT_POINTS = {win:3, draw:1, loss:0, no_match:0};
+const RESULT_LABEL = {win:'فوز', draw:'تعادل', loss:'خسارة', no_match:'لا توجد مباراة'};
 function getCurrentRoundNumber(){
   return DATA.rounds.length ? DATA.rounds[DATA.rounds.length-1].number : CURRENT_BASE_ROUND;
 }
@@ -116,8 +116,14 @@ function computeStandings(upTo){
   return list;
 }
 
+// "لعب فعليًا هذه الجولة" — يستثني تسجيلات "لا توجد مباراة" (no_match) من
+// الاحتساب، حتى لا يُعامَل مشارك ناديه (أو كل أنديته) بلا مباراة هذه الجولة
+// كأنه لعب وسجّل صفر نقطة (ممة وهمية) أو يُكسر سلسلته بلا سبب حقيقي (طلب
+// المستخدم 16 سبتمبر 2026 — خيار "لا توجد مباراة هذه الجولة" بنموذج الجولة).
 function round_has_entries(round, pid){
-  return round.entries && round.entries[pid] && round.entries[pid].length>0;
+  const es = round.entries && round.entries[pid];
+  if(!es || !es.length) return false;
+  return es.some(e=> e && e.result !== 'no_match');
 }
 
 

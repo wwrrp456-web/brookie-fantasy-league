@@ -110,11 +110,16 @@ function getRoundHeroes(){
 
   let top = null, mummat = [], bestStreak = null;
   let maxPts = -Infinity;
+  // آخر جولة حقيقية (إن وُجدت) — تُستخدم لاستثناء مشارك بلا مباراة فعلية هذه
+  // الجولة (كل أنديته "لا توجد مباراة") من قائمة "ممات الجولة"، بدل عدّه كأنه
+  // لعب وسجّل صفرًا (طلب المستخدم 16 سبتمبر 2026).
+  const lastRoundForHeroes = DATA.rounds.length ? DATA.rounds[DATA.rounds.length-1] : null;
   PARTICIPANTS.forEach(p=>{
     const pts = roundPoints[p.id];
     if(pts > maxPts) maxPts = pts;
     if((!JOINED_AFTER_ROUND1[p.id] && !JOINED_AFTER_ROUND2[p.id]) || DATA.rounds.length>0){
-      if(pts===0) mummat.push(p.name);
+      const playedThisRound = lastRoundForHeroes ? round_has_entries(lastRoundForHeroes, p.id) : true;
+      if(pts===0 && playedThisRound) mummat.push(p.name);
     }
   });
 
@@ -166,7 +171,10 @@ function getClubRoundResults(clubName){
     // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) — هذه مباريات
     // حقيقية متعددة لنفس المالك، فتُحتسب كلها (ليست تكرارًا).
     getTeamRoundEntries(entries, idx).forEach(e=>{
-      if(e && e.result) results.push(e.result);
+      // "لا توجد مباراة" (no_match) ليست مباراة فعلية لهذا النادي — تُستثنى من
+      // عدّاد "لعب X مباراة" وإحصائيات الأداء، وإلا احتُسب النادي كأنه خسر/تعادل
+      // في جولة لم يخض فيها أصلًا (طلب المستخدم 16 سبتمبر 2026).
+      if(e && e.result && e.result !== 'no_match') results.push(e.result);
     });
   });
   return results;
