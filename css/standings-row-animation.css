@@ -1,0 +1,5 @@
+/* إعادة ترتيب صفوف الجدول بالحركة (ميزة 14 من حزمة UX/الشكل — أُضيفت 15 سبتمبر 2026) */
+tr.standings-row{will-change:transform;}
+@media (prefers-reduced-motion: reduce){
+  tr.standings-row{transition:none !important; transform:none !important;}
+}

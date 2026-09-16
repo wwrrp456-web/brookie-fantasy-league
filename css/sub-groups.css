@@ -1,0 +1,13 @@
+/* المجموعات الفرعية (ميزة 9 من حزمة العمق التنافسي — أُضيفت 15 سبتمبر 2026) */
+.sub-groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.sub-group-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;}
+.sub-group-title{font-size:0.86rem;font-weight:800;color:var(--text);margin-bottom:8px;}
+.sub-group-list{display:flex;flex-direction:column;gap:5px;}
+.sub-group-row{display:flex;align-items:center;gap:8px;font-size:0.8rem;}
+.sub-group-rank{min-width:20px;height:20px;border-radius:6px;background:rgba(123,92,255,0.18);color:var(--text2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.7rem;}
+.sub-group-name{flex:1;color:var(--text);}
+.sub-group-total{font-weight:800;color:var(--gold);}
+
+.sub-group-admin-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);}
+.sub-group-member-check{display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;margin:3px 8px 3px 0;color:var(--text2);}
+#subGroupMembersCheckboxes{display:flex;flex-wrap:wrap;margin-bottom:8px;}

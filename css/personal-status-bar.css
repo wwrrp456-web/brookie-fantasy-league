@@ -1,0 +1,20 @@
+/* شريط الحالة الشخصية الثابت (ميزة 13 من حزمة UX/الشكل — أُضيفت 15 سبتمبر 2026) */
+#statusBarBox{position:fixed;bottom:0;right:0;left:0;z-index:500;pointer-events:none;}
+.status-bar-inner{pointer-events:auto;background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,0.18);padding:8px 14px;display:flex;align-items:center;gap:10px;max-width:900px;margin:0 auto;transition:transform .2s ease;}
+.status-bar-inner.collapsed{transform:translateY(calc(100% - 34px));}
+.status-bar-toggle{background:none;border:none;color:var(--muted);font-size:0.85rem;cursor:pointer;padding:4px 8px;flex-shrink:0;}
+.status-bar-content{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:0.82rem;color:var(--text);flex:1;min-width:0;}
+.status-bar-name{font-weight:800;}
+.status-bar-sep{color:var(--muted);}
+.status-bar-rank{color:var(--gold);font-weight:800;}
+.status-bar-total{font-weight:700;}
+.status-bar-last.pos{color:#2ECC71;font-weight:700;}
+.status-bar-last.neg{color:var(--coral);font-weight:700;}
+
+/* مساحة أسفل الصفحة عشان الشريط الثابت ما يغطي آخر محتوى بأي تبويب */
+body.has-status-bar{padding-bottom:52px;}
+body.has-status-bar.status-bar-collapsed{padding-bottom:34px;}
+
+@media (max-width:480px){
+  .status-bar-content{font-size:0.76rem;}
+}

@@ -1,0 +1,17 @@
+/* قصة الجولة الساخرة (ميزة 5 من حزمة المحتوى الطازج — أُضيفت 15 سبتمبر 2026) */
+.round-story-card{
+  background:linear-gradient(135deg,rgba(122,82,238,0.12),rgba(255,193,7,0.08));
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-top:10px;
+}
+.round-story-icon{font-size:1.4rem;line-height:1;flex-shrink:0;}
+.round-story-text{font-size:0.86rem;line-height:1.7;color:var(--text);font-weight:600;}
+
+@media (max-width:480px){
+  .round-story-card{flex-direction:column;align-items:stretch;}
+}

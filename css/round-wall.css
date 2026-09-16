@@ -1,0 +1,47 @@
+/* جدار الجولة (ميزة 1 من حزمة التفاعل الاجتماعي — 15 سبتمبر 2026) */
+
+.round-wall-section{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
+.round-wall-title{font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:4px;}
+
+.wall-add-form{margin-bottom:12px;}
+.wall-input{
+  width:100%;box-sizing:border-box;resize:vertical;min-height:44px;
+  padding:9px 11px;border:1px solid var(--line);border-radius:8px;
+  background:var(--paper);color:var(--text);font-family:inherit;font-size:0.85rem;
+}
+.wall-form-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;}
+.wall-char-count{font-size:0.72rem;color:var(--muted);}
+.wall-submit-btn{padding:7px 18px;font-size:0.82rem;}
+
+.wall-messages-list{display:flex;flex-direction:column;gap:8px;}
+.wall-empty{font-size:0.78rem;color:var(--muted);padding:6px 2px;}
+
+.wall-message-item{
+  padding:9px 11px;border-radius:10px;background:rgba(255,255,255,0.04);
+  border:1px solid var(--line);
+}
+.wall-message-head{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.wall-message-author{font-weight:700;font-size:0.8rem;color:var(--sky);}
+.wall-message-time{font-size:0.68rem;color:var(--muted);margin-inline-start:auto;}
+.wall-delete-btn{
+  background:none;border:none;cursor:pointer;font-size:0.85rem;padding:2px 4px;
+  line-height:1;opacity:0.75;
+}
+.wall-delete-btn:hover{opacity:1;}
+.wall-message-text{font-size:0.85rem;color:var(--text);line-height:1.5;word-break:break-word;white-space:pre-wrap;}
+
+.wall-message-reactions{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.wall-reaction-btn{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 8px;border-radius:999px;border:1px solid var(--line);
+  background:var(--paper);color:var(--text2);font-size:0.82rem;cursor:pointer;
+  transition:transform 0.1s ease, border-color 0.15s ease;
+}
+.wall-reaction-btn:hover{transform:scale(1.06);}
+.wall-reaction-btn.mine{border-color:var(--gold);background:rgba(123,92,255,0.14);}
+.wall-reaction-count{font-size:0.7rem;font-weight:700;color:var(--muted);}
+.wall-reaction-btn.mine .wall-reaction-count{color:var(--gold);}
+
+@media (prefers-reduced-motion:reduce){
+  .wall-reaction-btn{transition:none;}
+}

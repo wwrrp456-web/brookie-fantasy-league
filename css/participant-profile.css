@@ -1,0 +1,17 @@
+/* الملف الشخصي الكامل للمشارك (ميزة 7 من حزمة المحتوى الطازج — أُضيفت 15 سبتمبر 2026) */
+.participant-profile-detail{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;}
+.profile-detail-title{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:10px;}
+.profile-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.profile-col-title{font-size:0.78rem;font-weight:800;color:var(--muted);margin-bottom:6px;}
+.profile-history-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+.profile-history-table th,.profile-history-table td{padding:4px 6px;text-align:center;border-bottom:1px solid var(--line);}
+.profile-history-table tr.profile-row-mumma td{color:var(--coral);}
+.profile-history-table tr.profile-row-great td{color:var(--gold);font-weight:800;}
+.profile-badges-list{display:flex;flex-direction:column;gap:6px;}
+.profile-badge-row{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text2);}
+.profile-badge-icon{font-size:1rem;}
+.profile-duel-record{font-size:0.8rem;font-weight:700;color:var(--text);}
+
+@media (max-width:520px){
+  .profile-detail-grid{grid-template-columns:1fr;}
+}

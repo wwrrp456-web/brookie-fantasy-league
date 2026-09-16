@@ -1,0 +1,6 @@
+/* أوسمة تلقائية (ميزة 11 من حزمة العمق التنافسي — أُضيفت 15 سبتمبر 2026) */
+.badge-toast-wrap{background:linear-gradient(135deg,rgba(255,193,7,0.16),rgba(255,107,53,0.1));border:1px solid var(--gold);border-radius:14px;padding:14px 16px;margin:10px 0;}
+.badge-toast{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.badge-toast-icon{font-size:1.6rem;flex-shrink:0;}
+.badge-toast-title{font-size:0.86rem;font-weight:800;color:var(--gold);}
+.badge-toast-detail{font-size:0.76rem;color:var(--text2);}

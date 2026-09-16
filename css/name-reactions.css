@@ -1,0 +1,24 @@
+/* ردود فعل الأسماء بجدول الترتيب (ميزة 2 من حزمة التفاعل الاجتماعي — 15 سبتمبر 2026) */
+
+.name-reaction-slot{position:relative;display:inline-block;margin-inline-start:4px;vertical-align:middle;}
+
+.name-reaction-badge{
+  display:inline-flex;align-items:center;gap:2px;
+  background:none;border:none;cursor:pointer;padding:0 2px;
+  font-size:0.72rem;line-height:1;opacity:0.55;vertical-align:middle;
+}
+.name-reaction-badge.has-count{opacity:1;}
+.nr-count{font-size:0.62rem;font-weight:800;color:var(--sky);}
+
+.name-reaction-picker{
+  position:absolute;top:100%;inset-inline-start:0;z-index:20;
+  display:flex;gap:3px;padding:4px 5px;margin-top:3px;
+  background:var(--ink2, var(--paper));border:1px solid var(--line);
+  border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,0.28);
+  white-space:nowrap;
+}
+.nr-pick-btn{
+  background:none;border:none;cursor:pointer;font-size:0.95rem;
+  padding:2px 3px;border-radius:5px;line-height:1;
+}
+.nr-pick-btn:hover{background:rgba(255,255,255,0.08);}

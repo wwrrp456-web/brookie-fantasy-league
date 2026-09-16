@@ -1,0 +1,24 @@
+/* وضع المباراة المباشرة المُركَّز (ميزة 15 من حزمة UX/الشكل — أُضيفت 15 سبتمبر 2026) */
+#liveFocusOverlay:empty{display:none;}
+#liveFocusOverlay{position:fixed;inset:0;z-index:2000;background:radial-gradient(circle at 50% 20%,#1a0533,#05030f 70%);display:flex;align-items:center;justify-content:center;padding:24px 16px;overflow-y:auto;}
+body.live-focus-active{overflow:hidden;}
+
+.live-focus-inner{width:100%;max-width:520px;text-align:center;}
+.live-focus-close{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:50%;width:38px;height:38px;font-size:1rem;cursor:pointer;}
+.live-focus-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,68,56,0.16);border:1px solid #FF4438;color:#FF8A80;border-radius:20px;padding:6px 14px;font-size:0.8rem;font-weight:800;margin-bottom:16px;}
+.live-focus-dot{width:8px;height:8px;border-radius:50%;background:#FF4438;animation:liveFocusPulse 1.4s ease-in-out infinite;}
+@keyframes liveFocusPulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.live-focus-hero{color:#E0C4FF;font-size:1rem;font-weight:800;margin-bottom:20px;}
+.live-focus-list{display:flex;flex-direction:column;gap:8px;}
+.live-focus-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 16px;color:#fff;}
+.live-focus-row.first{background:rgba(255,193,7,0.14);border-color:rgba(255,193,7,0.4);}
+.live-focus-rank{min-width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.85rem;}
+.live-focus-name{flex:1;text-align:right;font-weight:800;font-size:1rem;}
+.live-focus-arrow{font-size:0.75rem;font-weight:800;}
+.live-focus-arrow.up{color:#2ECC71;}
+.live-focus-arrow.down{color:#FF6B6B;}
+.live-focus-total{font-weight:900;font-size:1.1rem;color:#FFC107;min-width:40px;text-align:left;}
+
+@media (prefers-reduced-motion: reduce){
+  .live-focus-dot{animation:none;}
+}

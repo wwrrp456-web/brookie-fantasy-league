@@ -1,0 +1,14 @@
+/* سؤال/استطلاع الجولة (ميزة 8 من حزمة المحتوى الطازج — أُضيفت 15 سبتمبر 2026) */
+.round-poll-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;}
+.round-poll-question{font-size:0.92rem;font-weight:800;color:var(--text);margin-bottom:12px;}
+.round-poll-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.round-poll-my-vote{font-size:0.86rem;color:var(--text2);margin-bottom:12px;}
+.round-poll-my-vote strong{color:var(--gold);}
+.round-poll-results{display:flex;flex-direction:column;gap:8px;}
+.round-poll-result-row{display:flex;flex-direction:column;gap:3px;}
+.round-poll-result-label{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--text);}
+.round-poll-bar-track{height:8px;background:var(--cream);border-radius:4px;overflow:hidden;}
+.round-poll-bar-fill{height:100%;background:var(--gold);border-radius:4px;}
+
+.round-poll-admin-form textarea,
+.round-poll-admin-form input[type="text"]{width:100%;background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-family:inherit;font-size:0.84rem;margin-bottom:8px;}

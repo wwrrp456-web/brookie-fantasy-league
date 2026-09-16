@@ -1,0 +1,12 @@
+/* بطاقات "اللي فاتك" (ميزة 6 من حزمة المحتوى الطازج — أُضيفت 15 سبتمبر 2026) */
+.whats-new-card{
+  background:var(--paper);
+  border:1px solid var(--gold);
+  border-radius:14px;
+  padding:14px 16px;
+  margin:10px 0;
+}
+.whats-new-title{font-size:0.95rem;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.whats-new-body{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.whats-new-line{font-size:0.84rem;color:var(--text);line-height:1.6;}
+.whats-new-line strong{color:var(--gold);}

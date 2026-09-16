@@ -1,0 +1,7 @@
+/* سلاسل الحظ الساخن/البارد (ميزة 10 من حزمة العمق التنافسي — أُضيفت 15 سبتمبر 2026) */
+.streaks-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.streak-card{display:flex;align-items:center;gap:6px;border-radius:20px;padding:6px 12px;font-size:0.78rem;font-weight:700;border:1px solid var(--line);}
+.streak-hot{background:rgba(255,107,53,0.14);color:#FF6B35;border-color:rgba(255,107,53,0.35);}
+.streak-cold{background:rgba(58,157,255,0.14);color:#3A9DFF;border-color:rgba(58,157,255,0.35);}
+.streak-icon{font-size:1rem;}
+.streak-name{color:var(--text);}
