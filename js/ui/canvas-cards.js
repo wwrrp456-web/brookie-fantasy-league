@@ -796,6 +796,176 @@ async function downloadStandingsStoryImage(){
   }
 }
 
+// ---------- كرت الملف الشخصي الكامل لمشارك (صورة قابلة للمشاركة) ----------
+// يستبدل التقاط لقطة DOM الخام لصندوق الملف الشخصي (كانت النتيجة تبدو كواجهة
+// عامة غير منظمة) بكرت canvas مرسوم يدويًا بنفس هوية باقي الكروت (بطل الجولة/
+// الترتيب/ملخص الموسم): خلفية متدرجة داكنة، إطار بنفسجي مدوّر، علامة الشعار.
+async function buildParticipantProfileCard(pid){
+  const p = PARTICIPANTS.find(x=>x.id===pid);
+  if(!p) return null;
+
+  const st = computeStandings();
+  const rank = st.findIndex(s=>s.id===pid)+1;
+  const row = st.find(s=>s.id===pid) || {total:0, mummaCount:0, bestStreak:0};
+  const history = (typeof buildParticipantHistory === 'function') ? buildParticipantHistory(pid) : [];
+
+  const allBadges = [...computeBadges(), ...computeExtendedBadges()];
+  const myBadges = allBadges.filter(b=> b.names.split('، ').includes(p.name));
+
+  const duelRecord = (typeof _profileSeasonDuelRecord === 'function') ? _profileSeasonDuelRecord(pid) : null;
+
+  // آخر N جولات فقط بالشريط (المساحة محدودة بكرت مربّع) — الأحدث يمين لأن
+  // الاتجاه RTL، مطابقة لترتيب الأعمدة بكروت الترتيب الأخرى بهذا الملف.
+  const recentHistory = history.slice(-8);
+
+  const W = 1080;
+  const headH = 300;
+  const statsH = 150;
+  const stripH = recentHistory.length ? 190 : 0;
+  const badgesRowH = 74;
+  const badgesH = 70 + Math.max(1, myBadges.length ? Math.ceil(myBadges.length/2) : 1) * badgesRowH;
+  const duelH = duelRecord ? 90 : 0;
+  const footH = 90;
+  const H = headH + statsH + stripH + badgesH + duelH + footH;
+
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+
+  // خلفية متدرجة (نفس هوية باقي الكروت)
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  ctx.save(); ctx.globalAlpha=0.06; ctx.translate(W/2,240);
+  for(let i=0;i<12;i++){
+    ctx.rotate(Math.PI/6);
+    ctx.fillStyle='#16A6EA';
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-45,-620); ctx.lineTo(45,-620); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+
+  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
+  drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
+
+  await drawCardBrandMark(ctx, W);
+
+  ctx.textAlign='center';
+
+  // ---------- 1) الهيدر: العنوان + الاسم + المركز/النقاط ----------
+  ctx.fillStyle='#9B7BF5'; ctx.font='700 30px Tajawal, Arial';
+  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 70);
+  ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(120,92); ctx.lineTo(W-120,92); ctx.stroke();
+
+  ctx.fillStyle='#16A6EA'; ctx.font='800 32px Tajawal, Arial';
+  ctx.fillText('📋 الملف الشخصي', W/2, 140);
+
+  ctx.fillStyle='#FFFFFF';
+  const nameSize = fitFontSize(ctx, p.name, W-120, {size:66, weight:'800', family:'Tajawal, Arial'}, 34);
+  ctx.font = `800 ${nameSize}px Tajawal, Arial`;
+  ctx.fillText(p.name, W/2, 210);
+
+  if(p.teams && p.teams.length){
+    ctx.fillStyle='#A9A8D6'; ctx.font='600 26px Tajawal, Arial';
+    const teamsTxt = p.teams.join('  ·  ');
+    const teamsSize = fitFontSize(ctx, teamsTxt, W-160, {size:26, weight:'600', family:'Tajawal, Arial'}, 18);
+    ctx.font = `600 ${teamsSize}px Tajawal, Arial`;
+    ctx.fillText(teamsTxt, W/2, 254);
+  }
+
+  // ---------- 2) شريط الإحصاءات الأساسية ----------
+  let y = headH;
+  ctx.fillStyle='rgba(255,255,255,0.05)';
+  drawRoundedRect(ctx,60,y,W-120,statsH-30,16); ctx.fill();
+
+  const statCells = [
+    {v:`${rank||'—'}`, l:'المركز العام'},
+    {v:`${row.total}`, l:'إجمالي النقاط'},
+    {v:`${row.mummaCount}`, l:'الممات'},
+    {v:`${row.bestStreak}`, l:'أفضل سلسلة'}
+  ];
+  statCells.forEach((cell,i)=>{
+    const cx = 60 + (W-120)/8 + i*((W-120)/4);
+    ctx.fillStyle='#16A6EA'; ctx.font='800 42px Tajawal, Arial';
+    ctx.fillText(cell.v, cx, y+58);
+    ctx.fillStyle='#9C9BC9'; ctx.font='600 20px Tajawal, Arial';
+    ctx.fillText(cell.l, cx, y+92);
+  });
+
+  // ---------- 3) شريط تاريخ آخر الجولات ----------
+  y += statsH;
+  if(recentHistory.length){
+    ctx.fillStyle='#A9A8D6'; ctx.font='700 24px Tajawal, Arial';
+    ctx.fillText('تاريخ آخر الجولات', W/2, y+34);
+
+    const n = recentHistory.length;
+    const areaX = 60, areaW = W-120;
+    const colW = areaW / n;
+    // الأحدث يمين (RTL): نعكس ترتيب الرسم فقط، بلا تغيير بيانات المصدر.
+    const ordered = recentHistory.slice().reverse();
+    ordered.forEach((h,i)=>{
+      const cx = areaX + colW*i + colW/2;
+      const boxX = areaX + colW*i + 8, boxW = colW-16, boxY = y+55, boxH = 90;
+      const isMumma = h.points===0;
+      const isGreat = h.points>=10;
+      ctx.fillStyle = isMumma ? 'rgba(255,107,94,0.14)' : isGreat ? 'rgba(61,212,126,0.14)' : 'rgba(255,255,255,0.05)';
+      drawRoundedRect(ctx, boxX, boxY, boxW, boxH, 12); ctx.fill();
+      ctx.strokeStyle = isMumma ? 'rgba(255,107,94,0.4)' : isGreat ? 'rgba(61,212,126,0.4)' : 'rgba(255,255,255,0.12)';
+      ctx.lineWidth=1.5;
+      drawRoundedRect(ctx, boxX, boxY, boxW, boxH, 12); ctx.stroke();
+
+      ctx.fillStyle = isMumma ? '#FF6B5E' : isGreat ? '#3DD47E' : '#FFFFFF';
+      ctx.font='800 30px Tajawal, Arial';
+      ctx.fillText(`${h.points}`, cx, boxY+42);
+      ctx.fillStyle='#7B7AA8'; ctx.font='600 18px Tajawal, Arial';
+      ctx.fillText(`ج${h.number}`, cx, boxY+70);
+    });
+  }
+
+  // ---------- 4) الأوسمة الشخصية ----------
+  y += stripH;
+  ctx.fillStyle='#A9A8D6'; ctx.font='700 26px Tajawal, Arial';
+  ctx.fillText('🏅 أوسمته الشخصية', W/2, y+38);
+
+  if(myBadges.length){
+    const cols = 2;
+    const cellW = (W-120)/cols;
+    myBadges.forEach((b,i)=>{
+      const col = i % cols, rowI = Math.floor(i/cols);
+      const bx = 60 + col*cellW, by = y+62 + rowI*badgesRowH;
+      ctx.fillStyle='rgba(255,255,255,0.05)';
+      drawRoundedRect(ctx, bx+10, by, cellW-20, badgesRowH-14, 12); ctx.fill();
+      ctx.textAlign='center';
+      ctx.font='30px serif';
+      ctx.fillText(b.icon||'🏅', bx+cellW/2, by+38);
+      ctx.fillStyle='#FFFFFF'; ctx.font='700 19px Tajawal, Arial';
+      const label = fitFontSize(ctx, b.title, cellW-90, {size:19, weight:'700', family:'Tajawal, Arial'}, 14);
+      ctx.font = `700 ${label}px Tajawal, Arial`;
+      ctx.fillText(b.title, bx+cellW/2+22, by+38);
+    });
+  } else {
+    ctx.fillStyle='#7B7AA8'; ctx.font='600 22px Tajawal, Arial';
+    ctx.fillText('لا أوسمة شخصية بعد', W/2, y+76);
+  }
+
+  // ---------- 5) سجل نزال الموسم (إن وُجد) ----------
+  y += badgesH;
+  if(duelRecord){
+    ctx.fillStyle='#A9A8D6'; ctx.font='700 24px Tajawal, Arial';
+    ctx.fillText('🥊 سجل نزال الموسم', W/2, y+30);
+    ctx.fillStyle='#FFFFFF'; ctx.font='800 26px Tajawal, Arial';
+    const txt = `${duelRecord.wins} فوز · ${duelRecord.losses} خسارة · ${duelRecord.ties} تعادل${duelRecord.active?` · ${duelRecord.active} جارٍ`:''}`;
+    ctx.fillText(txt, W/2, y+64);
+  }
+
+  // ---------- 6) التذييل ----------
+  ctx.fillStyle='#7B7AA8'; ctx.font='600 22px Tajawal, Arial';
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-32);
+
+  return cv;
+}
+
 // ---------- تحميل أي تبويب (المشاركون / الجولات / الإحصائيات / اللائحة) كصورة ----------
 // دالة عامة تلتقط عنصر DOM حقيقي (وليس رسمًا يدويًا على canvas) عبر html2canvas،
 // لأن محتوى هذه التبويبات متغيّر الطول والشكل (قوائم، جداول، كروت مباريات...)
