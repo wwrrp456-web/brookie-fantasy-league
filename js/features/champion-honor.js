@@ -166,7 +166,10 @@ function handleChampionIdentityWelcome(id){
 // (logAdminActivity نفسها مقيّدة بـisAdmin أصلًا)، ومحمية بمفاتيح تفادي
 // (dedupe) حتى لا يتكرر نفس التنبيه مع كل إعادة رسم.
 function checkChampionAlerts(){
-  if(!isAdmin || !CHAMPION_ID || !DATA.rounds.length) return;
+  // طلب المستخدم 17 سبتمبر 2026 — computeStandings() يعطي ترتيبًا صحيحًا حتى
+  // بمرحلة جسر الجولة 2 (بلا أي DATA.rounds حقيقية)، فالبوابة القديمة على
+  // DATA.rounds.length كانت تعطّل التنبيهات كاملة طول تلك الفترة بلا داعٍ.
+  if(!isAdmin || !CHAMPION_ID) return;
   const st = computeStandings();
   const champRow = st.find(s=>s.id===CHAMPION_ID);
   if(!champRow) return;

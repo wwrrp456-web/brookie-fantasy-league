@@ -353,7 +353,9 @@ function renderPredictions(){
 
 // ---------- "ماذا أحتاج؟" مُضافة لـ renderMyDashboard ----------
 function buildWhatINeedHTML(meRow, st, idx){
-  if(!DATA.rounds.length) return '';
+  // طلب المستخدم 17 سبتمبر 2026 — st/meRow/idx تأتي من computeStandings() التي
+  // تعمل صح منذ جسر الجولة 2، فبوابة DATA.rounds.length القديمة كانت تُخفي
+  // هذا العنصر بلا داعٍ لغاية تسجيل أول جولة حقيقية.
   const above = idx>0 ? st[idx-1] : null;
   const below = idx<st.length-1 ? st[idx+1] : null;
   const myLast = meRow.lastPoints || 0;
@@ -416,12 +418,14 @@ function renderMyAchievements(){
     ['💪','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
     ['⚽','ناديك المفضل',favClub?favClub[0]:'—',favClub?`${favClub[1]} مرات`:''],
   ];
+  // طلب المستخدم 17 سبتمبر 2026 — عدّ الجولات يجب أن يشمل الجولتين 1 و2
+  // (getCurrentRoundNumber())، لا DATA.rounds.length التي تستثنيهما فتُنقِص العدّ.
   box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">⭐ إنجازاتي الشخصية</h2>
     <div style="background:var(--paper);border-radius:14px;padding:16px;border:2px solid ${pc}44;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
         <strong style="color:${pc};">${p?.name||''}</strong>
-        <span style="color:var(--muted);font-size:0.82rem;">— ${DATA.rounds.length} جولات</span>
+        <span style="color:var(--muted);font-size:0.82rem;">— ${getCurrentRoundNumber()} جولات</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
         ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">

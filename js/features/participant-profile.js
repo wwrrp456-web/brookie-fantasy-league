@@ -100,8 +100,27 @@ function renderParticipantProfileInto(box, pid){
   box.innerHTML = html;
   const dlBtn = document.getElementById(`dlProfileBtn-${pid}`);
   if(dlBtn){
-    dlBtn.addEventListener('click', ()=>{
-      downloadElementAsImage(`profileCapture-${pid}`, `ملف-${p.name}.png`, `profileMsg-${pid}`, `dlProfileBtn-${pid}`);
+    dlBtn.addEventListener('click', async ()=>{
+      const msgBox = document.getElementById(`profileMsg-${pid}`);
+      dlBtn.disabled = true;
+      if(msgBox) msgBox.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز الصورة…</p>';
+      try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+      try{
+        const cv = await buildParticipantProfileCard(pid);
+        if(!cv) throw new Error('تعذّر بناء الكرت');
+        const filename = `profile-${pid}.png`;
+        const shared = await tryShareCanvas(cv, filename, 'الملف الشخصي', `تعرّف على ملفي في دوري بروكي الفانتازي`);
+        if(!shared){
+          downloadCanvasPNG(cv, filename);
+          if(msgBox) msgBox.innerHTML = '<div class="status-msg ok">تم تحميل الصورة — أرسلها في الجروب 📲</div>';
+        } else if(msgBox){
+          msgBox.innerHTML = '<div class="status-msg ok">تم فتح المشاركة ✅</div>';
+        }
+      }catch(e){
+        if(msgBox) msgBox.innerHTML = '<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>';
+      } finally {
+        dlBtn.disabled = false;
+      }
     });
   }
 }

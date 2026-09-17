@@ -205,8 +205,9 @@ let _whatifRendered = false;
 function renderWhatIf(){
   const box = document.getElementById('whatIfBox');
   if(!box) return;
-  if(!DATA.rounds.length){ box.innerHTML=''; return; }
-
+  // طلب المستخدم 17 سبتمبر 2026 — الحاسبة تعتمد فقط على computeStandings()
+  // الجاهزة أصلًا منذ جسر الجولة 2، فبوابة DATA.rounds.length القديمة كانت
+  // تخفيها بلا داعٍ قبل تسجيل أول جولة حقيقية.
   const st = computeStandings();
   const opts = st.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
 

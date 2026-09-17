@@ -179,10 +179,9 @@ function renderNightMode(){
 function renderRoundComments(){
   const box = document.getElementById('roundCommentsBox');
   if(!box) return;
-  if(!DATA.rounds.length){ box.innerHTML=''; return; }
-
-  const n = DATA.rounds.length;
-  const roundNum = DATA.rounds[n-1].number;
+  // طلب المستخدم 17 سبتمبر 2026 — التعليق على "جولتك" لا يحتاج سجل جولة حقيقية
+  // بـDATA.rounds؛ الجولتان 1 و2 (جسر) منتهيتان فعليًا وتستحقان تعليقًا أيضًا.
+  const roundNum = getCurrentRoundNumber();
   const comments = (DATA.roundComments && DATA.roundComments[roundNum]) || {};
   const myPid = window._verifiedPid || null;
   const myName = myPid ? (PARTICIPANTS.find(p=>p.id===myPid)||{}).name : null;
@@ -239,8 +238,10 @@ let _scenarioRendered=false;
 function renderScenario(){
   const box=document.getElementById('scenarioBox');
   if(!box) return;
-  if(DATA.rounds.length<2){box.innerHTML='';return;}
-  const remaining=SEASON_TOTAL_ROUNDS-DATA.rounds.length;
+  // طلب المستخدم 17 سبتمبر 2026 — محاكاة السيناريو تعتمد فقط على computeStandings()
+  // (تعمل صح بمرحلة جسر الجولة 2)، فبوابة DATA.rounds.length<2 القديمة كانت
+  // تخفيها بلا داعٍ لغاية تسجيل جولتين حقيقيتين كاملتين (أي حتى الجولة 4).
+  const remaining=SEASON_TOTAL_ROUNDS-getCurrentRoundNumber();
   if(remaining<=0){box.innerHTML='';return;}
   if(_scenarioRendered) return;
   _scenarioRendered=true;
@@ -302,9 +303,10 @@ function renderRoundChallenge(){
   // خيار إخفاء/إظهار للمنظم (نفس نمط DATA.duelsEnabled) — بيانات قديمة بلا
   // هذا الحقل تُعامَل كـ"مفعّل" افتراضيًا (9 سبتمبر 2026).
   if(DATA.roundChallengeEnabled === false){box.innerHTML='';return;}
-  if(!DATA.rounds.length){box.innerHTML='';return;}
-  const lastRound=DATA.rounds[DATA.rounds.length-1];
-  const nextNum=lastRound.number+1;
+  // طلب المستخدم 17 سبتمبر 2026 — "من سيتصدر الجولة القادمة؟" معناها الجولة
+  // التالية لآخر جولة منتهية فعليًا (تشمل جسر الجولة 1/2)، وليس فقط بعد أول
+  // جولة حقيقية بـDATA.rounds.
+  const nextNum=getCurrentRoundNumber()+1;
   const stands=computeStandings();
   const pid=window._verifiedPid;
   const cKey=`challenge_r${nextNum}`;
@@ -355,8 +357,9 @@ function renderRoundChallenge(){
 async function castChallengeVote(targetPid){
   const pid=window._verifiedPid;
   if(!pid) return;
-  const lastRound=DATA.rounds[DATA.rounds.length-1];
-  const cKey=`challenge_r${lastRound.number+1}`;
+  // نفس منطق getCurrentRoundNumber() المستخدم بـrenderRoundChallenge — لازم
+  // يطابقه تمامًا حتى يُخزَّن التصويت بنفس مفتاح الجولة المعروض (17 سبتمبر 2026).
+  const cKey=`challenge_r${getCurrentRoundNumber()+1}`;
   const voterName=PARTICIPANTS.find(x=>x.id===pid)?.name||'';
   if(!DATA.roundComments) DATA.roundComments={};
   if(!DATA.roundComments[cKey]) DATA.roundComments[cKey]={};

@@ -4,9 +4,15 @@
 function renderSeasonStory(){
   const box = document.getElementById('seasonStoryBox');
   if(!box) return;
-  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
 
+  // n: فهرس داخل DATA.rounds (الجولات الحقيقية 3+ فقط) — يُستخدم فقط لحساب
+  // صدارة كل جولة تاريخيًا عبر computeStandings(i)، لأن جولتي 1/2 (فترة
+  // الجسر) ليس لهما فرز منفصل جولة-بجولة. totalRoundsSoFar هو العدد الحقيقي
+  // للجولات المكتملة شاملًا الجولتين 1 و2 (طلب المستخدم 17 سبتمبر 2026 —
+  // بيانات الجولتين 1/2 كانت "تختفي" من قصة الموسم وتُخفي القصة كاملة قبل
+  // اكتمال جولتين حقيقيتين رغم توفر بيانات الجسر منذ انطلاق الموسم).
   const n = DATA.rounds.length;
+  const totalRoundsSoFar = getCurrentRoundNumber();
   const histMap = getAllParticipantsRoundsHistory();
   const st = computeStandings();
   const leader = st[0];
@@ -19,24 +25,29 @@ function renderSeasonStory(){
   // ---- فصل 1: الافتتاحية ----
   const totalPts = st.reduce((a,s)=>a+s.total,0);
   const totalMum = st.reduce((a,s)=>a+s.mummaCount,0);
-  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(PARTICIPANTS.length+' مشاركاً')} يتنافسون بـ${hl(CLUBS.length+' نادياً')} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(n+' جولات')} أُنتجت فيها ${hl(totalPts+' نقطة')} إجمالية، وشهدت ${hl(totalMum+' ممة')} مؤلمة.`;
+  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(PARTICIPANTS.length+' مشاركاً')} يتنافسون بـ${hl(CLUBS.length+' نادياً')} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(totalRoundsSoFar+' جولات')} أُنتجت فيها ${hl(totalPts+' نقطة')} إجمالية، وشهدت ${hl(totalMum+' ممة')} مؤلمة.`;
 
   // ---- فصل 2: الصدارة وتاريخها ----
   const leaderRounds = {};
   PARTICIPANTS.forEach(p=>leaderRounds[p.id]=0);
+  // فترة جسر الجولتين 1 و2 مجمّعة بلا فرز منفصل جولة-بجولة، فتُحتسب صدارتها
+  // (بنتيجة computeStandings(0)) كصدارة لكلتا الجولتين معًا، حتى لا تُحذفا من
+  // إحصاء "جولات الهيمنة" (طلب المستخدم 17 سبتمبر 2026).
+  const bridgeLeader = computeStandings(0)[0];
+  if(bridgeLeader) leaderRounds[bridgeLeader.id] += 2;
   for(let i=1;i<=n;i++){
     const top = computeStandings(i)[0];
     if(top) leaderRounds[top.id]++;
   }
   const topLeader = PARTICIPANTS.slice().sort((a,b)=>(leaderRounds[b.id]||0)-(leaderRounds[a.id]||0))[0];
   const changes = [];
-  let prevLeaderId = null;
+  let prevLeaderId = bridgeLeader ? bridgeLeader.id : null;
   for(let i=1;i<=n;i++){
     const cur = computeStandings(i)[0];
     if(cur && cur.id !== prevLeaderId){ changes.push({round:DATA.rounds[i-1].number, name:cur.name}); prevLeaderId=cur.id; }
   }
   const gap = st.length>=2 ? leader.total - st[1].total : 0;
-  let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${n}. `;
+  let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${totalRoundsSoFar}. `;
   if(changes.length > 1){
     chap2 += `شهد الموسم ${hl(changes.length+' تغييرات')} في قيادة الترتيب — `;
     chap2 += changes.map(c=>`${c.name} (ج${c.round})`).join(' ← ');
@@ -101,7 +112,7 @@ function renderSeasonStory(){
   }
 
   // ---- فصل 6: نهاية الموسم المتوقعة ----
-  const roundsLeft = SEASON_TOTAL_ROUNDS - n;
+  const roundsLeft = SEASON_TOTAL_ROUNDS - totalRoundsSoFar;
   const avgByPid={};
   PARTICIPANTS.forEach(p=>{
     const hist=histMap[p.id];

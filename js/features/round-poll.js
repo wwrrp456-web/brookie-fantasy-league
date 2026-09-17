@@ -8,8 +8,10 @@
  */
 
 function _pollTargetRound(){
-  if(!DATA.rounds.length) return null;
-  return DATA.rounds[DATA.rounds.length-1].number + 1;
+  // طلب المستخدم 17 سبتمبر 2026 — الاعتماد على DATA.rounds.length مباشرة كان
+  // يمنع سؤال أي جولة (حتى الجولة 3) طالما لم تُسجَّل أي جولة حقيقية بعد،
+  // رغم أن الجولتين 1 و2 (جسر) منتهيتان فعليًا؛ getCurrentRoundNumber() تحسبهما.
+  return getCurrentRoundNumber() + 1;
 }
 
 function getCurrentRoundPoll(){
