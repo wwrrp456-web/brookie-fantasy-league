@@ -37,6 +37,18 @@ function computeRoundStats(round){
   return stats;
 }
 
+// مشارك "لسه ما دخل فعليًا الموسم" — انضم بعد جولات حقيقية فعلية (لا فقط بعد
+// فترة الجسر 1-2) ولم تُكمَل بعد الجولة اللي يبدأ منها. يُستخدم لإخفائه
+// بالكامل من كل قوائم/جداول الترتيب والإحصائيات والميداليات والألقاب حتى
+// تبدأ جولته الأولى فعليًا، حتى لا يؤثر رصيده الافتتاحي على أرقام مراكز بقية
+// المشاركين أو نتائجهم بالجولات اللي لم يشارك فيها (طلب المستخدم صراحة عند
+// إضافة لطفي (id:20) — 19 سبتمبر 2026؛ راجع ملف التسليم القسم 9.57).
+// ملاحظة: لا يؤثر هذا على أبو صالح/محمد عثمان (كلاهما تجاوز جولته الأولى
+// فعليًا منذ زمن)، فيبقيان ظاهرين بلا أي تغيير.
+function isParticipantActiveNow(pid){
+  return getCurrentRoundNumber() > (JOINED_AFTER_ROUND[pid]||0);
+}
+
 // يحسب الترتيب حتى جولة معيّنة (upTo = عدد الجولات المحتسبة، افتراضياً الكل)
 function computeStandings(upTo){
   const limit = (upTo === undefined) ? DATA.rounds.length : upTo;
@@ -105,7 +117,8 @@ function computeStandings(upTo){
   // لغياب توقيت آلي للمباريات)، ثم (ج) الأكثر أهدافًا، ثم (د) الأقل استقبالًا
   // للأهداف. كان manualPriority (ب) بالغلط يُفحص بعد ج ود بدل قبلهما مباشرة
   // (صُحّح 10 سبتمبر 2026).
-  list.sort((a,b)=>{
+  const eligibleList = list.filter(s=> isParticipantActiveNow(s.id));
+  eligibleList.sort((a,b)=>{
     if(b.total !== a.total) return b.total - a.total;
     if(b.lastPoints !== a.lastPoints) return b.lastPoints - a.lastPoints;
     if(a.manualPriority !== b.manualPriority) return a.manualPriority - b.manualPriority;
@@ -113,7 +126,7 @@ function computeStandings(upTo){
     if(a.lastGa !== b.lastGa) return a.lastGa - b.lastGa;
     return a.name.localeCompare(b.name,'ar');
   });
-  return list;
+  return eligibleList;
 }
 
 // "لعب فعليًا هذه الجولة" — يستثني تسجيلات "لا توجد مباراة" (no_match) من
