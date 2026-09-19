@@ -261,8 +261,15 @@ function getAllMovementsHistory(){
   for(let i=1;i<=DATA.rounds.length;i++){
     const before = getRankMap(i-1);
     const now = getRankMap(i);
+    const roundNum = DATA.rounds[i-1].number;
     PARTICIPANTS.forEach(p=>{
-      result.push({round:DATA.rounds[i-1].number, pid:p.id, name:p.name, delta:(before[p.id]||0)-(now[p.id]||0)});
+      // مشارك لم يكن قد انضمّ بعد وقت هذه الجولة (مثل لطفي بالجولتين 3 و4)
+      // يُستبعد من أرشيف الحركة — رصيده الثابت (carry) يبقى بنفس المرتبة تقريبًا
+      // بكل اللقطات قبل انضمامه، فأي فرق مرتبة هنا وهمي بالكامل (ناتج فقط عن
+      // حركة بقية المشاركين حوله)، بنفس منطق استثناء JOINED_AFTER_ROUND2
+      // بجسر الجولة 2 أعلاه (خطأ اكتُشف ومُنع وقت إضافة لطفي، 18 سبتمبر 2026).
+      if(roundNum <= (JOINED_AFTER_ROUND[p.id]||0)) return;
+      result.push({round:roundNum, pid:p.id, name:p.name, delta:(before[p.id]||0)-(now[p.id]||0)});
     });
   }
   return result;
@@ -306,9 +313,14 @@ function getRoundChampion(roundNumber){
   if(!round) return null;
   if(ROUND_HERO_OVERRIDE[roundNumber]) return ROUND_HERO_OVERRIDE[roundNumber];
   const stats = computeRoundStats(round);
+  // مشارك انضمّ بعد هذه الجولة تحديدًا (JOINED_AFTER_ROUND، مثل لطفي المستثنى
+  // من الجولتين الحقيقيتين 3 و4) يُستبعد تمامًا من ترشّح بطولة الجولة، لا
+  // يكفي الاعتماد على stats[p.id].points===0 وحده (لو صادف كل المشاركين
+  // الفعليين تسجيل صفر بجولة ما لأي سبب، خطأ اكتُشف ومُنع وقت إضافة لطفي).
+  const eligible = PARTICIPANTS.filter(p=> roundNumber > (JOINED_AFTER_ROUND[p.id]||0));
   let maxPts = -Infinity;
-  PARTICIPANTS.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
-  const tied = PARTICIPANTS.filter(p=> stats[p.id].points === maxPts);
+  eligible.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
+  const tied = eligible.filter(p=> stats[p.id].points === maxPts);
   if(tied.length === 1) return tied[0].id;
   const sorted = tied.slice().sort((a,b)=>{
     const ga_ = computeRoundGoals(round, a.id), gb_ = computeRoundGoals(round, b.id);
@@ -365,9 +377,12 @@ function getRoundChampionsArchive(){
 
   DATA.rounds.forEach(round=>{
     const stats = computeRoundStats(round);
+    // نفس استثناء JOINED_AFTER_ROUND بـgetRoundChampion() أعلاه — مشارك انضمّ
+    // بعد هذه الجولة (مثل لطفي بالجولتين 3 و4) لا يظهر بأرشيف أبطال الجولات.
+    const eligible = PARTICIPANTS.filter(p=> round.number > (JOINED_AFTER_ROUND[p.id]||0));
     let maxPts = -Infinity;
-    PARTICIPANTS.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
-    const tied = PARTICIPANTS.filter(p=>stats[p.id].points===maxPts);
+    eligible.forEach(p=>{ if(stats[p.id].points > maxPts) maxPts = stats[p.id].points; });
+    const tied = eligible.filter(p=>stats[p.id].points===maxPts);
     let champNames;
     if(ROUND_HERO_OVERRIDE[round.number]){
       const w = PARTICIPANTS.find(p=>p.id===ROUND_HERO_OVERRIDE[round.number]);
