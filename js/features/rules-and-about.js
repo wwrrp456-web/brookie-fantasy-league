@@ -194,17 +194,15 @@ function renderAboutLeague(){
   const totalMummas = st.reduce((a,s)=>a+s.mummaCount,0);
   let bestSinglePts = 0;
   PARTICIPANTS.forEach(p=>{ (histMap[p.id]||[]).forEach(r=>{ if(r.points>bestSinglePts) bestSinglePts=r.points; }); });
-  const uniqueLeagues = new Set(Object.values(CLUBS).map(c=>c.league||''));
+  // إصلاح 19 سبتمبر 2026: كانت تحسب `c.league` على عناصر `CLUBS` (مصفوفة
+  // أسماء أندية نصّية بسيطة، لا كائنات بحقل league) فتُرجع دائمًا '' لكل
+  // نادٍ — أي أن عدّاد "دوري" بهذا القسم كان يعرض 0 دائمًا بصمت منذ البداية،
+  // بصرف النظر عن عدد الدوريات الفعلي. المصدر الصحيح لدوري كل نادٍ هو
+  // `CLUB_LEAGUE_MAP` (js/data/season-2/clubs.js)، فيُحسب العدد الفعلي منه
+  // مباشرة — يتحدّث تلقائيًا مع أي دوري/نادٍ جديد يُضاف مستقبلاً بلا أي
+  // تعديل إضافي هنا.
+  const uniqueLeagues = new Set(CLUBS.map(c=>CLUB_LEAGUE_MAP[c]||''));
   uniqueLeagues.delete('');
-
-  const leagueNames = {
-    'Premier League':'الدوري الإنجليزي',
-    'La Liga':'الدوري الإسباني',
-    'Bundesliga':'الدوري الألماني',
-    'Serie A':'الدوري الإيطالي',
-    'Ligue 1':'الدوري الفرنسي',
-    'Saudi Pro League':'الدوري السعودي',
-  };
 
   box.innerHTML = `
     <div class="about-league">
