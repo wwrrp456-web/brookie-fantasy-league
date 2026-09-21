@@ -377,11 +377,31 @@ function renderMedals(){
 function renderRankHistory(){
   const box = document.getElementById('rankHistoryBox');
   if(!box) return;
-  if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
 
   const n = DATA.rounds.length;
-  // المركز 1 في كل جولة
-  const leaders = []; // {round, pid, name}
+  // المركز 1 في كل جولة — نبدأ بالجولتين 1 و2 (فترة "الجسر" الثابتة، قبل أي
+  // جولة حقيقية بـDATA.rounds)، ثم كل جولة حقيقية أُدخلت لاحقًا بالمنظم. قبل
+  // 21 سبتمبر 2026 كان الجدول يبدأ من أول جولة حقيقية فقط (يفوّت من تصدّر
+  // الجولتين 1 و2 قبل دخول أي جولة حقيقية) — طلب المستخدم إضافتهما صراحة.
+  const leaders = []; // {round, pid, name, total}
+
+  // الجولة 1: القائد = صاحب أعلى ROUND1_POINTS — بلا أي رصيد سابق بعد، فمجموع
+  // الجولة الأولى وحده هو صدارة الترتيب وقتها. نفس منطق getRoundChampion(1)
+  // تمامًا (يراعي استثناء JOINED_AFTER_ROUND1 وROUND_HERO_OVERRIDE[1] عند التعادل).
+  const r1ChampId = getRoundChampion(1);
+  if(r1ChampId != null){
+    const p1 = PARTICIPANTS.find(p=>p.id===r1ChampId);
+    if(p1) leaders.push({round:1, pid:p1.id, name:p1.name, total: ROUND1_POINTS[p1.id]||0});
+  }
+
+  // الجولة 2: القائد = صاحب أعلى مجموع تراكمي (carry) وقتها — نفس اللقطة
+  // المستخدمة بلوحة الميداليات وأرشيف أبطال الجولات (computeStandings(0)).
+  // مهم: هذا يختلف عن "بطل الجولة 2" (الأعلى نقاطًا بالجولة 2 وحدها) — صدارة
+  // الترتيب هنا تراكمية منذ الجولة 1، فقد يتصدّر شخص التراكم دون أن يكون هو
+  // الأعلى نقاطًا بالجولة 2 تحديدًا.
+  const r2List = computeStandings(0);
+  if(r2List[0]) leaders.push({round:2, pid:r2List[0].id, name:r2List[0].name, total:r2List[0].total});
+
   for(let i=1; i<=n; i++){
     const list = computeStandings(i);
     if(list[0]) leaders.push({round: DATA.rounds[i-1].number, pid:list[0].id, name:list[0].name, total:list[0].total});
@@ -416,7 +436,10 @@ function renderRankHistory(){
   html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">';
   topLeaders.forEach(p=>{
     const rounds = leaderRounds[p.id];
-    const pct = Math.round(rounds/n*100);
+    // المقام الصحيح لنسبة الصدارة هو إجمالي الجولات المتتبَّعة فعليًا بجدول
+    // leaders (يشمل الجولتين 1 و2 + كل جولة حقيقية)، لا عدد الجولات الحقيقية
+    // فقط (n) كما كان قبل 21 سبتمبر 2026 — وإلا كانت النسبة تتجاوز 100%.
+    const pct = Math.round(rounds/leaders.length*100);
     html += `<div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:0.8rem;">
       <b>${p.name}</b> — <span style="color:var(--gold);">${rounds} جولة</span> في الصدارة (${pct}%)
     </div>`;
