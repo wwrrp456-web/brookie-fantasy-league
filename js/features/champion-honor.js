@@ -78,7 +78,7 @@ function renderChampionBanner(){
   if(!CHAMPION_FEATURES.top_banner || !CHAMPION_ID){ box.innerHTML=''; return; }
   const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
   if(!champ){ box.innerHTML=''; return; }
-  box.innerHTML = `<div class="champion-banner">🛡️ ${champ.name} — حامل لقب الموسم الحالي، والكل يطارده!</div>`;
+  box.innerHTML = `<div class="champion-banner">🛡️ ${champ.name} — حامل لقب الموسم الماضي، والكل يطارده!</div>`;
 }
 
 // ميزة 12: تاج متحرك بجانب شعار الموقع
