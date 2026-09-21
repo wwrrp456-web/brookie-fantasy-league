@@ -156,7 +156,7 @@ function handleChampionIdentityWelcome(id){
     const champ = PARTICIPANTS.find(p=>p.id===pid);
     const toast = document.createElement('div');
     toast.className = 'champion-toast';
-    toast.innerHTML = `👑 أهلًا ${champ?champ.name:''}! بصفتك حامل لقب الموسم الحالي، الكل يترقّب دفاعك عن العرش هالموسم 🛡️`;
+    toast.innerHTML = `👑 أهلًا ${champ?champ.name:''}! بصفتك حامل لقب الموسم الماضي، الكل يترقّب دفاعك عن العرش هالموسم 🛡️`;
     document.body.appendChild(toast);
     setTimeout(()=>toast.remove(), 5000);
   }
