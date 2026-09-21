@@ -76,8 +76,21 @@ function renderSeasonStory(){
     const g=st[i].total-st[i+1].total;
     if(g<tightestGap){ tightestGap=g; tightPair=[st[i].name,st[i+1].name]; }
   }
-  // أكبر فارق في نقاط جولة واحدة
+  // أكبر فارق في نقاط جولة واحدة — يشمل الآن الجولتين 1 و2 (فترة الجسر) بجانب
+  // كل جولة حقيقية لاحقة (طلب المستخدم 21 سبتمبر 2026: "أضف الجولة الأولى
+  // والثانية كذلك في قصة الموسم"). كان الحساب يقتصر فقط على DATA.rounds
+  // (الجولات الحقيقية 3+)، فيغفل تمامًا عن أي تفاوت بجولتي الجسر رغم توفر
+  // بياناتهما — بنفس المصدرين المستخدمين أصلًا بالفصل 2: ROUND1_POINTS
+  // (نقاط الجولة 1 حصرًا) وgetRound2BridgePointsMap() (نقاط الجولة 2 حصرًا).
   let biggestRoundGap=0, biggestRound=0;
+  [
+    {number:1, map:ROUND1_POINTS},
+    {number:2, map:getRound2BridgePointsMap()}
+  ].forEach(r=>{
+    const pts = PARTICIPANTS.map(p=> r.map[p.id]||0);
+    const g = Math.max(...pts) - Math.min(...pts);
+    if(g>biggestRoundGap){biggestRoundGap=g;biggestRound=r.number;}
+  });
   DATA.rounds.forEach(r=>{
     const stats=computeRoundStats(r);
     const pts=PARTICIPANTS.map(p=>stats[p.id]?.points||0).filter(v=>v>=0);
@@ -88,10 +101,16 @@ function renderSeasonStory(){
   chap3 += `الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(biggestRoundGap+' نقطة')} بين الأعلى والأدنى.`;
 
   // ---- فصل 4: نجوم ومفاجآت ----
-  // أعلى نقطة جولة واحدة
+  // أعلى نقطة جولة واحدة — histMap (عبر getAllParticipantsRoundsHistory)
+  // يشمل أصلًا الجولتين 1 و2 (فترة الجسر) بجانب كل جولة حقيقية، فكان بالإمكان
+  // أصلًا أن يكون صاحب أعلى حصاد قد حقّقه بالجولة 1 أو 2 تحديدًا. لكن كل
+  // عنصر بـhistMap يحمل رقم الجولة بخاصية `round` لا `number` (تصحيح 21
+  // سبتمبر 2026 — طلب المستخدم "أضف الجولة الأولى والثانية كذلك في قصة
+  // الموسم": الخطأ كان يجعل رقم الجولة يظهر "undefined" دائمًا لأي جولة،
+  // بما فيها 1 و2، لأن `h.number` غير موجود إطلاقًا بعناصر هذا المصدر).
   let bestPts=0, bestRoundN=0, bestPid=null;
   PARTICIPANTS.forEach(p=>{
-    histMap[p.id].forEach(h=>{ if(h.points>bestPts){bestPts=h.points;bestPid=p.id;bestRoundN=h.number;} });
+    histMap[p.id].forEach(h=>{ if(h.points>bestPts){bestPts=h.points;bestPid=p.id;bestRoundN=h.round;} });
   });
   // أكثر صعودًا من الجولة 1 حتى الآن
   const startRanks={}, nowRanks={};
