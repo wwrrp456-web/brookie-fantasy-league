@@ -71,6 +71,27 @@ function fitFontSize(ctx, text, maxWidth, fontSpec, minSize){
   return size;
 }
 
+// يقسّم نصًا طويلًا (فقرة تقدير بشهادة التكريم مثلًا) إلى أسطر تدخل ضمن
+// عرض معيّن، بالاعتماد على قياس عرض كل كلمة فعليًا بنفس الخط الحالي لـctx
+// (يجب ضبط ctx.font قبل استدعائها) — بدل نص واحد قد يتجاوز حدود الكانفاس
+// (21 سبتمبر 2026، لشهادة تكريم البطل).
+function wrapCanvasText(ctx, text, maxWidth){
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  words.forEach(word=>{
+    const test = current ? `${current} ${word}` : word;
+    if(current && ctx.measureText(test).width > maxWidth){
+      lines.push(current);
+      current = word;
+    } else {
+      current = test;
+    }
+  });
+  if(current) lines.push(current);
+  return lines;
+}
+
 // ---------- علامة شعار البطولة على كل بطاقة/شهادة/ستوري تُصدَّر كصورة ----------
 // تُثبَّت بالزاوية العلوية اليمنى لكل كرت يُصدَّره الموقع (بطل الجولة، الترتيب،
 // ملخص الموسم، شهادة البطل، نسخ الستوري)، عشان يبان واضح إنها بطاقات دوري
@@ -1113,11 +1134,13 @@ function printSeasonReport(){
 }
 
 // ميزة 7: شهادة تكريم قابلة للمشاركة — نفس أسلوب buildStandingsStoryCanvas
+// نص الشهادة الكامل (نص تقديري منسّق بطلب المستخدم، 21 سبتمبر 2026) بدل
+// سطر الرصيد المجرّد وحده — الرصيد الحالي أصبح إحصائية إضافية أسفل الفقرة.
 async function buildChampionCertificateCanvas(){
   const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID) || {name:'—'};
   const st = computeStandings();
   const row = st.find(s=>s.id===CHAMPION_ID) || {total:0};
-  const W=1080, H=1350;
+  const W=1080, H=1300;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
@@ -1130,18 +1153,52 @@ async function buildChampionCertificateCanvas(){
   drawRoundedRect(ctx,50,50,W-100,H-100,22); ctx.stroke();
   await drawCardBrandMark(ctx, W, 66);
   ctx.textAlign='center';
+
   ctx.fillStyle='#00B4FF'; ctx.font='700 30px Tajawal, Arial';
   ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 150);
+
   ctx.fillStyle='#FFD76A'; ctx.font='900 42px Tajawal, Arial';
-  ctx.fillText('🏆 شهادة تكريم حامل اللقب 🏆', W/2, 230);
+  ctx.fillText('🏆 شهادة تكريم حامل اللقب 🏆', W/2, 220);
+
+  ctx.strokeStyle='rgba(255,215,106,0.5)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(W/2-140,252); ctx.lineTo(W/2+140,252); ctx.stroke();
+
+  ctx.fillStyle='#B9AEF5'; ctx.font='500 26px Tajawal, Arial';
+  ctx.fillText('يتشرّف دوري بروكي الفانتازي بتكريم', W/2, 305);
+
   ctx.fillStyle='#FFFFFF';
-  const nameSize = fitFontSize(ctx, champ.name, W-200, {size:80}, 40);
+  const nameSize = fitFontSize(ctx, champ.name, W-200, {size:74, weight:'900', family:'Tajawal, Arial'}, 40);
   ctx.font = `900 ${nameSize}px Tajawal, Arial`;
-  ctx.fillText(champ.name, W/2, 460);
-  ctx.fillStyle='#B9AEF5'; ctx.font='600 30px Tajawal, Arial';
-  ctx.fillText(`الرصيد الحالي: ${row.total} نقطة`, W/2, 540);
-  ctx.fillStyle='#9C9BC9'; ctx.font='500 24px Tajawal, Arial';
+  ctx.fillText(champ.name, W/2, 395);
+
+  ctx.fillStyle='#FFD76A'; ctx.font='700 28px Tajawal, Arial';
+  ctx.fillText('بطلًا لدوري بروكي الفانتازي — الموسم الأول', W/2, 445);
+
+  ctx.fillStyle='#D8D4F5'; ctx.font='500 26px Tajawal, Arial';
+  const bodyLines = wrapCanvasText(ctx,
+    'تقديرًا لتفوّقه وتميّزه على مدار الموسم، وحصده اللقب باستحقاق بين نخبة من المنافسين، وحمل راية البطولة التي يسعى الجميع هذا الموسم لانتزاعها منه.',
+    W-220
+  );
+  let ly = 515;
+  bodyLines.forEach(line=>{ ctx.fillText(line, W/2, ly); ly += 42; });
+
+  ctx.fillStyle='#FFFFFF'; ctx.font='700 27px Tajawal, Arial';
+  ly += 22;
+  wrapCanvasText(ctx, 'فهنيئًا له اللقب، وتحية لروح المنافسة التي جمعت الجميع 🎉', W-220)
+    .forEach(line=>{ ctx.fillText(line, W/2, ly); ly += 40; });
+
+  ctx.fillStyle='#8FE3A6'; ctx.font='600 28px Tajawal, Arial';
+  ly += 46;
+  ctx.fillText(`الرصيد الحالي: ${row.total} نقطة`, W/2, ly);
+
+  ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(W/2-120,H-172); ctx.lineTo(W/2+120,H-172); ctx.stroke();
+
+  ctx.fillStyle='#9C9BC9'; ctx.font='600 24px Tajawal, Arial';
+  ctx.fillText('إدارة دوري بروكي الفانتازي', W/2, H-130);
+  ctx.font='500 22px Tajawal, Arial';
   ctx.fillText(new Date().toLocaleDateString('ar-SA'), W/2, H-90);
+
   return cv;
 }
 async function showChampionCertificate(){
