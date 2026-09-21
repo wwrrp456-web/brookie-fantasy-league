@@ -30,21 +30,33 @@ function renderSeasonStory(){
   // ---- فصل 2: الصدارة وتاريخها ----
   const leaderRounds = {};
   PARTICIPANTS.forEach(p=>leaderRounds[p.id]=0);
-  // فترة جسر الجولتين 1 و2 مجمّعة بلا فرز منفصل جولة-بجولة، فتُحتسب صدارتها
-  // (بنتيجة computeStandings(0)) كصدارة لكلتا الجولتين معًا، حتى لا تُحذفا من
-  // إحصاء "جولات الهيمنة" (طلب المستخدم 17 سبتمبر 2026).
-  const bridgeLeader = computeStandings(0)[0];
-  if(bridgeLeader) leaderRounds[bridgeLeader.id] += 2;
+  // فترة جسر الجولتين 1 و2 — كل جولة منهما تُحتسب على حدة (لا كوحدة واحدة)،
+  // بنفس منطق "تاريخ الصدارة" المصحَّح بالقسم 9.61: قائد الجولة 1 من
+  // getRoundChampion(1) (يعتمد فقط على ROUND1_POINTS، بلا أي رصيد سابق)،
+  // وقائد الجولة 2 من computeStandings(0)[0] (اللقطة التراكمية بعد الجولتين).
+  // تصحيح 21 سبتمبر 2026: الكود القديم كان يُسند الجولتين معًا لقائد الجولة 2
+  // فقط (عبر bridgeLeader واحد += 2)، فبالغ بعدد جولات هيمنته إذا اختلف قائدا
+  // الجولتين فعليًا (كما حدث: أبو عبيدة بالجولة 1، أبو أوس بالجولة 2 — كان
+  // يُسجَّل أبو أوس مهيمنًا 3 جولات بدل 2 فقط).
+  const leaderTimeline = []; // {round, id, name}
+  const r1ChampId = getRoundChampion(1);
+  if(r1ChampId != null){
+    const p1 = PARTICIPANTS.find(p=>p.id===r1ChampId);
+    if(p1) leaderTimeline.push({round:1, id:p1.id, name:p1.name});
+  }
+  const r2Leader = computeStandings(0)[0];
+  if(r2Leader) leaderTimeline.push({round:2, id:r2Leader.id, name:r2Leader.name});
   for(let i=1;i<=n;i++){
     const top = computeStandings(i)[0];
-    if(top) leaderRounds[top.id]++;
+    if(top) leaderTimeline.push({round:DATA.rounds[i-1].number, id:top.id, name:top.name});
   }
+  leaderTimeline.forEach(entry=>{ leaderRounds[entry.id] = (leaderRounds[entry.id]||0)+1; });
   const topLeader = PARTICIPANTS.slice().sort((a,b)=>(leaderRounds[b.id]||0)-(leaderRounds[a.id]||0))[0];
   const changes = [];
-  let prevLeaderId = bridgeLeader ? bridgeLeader.id : null;
-  for(let i=1;i<=n;i++){
-    const cur = computeStandings(i)[0];
-    if(cur && cur.id !== prevLeaderId){ changes.push({round:DATA.rounds[i-1].number, name:cur.name}); prevLeaderId=cur.id; }
+  let prevLeaderId = leaderTimeline.length ? leaderTimeline[0].id : null;
+  for(let i=1;i<leaderTimeline.length;i++){
+    const entry = leaderTimeline[i];
+    if(entry.id !== prevLeaderId){ changes.push({round:entry.round, name:entry.name}); prevLeaderId=entry.id; }
   }
   const gap = st.length>=2 ? leader.total - st[1].total : 0;
   let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${totalRoundsSoFar}. `;
@@ -53,7 +65,7 @@ function renderSeasonStory(){
     chap2 += changes.map(c=>`${c.name} (ج${c.round})`).join(' ← ');
     chap2 += '. ';
   } else {
-    chap2 += `القيادة لم تتغير — ${hl(changes[0]?.name||leader.name)} يقود منذ البداية. `;
+    chap2 += `القيادة لم تتغير — ${hl(changes[0]?.name||leaderTimeline[0]?.name||leader.name)} يقود منذ البداية. `;
   }
   chap2 += `المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب بـ${hl(gap+' نقطة')}.`;
 
