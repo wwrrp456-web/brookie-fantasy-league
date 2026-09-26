@@ -1,4 +1,9 @@
 /* تبويب الإحصائيات: كفاءة/خريطة الأندية، الرادار، السباق، حاسبة ماذا لو، المواجهة المباشرة */
+  /* قفزة سريعة أعلى التبويب — شريط أفقي قابل للتمرير بعدد أقسام التبويب الطويل */
+  .stats-quick-nav{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:6px;}
+  .stats-quick-nav-chip{flex:0 0 auto;background:var(--paper);border:1px solid var(--line);color:var(--text2);border-radius:20px;padding:6px 12px;font-size:0.76rem;font-weight:700;white-space:nowrap;cursor:pointer;font-family:inherit;}
+  .stats-quick-nav-chip:hover{background:var(--cream);}
+
   /* لوحة أدق المتوقعين */
   .pred-leaderboard{display:flex;flex-direction:column;gap:6px;}
   .pred-lb-row{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 12px;}

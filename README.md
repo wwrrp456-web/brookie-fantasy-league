@@ -20,6 +20,16 @@ Admin PIN (for the "المنظم" organizer tab): `2580`
 - **`index.html`** — التطبيق كاملًا (HTML/CSS/JS في ملف واحد). The full app (HTML/CSS/JS, single file).
 - **`دوري-بروكي-ملف-التسليم.md`** — ملف التسليم التقني الكامل: القرارات، مصادر البيانات، الأخطاء المُصلحة، والبحث الذي بُنيت عليه بعض الأرقام (مثل تفاصيل مباريات الجولة 2). A full technical handover doc: decisions made, data sources, fixed bugs, and the research behind some of the numbers (e.g. round-2 match-by-match detail).
 
+## الاختبارات / Tests
+
+اختبارات آلية خفيفة لمحرك الترتيب وكسر التعادل (`js/core/standings-engine.js`) — Node فقط، بدون أي تثبيت (`npm install`):
+
+```
+node tests/run.js
+```
+
+Lightweight automated tests for the standings/tie-break engine — Node only, no install needed.
+
 ## مصدر البيانات / Data sources
 
 بيانات الأندية والمباريات مأخوذة من نتائج حقيقية عبر [365Scores](https://www.365scores.com)، بنظام نقاط فوز=3 / تعادل=1 / خسارة=0 لدوري كل نادٍ المحلي فقط.

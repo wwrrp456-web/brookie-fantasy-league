@@ -39,8 +39,9 @@
   .about-stat-label{display:block;font-size:0.65rem;color:var(--muted);margin-top:2px;}
 
   /* سجل نشاط المنظم */
-  .activity-log-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);font-size:0.8rem;}
+  .activity-log-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted var(--line);font-size:0.8rem;flex-wrap:wrap;}
   .activity-log-row:last-child{border-bottom:none;}
+  .activity-undo-btn{font-size:0.7rem;padding:2px 10px;}
 
   /* Admin */
   .admin-box{background:var(--paper);border:1px dashed var(--gold);border-radius:10px;padding:14px;margin-bottom:16px;}
@@ -134,6 +135,12 @@
   .round-form-toolbar input[type="checkbox"]{width:17px;height:17px;cursor:pointer;}
   .draft-banner{background:rgba(255,193,7,0.14);border:1px solid #FFC107;color:var(--text);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.84rem;line-height:1.7;}
   html.light-mode .draft-banner{background:#FFF6DC;}
+
+  /* لصق نتائج وتحليل تلقائي — بديل أسرع للكتابة اليدوية بنموذج إدخال الجولة */
+  .paste-import-box{margin-bottom:14px;}
+  #pasteImportPanel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:8px;}
+  #pasteImportInput{background:var(--cream);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:0.85rem;resize:vertical;}
+  #pasteImportResult .status-msg{margin:0;}
 
   /* شريط سفلي ثابت لزر "حفظ الجولة" مع عداد الاكتمال — يبقى ظاهرًا أثناء
      التمرير بنموذج جولة طويل بدل النزول للأسفل كل مرة (طلب المستخدم 7 سبتمبر

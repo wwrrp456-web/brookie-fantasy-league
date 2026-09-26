@@ -189,6 +189,11 @@ function startRealtimeSync(){
       syncChampionAdminUI();
     }, err=>{ console.warn('انقطعت المزامنة اللحظية لميزات تكريم البطل:', err); });
 
+    db.ref('brookie/seasonsArchive').on('value', snap=>{
+      SEASONS_ARCHIVE = snap.exists() ? (snap.val() || {}) : {};
+      renderSeasonsArchive();
+    }, err=>{ console.warn('انقطعت المزامنة اللحظية لأرشيف المواسم:', err); });
+
     _realtimeSyncStarted = true;
   }catch(e){
     // فشل تفعيل المزامنة اللحظية (مثلاً Firebase لم يُحمَّل بعد) لا يوقف التطبيق —

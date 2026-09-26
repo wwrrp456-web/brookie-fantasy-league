@@ -187,8 +187,14 @@ function renderRoundComments(){
   const myName = myPid ? (PARTICIPANTS.find(p=>p.id===myPid)||{}).name : null;
 
   // قائمة التعليقات الحالية
+  // ملاحظة: Firebase Realtime Database يحوّل أي كائن مفاتيحه أرقام متتالية
+  // (زي {1:{...}, 5:{...}} هنا — مفاتيحه أرقام pid) إلى مصفوفة فعليًا عند
+  // الحفظ/القراءة، ويملأ الفجوات (pid=2,3,4 غير الموجودين) بـnull — فتصير
+  // comments عمليًا [null,{...},null,null,null,{...}] بدل كائن نظيف. .filter(Boolean)
+  // هنا يتجاهل هذه الفجوات قبل الفرز (خطأ حقيقي اكتُشف على الموقع الحي:
+  // "Cannot read properties of null (reading 'time')" عند كل تحميل صفحة).
   let commentsHTML = '';
-  Object.values(comments).sort((a,b)=>new Date(a.time)-new Date(b.time)).forEach(c=>{
+  Object.values(comments).filter(Boolean).sort((a,b)=>new Date(a.time)-new Date(b.time)).forEach(c=>{
     const t = new Date(c.time).toLocaleDateString('ar',{month:'short',day:'numeric'});
     commentsHTML += `<div class="round-comment-item">
       <span class="rc-author">${c.name}</span>

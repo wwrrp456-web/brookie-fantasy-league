@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دوري بروكي الفانتازي - الموسم الثاني</title>
+<meta name="description" content="تابع ترتيب دوري بروكي الفانتازي أولاً بأول: الترتيب العام، بطل الجولة، أداء الأندية، والإحصائيات الكاملة.">
+<!-- Open Graph: بريفيو جذاب عند مشاركة رابط الموقع بواتساب/تويتر بدل رابط عادي -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PROKI Fantasy League">
+<meta property="og:title" content="دوري بروكي الفانتازي - الموسم الثاني">
+<meta property="og:description" content="تابع ترتيب دوري بروكي الفانتازي أولاً بأول: الترتيب العام، بطل الجولة، أداء الأندية، والإحصائيات الكاملة.">
+<meta property="og:url" content="https://wwrrp456-web.github.io/brookie-fantasy-league/">
+<meta property="og:image" content="https://wwrrp456-web.github.io/brookie-fantasy-league/icon-512.png">
+<meta name="twitter:card" content="summary">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0B0D1F">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -26,6 +35,7 @@
 <link rel="stylesheet" href="css/badge-toast.css">
 <link rel="stylesheet" href="css/club-swap-lab.css">
 <link rel="stylesheet" href="css/personal-status-bar.css">
+<link rel="stylesheet" href="css/notification-center.css">
 <link rel="stylesheet" href="css/standings-row-animation.css">
 <link rel="stylesheet" href="css/live-focus-mode.css">
 <link rel="stylesheet" href="css/stats-tab.css">
@@ -38,6 +48,7 @@
 <div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
 
 <div id="statusBarBox"></div>
+<div id="notificationCenterBox" class="notif-center"></div>
 <div id="liveFocusOverlay"></div>
 
 <div id="onboardOverlay" class="onboard-overlay" hidden>
@@ -181,6 +192,7 @@
       <button class="btn" id="printReportBtn" onclick="printSeasonReport()">🖨️ تقرير الموسم</button>
     </div>
     <div id="statsImgMsg"></div>
+    <div id="statsQuickNavBox"></div>
     <div id="statsCapture">
       <h2 class="section-title">تطوّر الترتيب</h2>
       <div id="chartBox"></div>
@@ -190,6 +202,7 @@
       <div id="rankLeaderboardBox"></div>
       <div id="deathMapBox"></div>
       <div id="hallOfFameBox"></div>
+      <div id="seasonsArchiveBox"></div>
       <div id="recordsBox"></div>
       <div id="subGroupsBox"></div>
       <div id="hotColdStreaksBox"></div>
@@ -772,6 +785,7 @@
 <script src="js/features/whats-new-card.js"></script>
 <script src="js/features/participant-profile.js"></script>
 <script src="js/features/round-poll.js"></script>
+<script src="js/features/notification-center.js"></script>
 <script src="js/features/sub-groups.js"></script>
 <script src="js/features/hot-cold-streaks.js"></script>
 <script src="js/features/badge-toast.js"></script>

@@ -9,6 +9,10 @@
 // ════════════════════════════════════════════════════════════════════════
 let CHAMPION_ID = null; // null = "بدون بطل حاليًا"
 let SEASON_CHAMPIONS_ARCHIVE = []; // [{season, name, points}] — سجل تاريخي يدوي مستقل
+// أرشيف مواسم فعلي: {[seasonArchiveId]: {seasonName, lockedAt, finalStandings}} —
+// لقطة كاملة للترتيب النهائي تُكتب تلقائيًا عند "قفل الموسم" (admin-season-lock.js)،
+// بخلاف SEASON_CHAMPIONS_ARCHIVE أعلاه اللي يحفظ اسم البطل ونقاطه فقط.
+let SEASONS_ARCHIVE = {};
 const CHAMPION_FEATURE_KEYS = [
   'badge_standings','top_banner','golden_card',
   'hero_card','welcome_message','golden_confetti','certificate','whatsapp_line',
@@ -35,6 +39,10 @@ async function loadChampionData(){
     const loaded = (res3 && res3.value) || {};
     CHAMPION_FEATURE_KEYS.forEach(k=> CHAMPION_FEATURES[k] = !!loaded[k]);
   }catch(e){ /* تبقى كل الميزات معطّلة افتراضيًا عند تعذّر القراءة */ }
+  try{
+    const res4 = await window.storage.get('seasonsArchive', true);
+    SEASONS_ARCHIVE = (res4 && res4.value) || {};
+  }catch(e){ SEASONS_ARCHIVE = {}; }
 }
 
 // آخر إدخال بسجل أبطال المواسم يطابق اسم البطل الحالي — يُستخدم لميزتي
@@ -96,6 +104,31 @@ function renderHallOfFame(){
   const sorted = SEASON_CHAMPIONS_ARCHIVE.slice().sort((a,b)=>(b.points||0)-(a.points||0));
   box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2>
     <div>${sorted.map(r=>`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${r.points} نقطة</span></div>`).join('')}</div>`;
+}
+
+// أرشيف مواسم فعلي — الترتيب النهائي الكامل لكل موسم قُفل بعد إضافة هذه
+// الميزة (admin-season-lock.js يكتب SEASONS_ARCHIVE عند القفل). مواسم قُفلت
+// قبلها تبقى غير متاحة هنا (فقط الاسم/النقاط بـ"قاعة مشاهير الأبطال" أعلاه)
+// — لا استرجاع رجعي ممكن للقطة لم تُحفظ وقتها.
+function renderSeasonsArchive(){
+  const box = document.getElementById('seasonsArchiveBox');
+  if(!box) return;
+  const seasons = Object.values(SEASONS_ARCHIVE || {}).filter(Boolean).sort((a,b)=>(b.lockedAt||0)-(a.lockedAt||0));
+  if(!seasons.length){ box.innerHTML=''; return; }
+  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🗄️ أرشيف المواسم</h2>` +
+    seasons.map(s=>{
+      const rows = (s.finalStandings||[]).map((row,i)=>`
+        <div class="season-archive-row">
+          <span class="season-archive-rank">${i+1}</span>
+          <span class="season-archive-name">${row.name}</span>
+          <span class="season-archive-pts">${row.total} نقطة</span>
+        </div>`).join('');
+      const lockedLabel = s.lockedAt ? new Date(s.lockedAt).toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric'}) : '';
+      return `<details class="season-archive-card">
+        <summary>${s.seasonName}${lockedLabel?` <span class="season-archive-date">— قُفل ${lockedLabel}</span>`:''}</summary>
+        <div class="season-archive-table">${rows || '<div style="color:var(--muted);font-size:0.8rem;padding:8px;">لا يوجد ترتيب محفوظ.</div>'}</div>
+      </details>`;
+    }).join('');
 }
 
 // ميزة 4 (كرت المدافع عن اللقب) + ميزة 9 (رحلة الدفاع) + زر ميزة 7 (الشهادة)
