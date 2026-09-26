@@ -43,6 +43,16 @@ function clubCrestSVG(name, px){
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
       <polygon points="0,32 100,0 100,34 0,66" fill="${ac}"/>
     </g>`;
+  } else if(st.pattern === 'eiffel'){
+    // برج إيفل — هوية باريس سان جيرمان، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: EIFFEL_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
+    pattern = `<g clip-path="url(#sh${uid})">
+      <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
+      <mask id="ef${uid}">
+        <image href="${EIFFEL_ICON_PNG_BASE64}" x="18" y="22" width="64" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#ef${uid})"/>
+    </g>`;
   } else if(st.pattern === 'hoops'){
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
@@ -88,6 +98,16 @@ function clubCrestSVG(name, px){
       <circle cx="50" cy="30" r="4.5" fill="${ac}"/>
       <circle cx="73" cy="42" r="4" fill="${ac}"/>
     </g>`;
+  } else if(st.pattern === 'saudiMap'){
+    // خريطة المملكة العربية السعودية — هوية النصر، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: SAUDI_MAP_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
+    pattern = `<g clip-path="url(#sh${uid})">
+      <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
+      <mask id="sm${uid}">
+        <image href="${SAUDI_MAP_ICON_PNG_BASE64}" x="20" y="24" width="60" height="60" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#sm${uid})"/>
+    </g>`;
   } else if(st.pattern === 'ship'){
     // سفينة (مُصغَّرة بطلب المستخدم) — هوية مانشستر سيتي التاريخية (قناة
     // مانشستر الملاحية)
@@ -113,12 +133,15 @@ function clubCrestSVG(name, px){
       <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#lm${uid})"/>
     </g>`;
   } else if(st.pattern === 'wolf'){
-    // رأس ذئبة — هوية روما (أسطورة ذئبة الكابيتول)، بطلب المستخدم
+    // رأس ذئبة عاوية — هوية روما (أسطورة ذئبة الكابيتول)، أيقونة PNG قدّمها
+    // المستخدم (brand-assets.js: WOLF_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد
+    // أعلاه (invert(1) لأن قناع SVG الافتراضي يُظهر الفاتح ويُخفي الداكن).
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <path d="M30 50 L20 32 L34 40 L50 28 L66 40 L80 32 L70 50 C70 66 58 76 50 76 C42 76 30 66 30 50 Z" fill="${ac}"/>
-      <circle cx="42" cy="52" r="3" fill="${bg}"/>
-      <circle cx="58" cy="52" r="3" fill="${bg}"/>
+      <mask id="wm${uid}">
+        <image href="${WOLF_ICON_PNG_BASE64}" x="18" y="20" width="64" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#wm${uid})"/>
     </g>`;
   } else if(st.pattern === 'lock'){
     // قفل — هوية غلطة سراي، بطلب المستخدم
@@ -140,32 +163,33 @@ function clubCrestSVG(name, px){
       <path d="M50 54 C54 44 56 34 62 26 C52 32 48 42 48 52 Z" fill="${ac}"/>
     </g>`;
   } else if(st.pattern === 'ball'){
-    // كرة — هوية الشباب، بطلب المستخدم
+    // كرة طائرة — هوية الشباب، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: BALL_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <circle cx="50" cy="54" r="24" fill="none" stroke="${ac}" stroke-width="4"/>
-      <polygon points="50,40 58,46 55,55 45,55 42,46" fill="${ac}"/>
-      <line x1="50" y1="30" x2="50" y2="40" stroke="${ac}" stroke-width="3"/>
-      <line x1="26" y1="54" x2="42" y2="50" stroke="${ac}" stroke-width="3"/>
-      <line x1="74" y1="54" x2="58" y2="50" stroke="${ac}" stroke-width="3"/>
+      <mask id="bl${uid}">
+        <image href="${BALL_ICON_PNG_BASE64}" x="18" y="22" width="64" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#bl${uid})"/>
     </g>`;
   } else if(st.pattern === 'phoenix'){
-    // طائر (عنقاء) مفرود الجناحين — هوية ليفربول، بطلب المستخدم
+    // طائر الليفر (Liver Bird) — هوية ليفربول، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: LIVERBIRD_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <path d="M50 74 C50 60 40 54 34 44 C40 46 46 50 50 56 C54 50 60 46 66 44 C60 54 50 60 50 74 Z" fill="${ac}"/>
-      <path d="M50 56 C42 50 30 48 20 54 C30 52 40 54 46 60 Z" fill="${ac}"/>
-      <path d="M50 56 C58 50 70 48 80 54 C70 52 60 54 54 60 Z" fill="${ac}"/>
-      <circle cx="50" cy="42" r="5" fill="${ac}"/>
+      <mask id="pb${uid}">
+        <image href="${LIVERBIRD_ICON_PNG_BASE64}" x="29" y="22" width="43" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#pb${uid})"/>
     </g>`;
   } else if(st.pattern === 'checkerCell'){
     // "خلية" مربّعات حمراء/بيضاء صغيرة وسط الدرع — هوية دينامو زغرب، بطلب المستخدم
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <rect x="38" y="38" width="12" height="12" fill="#fff"/>
-      <rect x="50" y="38" width="12" height="12" fill="#CE151C"/>
-      <rect x="38" y="50" width="12" height="12" fill="#CE151C"/>
-      <rect x="50" y="50" width="12" height="12" fill="#fff"/>
+      <rect x="34" y="36" width="16" height="16" fill="#fff"/>
+      <rect x="50" y="36" width="16" height="16" fill="#CE151C"/>
+      <rect x="34" y="52" width="16" height="16" fill="#CE151C"/>
+      <rect x="50" y="52" width="16" height="16" fill="#fff"/>
     </g>`;
   } else if(st.pattern === 'psvFlag'){
     // أحمر/أبيض مقلّم + علم أبيض في المنتصف — هوية آيندهوفن (PSV)، بطلب المستخدم
@@ -178,21 +202,29 @@ function clubCrestSVG(name, px){
       <path d="M49 34 L70 40 L49 46 Z" fill="#fff"/>
     </g>`;
   } else if(st.pattern === 'fenerLeaf'){
-    // كحلي + أحمر + أصفر مع ورقة شجر خضراء في المنتصف — هوية فنربخشة، بطلب المستخدم
+    // ثلاث حزم أفقية (أصفر أعلى، كحلي وسط، أحمر أسفل) ونخلة بيضاء في المنتصف
+    // — هوية فنربخشة، بطلب المستخدم بدل التقسيم القطري وورقة الشجرة الخضراء
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <polygon points="0,0 46,0 0,58" fill="${ac}"/>
-      <polygon points="100,110 54,110 100,52" fill="#E4002B"/>
-      <path d="M50 34 C64 38 68 52 60 66 C55 74 45 74 40 66 C32 52 36 38 50 34 Z" fill="#2E9E4F"/>
-      <line x1="50" y1="38" x2="50" y2="68" stroke="#1B6B33" stroke-width="2"/>
+      <rect x="0" y="0" width="100" height="37" fill="${ac}"/>
+      <rect x="0" y="37" width="100" height="36" fill="#00285E"/>
+      <rect x="0" y="73" width="100" height="37" fill="#E4002B"/>
+      <path d="M50 58 C48 44 48 30 50 18 C52 30 52 44 50 58 Z" fill="#fff"/>
+      <path d="M50 60 C38 56 28 46 24 34 C34 40 44 48 50 58 Z" fill="#fff"/>
+      <path d="M50 60 C62 56 72 46 76 34 C66 40 56 48 50 58 Z" fill="#fff"/>
+      <path d="M50 60 C34 60 20 54 12 44 C24 46 38 52 50 58 Z" fill="#fff"/>
+      <path d="M50 60 C66 60 80 54 88 44 C76 46 62 52 50 58 Z" fill="#fff"/>
+      <path d="M48 95 L46 65 L50 60 L54 65 L52 95 Z" fill="#fff"/>
     </g>`;
   } else if(st.pattern === 'cannon'){
-    // مدفع — هوية أرسنال (The Gunners)، بطلب المستخدم بدل القطع المائلة
+    // مدفع — هوية أرسنال (The Gunners)، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: CANNON_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <rect x="26" y="50" width="48" height="12" rx="6" fill="${ac}" transform="rotate(-20 26 50)"/>
-      <circle cx="34" cy="72" r="11" fill="none" stroke="${ac}" stroke-width="4"/>
-      <circle cx="76" cy="38" r="5" fill="${ac}"/>
+      <mask id="cn${uid}">
+        <image href="${CANNON_ICON_PNG_BASE64}" x="18" y="22" width="64" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#cn${uid})"/>
     </g>`;
   } else if(st.pattern === 'eagle'){
     // نسر/صقر مفرود الجناحين — هوية بنفيكا، بطلب المستخدم
@@ -231,7 +263,7 @@ function clubCrestSVG(name, px){
   // بدلاً عنه)، بخلاف الاختصار العام اللي أُزيل من كل الدروع سابقًا بطلب
   // المستخدم؛ هذا استثناء صريح لهوية كل نادٍ من هذي الخمسة تحديدًا.
   const monogramSVG = st.monogram
-    ? `<text x="50" y="66" text-anchor="middle" font-family="Tajawal, Arial, sans-serif" font-size="${st.monogram.length > 2 ? 26 : 36}" font-weight="900" fill="${st.monogramColor || ac}" stroke="rgba(0,0,0,0.35)" stroke-width="0.8" paint-order="stroke">${st.monogram}</text>`
+    ? `<text x="50" y="68" text-anchor="middle" font-family="Tajawal, Arial, sans-serif" font-size="${st.monogram.length > 2 ? 26 : st.monogram.length > 1 ? 34 : 42}" font-weight="900" fill="${st.monogramColor || ac}" stroke="rgba(0,0,0,0.35)" stroke-width="0.8" paint-order="stroke">${st.monogram}</text>`
     : '';
 
   return `<svg class="crest" width="${px}" height="${px*1.1}" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${name}">
