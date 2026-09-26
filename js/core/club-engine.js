@@ -60,6 +60,16 @@ function clubCrestSVG(name, px){
       <rect x="0" y="44" width="100" height="15" fill="${ac}"/>
       <rect x="0" y="74" width="100" height="15" fill="${ac}"/>
     </g>`;
+  } else if(st.pattern === 'clover'){
+    // ورقة برسيم رباعية — هوية سلتيك، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: CLOVER_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
+    pattern = `<g clip-path="url(#sh${uid})">
+      <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
+      <mask id="cl${uid}">
+        <image href="${CLOVER_ICON_PNG_BASE64}" x="18" y="22" width="64" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#cl${uid})"/>
+    </g>`;
   } else if(st.pattern === 'diag'){
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
@@ -144,13 +154,14 @@ function clubCrestSVG(name, px){
       <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#wm${uid})"/>
     </g>`;
   } else if(st.pattern === 'lock'){
-    // قفل — هوية غلطة سراي، بطلب المستخدم
+    // شعار GS 1905 — هوية غلطة سراي، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: GALATASARAY_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <path d="M38 46 V38 C38 28 62 28 62 38 V46" stroke="${ac}" stroke-width="6" fill="none"/>
-      <rect x="30" y="46" width="40" height="32" rx="6" fill="${ac}"/>
-      <circle cx="50" cy="58" r="5" fill="${bg}"/>
-      <rect x="47" y="60" width="6" height="10" fill="${bg}"/>
+      <mask id="gs${uid}">
+        <image href="${GALATASARAY_ICON_PNG_BASE64}" x="27" y="22" width="46" height="64" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#gs${uid})"/>
     </g>`;
   } else if(st.pattern === 'palm'){
     // نخلة — هوية الأهلي السعودي، بطلب المستخدم
@@ -227,11 +238,14 @@ function clubCrestSVG(name, px){
       <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#cn${uid})"/>
     </g>`;
   } else if(st.pattern === 'eagle'){
-    // نسر/صقر مفرود الجناحين — هوية بنفيكا، بطلب المستخدم
+    // نسر مفرود الجناحين — هوية بنفيكا، أيقونة PNG قدّمها المستخدم
+    // (brand-assets.js: EAGLE_ICON_PNG_BASE64)، بنفس أسلوب قناع الأسد أعلاه
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <path d="M50 34 C42 38 26 40 14 52 C24 50 32 52 38 58 L44 50 L50 58 L56 50 L62 58 C68 52 76 50 86 52 C74 40 58 38 50 34 Z" fill="${ac}"/>
-      <circle cx="50" cy="30" r="5" fill="${ac}"/>
+      <mask id="eg${uid}">
+        <image href="${EAGLE_ICON_PNG_BASE64}" x="18" y="44" width="64" height="21" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#eg${uid})"/>
     </g>`;
   } else {
     pattern = `<g clip-path="url(#sh${uid})">

@@ -32,7 +32,7 @@ const CLUB_STYLE = {
   'النصر':             {bg:'#FFD400', fg:'#1B1F5E', pattern:'saudiMap', short:'النصر', accent:'#1B4C9B'},
   'أياكس':             {bg:'#FFFFFF', fg:'#D2122E', pattern:'sash',    short:'أياكس', accent:'#D2122E'},
   'أرسنال':            {bg:'#EF0107', fg:'#fff',    pattern:'cannon',  short:'أرسنال', accent:'#FFFFFF'},
-  'سلتيك':             {bg:'#FFFFFF', fg:'#018749', pattern:'hoops',   short:'سلتيك', accent:'#018749'},
+  'سلتيك':             {bg:'#FFFFFF', fg:'#018749', pattern:'clover',  short:'سلتيك', accent:'#018749'},
   'بايرن ميونيخ':      {bg:'#DC052D', fg:'#fff',    pattern:'checkers', short:'بايرن', accent:'#0066B2'},
   'فاينورد':           {bg:'#FFFFFF', fg:'#E2001A', pattern:'halves',  short:'فاينورد', accent:'#E2001A', monogram:'F', monogramColor:'#F0C400'},
   'رينجرز':            {bg:'#00205B', fg:'#fff',    pattern:'lion',    short:'رينجرز', accent:'#E4022D'},
