@@ -347,7 +347,9 @@ const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>
 
 // ألوان تقريبية للأندية — قيم افتراضية مولَّدة تلقائيًا (لون واحد موحّد لكل
 // ناد كبداية)، عدّلها يدويًا بالملف بعد الرفع بألوان الأندية الحقيقية إن رغبت
-// (pattern: stripes | halves | sash | solid | hoops | cross | diag).
+// (pattern: stripes | halves | sash | solid | hoops | diag | checkers | crown | crescent
+// | ship | cannon | eagle | lion | lionSpear | wolf | lock | palm | ball | phoenix
+// | checkerCell | psvFlag | fenerLeaf — وحقل monogram الاختياري لحرف/اختصار مركزي).
 const CLUB_STYLE = {
 ${styleLines}
 };
