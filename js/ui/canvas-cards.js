@@ -113,35 +113,44 @@ function loadCardLogoImage(){
   return _cardLogoPromise;
 }
 
-// ارتفاع الشعار المتمركز حسب عرض الكرت — دالة واحدة يستخدمها كل من رسم
-// الشعار الفعلي وحساب مقدار الإزاحة (translate) مسبقًا قبل إنشاء الكانفاس،
-// فلا يتكرر نفس الحساب بصيغتين قد تختلفان بالخطأ لاحقًا.
+// ارتفاع افتراضي معقول للشعار حسب عرض الكرت — نقطة بداية فقط؛ كل كرت يمرّر
+// logoH خاصًا به إن احتاج حجمًا مختلفًا (بدل صيغة واحدة تُفرض على الجميع).
 function cardLogoHeight(W){ return Math.max(100, Math.min(190, W*0.22)); }
-// يرسم الشعار متمركزًا أعلى الكرت بحجم بارز (بدل شريحة صغيرة بالزاوية)،
-// ويرجع الارتفاع الكلي المحجوز له (topMargin + ارتفاع الشعار + فراغ) — يُستخدم
-// هذا الرقم كقيمة إزاحة (translate) لبقية عناصر الكرت بدل إعادة حساب كل
-// إحداثيات y يدويًا لكل كرت على حدة.
-async function drawCardHeaderLogo(ctx, W, topMargin){
-  // topMargin لا يقل عن 38 دائمًا — الشعار كان يقترب جدًا من إطار الكرت
-  // العلوي، وتوهّجه (shadowBlur) يتجاوز حد الإطار فيبدو "نازلًا عن الحافة"؛
-  // هامش أكبر + توهّج أخف يضمنان بقاءه كاملًا داخل الإطار (27 سبتمبر 2026).
-  const m = Math.max(38, topMargin===undefined ? 38 : topMargin);
+
+// يرسم الشعار داخل "حزمة هيدر" محجوزة أعلى الكرت (من borderTop إلى
+// borderTop+bandHeight)، ويتمركز الشعار عموديًا في مُنتصف تلك الحزمة تلقائيًا
+// (بدل تحديد هامش علوي يدويًا وأمل أن يتساوى مع الفراغ المتبقي أسفله) — بطلب
+// المستخدم (28 سبتمبر 2026): أراد الشعار دائمًا في منتصف المساحة الفارغة
+// المحجوزة له، فحساب المركز هندسيًا هنا يضمن ذلك دائمًا مهما تغيّر حجم
+// الشعار لاحقًا، بدل تعديل هامشين منفصلين يدويًا في كل مرة.
+// كل كرت يمرّر borderTop (بداية إطاره الفعلي) وbandHeight (المساحة الكلية
+// المحجوزة للهيدر) وlogoH (حجم شعاره) — فيتحكم كل كرت بمساحته الخاصة دون أي
+// صيغة مفروضة على البقية. يرجع borderTop+bandHeight دائمًا: نقطة بداية بقية
+// محتوى الكرت، ثابتة سواء نجح تحميل الشعار أو لا.
+async function drawCardHeaderLogo(ctx, W, opts){
+  opts = opts || {};
+  const borderTop = opts.borderTop===undefined ? 22 : opts.borderTop;
+  const logoH = opts.logoH || cardLogoHeight(W);
+  const bandHeight = opts.bandHeight===undefined ? (logoH + 36) : opts.bandHeight;
+  const contentStart = borderTop + bandHeight;
   try{
     const img = await loadCardLogoImage();
-    if(!img || !img.naturalWidth) return m;
-    const logoH = cardLogoHeight(W);
+    if(!img || !img.naturalWidth) return contentStart;
+    const logoY = borderTop + Math.max(0, (bandHeight - logoH) / 2);
     const logoW = logoH * (img.naturalWidth / img.naturalHeight);
     const cx = (W-logoW)/2;
     ctx.save();
-    ctx.shadowColor = 'rgba(22,166,234,0.3)';
-    ctx.shadowBlur = 10;
+    if(opts.glow !== false){
+      // لون توهّج قابل للتخصيص لكل كرت — الشهادة مثلًا ذهبية/بنفسجية الهوية
+      // فتوهّج أزرق افتراضي كان يبدو غريبًا عليها بدل التوهّج الذهبي المناسب.
+      ctx.shadowColor = opts.glowColor || 'rgba(22,166,234,0.3)';
+      ctx.shadowBlur = 8;
+    }
     ctx.globalAlpha = 0.98;
-    ctx.drawImage(img, cx, m, logoW, logoH);
+    ctx.drawImage(img, cx, logoY, logoW, logoH);
     ctx.restore();
-    // فراغ صغير فقط قبل أول نص — كان الفراغ الزائد يفصل الشعار عن محتوى
-    // الكرت وكأنه عنصر منفصل بدل هيدر واحد متّصل.
-    return m + logoH + 10;
-  }catch(e){ return m; }
+  }catch(e){}
+  return contentStart;
 }
 
 // ---------- خلفية/إطار موحّد وأرقى لكل الكروت القابلة للمشاركة ----------
@@ -210,14 +219,15 @@ async function buildChampionCard(){
   const mv = getMovements();
 
   const W=800;
-  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const logoH=235, bandHeight=280; // مضبوطة خصيصًا لهذا الكرت (كأس كبير 120px يتبعه) — بطلب المستخدم: أكبر وأبعد قليلًا عن حافة الإطار العلوي
+  const headerShift = 22 + bandHeight;
   const H = 1000 + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {glowY:330+headerShift});
-  await drawCardHeaderLogo(ctx, W, 34);
+  await drawCardHeaderLogo(ctx, W, {logoH, bandHeight});
 
   ctx.save();
   ctx.translate(0, headerShift);
@@ -308,11 +318,13 @@ async function buildStoryCanvas(sourceCanvas){
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {cornerRadius:30, glowY:H*0.1});
-  await drawCardHeaderLogo(ctx, W, 60);
+  // شعار أكبر بوضوح هنا: هذا الكرت غلاف "ستوري" رأسي بمساحة واسعة (1920px)،
+  // فحجم الشعار الافتراضي (لمقاسات الكروت المضغوطة) يبان صغيرًا عليه.
+  const logoBottom = await drawCardHeaderLogo(ctx, W, {logoH:260, bandHeight:334});
 
   ctx.textAlign = 'center';
 
-  const marginTop = 220, marginBottom = 130;
+  const marginTop = logoBottom, marginBottom = 130;
   const availH = H - marginTop - marginBottom;
   const srcW = sourceCanvas.width, srcH = sourceCanvas.height;
   const scale = Math.min((W*0.9)/srcW, availH/srcH);
@@ -431,14 +443,15 @@ async function buildSeasonWrapCard(){
   const stats = getSeasonWrapStats();
   const roundNum = getCurrentRoundNumber();
   const W=800, contentH=1100;
-  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const logoH=205, bandHeight=241; // مضبوطة خصيصًا (أيقونة 📊 96px تتبعه)
+  const headerShift = 22 + bandHeight;
   const H = contentH + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {glowY:300+headerShift});
-  await drawCardHeaderLogo(ctx, W, 34);
+  await drawCardHeaderLogo(ctx, W, {logoH, bandHeight});
 
   ctx.save();
   ctx.translate(0, headerShift);
@@ -542,7 +555,8 @@ async function buildStandingsCard(){
   const rowH = 56;
   const footH = 70;
   const contentH = headH + n*rowH + footH;
-  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const logoH=215, bandHeight=243; // مضبوطة خصيصًا (عنوان نصي متوسط الحجم يتبعه مباشرة)
+  const headerShift = 22 + bandHeight;
   const H = contentH + headerShift;
 
   const cv = document.createElement('canvas');
@@ -550,7 +564,7 @@ async function buildStandingsCard(){
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {cornerRadius:22, glowY:headH*0.6+headerShift});
-  await drawCardHeaderLogo(ctx, W, 34);
+  await drawCardHeaderLogo(ctx, W, {logoH, bandHeight});
 
   ctx.save();
   ctx.translate(0, headerShift);
@@ -652,14 +666,15 @@ async function buildStandingsStoryCanvas(){
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {cornerRadius:28, glowY:H*0.1});
-  await drawCardHeaderLogo(ctx, W, 56);
+  // نفس منطق كرت الستوري العام: مساحة رأسية واسعة تتحمّل شعارًا أكبر وأبرز.
+  const logoBottom = await drawCardHeaderLogo(ctx, W, {logoH:250, bandHeight:314});
 
   ctx.textAlign='center';
   ctx.fillStyle='#16A6EA'; ctx.font='800 44px Tajawal, Arial';
-  ctx.fillText(`الترتيب العام — بعد الجولة ${roundNum}`, W/2, 240);
+  ctx.fillText(`الترتيب العام — بعد الجولة ${roundNum}`, W/2, logoBottom+24);
 
   ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(70,264); ctx.lineTo(W-70,264); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(70,logoBottom+48); ctx.lineTo(W-70,logoBottom+48); ctx.stroke();
 
   const colRank = W-110, colName = W-190, colPts = 130, colMv = 260;
   const rowH = 150;
@@ -730,7 +745,7 @@ async function buildStandingsStoryCanvas(){
   const bottomN = Math.min(3, Math.max(0, n - topN));
   const skipped = Math.max(0, n - topN - bottomN);
 
-  let cursorY = 300;
+  let cursorY = logoBottom+84;
   drawStoryHeaderRow(cursorY);
   cursorY += 26;
 
@@ -869,7 +884,8 @@ async function buildParticipantProfileCard(pid){
   const duelH = duelRecord ? 90 : 0;
   const footH = 90;
   const contentH = headH + statsH + stripH + badgesH + duelH + footH;
-  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const logoH=215, bandHeight=247; // مضبوطة خصيصًا (عنوان "الملف الشخصي" يتبعه)
+  const headerShift = 22 + bandHeight;
   const H = contentH + headerShift;
 
   const cv = document.createElement('canvas');
@@ -877,7 +893,7 @@ async function buildParticipantProfileCard(pid){
   const ctx = cv.getContext('2d');
 
   drawCardBackdrop(ctx, W, H, {glowY:240+headerShift});
-  await drawCardHeaderLogo(ctx, W, 34);
+  await drawCardHeaderLogo(ctx, W, {logoH, bandHeight});
 
   ctx.save();
   ctx.translate(0, headerShift);
@@ -1147,7 +1163,13 @@ async function buildChampionCertificateCanvas(){
   const st = computeStandings();
   const row = st.find(s=>s.id===CHAMPION_ID) || {total:0};
   const W=1080, contentH=1300;
-  const headerShift = 40 + cardLogoHeight(W) + 20;
+  // borderTop=50 (وليس الافتراضي 22): إطار الشهادة الداخلي مرسوم عند y=50
+  // (خط أبيض رفيع) لا 22 كبقية الكروت — لازم يُمرَّر صراحة وإلا يتقاطع
+  // الشعار بصريًا مع خط الإطار (خطأ لوحظ بطلب المستخدم، 28 سبتمبر 2026).
+  // logoH أكبر من الحجم الافتراضي عمدًا: الشهادة كرت "احتفالي" بمساحة رأسية
+  // واسعة (contentH=1300)، فشعار أبرز يليق بمقامها كوثيقة تكريم رسمية.
+  const certBorderTop=50, logoH=230, bandHeight=266;
+  const headerShift = certBorderTop + bandHeight;
   const H = contentH + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
@@ -1165,7 +1187,7 @@ async function buildChampionCertificateCanvas(){
   ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=2;
   drawRoundedRect(ctx,50,50,W-100,H-100,22); ctx.stroke();
   drawCornerTicks(ctx, W, H, '#FFD76A', 50);
-  await drawCardHeaderLogo(ctx, W, 46);
+  await drawCardHeaderLogo(ctx, W, {logoH, bandHeight, borderTop:certBorderTop, glowColor:'rgba(255,215,106,0.4)'});
 
   ctx.save();
   ctx.translate(0, headerShift);
