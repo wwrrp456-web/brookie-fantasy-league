@@ -133,8 +133,9 @@
   .hero-card .hero-sub{font-size:0.72rem;color:var(--gold-light);margin-top:2px;}
   .hero-card.gold{border-color:#16A6EA;background:var(--cream);}
 
-  /* ===== كرت بطل الجولة ===== */
-  #championCanvas{max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;
+  /* ===== كرت بطل الجولة / ملخص الموسم — يجب أن يتقلّص مع عرض الجوال بدل
+     تجاوز الشاشة أفقيًا (خطأ لوحظ بشاشات الجوال، 27 سبتمبر 2026) ===== */
+  #championCanvas, #seasonWrapCanvas{max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;
     box-shadow:0 6px 22px rgba(0,0,0,0.3);}
   .champ-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
 

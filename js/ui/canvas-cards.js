@@ -92,12 +92,12 @@ function wrapCanvasText(ctx, text, maxWidth){
   return lines;
 }
 
-// ---------- علامة شعار البطولة على كل بطاقة/شهادة/ستوري تُصدَّر كصورة ----------
-// تُثبَّت بالزاوية العلوية اليمنى لكل كرت يُصدَّره الموقع (بطل الجولة، الترتيب،
-// ملخص الموسم، شهادة البطل، نسخ الستوري)، عشان يبان واضح إنها بطاقات دوري
-// بروكي عند مشاركتها بستوريات واتساب/انستغرام. حجم صغير وزاوية فارغة دائمًا
-// (كل عناوين الكروت متمركزة نصيًا في المنتصف)، فلا تتعارض مع أي تصميم موجود
-// (10 سبتمبر 2026، بطلب المستخدم).
+// ---------- شعار البطولة على كل بطاقة/شهادة/ستوري تُصدَّر كصورة ----------
+// كان الشعار سابقًا "شريحة" صغيرة معزولة بالزاوية العلوية — بطلب المستخدم
+// (27 سبتمبر 2026) صار الآن جزء رئيسي من هيكل الهيدر: يتصدّر منتصف كل كرت
+// بحجم واضح (نفس أسلوب البطاقات الاحترافية: الشعار أولًا كعنصر هوية، ثم
+// التفاصيل تحته)، بدل نص "دوري بروكي الفانتازي" النصي المكرَّر أسفله — الشعار
+// نفسه يحمل الاسم والشعار الفرعي فلا داعي لتكراره نصيًا بعده.
 let _cardLogoImg = null, _cardLogoPromise = null;
 function loadCardLogoImage(){
   if(_cardLogoImg) return Promise.resolve(_cardLogoImg);
@@ -112,18 +112,93 @@ function loadCardLogoImage(){
   });
   return _cardLogoPromise;
 }
-async function drawCardBrandMark(ctx, W, margin){
+
+// ارتفاع الشعار المتمركز حسب عرض الكرت — دالة واحدة يستخدمها كل من رسم
+// الشعار الفعلي وحساب مقدار الإزاحة (translate) مسبقًا قبل إنشاء الكانفاس،
+// فلا يتكرر نفس الحساب بصيغتين قد تختلفان بالخطأ لاحقًا.
+function cardLogoHeight(W){ return Math.max(100, Math.min(190, W*0.22)); }
+// يرسم الشعار متمركزًا أعلى الكرت بحجم بارز (بدل شريحة صغيرة بالزاوية)،
+// ويرجع الارتفاع الكلي المحجوز له (topMargin + ارتفاع الشعار + فراغ) — يُستخدم
+// هذا الرقم كقيمة إزاحة (translate) لبقية عناصر الكرت بدل إعادة حساب كل
+// إحداثيات y يدويًا لكل كرت على حدة.
+async function drawCardHeaderLogo(ctx, W, topMargin){
+  // topMargin لا يقل عن 38 دائمًا — الشعار كان يقترب جدًا من إطار الكرت
+  // العلوي، وتوهّجه (shadowBlur) يتجاوز حد الإطار فيبدو "نازلًا عن الحافة"؛
+  // هامش أكبر + توهّج أخف يضمنان بقاءه كاملًا داخل الإطار (27 سبتمبر 2026).
+  const m = Math.max(38, topMargin===undefined ? 38 : topMargin);
   try{
     const img = await loadCardLogoImage();
-    if(!img || !img.naturalWidth) return;
-    const m = margin===undefined ? 26 : margin;
-    const logoW = Math.max(56, Math.min(100, W*0.1));
-    const logoH = logoW * (img.naturalHeight / img.naturalWidth);
+    if(!img || !img.naturalWidth) return m;
+    const logoH = cardLogoHeight(W);
+    const logoW = logoH * (img.naturalWidth / img.naturalHeight);
+    const cx = (W-logoW)/2;
     ctx.save();
-    ctx.globalAlpha = 0.92;
-    ctx.drawImage(img, W - m - logoW, m, logoW, logoH);
+    ctx.shadowColor = 'rgba(22,166,234,0.3)';
+    ctx.shadowBlur = 10;
+    ctx.globalAlpha = 0.98;
+    ctx.drawImage(img, cx, m, logoW, logoH);
     ctx.restore();
-  }catch(e){}
+    // فراغ صغير فقط قبل أول نص — كان الفراغ الزائد يفصل الشعار عن محتوى
+    // الكرت وكأنه عنصر منفصل بدل هيدر واحد متّصل.
+    return m + logoH + 10;
+  }catch(e){ return m; }
+}
+
+// ---------- خلفية/إطار موحّد وأرقى لكل الكروت القابلة للمشاركة ----------
+// يجمع (تدرّج داكن + توهّج علوي ناعم + نسيج نقطي خفيف + إطار مزدوج بلمسة
+// ذهبية + زوايا مُبرَزة) بدل تكرار نفس التدرّج المسطّح + "الأشعة" البدائية في
+// كل دالة بناء كرت على حدة — تحسين شامل لهوية كل الصور القابلة للتصدير
+// بطلب المستخدم (27 سبتمبر 2026): كانت تحس إنها "تسليك" بدل تصميم منسّق.
+function drawDotGridTexture(ctx, W, H, opacity){
+  ctx.save();
+  ctx.globalAlpha = opacity===undefined ? 0.05 : opacity;
+  ctx.fillStyle = '#FFFFFF';
+  const gap = Math.max(28, Math.round(W/26));
+  for(let yy=gap; yy<H-gap*0.5; yy+=gap){
+    for(let xx=gap; xx<W-gap*0.5; xx+=gap){
+      ctx.beginPath(); ctx.arc(xx, yy, 1.3, 0, Math.PI*2); ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+function drawCornerTicks(ctx, W, H, color, margin){
+  const m = margin===undefined ? 22 : margin, tick = Math.max(16, W*0.028);
+  ctx.save();
+  ctx.strokeStyle = color; ctx.lineWidth = 4; ctx.lineCap = 'round';
+  [[m,m,1,1],[W-m,m,-1,1],[m,H-m,1,-1],[W-m,H-m,-1,-1]].forEach(([x,y,dx,dy])=>{
+    ctx.beginPath();
+    ctx.moveTo(x, y+dy*tick); ctx.lineTo(x, y); ctx.lineTo(x+dx*tick, y);
+    ctx.stroke();
+  });
+  ctx.restore();
+}
+function drawCardBackdrop(ctx, W, H, opts){
+  opts = opts || {};
+  const cornerRadius = opts.cornerRadius===undefined ? 26 : opts.cornerRadius;
+  const borderColor = opts.borderColor || '#7A52EE';
+  const accentColor = opts.accentColor || '#16A6EA';
+  const outerColor = opts.outerColor || 'rgba(255,215,106,0.4)';
+
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // توهّج علوي ناعم بدل "الأشعة" المثلثية السابقة
+  const glowY = opts.glowY===undefined ? H*0.2 : opts.glowY;
+  const glow = ctx.createRadialGradient(W/2, glowY, 4, W/2, glowY, W*0.62);
+  glow.addColorStop(0, 'rgba(22,166,234,0.18)');
+  glow.addColorStop(1, 'rgba(22,166,234,0)');
+  ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
+
+  drawDotGridTexture(ctx, W, H);
+
+  // إطار مزدوج: خط ذهبي رفيع خارجي + خط رئيسي داخلي
+  ctx.strokeStyle = outerColor; ctx.lineWidth = 2;
+  drawRoundedRect(ctx, 12,12, W-24, H-24, cornerRadius+6); ctx.stroke();
+  ctx.strokeStyle = borderColor; ctx.lineWidth = 5;
+  drawRoundedRect(ctx, 22,22, W-44, H-44, cornerRadius); ctx.stroke();
+
+  drawCornerTicks(ctx, W, H, accentColor, 22);
 }
 
 async function buildChampionCard(){
@@ -134,39 +209,19 @@ async function buildChampionCard(){
   const champRank = st.findIndex(x=>x.id===h.top.id)+1;
   const mv = getMovements();
 
-  const W=800, H=1000;
+  const W=800;
+  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const H = 1000 + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
 
-  // خلفية متدرجة
-  const g = ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  drawCardBackdrop(ctx, W, H, {glowY:330+headerShift});
+  await drawCardHeaderLogo(ctx, W, 34);
 
-  // أشعة خلفية
-  ctx.save(); ctx.globalAlpha=0.07; ctx.translate(W/2,330);
-  for(let i=0;i<12;i++){
-    ctx.rotate(Math.PI/6);
-    ctx.fillStyle='#16A6EA';
-    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-45,-620); ctx.lineTo(45,-620); ctx.closePath(); ctx.fill();
-  }
-  ctx.restore();
-
-  // إطار ذهبي
-  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
-  drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
-
-  await drawCardBrandMark(ctx, W);
-
+  ctx.save();
+  ctx.translate(0, headerShift);
   ctx.textAlign='center';
-
-  // العنوان العلوي
-  ctx.fillStyle='#9B7BF5'; ctx.font='700 30px Tajawal, Arial';
-  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 82);
-
-  ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(120,104); ctx.lineTo(W-120,104); ctx.stroke();
 
   // الكأس
   ctx.font='120px serif'; ctx.fillText('🏆', W/2, 240);
@@ -238,6 +293,7 @@ async function buildChampionCard(){
   ctx.fillStyle='#7B7AA8'; ctx.font='600 22px Tajawal, Arial';
   ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, 946);
 
+  ctx.restore();
   return cv;
 }
 
@@ -251,19 +307,12 @@ async function buildStoryCanvas(sourceCanvas){
   cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d');
 
-  const g = ctx.createLinearGradient(0,0,0,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-
-  await drawCardBrandMark(ctx, W, 42);
+  drawCardBackdrop(ctx, W, H, {cornerRadius:30, glowY:H*0.1});
+  await drawCardHeaderLogo(ctx, W, 60);
 
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#9B7BF5'; ctx.font = '800 42px Tajawal, Arial';
-  ctx.fillText('🏆 دوري بروكي الفانتازي', W/2, 96);
-  ctx.fillStyle = '#A9A8D6'; ctx.font = '600 26px Tajawal, Arial';
-  ctx.fillText('الموسم الثاني', W/2, 136);
 
-  const marginTop = 190, marginBottom = 130;
+  const marginTop = 220, marginBottom = 130;
   const availH = H - marginTop - marginBottom;
   const srcW = sourceCanvas.width, srcH = sourceCanvas.height;
   const scale = Math.min((W*0.9)/srcW, availH/srcH);
@@ -381,33 +430,19 @@ function getSeasonWrapStats(){
 async function buildSeasonWrapCard(){
   const stats = getSeasonWrapStats();
   const roundNum = getCurrentRoundNumber();
-  const W=800, H=1100;
+  const W=800, contentH=1100;
+  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const H = contentH + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
 
-  const g = ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  drawCardBackdrop(ctx, W, H, {glowY:300+headerShift});
+  await drawCardHeaderLogo(ctx, W, 34);
 
-  ctx.save(); ctx.globalAlpha=0.07; ctx.translate(W/2,300);
-  for(let i=0;i<12;i++){
-    ctx.rotate(Math.PI/6);
-    ctx.fillStyle='#16A6EA';
-    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-45,-620); ctx.lineTo(45,-620); ctx.closePath(); ctx.fill();
-  }
-  ctx.restore();
-
-  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
-  drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
-
-  await drawCardBrandMark(ctx, W);
-
+  ctx.save();
+  ctx.translate(0, headerShift);
   ctx.textAlign='center';
-  ctx.fillStyle='#9B7BF5'; ctx.font='700 30px Tajawal, Arial';
-  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 82);
-  ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(120,104); ctx.lineTo(W-120,104); ctx.stroke();
 
   ctx.font='96px serif'; ctx.fillText('📊', W/2, 218);
 
@@ -441,8 +476,9 @@ async function buildSeasonWrapCard(){
   });
 
   ctx.fillStyle='#7B7AA8'; ctx.font='600 22px Tajawal, Arial';
-  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-40);
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, contentH-40);
 
+  ctx.restore();
   return cv;
 }
 
@@ -505,30 +541,24 @@ async function buildStandingsCard(){
   const headH = 190;
   const rowH = 56;
   const footH = 70;
-  const H = headH + n*rowH + footH;
+  const contentH = headH + n*rowH + footH;
+  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const H = contentH + headerShift;
 
   const cv = document.createElement('canvas');
   cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d');
 
-  // خلفية متدرجة (نفس هوية كرت البطل)
-  const g = ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.5,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  drawCardBackdrop(ctx, W, H, {cornerRadius:22, glowY:headH*0.6+headerShift});
+  await drawCardHeaderLogo(ctx, W, 34);
 
-  // إطار ذهبي
-  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
-  drawRoundedRect(ctx,14,14,W-28,H-28,22); ctx.stroke();
-
-  await drawCardBrandMark(ctx, W);
-
+  ctx.save();
+  ctx.translate(0, headerShift);
   ctx.textAlign='center';
 
   // العنوان
-  ctx.fillStyle='#9B7BF5'; ctx.font='700 28px Tajawal, Arial';
-  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 56);
   ctx.fillStyle='#16A6EA'; ctx.font='800 40px Tajawal, Arial';
-  ctx.fillText(`🏆 الترتيب العام — بعد الجولة ${roundNum}`, W/2, 108);
+  ctx.fillText(`🏆 الترتيب العام — بعد الجولة ${roundNum}`, W/2, 90);
 
   ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
   ctx.beginPath(); ctx.moveTo(60,132); ctx.lineTo(W-60,132); ctx.stroke();
@@ -601,8 +631,9 @@ async function buildStandingsCard(){
   // تذييل
   ctx.textAlign='center';
   ctx.fillStyle='#7B7AA8'; ctx.font='600 20px Tajawal, Arial';
-  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-30);
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, contentH-30);
 
+  ctx.restore();
   return cv;
 }
 
@@ -620,25 +651,15 @@ async function buildStandingsStoryCanvas(){
   cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d');
 
-  const g = ctx.createLinearGradient(0,0,0,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-
-  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
-  drawRoundedRect(ctx,20,20,W-40,H-40,28); ctx.stroke();
-
-  await drawCardBrandMark(ctx, W, 42);
+  drawCardBackdrop(ctx, W, H, {cornerRadius:28, glowY:H*0.1});
+  await drawCardHeaderLogo(ctx, W, 56);
 
   ctx.textAlign='center';
-  ctx.fillStyle='#9B7BF5'; ctx.font='700 34px Tajawal, Arial';
-  ctx.fillText('🏆 دوري بروكي الفانتازي', W/2, 90);
-  ctx.fillStyle='#A9A8D6'; ctx.font='600 26px Tajawal, Arial';
-  ctx.fillText('الموسم الثاني', W/2, 128);
   ctx.fillStyle='#16A6EA'; ctx.font='800 44px Tajawal, Arial';
-  ctx.fillText(`الترتيب العام — بعد الجولة ${roundNum}`, W/2, 190);
+  ctx.fillText(`الترتيب العام — بعد الجولة ${roundNum}`, W/2, 240);
 
   ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(70,214); ctx.lineTo(W-70,214); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(70,264); ctx.lineTo(W-70,264); ctx.stroke();
 
   const colRank = W-110, colName = W-190, colPts = 130, colMv = 260;
   const rowH = 150;
@@ -709,7 +730,7 @@ async function buildStandingsStoryCanvas(){
   const bottomN = Math.min(3, Math.max(0, n - topN));
   const skipped = Math.max(0, n - topN - bottomN);
 
-  let cursorY = 250;
+  let cursorY = 300;
   drawStoryHeaderRow(cursorY);
   cursorY += 26;
 
@@ -847,38 +868,22 @@ async function buildParticipantProfileCard(pid){
   const badgesH = 70 + Math.max(1, myBadges.length ? Math.ceil(myBadges.length/2) : 1) * badgesRowH;
   const duelH = duelRecord ? 90 : 0;
   const footH = 90;
-  const H = headH + statsH + stripH + badgesH + duelH + footH;
+  const contentH = headH + statsH + stripH + badgesH + duelH + footH;
+  const headerShift = 34 + cardLogoHeight(W) + 22;
+  const H = contentH + headerShift;
 
   const cv = document.createElement('canvas');
   cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d');
 
-  // خلفية متدرجة (نفس هوية باقي الكروت)
-  const g = ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#040421'); g.addColorStop(0.55,'#06061A'); g.addColorStop(1,'#000000');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  drawCardBackdrop(ctx, W, H, {glowY:240+headerShift});
+  await drawCardHeaderLogo(ctx, W, 34);
 
-  ctx.save(); ctx.globalAlpha=0.06; ctx.translate(W/2,240);
-  for(let i=0;i<12;i++){
-    ctx.rotate(Math.PI/6);
-    ctx.fillStyle='#16A6EA';
-    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-45,-620); ctx.lineTo(45,-620); ctx.closePath(); ctx.fill();
-  }
-  ctx.restore();
-
-  ctx.strokeStyle='#7A52EE'; ctx.lineWidth=6;
-  drawRoundedRect(ctx,18,18,W-36,H-36,26); ctx.stroke();
-
-  await drawCardBrandMark(ctx, W);
-
+  ctx.save();
+  ctx.translate(0, headerShift);
   ctx.textAlign='center';
 
-  // ---------- 1) الهيدر: العنوان + الاسم + المركز/النقاط ----------
-  ctx.fillStyle='#9B7BF5'; ctx.font='700 30px Tajawal, Arial';
-  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 70);
-  ctx.strokeStyle='rgba(155,123,245,0.35)'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(120,92); ctx.lineTo(W-120,92); ctx.stroke();
-
+  // ---------- 1) الهيدر: الاسم + المركز/النقاط ----------
   ctx.fillStyle='#16A6EA'; ctx.font='800 32px Tajawal, Arial';
   ctx.fillText('📋 الملف الشخصي', W/2, 140);
 
@@ -982,8 +987,9 @@ async function buildParticipantProfileCard(pid){
 
   // ---------- 6) التذييل ----------
   ctx.fillStyle='#7B7AA8'; ctx.font='600 22px Tajawal, Arial';
-  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, H-32);
+  ctx.fillText('فوز = 3  ·  تعادل = 1  ·  خسارة = 0', W/2, contentH-32);
 
+  ctx.restore();
   return cv;
 }
 
@@ -1140,22 +1146,30 @@ async function buildChampionCertificateCanvas(){
   const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID) || {name:'—'};
   const st = computeStandings();
   const row = st.find(s=>s.id===CHAMPION_ID) || {total:0};
-  const W=1080, H=1300;
+  const W=1080, contentH=1300;
+  const headerShift = 40 + cardLogoHeight(W) + 20;
+  const H = contentH + headerShift;
   const cv = document.createElement('canvas');
   cv.width=W; cv.height=H;
   const ctx = cv.getContext('2d');
   const g = ctx.createLinearGradient(0,0,W,H);
   g.addColorStop(0,'#0B0D1F'); g.addColorStop(1,'#3D2E99');
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const certGlow = ctx.createRadialGradient(W/2, H*0.13, 4, W/2, H*0.13, W*0.6);
+  certGlow.addColorStop(0, 'rgba(255,215,106,0.16)');
+  certGlow.addColorStop(1, 'rgba(255,215,106,0)');
+  ctx.fillStyle = certGlow; ctx.fillRect(0,0,W,H);
+  drawDotGridTexture(ctx, W, H, 0.06);
   ctx.strokeStyle='#7B5CFF'; ctx.lineWidth=10;
   drawRoundedRect(ctx,30,30,W-60,H-60,30); ctx.stroke();
   ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=2;
   drawRoundedRect(ctx,50,50,W-100,H-100,22); ctx.stroke();
-  await drawCardBrandMark(ctx, W, 66);
-  ctx.textAlign='center';
+  drawCornerTicks(ctx, W, H, '#FFD76A', 50);
+  await drawCardHeaderLogo(ctx, W, 46);
 
-  ctx.fillStyle='#00B4FF'; ctx.font='700 30px Tajawal, Arial';
-  ctx.fillText('دوري بروكي الفانتازي — الموسم الثاني', W/2, 150);
+  ctx.save();
+  ctx.translate(0, headerShift);
+  ctx.textAlign='center';
 
   ctx.fillStyle='#FFD76A'; ctx.font='900 42px Tajawal, Arial';
   ctx.fillText('🏆 شهادة تكريم حامل اللقب 🏆', W/2, 220);
@@ -1192,13 +1206,14 @@ async function buildChampionCertificateCanvas(){
   ctx.fillText(`الرصيد الحالي: ${row.total} نقطة`, W/2, ly);
 
   ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(W/2-120,H-172); ctx.lineTo(W/2+120,H-172); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W/2-120,contentH-172); ctx.lineTo(W/2+120,contentH-172); ctx.stroke();
 
   ctx.fillStyle='#9C9BC9'; ctx.font='600 24px Tajawal, Arial';
-  ctx.fillText('إدارة دوري بروكي الفانتازي', W/2, H-130);
+  ctx.fillText('إدارة دوري بروكي الفانتازي', W/2, contentH-130);
   ctx.font='500 22px Tajawal, Arial';
-  ctx.fillText(new Date().toLocaleDateString('ar-SA'), W/2, H-90);
+  ctx.fillText(new Date().toLocaleDateString('ar-SA'), W/2, contentH-90);
 
+  ctx.restore();
   return cv;
 }
 async function showChampionCertificate(){

@@ -27,7 +27,7 @@ const CLUB_STYLE = {
   'بنفيكا':            {bg:'#E30613', fg:'#fff',    pattern:'eagle',   short:'بنفيكا', accent:'#fff'},
   'ريال مدريد':        {bg:'#FEFEFE', fg:'#1B1F5E', pattern:'crown',   short:'ريال', accent:'#FEBE10', border:'#1B1F5E'},
   'بوروسيا دورتموند':  {bg:'#FDE100', fg:'#000',    pattern:'solid',   short:'دورتموند', accent:'#FDE100', monogram:'BVB', monogramColor:'#000'},
-  'أتلتيكو مدريد':     {bg:'#CB3524', fg:'#fff',    pattern:'stripes', short:'أتلتيكو', accent:'#FFFFFF'},
+  'أتلتيكو مدريد':     {bg:'#0C2340', fg:'#fff',    pattern:'atleticoStripes', short:'أتلتيكو', accent:'#CB3524'},
   'فنربخشة':           {bg:'#00285E', fg:'#FFED00', pattern:'fenerLeaf', short:'فنربخشة', accent:'#FFED00'},
   'النصر':             {bg:'#FFD400', fg:'#1B1F5E', pattern:'saudiMap', short:'النصر', accent:'#1B4C9B'},
   'أياكس':             {bg:'#FFFFFF', fg:'#D2122E', pattern:'sash',    short:'أياكس', accent:'#D2122E'},

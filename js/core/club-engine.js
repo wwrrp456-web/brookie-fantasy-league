@@ -33,6 +33,22 @@ function clubCrestSVG(name, px){
       <rect x="48" y="0" width="16" height="110" fill="${ac}"/>
       <rect x="80" y="0" width="16" height="110" fill="${ac}"/>
     </g>`;
+  } else if(st.pattern === 'atleticoStripes'){
+    // خلفية كحلية + خطوط رأسية بيضاء وحمراء متبادلة، مع قص الجزء العلوي
+    // بشكل مائل — هوية أتلتيكو مدريد، بطلب المستخدم
+    pattern = `<g clip-path="url(#sh${uid})">
+      <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
+      <clipPath id="atc${uid}">
+        <polygon points="0,60 100,20 100,110 0,110"/>
+      </clipPath>
+      <g clip-path="url(#atc${uid})">
+        <rect x="0" y="0" width="20" height="110" fill="#fff"/>
+        <rect x="20" y="0" width="20" height="110" fill="${ac}"/>
+        <rect x="40" y="0" width="20" height="110" fill="#fff"/>
+        <rect x="60" y="0" width="20" height="110" fill="${ac}"/>
+        <rect x="80" y="0" width="20" height="110" fill="#fff"/>
+      </g>
+    </g>`;
   } else if(st.pattern === 'halves'){
     pattern = `<g clip-path="url(#sh${uid})">
       <rect x="0" y="0" width="50" height="110" fill="${bg}"/>
@@ -119,13 +135,16 @@ function clubCrestSVG(name, px){
       <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#sm${uid})"/>
     </g>`;
   } else if(st.pattern === 'ship'){
-    // سفينة (مُصغَّرة بطلب المستخدم) — هوية مانشستر سيتي التاريخية (قناة
-    // مانشستر الملاحية)
+    // سفينة شراعية — هوية مانشستر سيتي التاريخية (قناة مانشستر الملاحية)،
+    // أيقونة PNG قدّمها المستخدم (brand-assets.js: SHIP_ICON_PNG_BASE64)، فوق
+    // خلفية بلونين: أبيض أعلى وسماوي أسفل، بطلب المستخدم
     pattern = `<g clip-path="url(#sh${uid})">
-      <rect x="0" y="0" width="100" height="110" fill="${bg}"/>
-      <path d="M32 63 L68 63 L62 70 L38 70 Z" fill="${ac}"/>
-      <rect x="49" y="40" width="2" height="23" fill="${ac}"/>
-      <path d="M51 40 L64 48 L51 51 Z" fill="${ac}"/>
+      <rect x="0" y="0" width="100" height="55" fill="#fff"/>
+      <rect x="0" y="55" width="100" height="55" fill="${bg}"/>
+      <mask id="sp${uid}">
+        <image href="${SHIP_ICON_PNG_BASE64}" x="18" y="40" width="64" height="29" style="filter:invert(1)"/>
+      </mask>
+      <rect x="0" y="0" width="100" height="110" fill="${ac}" mask="url(#sp${uid})"/>
     </g>`;
   } else if(st.pattern === 'lion'){
     // أيقونة أسد جاهزة قدّمها المستخدم (صورة PNG محوّلة base64 بـ
