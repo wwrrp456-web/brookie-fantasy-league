@@ -271,12 +271,7 @@ html.light-mode .radar-card svg polygon:not([fill="none"]){fill-opacity:.32;stro
 html.light-mode .radar-card svg circle{stroke:#fff;stroke-width:.8;}
 
 /* عناصر أخرى بألوان فاتحة/بيضاء ثابتة كانت تختفي على خلفية الوضع النهاري */
-html.light-mode .club-stats-table td{color:#2A2560;border-bottom-color:rgba(91,63,224,.14);}
-html.light-mode .club-stats-table td[style*="color:#fff"]{color:#14123A !important;}
-html.light-mode .cs-club-label{color:#14123A;}
 html.light-mode .race-bar-wrap,html.light-mode .club-eff-bar-wrap{background:rgba(91,63,224,.12);box-shadow:inset 0 0 0 1px rgba(91,63,224,.10);}
-html.light-mode .quick-hist-pill{background:rgba(91,63,224,.10);color:#3D2E99;}
-html.light-mode .quick-hist-pill.mumma{background:rgba(201,85,44,.14);color:#B23A1C;}
 html.light-mode .round-comment-item,html.light-mode .wall-message-item{
   background:rgba(91,63,224,.05);border:1px solid rgba(91,63,224,.10);}
 html.light-mode .match-badge-external,html.light-mode .status-pill.off{background:rgba(91,63,224,.08);color:var(--muted);}
@@ -286,9 +281,7 @@ html.light-mode .rank-leaderboard .rl-cell-2{color:#6F6A85;}
 html.light-mode .rank-leaderboard .rl-cell-3{color:#A0651D;}
 html.light-mode .medal-silver{background:rgba(120,115,140,.08);}
 html.light-mode .medal-bronze{background:rgba(214,168,104,.12);}
-html.light-mode .dm-dead,html.light-mode .mv-down{color:#B23A1C;}
-html.light-mode .chart-wrap svg line{stroke:rgba(61,46,153,.20);}
-html.light-mode .chart-wrap svg text{fill:#575080;}
+html.light-mode .dm-dead{color:#B23A1C;}
 
 /* الوضع الليلي: رماديات داكنة ثابتة كانت ضعيفة التباين على الخلفيات الداكنة */
 html:not(.light-mode) .mv-same{color:#A9A8D6;}
