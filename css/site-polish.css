@@ -1,4 +1,4 @@
-/* تحسين بصري لصفحة index.html فقط (لا يُربط بـ league.html).
+/* تحسين بصري موحّد لصفحات index وleague وreport (ملف مستقل عن الملفات المشتركة).
    يغيّر الألوان/الخطوط/المسافات/الظلال فقط — لا نصوص ولا وظائف ولا بيانات.
    يُحمَّل آخر ملف CSS ليتغلّب على القيم الافتراضية دون تعديل الملفات المشتركة. */
 
@@ -190,6 +190,20 @@ html.light-mode select:focus,html.light-mode input:focus,html.light-mode textare
 .onboard-card .btn{margin-top:0;}
 .onboard-card select,.onboard-card input[type="text"]{margin-bottom:var(--sp-3);}
 .custom-confirm-box{border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow-2);}
+
+/* ---------- صفحة report.html (تبويباتها div.tabs وبطاقاتها .card) ---------- */
+div.tabs{gap:var(--sp-1);padding:6px var(--sp-2);border-bottom:1px solid var(--line);
+  background:rgba(11,13,31,.88);box-shadow:0 6px 20px rgba(0,0,0,.28);}
+div.tabs button{min-height:44px;margin:0;border:0;border-radius:var(--r-sm);
+  transition:background .2s ease,color .2s ease;}
+div.tabs button:hover{background:rgba(155,123,245,.16);color:#fff;}
+div.tabs button.active{background:linear-gradient(135deg,var(--gold) 0%,var(--accent-2) 100%);
+  box-shadow:0 4px 14px rgba(var(--accent-rgb),.45);}
+.card{background:linear-gradient(180deg,var(--paper-2) 0%,var(--paper) 100%);
+  border-radius:var(--r-md);padding:var(--sp-4);box-shadow:var(--shadow-1);}
+.field-label{font-size:.88rem;margin-bottom:var(--sp-2);}
+.live-row{padding:10px 4px;font-size:.9rem;}
+.round-chip{border-radius:999px;}
 
 /* ---------- حركة محترمة لتفضيلات المستخدم ---------- */
 @media (prefers-reduced-motion:reduce){
