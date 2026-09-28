@@ -1,5 +1,27 @@
 /* كل أقسام تبويب الإحصائيات (أكثر من 12 قسمًا) */
 
+// قفزة سريعة أعلى تبويب الإحصائيات — التبويب يحوي 12+ قسمًا طويلًا، وكانت
+// الطريقة الوحيدة للوصول لقسم معيّن هي التمرير اليدوي الطويل. تُبنى ديناميكيًا
+// بمسح كل عناوين ".section-title" الفعلية داخل #statsCapture *بعد* رسمها
+// (تُستدعى كآخر شيء بـrenderAll)، فتتوافق تلقائيًا مع أي قسم يظهر أو يختفي
+// حسب أعلام تفعيل المنظم — بلا أي قائمة ثابتة يدوية قد تتقادم.
+function renderStatsQuickNav(){
+  const box = document.getElementById('statsQuickNavBox');
+  if(!box) return;
+  const titles = Array.from(document.querySelectorAll('#statsCapture .section-title'));
+  if(titles.length < 2){ box.innerHTML=''; return; }
+  box.innerHTML = `<div class="stats-quick-nav">${titles.map((el,i)=>{
+    const id = el.id || (el.id = `statsSection_${i}`);
+    return `<button type="button" class="stats-quick-nav-chip" data-target="${id}">${el.textContent}</button>`;
+  }).join('')}</div>`;
+  box.querySelectorAll('.stats-quick-nav-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+}
+
 function renderRecords(){
   const box = document.getElementById('recordsBox');
   if(!box) return;

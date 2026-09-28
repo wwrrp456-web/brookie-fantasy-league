@@ -1,0 +1,45 @@
+/* مركز تنبيهات موحّد — جرس ثابت أعلى الصفحة يجمع كل التنبيهات المبعثرة
+   (أوسمة، اللي فاتك، دعوات نزال، سؤال الجولة) بمكان واحد */
+.notif-center{
+  position:fixed;top:10px;left:12px;z-index:998;
+}
+.notif-bell-btn{
+  position:relative;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--line);
+  color:var(--text);font-size:1.15rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+}
+.notif-count{
+  position:absolute;top:-4px;inset-inline-end:-4px;
+  background:var(--coral);color:#fff;
+  font-size:0.62rem;font-weight:800;
+  min-width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 3px;
+}
+.notif-dropdown{
+  position:absolute;top:48px;left:0;
+  width:260px;max-width:80vw;max-height:340px;overflow-y:auto;
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  padding:6px;
+}
+.notif-item{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 8px;border-radius:8px;cursor:pointer;
+  font-size:0.82rem;
+}
+.notif-item:hover{background:var(--cream);}
+.notif-item-icon{font-size:1.1rem;flex-shrink:0;}
+.notif-empty{
+  padding:14px 8px;text-align:center;color:var(--muted);font-size:0.8rem;
+}
+.notif-perm-btn{
+  position:absolute;bottom:-8px;inset-inline-end:-8px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--cream);border:1px solid var(--line);
+  font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  padding:0;
+}

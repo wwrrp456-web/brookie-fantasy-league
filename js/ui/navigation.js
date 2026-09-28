@@ -71,6 +71,7 @@ function renderAll(){
   renderBadgeToast();
   renderClubSwapLab();
   renderPersonalStatusBar();
+  renderNotificationCenter();
   renderLiveFocusToggleButton();
   renderLiveFocusMode();
   renderH2H();
@@ -91,7 +92,10 @@ function renderAll(){
   renderChampionCrown();
   renderChampionHero();
   renderHallOfFame();
+  renderSeasonsArchive();
   checkChampionAlerts();
+  // آخر استدعاء دائمًا — تعتمد على وجود كل عناوين تبويب الإحصائيات بالـDOM فعليًا
+  renderStatsQuickNav();
 }
 
 // ---------- Tabs ----------

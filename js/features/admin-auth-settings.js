@@ -3,11 +3,28 @@ let pinChangeUnlocked = false;
 let isAdmin = false;
 
 // ---------- سجل نشاط المنظم ----------
-// سيُخزَّن في DATA.activityLog = [{time, action}]
-function logAdminActivity(action){
+// سيُخزَّن في DATA.activityLog = [{time, action, snapshot?}]
+// snapshot (اختياري): لقطة كاملة من DATA *قبل* هذا الحدث — تُمرَّر فقط لأحداث
+// عالية الخطورة (حفظ/حذف جولة، قفل موسم) عبر {snapshot: preSnapshot} من نقطة
+// الاستدعاء نفسها (لازم تُلتقَط هناك قبل أي تعديل على DATA، وإلا تكون اللقطة
+// بعد التغيير بدل قبله). تتيح زر "↩️ تراجع" بجانب أي حدث يملك لقطة — بديل
+// تلقائي عن الاعتماد الوحيد على تصدير نسخة احتياطية يدوية *قبل* وقوع الخطأ.
+function logAdminActivity(action, opts={}){
   if(!isAdmin) return;
   if(!DATA.activityLog) DATA.activityLog = [];
-  DATA.activityLog.unshift({time: new Date().toISOString(), action});
+  const entry = {time: new Date().toISOString(), action};
+  if(opts.snapshot) entry.snapshot = opts.snapshot;
+  DATA.activityLog.unshift(entry);
+  // نُبقي أحدث 5 لقطات كاملة فقط (تفاديًا لتضخيم حجم البيانات المخزَّنة على
+  // Firebase) — أي لقطة أقدم من ذلك تُحذف وتبقى بقية الحدث (النص/الوقت) كما هي،
+  // فقط بلا إمكانية تراجع منها.
+  let snapshotsSeen = 0;
+  DATA.activityLog = DATA.activityLog.map(e=>{
+    if(!e.snapshot) return e;
+    snapshotsSeen++;
+    if(snapshotsSeen > 5){ const {snapshot, ...rest} = e; return rest; }
+    return e;
+  });
   if(DATA.activityLog.length > 50) DATA.activityLog = DATA.activityLog.slice(0,50);
   renderAdminActivityLog();
 }
@@ -19,12 +36,43 @@ function renderAdminActivityLog(){
     box.innerHTML = '<div style="color:var(--muted);font-size:0.8rem;">لا يوجد سجل نشاط بعد.</div>';
     return;
   }
-  box.innerHTML = log.map(entry=>{
+  box.innerHTML = log.map((entry, idx)=>{
     const d = new Date(entry.time);
     const timeStr = d.toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-    return `<div class="activity-log-row"><span>${entry.action}</span><span class="activity-log-time">${timeStr}</span></div>`;
+    const undoBtn = entry.snapshot
+      ? `<button type="button" class="btn ghost activity-undo-btn" data-idx="${idx}">↩️ تراجع</button>`
+      : '';
+    return `<div class="activity-log-row"><span>${entry.action}</span><span class="activity-log-time">${timeStr}</span>${undoBtn}</div>`;
   }).join('');
 }
+
+// "↩️ تراجع": يستبدل DATA بالكامل بلقطة ما قبل الحدث المختار — تحذير واضح إنه
+// استبدال كامل لا دمج جزئي (نفس روح تحذير استيراد النسخة الاحتياطية).
+document.getElementById('adminActivityLog').addEventListener('click', async (e)=>{
+  const btn = e.target.closest('.activity-undo-btn');
+  if(!btn) return;
+  const idx = Number(btn.dataset.idx);
+  const entry = (DATA.activityLog || [])[idx];
+  if(!entry || !entry.snapshot) return;
+  const d = new Date(entry.time);
+  const timeStr = d.toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  const sure = await customConfirm(
+    `سيتم استبدال كل بيانات الموسم الحيّة بلقطة محفوظة من قبل الحدث التالي:\n"${entry.action}" (${timeStr})\n\n` +
+    `هذا استبدال كامل (الجولات، الأولوية اليدوية، سجل النشاط) بحالتها وقتها بالضبط — وليس دمجًا جزئيًا — وينعكس فورًا على كل الزوار.\n\n` +
+    `هل تبي تتراجع فعلًا؟`,
+    {confirmText: '↩️ تراجع الآن'}
+  );
+  if(!sure) return;
+  btn.disabled = true;
+  const restoredAction = entry.action;
+  DATA = JSON.parse(JSON.stringify(entry.snapshot));
+  const ok = await saveData();
+  if(ok) logAdminActivity(`↩️ تراجع لحالة قبل: "${restoredAction}"`);
+  renderAll();
+  renderPastRoundsChips();
+  updateRoundSettingsStatus();
+  syncChampionAdminUI();
+});
 
 // شارتا حالة "مفعّل/معطّل" بجانب عنوان "⚙️ إعدادات الجولة الحالية" — تلخّصان
 // حالة التوقعات وتحدي المواجهة بنظرة وحدة بدون فتح القسم (6 سبتمبر 2026).

@@ -137,7 +137,27 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
     return;
   }
 
+  // ---------- أرشيف مواسم فعلي: لقطة كاملة (مو بس اسم البطل ونقاطه) ----------
+  // لوحة الشرف (SEASON_CHAMPIONS_ARCHIVE أعلاه) تحفظ اسم البطل ونقاطه فقط —
+  // الترتيب النهائي الكامل لموسم منتهٍ كان متاحًا فقط لمن حمّل ملف النسخة
+  // الاحتياطية يدويًا (backupFilename أعلاه) وفتحه بنفسه. هذه اللقطة تُخزَّن
+  // بمسار Firebase منفصل تمامًا (seasonsArchive/<seasonId>) لا تلمسه خطوة
+  // التصفير التالية أبدًا، فتبقى متاحة للجميع من داخل الموقع نفسه (قسم "🗄️
+  // أرشيف المواسم" بتبويب الإحصائيات — champion-honor.js: renderSeasonsArchive).
+  const seasonArchiveId = `${safeSeasonName}-${Date.now()}`;
+  SEASONS_ARCHIVE[seasonArchiveId] = {
+    seasonName,
+    lockedAt: Date.now(),
+    finalStandings: computeStandings(),
+  };
+  await window.storage.set('seasonsArchive', SEASONS_ARCHIVE, true);
+  renderSeasonsArchive();
+
   // ---------- الخطوة ٣: تصفير بيانات الموسم الحي (عبر saveData/savePredictions العاديتين) ----------
+  // لقطة قبل التصفير — تتيح زر "↩️ تراجع" بسجل نشاط المنظم كخط رجعة إضافي
+  // سريع فوق النسخة الاحتياطية المُنزَّلة أعلاه (لو اكتُشف خطأ بالتصفير نفسه
+  // فورًا، بدل الاضطرار لاستيراد ملف يدويًا).
+  const preSnapshot = JSON.parse(JSON.stringify(DATA));
   DATA.rounds = [];
   DATA.manualPriority = {};
   DATA.nextRoundAt = null;
@@ -149,7 +169,7 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
   CHAMPION_ID = null;
   await window.storage.set('currentChampionId', null, true);
 
-  logAdminActivity(`🔒 قفل موسم "${seasonName}" وتصفير الجولات لبدء موسم جديد`);
+  logAdminActivity(`🔒 قفل موسم "${seasonName}" وتصفير الجولات لبدء موسم جديد`, {snapshot: preSnapshot});
 
   renderAll();
   renderPredictions();
@@ -327,7 +347,9 @@ const CLUBS = Array.from(new Set(PARTICIPANTS.flatMap(p=>p.teams))).sort((a,b)=>
 
 // ألوان تقريبية للأندية — قيم افتراضية مولَّدة تلقائيًا (لون واحد موحّد لكل
 // ناد كبداية)، عدّلها يدويًا بالملف بعد الرفع بألوان الأندية الحقيقية إن رغبت
-// (pattern: stripes | halves | sash | solid | hoops | cross | diag).
+// (pattern: stripes | halves | sash | solid | hoops | diag | checkers | crown | crescent
+// | ship | cannon | eagle | lion | lionSpear | wolf | lock | palm | ball | phoenix
+// | checkerCell | psvFlag | fenerLeaf — وحقل monogram الاختياري لحرف/اختصار مركزي).
 const CLUB_STYLE = {
 ${styleLines}
 };

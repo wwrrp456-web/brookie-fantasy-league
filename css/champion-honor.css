@@ -26,6 +26,17 @@
   .hof-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:0.85rem;}
   .weekly-beat-badge{background:var(--coral);color:#fff;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;}
 
+  /* أرشيف مواسم فعلي — الترتيب النهائي الكامل لكل موسم مقفول */
+  .season-archive-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px;}
+  .season-archive-card summary{cursor:pointer;font-weight:700;font-size:0.88rem;}
+  .season-archive-date{color:var(--muted);font-weight:600;font-size:0.76rem;}
+  .season-archive-table{margin-top:10px;}
+  .season-archive-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px dotted var(--line);font-size:0.83rem;}
+  .season-archive-row:last-child{border-bottom:none;}
+  .season-archive-rank{font-weight:800;color:var(--gold);min-width:22px;text-align:center;}
+  .season-archive-name{flex:1;}
+  .season-archive-pts{font-weight:700;color:var(--text2);}
+
   /* شهادة تكريم البطل (كانفاس صورة) — كانت تُعرض بحجمها الفعلي بالبكسل
      (1080px عرضًا) بلا أي قيد، فتفيض عن عرض الصفحة على أي جهاز أضيق من ذلك
      (كل الجوالات وأغلب الشاشات)، ما يقطع جزءًا من الصفحة أفقيًا. نفس القيد

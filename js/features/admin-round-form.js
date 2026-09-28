@@ -275,6 +275,54 @@ function recomputeRoundCompletion(){
 // حر لخصم من خارج القائمة (فرق ليست ضمن أندية المشاركين الـ31). اختيار خصم
 // من القائمة هو ما يُفعّل مزامنة "المباراة الداخلية" التلقائية (mirrorInternalOpponent
 // بالأسفل) — خصم بنص حر لا يمكن مطابقته بنادٍ آخر فلا يُشغّلها.
+// ---------- لصق نتائج وتحليل تلقائي ----------
+// 365Scores ما عنده API عام، فهذا بديل عملي أسرع من الكتابة اليدوية لكل
+// نادٍ من الـ27+: المنظم يلصق نصًا (منسوخًا من أي مصدر أو مكتوبًا يدويًا)،
+// سطر واحد لكل مباراة: اسم نادٍ (من CLUBS) + نتيجة أرقامًا (مثال 3-0) + اسم
+// خصم اختياري. لا يحفظ شيئًا مباشرة — فقط يعبّئ حقول النموذج الحالية بنفس
+// شكلها العادي (matchRowHTML)، والمنظم يراجع ويضغط "حفظ الجولة" كالمعتاد.
+function parsePastedResults(text){
+  const scoreRe = /(\d+)\s*[-–—:]\s*(\d+)/;
+  // الأطول أولًا لتفادي تطابق جزئي بين أسماء أندية متشابهة
+  const sortedClubs = CLUBS.slice().sort((a,b)=>b.length-a.length);
+  const byClub = new Map();
+  const unrecognized = [];
+  text.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
+    const club = sortedClubs.find(c => line.includes(c));
+    const scoreMatch = line.match(scoreRe);
+    if(!club || !scoreMatch){ unrecognized.push(line); return; }
+    const gf = Number(scoreMatch[1]), ga = Number(scoreMatch[2]);
+    const afterScoreIdx = line.indexOf(scoreMatch[0]) + scoreMatch[0].length;
+    const opp = line.slice(afterScoreIdx).trim();
+    const result = gf > ga ? 'win' : (gf < ga ? 'loss' : 'draw');
+    if(!byClub.has(club)) byClub.set(club, []);
+    byClub.get(club).push({gf, ga, opp, result});
+  });
+  const recognized = [];
+  byClub.forEach((matches, club)=> recognized.push({club, matches}));
+  return {recognized, unrecognized};
+}
+
+// يعبّئ صناديق الأندية المتعرَّف عليها بنتائج parsePastedResults، عبر نفس
+// آلية المزامنة الموجودة أصلًا (syncSharedClub/mirrorInternalOpponent) بدل
+// تكرار منطق النشر لكل مشارك مالك لنفس النادي يدويًا. يرجع أسماء الأندية
+// اللي فعلًا تعبّت (لعرضها بالرسالة).
+function applyParsedResultsToForm(parsed){
+  const applied = [];
+  const blocks = Array.from(document.querySelectorAll('#roundForm .team-block'));
+  parsed.recognized.forEach(({club, matches})=>{
+    const tb = blocks.find(b => b.dataset.team === club);
+    if(!tb) return;
+    tb.querySelector('.match-rows').innerHTML = matches.map(m=>matchRowHTML(m, club)).join('');
+    refreshRemoveButtons(tb);
+    syncSharedClub(tb);
+    mirrorInternalOpponent(tb);
+    applied.push(club);
+  });
+  recomputeRoundCompletion();
+  return applied;
+}
+
 function matchRowHTML(prev, club){
   const selResult = prev ? prev.result : '';
   const isNoMatch = selResult === 'no_match';
@@ -431,6 +479,29 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     }
     return;
   }
+  const togglePasteImportBtn = e.target.closest('#togglePasteImportBtn');
+  if(togglePasteImportBtn){
+    const panel = document.getElementById('pasteImportPanel');
+    if(panel) panel.style.display = panel.style.display === 'none' ? '' : 'none';
+    return;
+  }
+  const applyPasteImportBtn = e.target.closest('#applyPasteImportBtn');
+  if(applyPasteImportBtn){
+    const input = document.getElementById('pasteImportInput');
+    const resultBox = document.getElementById('pasteImportResult');
+    const parsed = parsePastedResults(input ? input.value : '');
+    const applied = applyParsedResultsToForm(parsed);
+    if(resultBox){
+      const okLine = applied.length
+        ? `<div class="status-msg ok">تم تعبئة ${applied.length} نادٍ تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div>`
+        : '<div class="status-msg err">لم يتعرّف التحليل على أي نادٍ بالنص الملصق.</div>';
+      const unrecLine = parsed.unrecognized.length
+        ? `<div style="color:var(--muted);margin-top:6px;">⚠️ أسطر لم يُتعرَّف عليها تلقائيًا (أكملها يدويًا):<br>${parsed.unrecognized.map(l=>`— ${l}`).join('<br>')}</div>`
+        : '';
+      resultBox.innerHTML = okLine + unrecLine;
+    }
+    return;
+  }
 });
 
 // مزامنة حيّة أثناء الكتابة/الاختيار: أي تغيير بحقل خصم (اختيار من القائمة أو
@@ -507,6 +578,24 @@ function prepareRoundForm(num, opts={}){
     <label><input type="checkbox" id="showIncompleteOnlyToggle"> عرض الناقص فقط</label>
     <button type="button" class="btn ghost" id="expandAllParticipantsBtn">⬇️ فتح كل المشاركين</button>
     <button type="button" class="btn ghost" id="collapseAllParticipantsBtn">⬆️ طيّ كل المشاركين</button>
+  </div>`;
+  // لصق وتحليل نتائج تلقائي — بديل أسرع للكتابة اليدوية لكل نادٍ على حدة
+  // (طلب المستخدم: تسريع إدخال الجولة بدل بحث/كتابة يدوية لـ27+ ناديًا).
+  // لا يحفظ شيئًا مباشرة، فقط يعبّئ حقول النموذج الحالية ليراجعها المنظم.
+  html += `<div class="paste-import-box">
+    <button type="button" class="btn ghost" id="togglePasteImportBtn">📋 لصق نتائج وتحليل تلقائي</button>
+    <div id="pasteImportPanel" style="display:none;">
+      <div style="font-size:0.78rem;color:var(--muted);margin:8px 0;">
+        الصق نتائج الأندية هنا، سطر واحد لكل مباراة: اسم النادي، ثم النتيجة أرقامًا (مثال 3-0)، ثم اسم الخصم اختياريًا. أي نادٍ لعب أكثر من مباراة بنفس الجولة يُكتب بسطر مستقل لكل مباراة.
+      </div>
+      <textarea id="pasteImportInput" rows="6" style="width:100%;font-family:inherit;" placeholder="الهلال 3-0 الخليج
+برشلونة 2-0
+ريال مدريد 4-1 ريال سوسيادد"></textarea>
+      <div class="row" style="margin-top:8px;">
+        <button type="button" class="btn secondary" id="applyPasteImportBtn">تحليل وتعبئة الحقول</button>
+      </div>
+      <div id="pasteImportResult" style="margin-top:8px;font-size:0.8rem;"></div>
+    </div>
   </div>`;
   PARTICIPANTS.forEach(p=>{
     html += `<details class="round-entry-card"><summary>${p.name}<span class="completion-badge" data-pid="${p.id}"></span></summary>`;
@@ -599,10 +688,12 @@ function prepareRoundForm(num, opts={}){
   const deleteBtn = document.getElementById('deleteRoundBtn');
   if(deleteBtn){
     deleteBtn.addEventListener('click', async ()=>{
-      const sure = await customConfirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها نهائيًا من بيانات كل الزوار ولا يمكن التراجع عنه إلا باستعادة نسخة احتياطية.`, {confirmText: '🗑️ حذف الجولة'});
+      const sure = await customConfirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها من بيانات كل الزوار فورًا — يمكن التراجع عنه لاحقًا من "📅 سجل نشاط المنظم" (زر ↩️ تراجع) أو باستعادة نسخة احتياطية.`, {confirmText: '🗑️ حذف الجولة'});
       if(!sure) return;
+      const preSnapshot = JSON.parse(JSON.stringify(DATA));
       DATA.rounds = DATA.rounds.filter(r=>r.number!==num);
       DATA.updatedAt = Date.now();
+      logAdminActivity(`🗑️ حذف الجولة ${num}`, {snapshot: preSnapshot});
       deleteBtn.disabled = true;
       const ok = await saveData();
       renderAll();
@@ -670,6 +761,7 @@ function prepareRoundForm(num, opts={}){
       return;
     }
     const entries = collectRoundFormEntries();
+    const preSnapshot = JSON.parse(JSON.stringify(DATA));
 
     let round = DATA.rounds.find(r=>r.number===num);
     if(round){
@@ -683,7 +775,7 @@ function prepareRoundForm(num, opts={}){
     // (طلب المستخدم 7 سبتمبر 2026).
     round.lastModified = Date.now();
     DATA.updatedAt = Date.now();
-    logAdminActivity(`💾 حفظ الجولة ${num}`);
+    logAdminActivity(`💾 حفظ الجولة ${num}`, {snapshot: preSnapshot});
     const ok = await saveData();
     document.getElementById('saveRoundMsg').innerHTML = ok
       ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div>'
