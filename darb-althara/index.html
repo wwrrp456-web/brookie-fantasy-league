@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>درب الثراء</title>
+<style>
+:root{
+  --bg:#f4f1ea;--card:#fff;--ink:#1f2933;--muted:#6b7280;--line:#e2ddd0;
+  --brand:#0f766e;--brand-ink:#fff;--good:#15803d;--bad:#b91c1c;--warn:#b45309;
+  --t-payday:#bbf7d0;--t-deal:#bfdbfe;--t-doodad:#fecaca;--t-market:#fde68a;
+  --t-child:#fbcfe8;--t-charity:#ddd6fe;--t-layoff:#d1d5db;--t-dream:#fed7aa;--t-lawsuit:#fecaca;--t-tax:#e5e7eb;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14181d;--card:#1e252d;--ink:#e8edf2;--muted:#9aa5b1;--line:#2d3640;--brand:#2dd4bf;--brand-ink:#06201d;
+  --t-payday:#14532d;--t-deal:#1e3a5f;--t-doodad:#5f1d1d;--t-market:#5c4a0f;--t-child:#5b1f43;--t-charity:#3b2f6b;--t-layoff:#3a424b;--t-dream:#6b3a10;--t-lawsuit:#5f1d1d;--t-tax:#343b43}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;line-height:1.5;padding:0 16px 32px}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:1.4rem;margin:16px 0 4px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:480px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--bg);border-radius:10px;padding:8px 10px}
+.stat small{color:var(--muted);display:block;font-size:.75rem}
+.stat b{font-size:1.05rem;font-variant-numeric:tabular-nums}
+.good{color:var(--good)}.bad{color:var(--bad)}
+.bar{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--brand);width:0}
+.board{display:grid;gap:4px;direction:ltr}
+.tile{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.62rem;text-align:center;position:relative;color:#111;line-height:1.15;padding:1px}
+@media(prefers-color-scheme:dark){.tile{color:#eee}}
+.tile .ic{font-size:1.1rem}
+.tile.me{outline:3px solid var(--brand)}
+.token{position:absolute;top:-6px;inset-inline-end:-4px;font-size:1.2rem}
+.center{display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:.85rem;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;border:0;border-radius:10px;padding:11px 16px;cursor:pointer;background:var(--brand);color:var(--brand-ink);font-weight:600;min-height:44px}
+button.alt{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:default}
+#roll{flex:1;font-size:1.05rem}
+.log{max-height:170px;overflow:auto;font-size:.9rem}
+.log p{margin:0;padding:5px 0;border-bottom:1px dashed var(--line)}
+.log p:first-child{font-weight:600}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.modal.on{display:flex}
+.sheet{background:var(--card);border-radius:16px;padding:16px;max-width:440px;width:100%;max-height:88vh;overflow:auto}
+.sheet h2{margin:0 0 8px;font-size:1.15rem}
+.sheet table{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0}
+.sheet td{padding:5px 0;border-bottom:1px solid var(--line)}
+.sheet td:last-child{text-align:left;font-variant-numeric:tabular-nums}
+.prof{display:block;width:100%;text-align:start;margin-bottom:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.prof small{display:block;font-weight:400;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600;padding:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏁 درب الثراء</h1>
+  <p class="sub">اخرج من سباق الفئران: ابنِ دخلاً سلبياً يغطي مصاريفك، ثم حقّق حلمك.</p>
+
+  <div class="card">
+    <div class="stats" id="stats"></div>
+    <div class="bar" aria-label="تقدم الخروج"><i id="prog"></i></div>
+    <small class="sub" id="progtxt"></small>
+  </div>
+
+  <div class="card"><div class="board" id="board"></div></div>
+
+  <div class="row" style="margin-bottom:12px">
+    <button id="roll">🎲 ارمِ النرد</button>
+    <button class="alt" id="sheetBtn">📋 قائمتي المالية</button>
+    <button class="alt" id="newBtn">🔄 جديدة</button>
+  </div>
+
+  <div class="card log" id="log"></div>
+</div>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<script>
+(()=>{
+"use strict";
+const $=s=>document.querySelector(s);
+const fmt=n=>Math.round(n).toLocaleString("en-US");
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const KEY="darb-althara-v1";
+
+/* ---------- المحتوى ---------- */
+const PROFS=[
+ {n:"معلّم",salary:4200,tax:620,home:520,car:140,cards:90,other:260,childCost:150,cash:3000,debt:"قرض سكن 72,000"},
+ {n:"ممرّض",salary:5100,tax:810,home:640,car:180,cards:110,other:300,childCost:170,cash:3500,debt:"قرض سكن 88,000"},
+ {n:"مهندس",salary:7800,tax:1500,home:1250,car:290,cards:220,other:480,childCost:260,cash:5200,debt:"قرض سكن 150,000"},
+ {n:"سائق",salary:3300,tax:430,home:410,car:110,cards:60,other:210,childCost:120,cash:2200,debt:"قرض سكن 54,000"},
+ {n:"طبيب",salary:12500,tax:2900,home:2300,car:480,cards:400,other:900,childCost:420,cash:9000,debt:"قرض سكن 310,000"},
+ {n:"محاسب",salary:5600,tax:930,home:720,car:190,cards:130,other:330,childCost:180,cash:4000,debt:"قرض سكن 96,000"}
+];
+const RAT=["payday","deal","doodad","deal","market","charity","deal","doodad","payday","deal","market","deal","doodad","child","deal","payday","market","deal","doodad","deal","layoff","market","deal","charity"];
+const FAST=["payday","biz","dream","biz","lawsuit","biz","payday","dream","biz","tax","biz","dream"];
+const DREAMS=[
+ {n:"رحلة حول العالم مع العائلة",cost:180000},
+ {n:"مدرسة خيرية باسمك",cost:320000},
+ {n:"منزل الأحلام على الشاطئ",cost:450000}
+];
+const TILE={
+ payday:["💰","يوم الراتب","--t-payday"],deal:["🤝","فرصة","--t-deal"],doodad:["🛍️","مصروف طارئ","--t-doodad"],
+ market:["📈","السوق","--t-market"],child:["👶","مولود","--t-child"],charity:["🎁","تبرّع","--t-charity"],
+ layoff:["📉","تسريح","--t-layoff"],biz:["🏢","مشروع كبير","--t-deal"],dream:["⭐","حلم","--t-dream"],
+ lawsuit:["⚖️","قضية","--t-lawsuit"],tax:["🧾","ضريبة","--t-tax"]
+};
+// down = الدفعة الأولى، inc = صافي الدخل الشهري بعد قسط التمويل، cost = قيمة الأصل
+const SMALL=[
+ {n:"شقة صغيرة للإيجار",t:"عقار",down:3000,cost:38000,inc:160},
+ {n:"كشك قهوة عند محطة",t:"مشروع",down:4000,cost:9000,inc:230},
+ {n:"حزمة أسهم شركة نقل",t:"أسهم",down:2500,cost:2500,inc:0},
+ {n:"محل هدايا صغير",t:"مشروع",down:4500,cost:12000,inc:260},
+ {n:"غرفة مؤجرة للطلاب",t:"عقار",down:2000,cost:22000,inc:110},
+ {n:"حزمة أسهم شركة غذاء",t:"أسهم",down:1800,cost:1800,inc:20},
+ {n:"عربة وجبات سريعة",t:"مشروع",down:5000,cost:14000,inc:300},
+ {n:"مغسلة ملابس بالقطعة",t:"مشروع",down:3500,cost:9500,inc:190}
+];
+const BIG=[
+ {n:"عمارة سكنية ٨ شقق",t:"عقار",down:60000,cost:520000,inc:1850},
+ {n:"مغسلة سيارات آلية",t:"مشروع",down:45000,cost:110000,inc:1250},
+ {n:"مزرعة دواجن",t:"مشروع",down:80000,cost:190000,inc:2350},
+ {n:"مطعم عائلي",t:"مشروع",down:100000,cost:240000,inc:3100},
+ {n:"قطعة أرض للتطوير",t:"عقار",down:30000,cost:30000,inc:0},
+ {n:"حزمة أسهم شركة طاقة",t:"أسهم",down:35000,cost:35000,inc:450},
+ {n:"مجمّع محلات تجارية",t:"عقار",down:90000,cost:620000,inc:2900},
+ {n:"مصنع تعبئة صغير",t:"مشروع",down:70000,cost:150000,inc:2100}
+];
+const BIZ=[
+ {n:"سلسلة مقاهٍ من ٦ فروع",t:"مشروع",down:120000,inc:3200},
+ {n:"برج مكاتب",t:"عقار",down:200000,inc:5600},
+ {n:"شركة برمجيات ناشئة",t:"مشروع",down:90000,inc:2400},
+ {n:"مستودعات لوجستية",t:"عقار",down:150000,inc:4100},
+ {n:"مصنع أغذية",t:"مشروع",down:180000,inc:5000}
+];
+const DOODADS=[
+ ["إصلاح مفاجئ للسيارة",900],["شاشة تلفاز جديدة",1500],["عشاء فاخر لأصدقاء",400],
+ ["هاتف أحدث إصدار",1300],["رحلة قصيرة غير مخططة",2200],["غسالة معطّلة",700],["مخالفة مرورية",350]
+];
+
+/* ---------- الحالة ---------- */
+let S=null, busy=false;
+
+function newGame(pi){
+  const p=PROFS[pi];
+  S={prof:p.n,salary:p.salary,cash:p.cash,
+     exp:{"ضرائب":p.tax,"قسط السكن":p.home,"قسط السيارة":p.car,"بطاقات ائتمان":p.cards,"مصاريف أخرى":p.other},
+     childCost:p.childCost,children:0,loans:0,debt:p.debt,assets:[],pos:0,skip:0,charity:0,fast:false,log:[]};
+  log(`بدأت كـ${p.n}. راتبك ${fmt(p.salary)} ومصاريفك ${fmt(expenses())}.`);
+  save();render();
+}
+function expenses(){return Object.values(S.exp).reduce((a,b)=>a+b,0)+S.children*S.childCost+S.loans*0.1}
+function passive(){return S.assets.reduce((a,b)=>a+b.inc,0)}
+function cashflow(){return S.salary+passive()-expenses()}
+function log(t){S.log.unshift(t);S.log=S.log.slice(0,40)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);if(r){S=JSON.parse(r);return true}}catch(e){}return false}
+
+/* ---------- العرض ---------- */
+function render(){
+  const cf=cashflow();
+  $("#stats").innerHTML=[
+    ["النقد",fmt(S.cash),""],
+    [S.fast?"الدخل السلبي":"الراتب",fmt(S.fast?passive():S.salary),""],
+    ["الدخل السلبي",fmt(passive()),"good"],
+    ["المصاريف",fmt(expenses()),"bad"]
+  ].map(([k,v,c])=>`<div class="stat"><small>${k}</small><b class="${c}">${v}</b></div>`).join("");
+  const ratio=expenses()?Math.min(1,passive()/expenses()):0;
+  $("#prog").style.width=(S.fast?100:ratio*100)+"%";
+  $("#progtxt").textContent=S.fast?"أنت في المسار السريع: اشترِ حلمك لتفوز!":
+    `الدخل السلبي ${fmt(passive())} من أصل ${fmt(expenses())} مصروفاً — التدفق الشهري ${cf>=0?"+":""}${fmt(cf)}`;
+  const track=S.fast?FAST:RAT, n=S.fast?4:7;
+  const b=$("#board");b.style.gridTemplateColumns=`repeat(${n},1fr)`;
+  const cells=perimeter(n);
+  let html="";
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+    const i=cells.findIndex(x=>x[0]===r&&x[1]===c);
+    if(i<0){html+=(r===Math.floor(n/2)&&c===Math.floor(n/2)&&n===7)?`<div class="center" style="grid-column:2/7;grid-row:2/7">${S.fast?"":"مسار الفئران"}<br>${S.prof}</div>`:(n===4&&r===1&&c===1?`<div class="center" style="grid-column:2/4;grid-row:2/4">المسار السريع</div>`:"");continue}
+    const k=track[i],[ic,name,col]=TILE[k];
+    html+=`<div class="tile ${i===S.pos?"me":""}" style="grid-row:${r+1};grid-column:${c+1};background:var(${col})"><span class="ic">${ic}</span>${name}${i===S.pos?'<span class="token">🧑</span>':""}</div>`;
+  }
+  b.innerHTML=html;
+  $("#log").innerHTML=S.log.map(t=>`<p>${t}</p>`).join("");
+  $("#roll").disabled=busy;
+}
+function perimeter(n){
+  const a=[];
+  for(let c=0;c<n;c++)a.push([0,c]);
+  for(let r=1;r<n;r++)a.push([r,n-1]);
+  for(let c=n-2;c>=0;c--)a.push([n-1,c]);
+  for(let r=n-2;r>=1;r--)a.push([r,0]);
+  return a;
+}
+
+/* ---------- النوافذ ---------- */
+function modal(title,body,btns){
+  $("#sheet").innerHTML=`<h2>${title}</h2>${body}<div class="row" style="margin-top:12px"></div>`;
+  const row=$("#sheet .row");
+  btns.forEach(([label,fn,alt])=>{
+    const b=document.createElement("button");b.textContent=label;if(alt)b.className="alt";
+    b.onclick=()=>{close();fn&&fn()};row.appendChild(b);
+  });
+  $("#modal").classList.add("on");
+}
+function close(){$("#modal").classList.remove("on")}
+function ensureCash(amount,forced,cb){
+  if(S.cash>=amount){cb(true);return}
+  const need=Math.ceil((amount-S.cash)/1000)*1000;
+  modal("تحتاج إلى قرض",`<p>ينقصك ${fmt(amount-S.cash)}. البنك يقرضك <b>${fmt(need)}</b> بقسط شهري ${fmt(need*0.1)} (10%) يُضاف إلى مصاريفك.</p>`,
+   forced?[["اقترض",()=>{S.cash+=need;S.loans+=need;log(`اقترضت ${fmt(need)}.`);cb(true)}]]:
+   [["اقترض",()=>{S.cash+=need;S.loans+=need;log(`اقترضت ${fmt(need)}.`);cb(true)}],["لا",()=>cb(false),true]]);
+}
+
+/* ---------- سير الدور ---------- */
+function finish(){
+  busy=false;
+  if(!S.fast&&passive()>0&&passive()>=expenses()){
+    const bonus=passive()*40;
+    S.fast=true;S.pos=0;S.cash+=bonus;
+    log(`🎉 خرجت من سباق الفئران! مكافأة ${fmt(bonus)}.`);
+    save();render();
+    modal("🎉 مبروك! خرجت من سباق الفئران",`<p>دخلك السلبي (${fmt(passive())}) صار يغطي مصاريفك. دخلت المسار السريع بنقد ${fmt(S.cash)}.</p><p>الهدف الآن: اشترِ أحد الأحلام الثلاثة أو نمِّ مشاريعك.</p>`,[["هيا",null]]);
+    return;
+  }
+  save();render();
+}
+function win(d){
+  S.cash-=d.cost;
+  log(`🏆 حققت حلمك: ${d.n}!`);
+  save();render();
+  modal("🏆 فزت!",`<p>حققت حلمك: <b>${d.n}</b>. وصلت للحرية المالية.</p>`,[["لعبة جديدة",()=>chooseProf()]]);
+}
+function pay(){
+  const track=S.fast;
+  const amt=track?passive()*12:cashflow();
+  S.cash+=amt;
+  log(`💰 يوم الراتب: ${amt>=0?"+":""}${fmt(amt)}`);
+}
+function roll(){
+  if(busy)return;busy=true;render();
+  if(S.skip>0){S.skip--;log(`فاتك الدور (تسريح). متبقٍ ${S.skip}.`);return finish()}
+  const dice=S.charity>0&&!S.fast?2:1;
+  if(S.charity>0)S.charity--;
+  let d=0;const ds=[];for(let i=0;i<dice;i++){const x=1+Math.floor(Math.random()*6);ds.push(x);d+=x}
+  log(`🎲 رميت ${ds.join(" + ")}${dice>1?" = "+d:""}.`);
+  const track=S.fast?FAST:RAT;
+  for(let i=0;i<d;i++){S.pos=(S.pos+1)%track.length;if(track[S.pos]==="payday"&&i<d-1)pay()}
+  const k=track[S.pos];
+  render();
+  setTimeout(()=>resolve(k),250);
+}
+function resolve(k){
+  if(k==="payday"){pay();return finish()}
+  if(k==="doodad"){
+    const [n,c]=rnd(DOODADS);
+    return modal("🛍️ مصروف طارئ",`<p>${n}: <b>${fmt(c)}</b></p>`,[["ادفع",()=>ensureCash(c,true,()=>{S.cash-=c;log(`دفعت ${fmt(c)} على «${n}».`);finish()})]]);
+  }
+  if(k==="child"){
+    S.children++;log(`👶 رزقت بمولود. مصاريفك +${fmt(S.childCost)}.`);
+    return modal("👶 مولود جديد",`<p>مبروك! تزيد مصاريفك ${fmt(S.childCost)} شهرياً.</p>`,[["حسناً",finish]]);
+  }
+  if(k==="layoff"){
+    const c=expenses();
+    return modal("📉 تسريح مؤقت",`<p>فقدت وظيفتك مؤقتاً. ادفع مصاريف شهر (${fmt(c)}) وتفوتك دورتان.</p>`,[["ادفع",()=>ensureCash(c,true,()=>{S.cash-=c;S.skip=2;log(`تسريح: دفعت ${fmt(c)} وتفوتك دورتان.`);finish()})]]);
+  }
+  if(k==="charity"){
+    const c=Math.round((S.salary+passive())*0.1);
+    return modal("🎁 فرصة تبرّع",`<p>تبرع بـ <b>${fmt(c)}</b> (10% من دخلك) فترمي نردين لمدة ٣ أدوار.</p>`,
+      [["تبرّع",()=>{if(S.cash<c){log("لا يكفي النقد للتبرع.");return finish()}S.cash-=c;S.charity=3;log(`تبرعت بـ ${fmt(c)} — نردان لـ٣ أدوار.`);finish()}],["تجاوز",finish,true]]);
+  }
+  if(k==="market")return market();
+  if(k==="deal")return modal("🤝 فرصة استثمارية",`<p>اختر نوع الصفقة:</p>`,[["صفقة صغيرة",()=>offer(rnd(SMALL))],["صفقة كبيرة",()=>offer(rnd(BIG))]]);
+  if(k==="biz")return offer(rnd(BIZ),true);
+  if(k==="dream"){
+    const d=DREAMS[FAST.slice(0,S.pos).filter(x=>x==="dream").length];
+    return modal(`⭐ ${d.n}`,`<p>السعر: <b>${fmt(d.cost)}</b> — نقدك ${fmt(S.cash)}.</p>`,
+      S.cash>=d.cost?[["حقّق الحلم",()=>win(d)],["لاحقاً",finish,true]]:[["لا يكفي النقد",finish,true]]);
+  }
+  if(k==="lawsuit"){const c=Math.round(S.cash*0.2);return modal("⚖️ قضية",`<p>تدفع ${fmt(c)} (20% من نقدك).</p>`,[["ادفع",()=>{S.cash-=c;log(`قضية: دفعت ${fmt(c)}.`);finish()}]])}
+  if(k==="tax"){const c=Math.round(S.cash*0.1);return modal("🧾 ضريبة",`<p>تدفع ${fmt(c)} (10% من نقدك).</p>`,[["ادفع",()=>{S.cash-=c;log(`ضريبة: ${fmt(c)}.`);finish()}]])}
+  finish();
+}
+function offer(c,big){
+  const inc=c.inc?`الدخل الشهري الصافي: <b class="good">+${fmt(c.inc)}</b>`:"لا دخل شهرياً — الربح من إعادة البيع.";
+  modal(`${c.n}`,`<p>النوع: ${c.t}${c.cost?` — القيمة: ${fmt(c.cost)}`:""}<br>الدفعة الأولى: <b>${fmt(c.down)}</b><br>${inc}</p><p class="sub">نقدك: ${fmt(S.cash)}</p>`,
+   [["اشترِ",()=>ensureCash(c.down,false,ok=>{
+      if(!ok)return finish();
+      S.cash-=c.down;S.assets.push({n:c.n,t:c.t,inc:c.inc,cost:c.cost||c.down});log(`اشتريت «${c.n}» بدفعة ${fmt(c.down)}.`);finish();
+    })],["تجاوز",finish,true]]);
+}
+function market(){
+  const owned=S.assets.filter(a=>a.cost);
+  if(!owned.length){log("📈 السوق نشط لكنك لا تملك أصولاً للبيع.");return finish()}
+  const a=rnd(owned);
+  const f=a.t==="أسهم"?0.5+Math.random()*2.2:1.05+Math.random()*0.9;
+  const price=Math.round(a.cost*f/100)*100;
+  const gain=price-a.cost;
+  modal("📈 عرض من السوق",`<p>مشترٍ يعرض <b>${fmt(price)}</b> على «${a.n}» (قيمتها ${fmt(a.cost)}).<br>${gain>=0?"ربح":"خسارة"}: <b class="${gain>=0?"good":"bad"}">${fmt(Math.abs(gain))}</b></p>`,
+    [["بِع",()=>{S.cash+=price;S.assets.splice(S.assets.indexOf(a),1);log(`بعت «${a.n}» بـ ${fmt(price)}.`);finish()}],["احتفظ",finish,true]]);
+}
+
+/* ---------- القائمة المالية ---------- */
+function sheet(){
+  const ex=Object.entries(S.exp).map(([k,v])=>`<tr><td>${k}</td><td>${fmt(v)}</td></tr>`).join("");
+  const as=S.assets.length?S.assets.map(a=>`<tr><td>${a.n}</td><td>${a.inc?"+"+fmt(a.inc):"—"}</td></tr>`).join(""):`<tr><td colspan="2">لا أصول بعد</td></tr>`;
+  const btns=[["إغلاق",null,true]];
+  if(S.loans>0&&S.cash>=1000)btns.unshift(["سدّ قرضاً 1,000",()=>{S.cash-=1000;S.loans-=1000;log("سددت 1,000 من القرض.");save();render();sheet()}]);
+  modal(`📋 قائمة ${S.prof} المالية`,
+   `<table><tr><td>الراتب</td><td>${fmt(S.salary)}</td></tr><tr><td>الدخل السلبي</td><td class="good">${fmt(passive())}</td></tr>
+    <tr><td>إجمالي المصاريف</td><td class="bad">${fmt(expenses())}</td></tr><tr><td><b>التدفق الشهري</b></td><td><b>${fmt(cashflow())}</b></td></tr></table>
+    <details><summary>المصاريف</summary><table>${ex}<tr><td>أطفال (${S.children})</td><td>${fmt(S.children*S.childCost)}</td></tr><tr><td>قروض (${fmt(S.loans)})</td><td>${fmt(S.loans*0.1)}</td></tr></table></details>
+    <details open><summary>الأصول</summary><table>${as}</table></details><p class="sub">${S.debt} (مدرج ضمن قسط السكن)</p>`,btns);
+}
+
+/* ---------- البداية ---------- */
+function chooseProf(){
+  const b=PROFS.map((p,i)=>`<button class="prof" data-i="${i}">${p.n}<small>راتب ${fmt(p.salary)} · مصاريف ${fmt(p.tax+p.home+p.car+p.cards+p.other)} · نقد ${fmt(p.cash)}</small></button>`).join("");
+  $("#sheet").innerHTML=`<h2>اختر مهنتك</h2><p class="sub">المهن الأعلى دخلاً مصاريفها أعلى، فالخروج يحتاج دخلاً سلبياً أكبر.</p>${b}`;
+  $("#sheet").querySelectorAll(".prof").forEach(el=>el.onclick=()=>{close();newGame(+el.dataset.i)});
+  $("#modal").classList.add("on");
+}
+$("#roll").onclick=roll;
+$("#sheetBtn").onclick=()=>S&&sheet();
+$("#newBtn").onclick=()=>{if(confirm("بدء لعبة جديدة؟ سيُمسح التقدم الحالي."))chooseProf()};
+if(load())render();else{S={prof:"-",salary:0,cash:0,exp:{},childCost:0,children:0,loans:0,debt:"",assets:[],pos:0,skip:0,charity:0,fast:false,log:[]};render();chooseProf()}
+})();
+</script>
+</body>
+</html>
