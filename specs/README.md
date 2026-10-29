@@ -23,7 +23,10 @@
 | `roadmap.md` | الميزات 000–006 وموجات التنفيذ | ✅ معتمد |
 | `001-ui-visual-overhaul/spec.md` | الرسومات والواجهة (النسخة 2) | ✅ معتمد |
 | `002-language-voice/spec.md` + `glossary.md` | اللغة والصوت والمعجم | ✅ معتمد |
-| `001-…/plan.md`، `tasks.md`، `codex-briefs.md` | مسودة قديمة | ⚠️ بتنكتب من جديد بعد الاعتماد |
+| `000-foundation/` | الأساس والإسعافات: spec + plan + tasks | ✅ جاهزة للتنفيذ |
+| `001-ui-visual-overhaul/` | plan + tasks + codex-briefs (النسخة 2) | ✅ جاهزة للتنفيذ |
+| `002-language-voice/` | plan + tasks | ✅ جاهزة للتنفيذ |
+| `003-security/` | spec + plan + tasks | 📝 المواصفة بانتظار الاعتماد |
 
 ## الأدوار (Q-25ب)
 
