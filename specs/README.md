@@ -26,7 +26,7 @@
 | `000-foundation/` | الأساس والإسعافات: spec + plan + tasks | ✅ جاهزة للتنفيذ |
 | `001-ui-visual-overhaul/` | plan + tasks + codex-briefs (النسخة 2) | ✅ جاهزة للتنفيذ |
 | `002-language-voice/` | plan + tasks | ✅ جاهزة للتنفيذ |
-| `003-security/` | spec + plan + tasks | 📝 المواصفة بانتظار الاعتماد |
+| `003-security/` | spec + plan + tasks | ✅ جاهزة للتنفيذ (R-08) |
 
 ## الأدوار (Q-25ب)
 

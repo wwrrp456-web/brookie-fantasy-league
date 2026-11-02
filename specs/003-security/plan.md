@@ -76,7 +76,7 @@ config/organizerUid              R: الكل   W: لا أحد (يُضبط من �
 | `js/data/season-2/participants.js`، `admin-season-lock.js` | حذف `PARTICIPANT_CODES` |
 | 🆕 `js/core/auth.js` | `ensureAnonymous()` عند الإقلاع، و`claimParticipant(pid, code)`، و`organizerSignIn(email, pass)`، و`isOrganizer()` |
 | `js/core/storage.js` | `savePredictions()` يكتب `predictions/{round}/{myPid}` فقط، و`loadPredictions()` يقرأ الشجرة ويبني `PRED_DATA` بنفس الشكل الحالي (فباقي الكود ما يتغير) |
-| `admin-auth-settings.js` | شاشة دخول بالبريد بدل الرمز، وقسم "رموز المشاركين" يقرأ ويكتب `secrets/codes` (يولّد رموز 6 أرقام) |
+| `admin-auth-settings.js` | شاشة دخول بالبريد بدل الرمز، وقسم "رموز المشاركين" يقرأ ويكتب `secrets/codes` (بنفس الرموز الحالية، R-08) |
 | `my-dashboard.js`، `theme-and-onboarding.js`، `report-main.js` | التحقق من الرمز عبر `claimParticipant` بدل المقارنة المحلية |
 | 🆕 `js/core/dom-utils.js` → `escapeHtml` | دالة واحدة، ويُعاد استخدامها في الجدار والتقارير والمواجهات وكل محتوى زائر |
 
@@ -86,8 +86,8 @@ config/organizerUid              R: الكل   W: لا أحد (يُضبط من �
            الكود يدعم Auth والمسارات الجديدة، ويقرأ التوقعات القديمة والجديدة معًا
 المرحلة ب  المنظّم: نسخة احتياطية ← إنشاء حسابه ← تفعيل Anonymous وEmail في لوحة Firebase
            ← تشغيل "ترحيل" من لوحة المنظّم (ينسخ التوقعات للشجرة الجديدة،
-              ويولّد رموز 6 أرقام في secrets، ويضبط config/organizerUid)
+              وينسخ رموز المشاركين الحالية كما هي إلى secrets، ويضبط config/organizerUid)
 المرحلة ج  لصق القواعد في لوحة Firebase ← نشر
-المرحلة د  التحقق (SC-01…05) ← توزيع الرموز الجديدة على الأعضاء
+المرحلة د  التحقق (SC-01…05). الأعضاء ما يحتاجون أي شي جديد (R-08)
 الرجوع     لو صار خلل: لصق القاعدة القديمة المفتوحة (محفوظة في الريبو) يرجّع كل شي فورًا
 ```
