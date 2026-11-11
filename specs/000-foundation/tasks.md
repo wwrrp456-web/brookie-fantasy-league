@@ -10,7 +10,7 @@
 
 ## أ. الإسعافات
 
-### ⬜ T01 · إصلاح تداخل ستوري الترتيب · 🛠️
+### ✅ T01 · إصلاح تداخل ستوري الترتيب · 🛠️
 - **يحل:** F-04 (C-01)
 - **الملفات:** 🆕 `js/ui/card-layout.js`، و`js/ui/canvas-cards.js` (`buildStandingsStoryCanvas` فقط)، و`index.html` (سطر `<script>` قبل `canvas-cards.js`)، و`tests/run.js`
 - **الوصف:** حسب `plan.md` §3 "إصلاح الستوري".
