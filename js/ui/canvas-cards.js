@@ -1141,6 +1141,21 @@ function printSeasonReport(){
 // ميزة 7: شهادة تكريم قابلة للمشاركة — نفس أسلوب buildStandingsStoryCanvas
 // نص الشهادة الكامل (نص تقديري منسّق بطلب المستخدم، 21 سبتمبر 2026) بدل
 // سطر الرصيد المجرّد وحده — الرصيد الحالي أصبح إحصائية إضافية أسفل الفقرة.
+// 000-T02 (F-05): نواقص بيانات الشهادة. قائمة فاضية = الشهادة صالحة للتصدير.
+function validateCertificateData(champId, participants){
+  const id = (champId === undefined) ? CHAMPION_ID : champId;
+  const list = participants || PARTICIPANTS;
+  const issues = [];
+  if(id === null || id === undefined || id === ''){
+    issues.push('لم يُحدَّد بطل الموسم السابق من تبويب المنظّم');
+    return issues;
+  }
+  const champ = list.find(p=>p.id===id);
+  if(!champ) issues.push('بطل الموسم السابق غير موجود في قائمة المشاركين');
+  else if(!String(champ.name||'').trim()) issues.push('اسم بطل الموسم السابق فارغ');
+  return issues;
+}
+
 async function buildChampionCertificateCanvas(){
   const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID) || {name:'—'};
   const st = computeStandings();
@@ -1216,7 +1231,8 @@ async function buildChampionCertificateCanvas(){
   ctx.fillStyle='#9C9BC9'; ctx.font='600 24px Tajawal, Arial';
   ctx.fillText('إدارة دوري بروكي الفانتازي', W/2, contentH-130);
   ctx.font='500 22px Tajawal, Arial';
-  ctx.fillText(new Date().toLocaleDateString('ar-SA'), W/2, contentH-90);
+  // حل مؤقت بأرقام لاتينية (الدستور 18)، ويُستبدل بـformatDate من 002.
+  ctx.fillText(new Date().toLocaleDateString('ar', {day:'numeric', month:'long', year:'numeric', numberingSystem:'latn'}), W/2, contentH-90);
 
   ctx.restore();
   return cv;
@@ -1224,6 +1240,16 @@ async function buildChampionCertificateCanvas(){
 async function showChampionCertificate(){
   const box = document.getElementById('championCertBox');
   if(!box) return;
+  const issues = validateCertificateData();
+  if(issues.length){
+    // بيانات ناقصة: رسالة للمنظّم بدون كانفس ولا أزرار
+    box.innerHTML = '';
+    const msg = document.createElement('div');
+    msg.className = 'status-msg err';
+    msg.textContent = 'لا يمكن إنشاء الشهادة: ' + issues[0];
+    box.appendChild(msg);
+    return;
+  }
   box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.85rem;">جارٍ تجهيز الشهادة…</p>';
   try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
   const cv = await buildChampionCertificateCanvas();
