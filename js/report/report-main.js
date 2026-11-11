@@ -1,6 +1,6 @@
 /* منطق صفحة تقارير المجتمع — يعتمد على FIREBASE_CONFIG (من core/config.js)
    و PARTICIPANTS/CLUBS/PARTICIPANT_CODES (من data/season-2/*) بدل نسخ محلية،
-   حتى يبقى مصدر واحد للحقيقة مع الصفحة الرئيسية index.html/league.html. */
+   حتى يبقى مصدر واحد للحقيقة مع الصفحة الرئيسية index.html. */
 // نفس مشروع Firebase المستخدم في الموقع الرئيسي (proki-fantasy) — هذه الصفحة
 // تكتب في مسار منفصل تمامًا (brookie/community-reports) ولا تلمس بيانات
 // الموسم الرسمية (brookie/brookie-fantasy-s2-data) بأي شكل. الهدف منها فقط
