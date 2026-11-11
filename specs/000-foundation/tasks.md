@@ -58,7 +58,7 @@
 ## ج. أدوات التحقق
 
 ### ⬜ T07 · `package.json` + الخط المحلي · 🛠️ `[P]`
-- **الملفات:** 🆕 `package.json` (devDependencies فقط)، و🆕 `assets/fonts/`، و🆕 `css/fonts.css`، و`index.html` و`report.html` (استبدال رابط Google Fonts)، و`.gitignore`
+- **الملفات:** 🆕 `package.json` (devDependencies فقط)، و🆕 `assets/fonts/`، و🆕 `css/fonts.css`، و`index.html` و`report.html` (استبدال رابط Google Fonts)، و`.gitignore`، وحذف `assets/icons/fonts/` المكرر وربط `assets/icons/_sheet.html` بـ`css/fonts.css`
 - **القبول:**
   - الموقع يعرض Tajawal بدون أي طلب لـ`fonts.googleapis.com`
   - الملفات الأربعة (400/500/700/800، العربية واللاتينية) ≤ 200KB مجتمعة
