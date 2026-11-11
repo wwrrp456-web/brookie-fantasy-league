@@ -68,4 +68,3 @@ Sonnet: يدمج ← يعلّم المهمة ✅ في tasks.md
 ```
 
 وحكم Opus في ملف منفصل: `specs/reports/<المهمة>-review.md`.
-```
