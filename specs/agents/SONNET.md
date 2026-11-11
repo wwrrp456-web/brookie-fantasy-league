@@ -48,28 +48,45 @@
   - لقطة الستوري بـ18 و20 مشاركًا، قبل وبعد. أداة اللقطات للحين غير موجودة، فاستخدم Playwright مباشرة على `index.html` بالبيانات المضمّنة.
 - **التقرير:** `specs/reports/000-T01.md`
 
-### ⬜ S2 · 000-T02 · منع تصدير شهادة ناقصة + أرقام لاتينية
+### ✅ S2 · 000-T02 · منع تصدير شهادة ناقصة + أرقام لاتينية
 - **المرجع:** `tasks.md` (T02) و`plan.md` §3 "إصلاح الشهادة".
 - **الفرع:** `feat/000-T02-certificate` (من فرع التكامل، مو من فرع S1).
 - **المطلوب:** `validateCertificateData()`، و`showChampionCertificate()` ما ترسم كانفس إذا فيه نواقص، والتاريخ بأرقام لاتينية. التعديل في هالدالتين فقط من `canvas-cards.js`.
 - **الأدلة:** لقطتان (ناقصة وصالحة) + نتيجة الاختبارات.
 - **التقرير:** `specs/reports/000-T02.md`
 
-### ⬜ S3 · 000-T03 · تحويل `league.html`
+### ✅ S3 · 000-T03 · تحويل `league.html`
 - **المرجع:** `tasks.md` (T03) و`plan.md` §3.
 - **الفرع:** `feat/000-T03-league-redirect`
 - **المطلوب:** استبدال `league.html` بالكامل بمحتوى الخطة، وتحديث أي تعليق في `js/` يذكر `league.html`.
 - **الأدلة:** حجم الملف (< 1KB)، وإن `league.html#rounds` يفتح `index.html#rounds` (Playwright)، ونتيجة `grep` على `js/`.
 - **التقرير:** `specs/reports/000-T03.md`
 
-### ⬜ S4 · 001-T04 · تصدير الشعارات الحالية كملفات · ⏹️ توقف بعده
+### ✅ S4 · 001-T04 · تصدير الشعارات الحالية كملفات
 - **المرجع:** `specs/001-ui-visual-overhaul/tasks.md` (T04).
 - **الفرع:** `feat/001-T04-export-crests`
 - **المطلوب:** 🆕 `tools/export-crests.js` يشغّل `clubCrestSVG()` الحالية في المتصفح (Playwright)، ويحفظ كل شعار **كما هو** في `assets/crests/<slug>.svg` (32)، و🆕 `assets/crests.json` (slug ← اسم النادي)، و🆕 `assets/crests/_sheet.html`.
 - **الأدلة:** لقطة `_sheet.html`، ولقطة لشعارات الموقع الحالية للمقارنة، وعدد الملفات.
 - **التقرير:** `specs/reports/001-T04.md`
 
-### ⬜ S5 · تركيب Spec Kit (R-12) · **بعد ما تندمج S1–S4**
+### ⬜ M3 · ادمج PR #9 (000-T02 الشهادة)
+- **SHA:** `44009bc9806651a7fb9209251045055535a6648c` · الحكم: `specs/reports/000-T02-review.md` · بعدها علّم T02 ✅ في `000-foundation/tasks.md`.
+
+### ⬜ M4 · ادمج PR #10 (000-T03 `league.html`)
+- **SHA:** `84d99b3c4c5a6c88c6c3913259caad35d35fa850` · الحكم: `specs/reports/000-T03-review.md` · بعدها علّم T03 ✅.
+
+### ⬜ M5 · ادمج PR #11 (001-T07b ألوان P)
+- **SHA:** `a67170a771ab8aa1123c3c01c9d9c5692e81a020` · الحكم: `specs/reports/001-T07b-review.md` · بعدها حدّث سطر "متابعة T07b" تحت T07 في `001-ui-visual-overhaul/tasks.md` إلى ✅.
+
+### ⬜ M6 · ادمج PR #12 (001-T04 تصدير الشعارات)
+- **SHA:** `298f34174ada202eef9e785fb895f30bd7a4f8a6` · الحكم: `specs/reports/001-T04-review.md` · بعدها علّم T04 ✅ في `001-ui-visual-overhaul/tasks.md`.
+
+### ⬜ S6 · تصحيح نص `index.html` اللي يذكر `league.html`
+- **الفرع:** `feat/000-T03b-index-text` · **التقرير:** `specs/reports/000-T03b.md`
+- النص حوالي السطر 670 (`والمرجعين بـindex.html/league.html`): احذف ذكر `league.html` بحيث يقول المرجع `index.html` فقط. **لا تعدّل غير هالنص.**
+- الأدلة: الـdiff (سطر واحد) و`node tests/run.js`.
+
+### ⬜ S5 · تركيب Spec Kit (R-12) · ⏹️ توقف بعده
 - **المرجع:** `specs/SPECKIT-MIGRATION.md` (اقرأه كامل، خصوصًا القسمين 3 و5).
 - **الفرع:** `feat/speckit-install`
 - **المطلوب:**
