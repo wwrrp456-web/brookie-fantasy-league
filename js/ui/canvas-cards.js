@@ -677,7 +677,10 @@ async function buildStandingsStoryCanvas(){
   ctx.beginPath(); ctx.moveTo(70,logoBottom+48); ctx.lineTo(W-70,logoBottom+48); ctx.stroke();
 
   const colRank = W-110, colName = W-190, colPts = 130, colMv = 260;
-  const rowH = 150;
+  const headerY = logoBottom+84;
+  const L = computeStoryLayout({n, H, contentTop: headerY+26, footerTop: H-170});
+  const rowH = L.rowH, k = L.scale;   // الخطوط تتناسب مع ارتفاع الصف (rowH/150)
+  const fs = (px)=>Math.round(px*k);
 
   function drawStoryHeaderRow(y){
     ctx.fillStyle='#9C9BC9'; ctx.font='700 24px Tajawal, Arial';
@@ -710,25 +713,25 @@ async function buildStandingsStoryCanvas(){
       drawRoundedRect(ctx, 60, y+6, 8, rowH-12, 4); ctx.fill();
     }
 
-    const midY = y + rowH/2 + 12;
+    const midY = y + rowH/2 + 12*k;
 
     ctx.textAlign='center';
     ctx.fillStyle = isTop3 ? (rank===1?'#16A6EA':rank===2?'#E4E4E4':'#E0A468') : (isBottom3 ? '#FF6B5E' : '#FFFFFF');
-    ctx.font = isTop3 ? '800 44px Tajawal, Arial' : '700 40px Tajawal, Arial';
+    ctx.font = isTop3 ? `800 ${fs(44)}px Tajawal, Arial` : `700 ${fs(40)}px Tajawal, Arial`;
     ctx.fillText(`${rank}`, colRank, midY);
 
     ctx.textAlign='right';
     ctx.fillStyle='#FFFFFF';
-    ctx.font = isTop3 ? '800 38px Tajawal, Arial' : '700 35px Tajawal, Arial';
+    ctx.font = isTop3 ? `800 ${fs(38)}px Tajawal, Arial` : `700 ${fs(35)}px Tajawal, Arial`;
     ctx.fillText(s.name, colName-40, midY);
 
     ctx.textAlign='center';
     ctx.fillStyle='#16A6EA';
-    ctx.font='800 40px Tajawal, Arial';
+    ctx.font=`800 ${fs(40)}px Tajawal, Arial`;
     ctx.fillText(`${s.total}`, colPts, midY);
 
     const delta = mv[s.id];
-    ctx.font='700 32px Tajawal, Arial';
+    ctx.font=`700 ${fs(32)}px Tajawal, Arial`;
     if(!delta){
       ctx.fillStyle='#9C9BC9';
       ctx.fillText('—', colMv, midY);
@@ -741,38 +744,18 @@ async function buildStandingsStoryCanvas(){
     }
   }
 
-  const topN = Math.min(6, n);
-  const bottomN = Math.min(3, Math.max(0, n - topN));
-  const skipped = Math.max(0, n - topN - bottomN);
+  drawStoryHeaderRow(headerY);
+  L.rows.forEach(r=> drawStoryRow(st[r.rank-1], r.rank, r.y));
 
-  let cursorY = logoBottom+84;
-  drawStoryHeaderRow(cursorY);
-  cursorY += 26;
-
-  for(let i=0;i<topN;i++){
-    drawStoryRow(st[i], i+1, cursorY);
-    cursorY += rowH;
-  }
-
-  if(skipped > 0){
-    cursorY += 14;
+  if(L.skipped > 0){
+    ctx.textAlign='center';
     ctx.fillStyle='#7B7AA8'; ctx.font='700 30px Tajawal, Arial';
-    ctx.fillText(`⋯ ${skipped} مراكز بينهم ⋯`, W/2, cursorY);
-    cursorY += 46;
-  } else {
-    cursorY += 20;
+    ctx.fillText(`⋯ ${L.skipped} مراكز بينهم ⋯`, W/2, L.skippedY+14);
   }
-
-  if(bottomN > 0){
+  if(L.bottomN > 0){
+    ctx.textAlign='center';
     ctx.fillStyle='#FF6B5E'; ctx.font='800 32px Tajawal, Arial';
-    ctx.fillText('🔥 سباق الهروب من القاع', W/2, cursorY);
-    cursorY += 54;
-
-    const bottomStart = n - bottomN;
-    for(let i=bottomStart;i<n;i++){
-      drawStoryRow(st[i], i+1, cursorY);
-      cursorY += rowH;
-    }
+    ctx.fillText('🔥 سباق الهروب من القاع', W/2, L.bottomTitleY);
   }
 
   ctx.textAlign='center';
