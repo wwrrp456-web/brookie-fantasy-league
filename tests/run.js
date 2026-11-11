@@ -22,6 +22,7 @@ const FILES = [
   'js/core/standings-engine.js',
   'js/core/club-engine.js',
   'js/ui/card-layout.js',
+  'js/ui/canvas-cards.js',
 ];
 
 const source = FILES.map(f => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n;\n');
@@ -81,6 +82,15 @@ const STORY_FOOTER_TOP = 1920 - 170;
     L.rows.every((r, i) => i === 0 || r.y >= L.rows[i - 1].y + L.rowH) && last.rank === n, true);
   check(`ستوري n=${n}: rowH ضمن [96,150]`, L.rowH >= 96 && L.rowH <= 150, true);
 });
+
+// ---------- 000-T02: التحقق من بيانات الشهادة ----------
+check('شهادة: بطل غير محدد (null) ← نقص واحد',
+  context.validateCertificateData(null, context.PARTICIPANTS),
+  ['لم يُحدَّد بطل الموسم السابق من تبويب المنظّم']);
+check('شهادة: بطل غير موجود بين المشاركين ← نقص',
+  context.validateCertificateData(9999, context.PARTICIPANTS).length, 1);
+check('شهادة: اسم فارغ ← نقص', context.validateCertificateData(1, [{id:1, name:'  '}]).length, 1);
+check('شهادة: بطل صالح ← لا نواقص', context.validateCertificateData(16, context.PARTICIPANTS), []);
 
 // ---------- الخلاصة ----------
 console.log(`\n${pass} ✅ / ${fail} ❌`);
