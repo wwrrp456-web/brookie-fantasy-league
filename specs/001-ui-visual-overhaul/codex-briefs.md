@@ -20,7 +20,8 @@
 
 الهوية معتمدة وثابتة (Q-19)، نطوّر عليها ولا نستبدلها:
   - شعار PROKI: حرف P هندسي حاد + PROKI + FANTASY LEAGUE
-  - خلفية كحلية عميقة #0A0B1E، ولون تمييز بنفسجي #7B61FF
+  - خلفية كحلية عميقة #0B0D1F، ولون تمييز بنفسجي #7B5CFF، وأزرق الهوية #00B4FF (لتدرج P فقط)
+    (ألوان الشاشة من HEX دليل الهوية، R-10. ألوان PDF الأصلي للطباعة فقط)
   - خط Tajawal
   - دلالات فقط: ذهبي #F5B83D للبطولة، وأخضر #22C55E للصعود، وأحمر #EF4444 للهبوط، وسماوي #38BDF8 للصدارة
 
@@ -69,7 +70,7 @@
   chevron-down  chevron-left  more (⋯)
 
 القبول:
-  - assets/icons/_sheet.html تعرض الكل على 16/24/48px، على #0A0B1E (لون #F4F5FF) وعلى #FFFFFF (لون #12142E)
+  - assets/icons/_sheet.html تعرض الكل على 16/24/48px، على #0B0D1F (لون #F4F5FF) وعلى #FFFFFF (لون #12142E)
   - لا أيقونتين متشابهتين لدرجة الالتباس على 16px
 ```
 
@@ -124,7 +125,7 @@ T04). المنظّم يحب الشعارات الحالية واختار "نبق
     proki-logo.svg        الكامل (P + PROKI + FANTASY LEAGUE + "— دوري بروكي الفانتازي —" كمسارات)
     proki-logo-light.svg  للخلفية الفاتحة
     proki-mark.svg        حرف P فقط (للهيدر المضغوط)
-    app-icons/icon-180.png, icon-192.png, icon-512.png   من proki-mark على #0A0B1E، مع هامش 20% (maskable)
+    app-icons/icon-180.png, icon-192.png, icon-512.png   من proki-mark على #0B0D1F، مع هامش 20% (maskable)
                           (Sonnet ينقلها للجذر لاحقًا في T12، لأن Codex ما يكتب خارج assets/)
   القبول: مطابق للأصل على 240px، و proki-logo.svg ≤ 15KB، و proki-mark.svg ≤ 3KB
 ```

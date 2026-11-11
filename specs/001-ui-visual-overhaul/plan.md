@@ -47,13 +47,15 @@ js/ui/cards/*.js                 ← 🆕 كرت لكل ملف (8 كروت)
 | D10 | **كل نص جديد** يمر على `formatCount` و`formatDate` والمعجم من 002 | ما نرجع نصلح مرتين |
 
 ## 4. الرموز (Tokens)
-نفس الهوية المعتمدة (Q-19)، مستخرجة من الألوان الأكثر استخدامًا حاليًا:
+نفس الهوية المعتمدة (Q-19). ألوان الهوية على الشاشة من قيم HEX في دليل الهوية (R-10)، والباقي مستخرج من الألوان الأكثر استخدامًا حاليًا:
 ```css
 :root {                                   /* داكن (الافتراضي) */
-  --c-bg:#0A0B1E; --c-surface-1:#12142E; --c-surface-2:#1A1D40;
-  --c-border:rgba(255,255,255,.08); --c-border-strong:rgba(123,97,255,.45);
+  --c-bg:#0B0D1F; --c-surface-1:#12142E; --c-surface-2:#1A1D40;
+  --c-border:rgba(255,255,255,.08); --c-border-strong:rgba(123,92,255,.45);
   --c-text:#F4F5FF; --c-text-2:#A9ADCF; --c-text-3:#6E7299;
-  --c-brand:#7B61FF; --c-brand-strong:#6246EA;          /* لون التمييز الوحيد */
+  --c-brand:#7B5CFF; --c-brand-strong:#6246EA;          /* لون التمييز الوحيد */
+  --c-brand-blue:#00B4FF;   /* أزرق الهوية: لتدرج P والرسومات فقط، ليس لون تمييز ثانيًا (R-10) */
+  --g-brand:linear-gradient(135deg,#00B4FF,#7B5CFF);   /* تدرج الهوية */
   --c-gold:#F5B83D; --c-up:#22C55E; --c-down:#EF4444; --c-info:#38BDF8;  /* دلالية فقط */
   --font:'Tajawal',system-ui,sans-serif;
   --fs-xs:12px; --fs-sm:14px; --fs-md:16px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:32px;
