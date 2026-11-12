@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة معاينة الأصول</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/fonts.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--c-bg);color:var(--c-text);font:var(--fs-sm)/1.6 var(--font);padding:var(--sp-4)}
+  h1{font-size:var(--fs-xl);margin:0 0 var(--sp-2)}
+  h2{font-size:var(--fs-lg);margin:var(--sp-8) 0 var(--sp-3);padding-bottom:var(--sp-2);border-bottom:1px solid var(--c-border)}
+  p.note{margin:0;color:var(--c-text-2)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:var(--sp-3)}
+  .cell{background:var(--c-surface-1);border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-2);text-align:center;min-width:0}
+  .cell svg{display:block;margin:0 auto var(--sp-2)}
+  .cell .name{font-size:var(--fs-xs);color:var(--c-text-2);overflow-wrap:anywhere}
+  .cell .slug{font-size:var(--fs-xs);color:var(--c-text-3);direction:ltr;overflow-wrap:anywhere}
+  .icon svg{width:24px;height:24px;color:var(--c-text)}
+  .crest svg{width:56px;height:auto}
+  .motif svg{width:56px;height:auto;color:var(--c-text)}
+  .logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--sp-3)}
+  .logo-cell{background:var(--c-surface-1);border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--sp-4);text-align:center}
+  .logo-cell svg{max-width:100%;height:72px;width:auto}
+  .logo-cell.on-dark{background:#0B0D1F;color:#F4F5FF}   /* الشعار الأبيض يحتاج خلفية داكنة ثابتة بالوضعين (مثل الهيدر) */
+  .empty{color:var(--c-text-3)}
+</style>
+</head>
+<body>
+<h1>لوحة معاينة الأصول</h1>
+<p class="note" id="summary"></p>
+
+<h2>الأيقونات (<span id="n-icons"></span>)</h2>
+<div class="grid" id="icons"></div>
+
+<h2>شعارات الأندية (<span id="n-crests"></span>)</h2>
+<div class="grid" id="crests"></div>
+
+<h2>رموز الشعارات (<span id="n-motifs"></span>)</h2>
+<div class="grid" id="motifs"></div>
+
+<h2>شعار PROKI</h2>
+<div class="logos" id="logos"></div>
+
+<h2>الشعارات الرسمية (<span id="n-official"></span>)</h2>
+<div class="grid" id="official"></div>
+
+<script src="../js/generated/assets.js"></script>
+<script>
+  // نفس مفتاح الثيم في الموقع (brookie-light-mode) عشان تُعرض اللوحة بالوضعين مثل التبويبات
+  try { if (localStorage.getItem('brookie-light-mode') === '1') document.documentElement.classList.add('light-mode'); } catch (e) {}
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const cells = (obj, cls, label) => Object.keys(obj).map(k => `<div class="cell ${cls}">${obj[k]}<div class="name">${esc(label ? label(k) : k)}</div>${label ? `<div class="slug">${esc(k)}</div>` : ''}</div>`).join('');
+  const set = (id, html) => { document.getElementById(id).innerHTML = html; };
+  const count = (id, n) => { document.getElementById(id).textContent = n; };
+
+  count('n-icons', Object.keys(ICONS).length);
+  set('icons', cells(ICONS, 'icon'));
+  count('n-crests', Object.keys(CRESTS).length);
+  set('crests', cells(CRESTS, 'crest', k => CREST_NAMES[k] || k));
+  count('n-motifs', Object.keys(MOTIFS).length);
+  set('motifs', cells(MOTIFS, 'motif'));
+  set('logos', Object.keys(LOGO_SVG).map(k => `<div class="logo-cell${k === 'logoLight' ? '' : ' on-dark'}">${LOGO_SVG[k]}<div class="name">${esc(k)}</div></div>`).join(''));
+  const off = Object.keys(CRESTS_OFFICIAL).length;
+  count('n-official', off);
+  set('official', off ? cells(CRESTS_OFFICIAL, 'crest', k => CREST_NAMES[k] || k) : '<div class="empty">لا توجد شعارات رسمية بعد (assets/crests/official/).</div>');
+  document.getElementById('summary').textContent =
+    `أيقونات ${Object.keys(ICONS).length} · شعارات ${Object.keys(CRESTS).length} · رموز ${Object.keys(MOTIFS).length} · شعار PROKI ${Object.keys(LOGO_SVG).length} · رسمية ${off}`;
+</script>
+</body>
+</html>
