@@ -219,6 +219,14 @@ function renderSmartProfile(){
     </div>`;
 }
 
+// اللمس على أي مكان في الصف يفتح تفاصيله (صف موسّع واحد في وقته، FR-14). الروابط والأزرار الداخلية للتفاصيل ما تقلبه.
+function onStandingsRowTap(e){
+  const tr = e.target.closest && e.target.closest('tr.standings-row');
+  if(!tr || !tr.dataset.pid) return;
+  if(e.target.closest('a, details, .name-reaction-slot button')) return;
+  toggleExpand(tr.dataset.pid);
+}
+
 function renderStandings(){
   const box = document.getElementById('standingsBox');
   const standings = computeStandings();
@@ -242,14 +250,13 @@ function renderStandings(){
   let html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
   html += `<table class="league-table">
     <thead><tr>
-      <th style="width:34px;">#</th>
-      <th style="width:30px;">±</th>
-      <th class="col-team">اللاعب</th>
-      <th>الجولة</th>
-      <th>ممة</th>
-      <th>جديد</th>
-      <th>نقاط</th>
-      <th style="width:30px;"></th>
+      <th class="col-rank">#</th>
+      <th class="col-move">±</th>
+      <th class="col-team">المشارك</th>
+      <th class="col-sec">ممة</th>
+      <th class="col-sec">جديد</th>
+      <th class="col-score">نقاط</th>
+      <th class="col-toggle"></th>
     </tr></thead><tbody>`;
 
   standings.forEach((s,i)=>{
@@ -260,27 +267,28 @@ function renderStandings(){
     else if(pos<=6) tier='tier-silver';
     else if(pos>standings.length-3) tier='tier-danger';
 
-    const clubs = p.teams.map(t=>crestHTML(t, 19)).join('');
+    const clubs = p.teams.map(t=>crestHTML(t, 24)).join('');
 
     const meCls = (MY_ID === s.id) ? 'is-me' : '';
     html += `<tr class="standings-row ${tier} ${i%2?'zebra':''} ${meCls}" data-pid="${s.id}">
       <td class="pos-cell">${pos}</td>
       <td>${movementHTML(mv[s.id])}</td>
       <td class="team-cell">
-        <div>
-          <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}<span class="name-reaction-slot" data-pid="${s.id}"></span></div>
-          ${championDefensePathHTML(s.id)}
+        <div class="team-cell-inner">
           <div class="team-cell-clubs">${clubs}</div>
+          <div class="team-cell-text">
+            <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}<span class="name-reaction-slot" data-pid="${s.id}"></span></div>
+            ${championDefensePathHTML(s.id)}
+          </div>
         </div>
       </td>
-      <td class="stat-dim">${getCurrentRoundNumber()}</td>
-      <td class="stat-dim">${s.mummaCount}</td>
-      <td class="stat-new ${s.newPoints===0?'zero':''}">${s.newPoints>0?'+':''}${s.newPoints}</td>
+      <td class="stat-dim col-sec">${s.mummaCount}</td>
+      <td class="stat-new col-sec ${s.newPoints===0?'zero':''}">${s.newPoints>0?'+':''}${s.newPoints}</td>
       <td class="stat-strong">${s.total}</td>
-      <td><button class="detail-toggle" onclick="toggleExpand(${s.id})" aria-label="تفاصيل ${s.name}">▾</button></td>
+      <td class="col-toggle"><button class="detail-toggle" type="button" aria-expanded="false" aria-controls="expand-${s.id}" aria-label="تفاصيل ${s.name}">${ICONS['chevron-down']}</button></td>
     </tr>
     <tr class="detail-row" id="expand-${s.id}" style="display:none;">
-      <td colspan="8">
+      <td colspan="7">
         <div class="detail-inner">
           ${(()=>{
             const hist = buildParticipantHistory(s.id);
@@ -330,6 +338,7 @@ function renderStandings(){
     html += '<p style="color:var(--muted);font-size:0.78rem;margin:10px 2px 0;">النقاط الحالية من كشف المطابقة المعتمد. عمود «جديد» يبدأ بالتحرك مع أول جولة تُسجَّل.</p>';
   }
   box.innerHTML = html;
+  if(!box.dataset.rowTap){ box.dataset.rowTap = '1'; box.addEventListener('click', onStandingsRowTap); }
 
   if(animEnabled && Object.keys(oldRects).length){
     // بعض بيئات الاختبار (jsdom) لا تنفّذ requestAnimationFrame — نتراجع

@@ -171,10 +171,11 @@
     text-align:start!important;
     padding-inline-start:2px!important;
   }
-  .team-cell-inner{display:flex;align-items:center;gap:8px;}
+  .team-cell-inner{display:flex;align-items:center;gap:var(--sp-2);}
+  .team-cell-text{min-width:0;}
   .team-cell-name{font-weight:700;font-size:0.85rem;color:#fff;line-height:1.25;}
-  .team-cell-clubs{display:flex;gap:3px;margin-top:3px;}
-  .team-cell-clubs .crest{width:19px;height:21px;}
+  .team-cell-clubs{display:flex;gap:var(--sp-1);flex:none;}
+  .team-cell-clubs .crest{width:24px;height:26.4px;}
 
   .stat-strong{font-weight:800;color:#fff;font-size:0.9rem;}
   .stat-dim{color:#8A8A8A;font-size:0.8rem;}
@@ -183,9 +184,16 @@
 
   .detail-toggle{
     background:none;border:none;color:#8A8A8A;
-    cursor:pointer;font-size:0.95rem;padding:4px 6px;
-    font-family:inherit;
+    cursor:pointer;padding:4px 6px;
+    font-family:inherit;display:inline-grid;place-items:center;
   }
+  .detail-toggle svg{width:16px;height:16px;transition:rotate .15s ease;}
+  .detail-toggle[aria-expanded="true"] svg{rotate:180deg;}
+  tr.standings-row{cursor:pointer;}
+  .col-rank{width:34px;}.col-move{width:30px;}.col-toggle{width:30px;}
+  /* ملخص الصف المضغوط: الصف ≤ 56px، والأعمدة الثانوية للكمبيوتر فقط (FR-14) */
+  .league-table tbody tr.standings-row td{padding-block:var(--sp-2);}
+  @media (max-width:899px){.col-sec{display:none;}}
   .detail-row td{
     background:#161616;
     padding:0!important;
