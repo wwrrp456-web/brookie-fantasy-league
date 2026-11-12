@@ -249,6 +249,32 @@ const asyncTests = (async () => {
   check('وهمي: الدالة غير المدعومة تُسجَّل', win.__FAKE_FIREBASE__.unsupported, ['ref.orderByChild()']);
 })();
 
+// ---------- 000-T010: tools/lint.js (SC-04: أي زيادة تفشل، والتخفيض فقط يُسجَّل) ----------
+{
+  const {spawnSync} = require('child_process');
+  const os = require('os');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-'));
+  fs.mkdirSync(path.join(tmp, 'css')); fs.mkdirSync(path.join(tmp, 'js'));
+  const lint = (...a) => spawnSync('node', [path.join(ROOT, 'tools/lint.js'), '--root', tmp, ...a], {encoding: 'utf8'});
+  const base = (o) => fs.writeFileSync(path.join(tmp, 'lint-baseline.json'), JSON.stringify(Object.assign({hexColors: 0, emoji: 0, inlineStyles: 0, numberNoun: 0, rawDates: 0, forbiddenTerms: 0, importants: 0}, o)));
+  base({});
+  fs.writeFileSync(path.join(tmp, 'css/a.css'), 'a{color:var(--x)}\n');
+  check('lint: ريبو نظيف مقابل خط أساس صفر ← ينجح', lint().status, 0);
+  fs.writeFileSync(path.join(tmp, 'css/a.css'), 'a{color:#123456}\n');
+  const bad = lint();
+  check('lint: إضافة #123456 لملف CSS ← يفشل (SC-04)', bad.status, 1);
+  check('lint: رسالة الفشل تسمّي المقياس hexColors', /hexColors/.test(bad.stdout + bad.stderr), true);
+  check('lint: --update-baseline يرفض الزيادة ولا يكتب', [lint('--update-baseline').status, JSON.parse(fs.readFileSync(path.join(tmp, 'lint-baseline.json'), 'utf8')).hexColors], [1, 0]);
+  base({hexColors: 5});
+  check('lint: تخفيض ← ينجح مع تلميح تسجيل التحسّن', lint().status, 0);
+  lint('--update-baseline');
+  check('lint: --update-baseline يخفّض خط الأساس للقيمة الحالية', JSON.parse(fs.readFileSync(path.join(tmp, 'lint-baseline.json'), 'utf8')).hexColors, 1);
+  fs.mkdirSync(path.join(tmp, 'js/core'));
+  fs.writeFileSync(path.join(tmp, 'js/core/b.js'), "// #fff في تعليق ما يُحسب\n/* #eee\n#ddd */\nconst x = 'https://a.b/#abc';\n");
+  check('lint: التعليقات لا تُحسب والنصوص تُحسب (css=1 + js=1)', require(path.join(ROOT, 'tools/lint.js')).measure(tmp).counts.hexColors, 2);
+  fs.rmSync(tmp, {recursive: true, force: true});
+}
+
 // ---------- الخلاصة ----------
 asyncTests.then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
