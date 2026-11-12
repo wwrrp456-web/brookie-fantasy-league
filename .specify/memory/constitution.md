@@ -1,50 +1,55 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# دستور مشروع دوري بروكي
 
-## Core Principles
+> مبادئ لا تتغير بين الميزات. أي مواصفة أو خطة أو كود يخالفها يُرفض في المراجعة.
+> آخر تعديل: 29 أكتوبر 2026، بعد اعتماد قرارات `decisions.md`.
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 1. المنتج
+1. **الجوال أولًا.** أغلب المشاركين الـ20 يفتحون الموقع أسبوعيًا من الجوال (Q-01). كل تصميم يُعتمد على عرض **390px** أولًا، ثم الكمبيوتر.
+2. **العربية أولًا، من اليمين لليسار.** النصوص والأرقام والاتجاهات والأسهم كلها تُصمَّم لـRTL من البداية.
+3. **صحة الأرقام فوق الجمال.** أي رقم يظهر يُحسب من مصدر واحد، ولا يُكتب يدويًا داخل نص.
+4. **الكرت المشارَك بنفس أهمية الموقع** (Q-02). وأي كرت ببيانات ناقصة لا يُصدَّر.
+5. **نرتّب ولا نحذف** (Q-06). الميزات تبقى، لكن الثانوي منها يُطوى أو ينتقل لموضع أقل بروزًا.
+6. **مجاني بالكامل** (Q-29ب). لا يُعتمد أي حل يحتاج اشتراكًا مدفوعًا.
+7. **مستمر لعدة مواسم** (Q-03). أي ميزة تُصمَّم بحيث تعمل في الموسم القادم بدون تعديل كود.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+## 2. التصميم
+8. **الهوية معتمدة** (Q-19): شعار PROKI، والكحلي العميق، والبنفسجي، وخط Tajawal. نطوّر عليها ولا نستبدلها.
+9. **نظام تصميم واحد.** كل لون ومسافة وحجم خط وزاوية من رموز (Design Tokens) في ملف واحد، بنسختين داكن وفاتح (Q-23). ممنوع كتابة لون hex مباشرة في ملفات الميزات.
+10. **لا إيموجي كأيقونات واجهة.** الأيقونات من مكتبة SVG موحّدة. يُسمح بالإيموجي فقط داخل محتوى يكتبه الأعضاء (الجدار والتعليقات) وداخل نصوص المزاح المولّدة.
+11. **هرمية بصرية واضحة.** لون تمييز واحد (البنفسجي) وألوان دلالية محددة: ذهبي للبطولة، أخضر للصعود، أحمر للهبوط والخطر.
+12. **شعارات الأندية من مصدرين** (Q-20/21): ملف رسمي يضعه المنظّم إن قرر ذلك، وإلا الدرع الأصلي المحسّن. ولا نرسم **نسخًا مقلّدة** من الشعارات الرسمية.
+13. **حالة فاضية محترمة.** أي عنصر بلا بيانات يعرض رسالة مفهومة أو يختفي، ولا يعرض "–" أو "0" مضلّلًا.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+## 3. اللغة والصوت
+14. **طبقتان للصوت** (Q-11):
+    - **الطبقة الرسمية بالفصحى المبسطة:** العناوين، والجداول، والأزرار، واللائحة، والإحصاءات، والشهادة، ورسائل النظام.
+    - **الطبقة الشعبية بلهجة سعودية بيضاء:** قصة الجولة، والتعليقات المولّدة، والمزاح، والإشعارات الاحتفالية.
+    - **لا خلط داخل الجملة الواحدة أو العنصر الواحد.**
+15. **المعجم الموحّد ملزم** (Q-13…15): **المشارك**، و**نقاط الجولة**، و**الرصيد**، و**ممة/ممّات**، و**الجولة 3** (لا "ج3" في النص الكامل). المرجع: `002-language-voice/glossary.md`.
+16. **قواعد العدد والمعدود إلزامية.** لا يُلصق رقم بمعدود نصيًا أبدًا، بل يمر عبر دالة الصياغة الموحّدة (`formatCount`): نقطة واحدة، نقطتان، 3 نقاط، 11 نقطة.
+17. **"الطقطقة" مسموحة** (Q-12) بشرط واحد: تستهدف **الأداء في الدوري فقط** (النتائج، والأندية، والممّات، والترتيب)، ولا تمس الشخص نفسه أو أهله أو دينه أو شكله.
+18. **الأرقام لاتينية** (0-9) في كل مكان (Q-16)، و**التاريخ ميلادي وهجري** معًا (Q-17) بصيغة موحّدة.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+## 4. التقنية
+19. **بدون خطوة بناء وقت التشغيل.** الموقع HTML/CSS/JS يشتغل من GitHub Pages مباشرة. وأدوات التطوير (`tools/`) مسموحة.
+20. **مصدر واحد للحقيقة.** لا تكرار للصفحات أو البيانات، و`index.html` هي الصفحة الوحيدة.
+21. **التحقق الآلي شرط الدمج** (Q-27، الدمج تلقائي): `node tests/run.js` و`tools/lint.js` و`tools/snap.js` تمر كلها قبل أي دمج، وأي تراجع في المقاييس يمنع الدمج.
+22. **الأمان بالقواعد لا بالسرية.** الصلاحيات تُفرض بقواعد Firebase (مجانية)، ولا توجد أسرار أو رموز في الريبو العام.
+23. **محتوى الأعضاء يُعقّم** قبل أي `innerHTML`.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## 5. العمل
+24. **الأدوار** (Q-25ب):
+    - **Claude Opus:** المواصفات والخطط والمراجعة.
+    - **Claude Sonnet:** تنفيذ البرمجة.
+    - **Codex:** التوليد البصري (أيقونات، شعارات، قوالب، صور).
+    - **المنظّم:** يعتمد المواصفات والذوق.
+25. مهمة واحدة = فرع واحد = PR صغير. والمواصفة تُعدَّل قبل الكود لا بعده.
+26. أسماء الملفات والمتغيرات والدوال بالإنجليزية، وكل ما عداها بالعربية.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## الحوكمة
+- الدستور فوق أي spec أو plan أو tasks أو كود. أي شي يخالفه يُرفض في المراجعة.
+- التعديل على الدستور = قرار جديد برقم R في `specs/decisions.md` يعتمده المنظّم، ثم يُحدَّث هذا الملف.
+- كل PR يُراجَع على الدستور، وأي استثناء يُكتب في تقرير المهمة ويُقرَّر من المنظّم.
+- الأدوار وطريقة العمل: `specs/WORKFLOW.md`. الأوامر الجاهزة لكل وكيل: `specs/agents/`.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-10-29 | **Last Amended**: 2026-11-12 (نقل إلى مكان Spec Kit، R-12، بدون تغيير أي بند)
