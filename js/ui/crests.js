@@ -383,5 +383,11 @@ function resetCrestCache(){ _crestUrls.clear(); _crestImgs.clear(); _slugByName 
   if(typeof document === 'undefined') return;
   const el = document.getElementById('logoImg');
   if(el) el.src = logoURL(false);
+  const mark = document.getElementById('logoMark');
+  if(mark) mark.src = svgToURL(LOGO_SVG.mark);
+  const contribute = document.getElementById('contributeLink');
+  if(contribute) contribute.innerHTML = ICONS.edit;
+  const more = document.getElementById('tabMoreBtn');
+  if(more) more.innerHTML = ICONS['chevron-left'];
 })();
 

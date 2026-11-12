@@ -94,7 +94,7 @@ function renderNotificationCenter(){
 
   box.innerHTML = `
     <button type="button" id="notifBellBtn" class="notif-bell-btn" aria-label="مركز التنبيهات">
-      🔔${items.length ? `<span class="notif-count">${items.length}</span>` : ''}
+      ${ICONS.bell}${items.length ? `<span class="notif-count">${items.length}</span>` : ''}
     </button>
     <div class="notif-dropdown" data-open="${wasOpen ? '1':'0'}" style="display:${wasOpen?'block':'none'};">
       ${items.length ? items.map((it,i)=>`
