@@ -282,6 +282,20 @@ const asyncDiffTests = (async () => {
   const errl = console.error; console.error = () => {};
   let bad; try { bad = await diffMain(['--base', empty, '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'd2')]); } finally { console.error = errl; }
   check('snap-diff: مجلد فاضي ← exit 2', bad, 2);
+  // --crop: ±200px حول المتغيّر وحد أقصى 4000px (000-T011)
+  mk('cbase', 'tall.png', 20, 1000); mk('chead', 'tall.png', 20, 1000, [[5, 500, [255, 0, 0]]]);
+  mk('cbase', 'huge.png', 20, 6000); mk('chead', 'huge.png', 20, 6000, [[5, 100, [255, 0, 0]], [5, 5000, [255, 0, 0]]]);
+  mk('cbase', 'edge.png', 20, 1000); mk('chead', 'edge.png', 20, 1000, [[5, 10, [255, 0, 0]]]);
+  const run = async extra => { const l = console.log; console.log = () => {}; try { return await diffMain(['--base', path.join(tmp, 'cbase'), '--head', path.join(tmp, 'chead'), '--out', path.join(tmp, 'cdiff'), ...extra]); } finally { console.log = l; } };
+  const h = f => PNG.sync.read(fs.readFileSync(path.join(tmp, 'cdiff', f))).height;
+  await run([]);
+  check('snap-diff: بدون --crop الصورة كاملة (السلوك القديم)', [h('tall.png'), h('huge.png'), h('edge.png')], [1000, 6000, 1000]);
+  await run(['--crop']);
+  check('snap-diff --crop: ±200 حول المتغيّر (500 ← 300..701)', h('tall.png'), 401);
+  check('snap-diff --crop: عند الحافة العليا يبدأ من 0 (10 ← 0..211)', h('edge.png'), 211);
+  check('snap-diff --crop: حد أقصى 4000px ارتفاعًا', h('huge.png'), 4000);
+  const md2 = fs.readFileSync(path.join(tmp, 'cdiff/summary.md'), 'utf8');
+  check('snap-diff --crop: الملخص يذكر القص وحد 4000', [/القص: مفعّل/.test(md2), /قُصّت الصورة: الصفوف 300–701 من 1000/.test(md2), /حد 4000px/.test(md2)], [true, true, true]);
   fs.rmSync(tmp, {recursive: true, force: true});
 })();
 

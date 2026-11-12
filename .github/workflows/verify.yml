@@ -1,0 +1,113 @@
+# الفحص التلقائي على كل PR (000-T011، plan.md §3 "verify.yml").
+# اسم وظيفة الفحص النهائية `verify` بالضبط: هو الفحص الإلزامي في حماية `main` (D6).
+# لقطات الأساس (base) والرأس (head) في وظيفتين متوازيتين، ثم `verify` تنزّلهما وتشغّل الاختبارات والمقاييس والمقارنة.
+name: verify
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  snap-head:
+    name: snap-head (لقطات الـPR)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: لقطات الرأس (كود الـPR)
+        run: node tools/snap.js --label head --out snapshots
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: snapshots-head
+          path: snapshots/head
+          retention-days: 1   # وسيط بين الوظائف فقط (حجمه كبير)، التقرير النهائي في verify-report
+
+  snap-base:
+    name: snap-base (لقطات الأساس)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: نسخة الأساس (كود فرع الأساس) بجوار الريبو
+        run: git worktree add ../base "origin/${{ github.base_ref }}"
+      - name: لقطات الأساس (أدوات الـPR على كود الأساس)
+        run: node tools/snap.js --root ../base --label base --out snapshots
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: snapshots-base
+          path: snapshots/base
+          retention-days: 1
+
+  verify:
+    name: verify
+    needs: [snap-head, snap-base]
+    # always(): لو فشلت وظيفة اللقطات تُتخطى verify عادةً، والفحص الإلزامي المتخطّى يُحسب نجاحًا في حماية الفرع.
+    # فنشغّلها دائمًا ونفشلها صراحةً لو أي وظيفة سابقة ما نجحت.
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: الوظائف السابقة لازم تنجح
+        run: |
+          echo "snap-head=${{ needs.snap-head.result }} snap-base=${{ needs.snap-base.result }}"
+          if [ "${{ needs.snap-head.result }}" != "success" ] || [ "${{ needs.snap-base.result }}" != "success" ]; then
+            echo "::error::فشلت وظيفة اللقطات (head أو base). verify ما تنجح بدونها."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: الاختبارات
+        run: node tests/run.js
+      - name: المقاييس (أي زيادة تفشل)
+        run: node tools/lint.js
+      - uses: actions/download-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: snapshots-head
+          path: snapshots/head
+      - uses: actions/download-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: snapshots-base
+          path: snapshots/base
+      - name: مقارنة اللقطات (لا تفشل على الفروق، مع قص صور الفرق)
+        if: ${{ !cancelled() }}
+        run: node tools/snap-diff.js --crop --base snapshots/base --head snapshots/head --out diff
+      - name: ملخص الفروق في صفحة الفحص
+        if: ${{ !cancelled() }}
+        run: cat diff/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: verify-report
+          path: |
+            diff
+            snapshots/head/report.json
+            snapshots/base/report.json
+          retention-days: 14
