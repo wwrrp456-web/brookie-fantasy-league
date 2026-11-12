@@ -2,6 +2,12 @@
 (async()=>{
  const root=document.documentElement;
  function syncLogo(){
+  const light=root.classList.contains("light-mode");
+  for(const crest of document.querySelectorAll(".table-v2 img.crest")){
+   const original=crest.getAttribute("src").replace("/crests/light/","/crests/");
+   const target=light?original.replace("/crests/","/crests/light/"):original;
+   if(crest.getAttribute("src")!==target)crest.setAttribute("src",target);
+  }
   const logo=document.querySelector('.table-v2 .logo');
   if(logo)logo.setAttribute('src',root.classList.contains('light-mode')?'../brand/proki-logo-light.svg':'../brand/proki-logo.svg');
  }

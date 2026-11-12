@@ -75,7 +75,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/champion-post.png",
-      "bytes": 131788,
+      "bytes": 133037,
       "errors": [],
       "checks": {
         "card": {
@@ -125,8 +125,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "champion-post-stress.html",
@@ -134,7 +135,7 @@
       "height": 1350,
       "stress": true,
       "shot": "shots/champion-post-stress.png",
-      "bytes": 141416,
+      "bytes": 142501,
       "errors": [],
       "checks": {
         "card": {
@@ -184,8 +185,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "standings-post.html",
@@ -193,7 +195,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/standings-post.png",
-      "bytes": 235111,
+      "bytes": 245985,
       "errors": [],
       "checks": {
         "card": {
@@ -225,141 +227,141 @@
         "ranking": [
           {
             "rank": 1,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "لطفي",
             "clipped": false
           },
           {
             "rank": 2,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "أيوب",
             "clipped": false
           },
           {
             "rank": 3,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "أبو أوس",
             "clipped": false
           },
           {
             "rank": 4,
-            "bottom": 586.46875,
-            "height": 68,
+            "bottom": 558.46875,
+            "height": 72,
             "name": "العندليب",
             "clipped": false
           },
           {
             "rank": 5,
-            "bottom": 654.46875,
-            "height": 68,
+            "bottom": 630.46875,
+            "height": 72,
             "name": "أبو عزام",
             "clipped": false
           },
           {
             "rank": 6,
-            "bottom": 722.46875,
-            "height": 68,
+            "bottom": 702.46875,
+            "height": 72,
             "name": "مصطفى عبده",
             "clipped": false
           },
           {
             "rank": 7,
-            "bottom": 790.46875,
-            "height": 68,
+            "bottom": 774.46875,
+            "height": 72,
             "name": "أبا عتاب",
             "clipped": false
           },
           {
             "rank": 8,
-            "bottom": 858.46875,
-            "height": 68,
+            "bottom": 846.46875,
+            "height": 72,
             "name": "أبو تغريد (زيد)",
             "clipped": false
           },
           {
             "rank": 9,
-            "bottom": 926.46875,
-            "height": 68,
+            "bottom": 918.46875,
+            "height": 72,
             "name": "أبو رمزي",
             "clipped": false
           },
           {
             "rank": 10,
-            "bottom": 994.46875,
-            "height": 68,
+            "bottom": 990.46875,
+            "height": 72,
             "name": "أبو شيخة",
             "clipped": false
           },
           {
             "rank": 11,
             "bottom": 1062.46875,
-            "height": 68,
+            "height": 72,
             "name": "سعيد",
             "clipped": false
           },
           {
             "rank": 12,
-            "bottom": 1130.46875,
-            "height": 68,
+            "bottom": 1134.46875,
+            "height": 72,
             "name": "أبو يحيى",
             "clipped": false
           },
           {
             "rank": 13,
-            "bottom": 586.46875,
-            "height": 68,
+            "bottom": 558.46875,
+            "height": 72,
             "name": "علي قوول",
             "clipped": false
           },
           {
             "rank": 14,
-            "bottom": 654.46875,
-            "height": 68,
+            "bottom": 630.46875,
+            "height": 72,
             "name": "أبو مناف",
             "clipped": false
           },
           {
             "rank": 15,
-            "bottom": 722.46875,
-            "height": 68,
+            "bottom": 702.46875,
+            "height": 72,
             "name": "ليمان",
             "clipped": false
           },
           {
             "rank": 16,
-            "bottom": 790.46875,
-            "height": 68,
+            "bottom": 774.46875,
+            "height": 72,
             "name": "أبو حمد",
             "clipped": false
           },
           {
             "rank": 17,
-            "bottom": 858.46875,
-            "height": 68,
+            "bottom": 846.46875,
+            "height": 72,
             "name": "أبو عبيدة",
             "clipped": false
           },
           {
             "rank": 18,
-            "bottom": 926.46875,
-            "height": 68,
+            "bottom": 918.46875,
+            "height": 72,
             "name": "موسى (العجوز)",
             "clipped": false
           },
           {
             "rank": 19,
-            "bottom": 994.46875,
-            "height": 68,
+            "bottom": 990.46875,
+            "height": 72,
             "name": "محمد عثمان",
             "clipped": false
           },
           {
             "rank": 20,
             "bottom": 1062.46875,
-            "height": 68,
+            "height": 72,
             "name": "أبو صالح",
             "clipped": false
           }
@@ -382,8 +384,130 @@
         "minimumRowFont": 30,
         "rowCount": 20
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": [
+        {
+          "id": "20",
+          "rank": "1",
+          "name": "لطفي",
+          "total": "92"
+        },
+        {
+          "id": "17",
+          "rank": "2",
+          "name": "أيوب",
+          "total": "90"
+        },
+        {
+          "id": "16",
+          "rank": "3",
+          "name": "أبو أوس",
+          "total": "89"
+        },
+        {
+          "id": "4",
+          "rank": "4",
+          "name": "العندليب",
+          "total": "85"
+        },
+        {
+          "id": "6",
+          "rank": "5",
+          "name": "أبو عزام",
+          "total": "85"
+        },
+        {
+          "id": "11",
+          "rank": "6",
+          "name": "مصطفى عبده",
+          "total": "85"
+        },
+        {
+          "id": "14",
+          "rank": "7",
+          "name": "أبا عتاب",
+          "total": "84"
+        },
+        {
+          "id": "1",
+          "rank": "8",
+          "name": "أبو تغريد (زيد)",
+          "total": "84"
+        },
+        {
+          "id": "9",
+          "rank": "9",
+          "name": "أبو رمزي",
+          "total": "83"
+        },
+        {
+          "id": "7",
+          "rank": "10",
+          "name": "أبو شيخة",
+          "total": "81"
+        },
+        {
+          "id": "13",
+          "rank": "11",
+          "name": "سعيد",
+          "total": "79"
+        },
+        {
+          "id": "3",
+          "rank": "12",
+          "name": "أبو يحيى",
+          "total": "79"
+        },
+        {
+          "id": "15",
+          "rank": "13",
+          "name": "علي قوول",
+          "total": "78"
+        },
+        {
+          "id": "2",
+          "rank": "14",
+          "name": "أبو مناف",
+          "total": "77"
+        },
+        {
+          "id": "12",
+          "rank": "15",
+          "name": "ليمان",
+          "total": "75"
+        },
+        {
+          "id": "10",
+          "rank": "16",
+          "name": "أبو حمد",
+          "total": "75"
+        },
+        {
+          "id": "5",
+          "rank": "17",
+          "name": "أبو عبيدة",
+          "total": "71"
+        },
+        {
+          "id": "8",
+          "rank": "18",
+          "name": "موسى (العجوز)",
+          "total": "71"
+        },
+        {
+          "id": "19",
+          "rank": "19",
+          "name": "محمد عثمان",
+          "total": "69"
+        },
+        {
+          "id": "18",
+          "rank": "20",
+          "name": "أبو صالح",
+          "total": "62"
+        }
+      ]
     },
     {
       "file": "standings-story.html",
@@ -391,7 +515,7 @@
       "height": 1920,
       "stress": false,
       "shot": "shots/standings-story.png",
-      "bytes": 177336,
+      "bytes": 176076,
       "errors": [],
       "checks": {
         "card": {
@@ -503,8 +627,64 @@
         "minimumRowFont": 30,
         "rowCount": 9
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": [
+        {
+          "id": "20",
+          "rank": "1",
+          "name": "لطفي",
+          "total": "92"
+        },
+        {
+          "id": "17",
+          "rank": "2",
+          "name": "أيوب",
+          "total": "90"
+        },
+        {
+          "id": "16",
+          "rank": "3",
+          "name": "أبو أوس",
+          "total": "89"
+        },
+        {
+          "id": "4",
+          "rank": "4",
+          "name": "العندليب",
+          "total": "85"
+        },
+        {
+          "id": "6",
+          "rank": "5",
+          "name": "أبو عزام",
+          "total": "85"
+        },
+        {
+          "id": "11",
+          "rank": "6",
+          "name": "مصطفى عبده",
+          "total": "85"
+        },
+        {
+          "id": "8",
+          "rank": "18",
+          "name": "موسى (العجوز)",
+          "total": "71"
+        },
+        {
+          "id": "19",
+          "rank": "19",
+          "name": "محمد عثمان",
+          "total": "69"
+        },
+        {
+          "id": "18",
+          "rank": "20",
+          "name": "أبو صالح",
+          "total": "62"
+        }
+      ]
     },
     {
       "file": "standings-story-stress.html",
@@ -512,7 +692,7 @@
       "height": 1920,
       "stress": true,
       "shot": "shots/standings-story-stress.png",
-      "bytes": 183102,
+      "bytes": 181888,
       "errors": [],
       "checks": {
         "card": {
@@ -624,8 +804,64 @@
         "minimumRowFont": 30,
         "rowCount": 9
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": [
+        {
+          "id": "20",
+          "rank": "1",
+          "name": "أبو تغريد (زيد) الثاني",
+          "total": "92"
+        },
+        {
+          "id": "17",
+          "rank": "2",
+          "name": "أيوب",
+          "total": "90"
+        },
+        {
+          "id": "16",
+          "rank": "3",
+          "name": "أبو أوس",
+          "total": "89"
+        },
+        {
+          "id": "4",
+          "rank": "4",
+          "name": "العندليب",
+          "total": "85"
+        },
+        {
+          "id": "6",
+          "rank": "5",
+          "name": "أبو عزام",
+          "total": "85"
+        },
+        {
+          "id": "11",
+          "rank": "6",
+          "name": "مصطفى عبده",
+          "total": "85"
+        },
+        {
+          "id": "8",
+          "rank": "18",
+          "name": "موسى (العجوز)",
+          "total": "71"
+        },
+        {
+          "id": "19",
+          "rank": "19",
+          "name": "محمد عثمان",
+          "total": "69"
+        },
+        {
+          "id": "18",
+          "rank": "20",
+          "name": "أبو صالح",
+          "total": "62"
+        }
+      ]
     },
     {
       "file": "season-wrap-post.html",
@@ -681,8 +917,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "profile-square.html",
@@ -690,7 +927,7 @@
       "height": 1080,
       "stress": false,
       "shot": "shots/profile-square.png",
-      "bytes": 81573,
+      "bytes": 80183,
       "errors": [],
       "checks": {
         "card": {
@@ -738,8 +975,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "certificate-post.html",
@@ -795,8 +1033,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "duel-post.html",
@@ -804,7 +1043,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/duel-post.png",
-      "bytes": 118428,
+      "bytes": 116879,
       "errors": [],
       "checks": {
         "card": {
@@ -852,8 +1091,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "duel-post-stress.html",
@@ -861,7 +1101,7 @@
       "height": 1350,
       "stress": true,
       "shot": "shots/duel-post-stress.png",
-      "bytes": 133372,
+      "bytes": 131766,
       "errors": [],
       "checks": {
         "card": {
@@ -909,8 +1149,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "my-clubs-post.html",
@@ -968,8 +1209,9 @@
         "minimumRowFont": null,
         "rowCount": 0
       },
+      "parity": null,
       "axe": null,
-      "parity": null
+      "semantics": []
     },
     {
       "file": "standings-post-light.html",
@@ -977,7 +1219,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/standings-post-light.png",
-      "bytes": 244129,
+      "bytes": 258047,
       "errors": [],
       "checks": {
         "card": {
@@ -1009,141 +1251,141 @@
         "ranking": [
           {
             "rank": 1,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "لطفي",
             "clipped": false
           },
           {
             "rank": 2,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "أيوب",
             "clipped": false
           },
           {
             "rank": 3,
-            "bottom": 466.46875,
-            "height": 176,
+            "bottom": 442.46875,
+            "height": 160,
             "name": "أبو أوس",
             "clipped": false
           },
           {
             "rank": 4,
-            "bottom": 586.46875,
-            "height": 68,
+            "bottom": 558.46875,
+            "height": 72,
             "name": "العندليب",
             "clipped": false
           },
           {
             "rank": 5,
-            "bottom": 654.46875,
-            "height": 68,
+            "bottom": 630.46875,
+            "height": 72,
             "name": "أبو عزام",
             "clipped": false
           },
           {
             "rank": 6,
-            "bottom": 722.46875,
-            "height": 68,
+            "bottom": 702.46875,
+            "height": 72,
             "name": "مصطفى عبده",
             "clipped": false
           },
           {
             "rank": 7,
-            "bottom": 790.46875,
-            "height": 68,
+            "bottom": 774.46875,
+            "height": 72,
             "name": "أبا عتاب",
             "clipped": false
           },
           {
             "rank": 8,
-            "bottom": 858.46875,
-            "height": 68,
+            "bottom": 846.46875,
+            "height": 72,
             "name": "أبو تغريد (زيد)",
             "clipped": false
           },
           {
             "rank": 9,
-            "bottom": 926.46875,
-            "height": 68,
+            "bottom": 918.46875,
+            "height": 72,
             "name": "أبو رمزي",
             "clipped": false
           },
           {
             "rank": 10,
-            "bottom": 994.46875,
-            "height": 68,
+            "bottom": 990.46875,
+            "height": 72,
             "name": "أبو شيخة",
             "clipped": false
           },
           {
             "rank": 11,
             "bottom": 1062.46875,
-            "height": 68,
+            "height": 72,
             "name": "سعيد",
             "clipped": false
           },
           {
             "rank": 12,
-            "bottom": 1130.46875,
-            "height": 68,
+            "bottom": 1134.46875,
+            "height": 72,
             "name": "أبو يحيى",
             "clipped": false
           },
           {
             "rank": 13,
-            "bottom": 586.46875,
-            "height": 68,
+            "bottom": 558.46875,
+            "height": 72,
             "name": "علي قوول",
             "clipped": false
           },
           {
             "rank": 14,
-            "bottom": 654.46875,
-            "height": 68,
+            "bottom": 630.46875,
+            "height": 72,
             "name": "أبو مناف",
             "clipped": false
           },
           {
             "rank": 15,
-            "bottom": 722.46875,
-            "height": 68,
+            "bottom": 702.46875,
+            "height": 72,
             "name": "ليمان",
             "clipped": false
           },
           {
             "rank": 16,
-            "bottom": 790.46875,
-            "height": 68,
+            "bottom": 774.46875,
+            "height": 72,
             "name": "أبو حمد",
             "clipped": false
           },
           {
             "rank": 17,
-            "bottom": 858.46875,
-            "height": 68,
+            "bottom": 846.46875,
+            "height": 72,
             "name": "أبو عبيدة",
             "clipped": false
           },
           {
             "rank": 18,
-            "bottom": 926.46875,
-            "height": 68,
+            "bottom": 918.46875,
+            "height": 72,
             "name": "موسى (العجوز)",
             "clipped": false
           },
           {
             "rank": 19,
-            "bottom": 994.46875,
-            "height": 68,
+            "bottom": 990.46875,
+            "height": 72,
             "name": "محمد عثمان",
             "clipped": false
           },
           {
             "rank": 20,
             "bottom": 1062.46875,
-            "height": 68,
+            "height": 72,
             "name": "أبو صالح",
             "clipped": false
           }
@@ -1166,6 +1408,10 @@
         "minimumRowFont": 30,
         "rowCount": 20
       },
+      "parity": {
+        "dynamicClassToggle": true,
+        "textUnchanged": true
+      },
       "axe": {
         "violations": [],
         "incomplete": [
@@ -1182,46 +1428,46 @@
                 "div[data-rank=\"4\"] > .rank"
               ],
               [
-                "div[data-rank=\"4\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"4\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"4\"] > b"
+                "div[data-rank=\"4\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"6\"] > .rank"
               ],
               [
-                "div[data-rank=\"6\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"6\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"6\"] > b"
+                "div[data-rank=\"6\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"8\"] > .rank"
               ],
               [
-                "div[data-rank=\"8\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"8\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"8\"] > b"
+                "div[data-rank=\"8\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"10\"] > .rank"
               ],
               [
-                "div[data-rank=\"10\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"10\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"10\"] > b"
+                "div[data-rank=\"10\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"12\"] > .rank"
               ],
               [
-                "div[data-rank=\"12\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"12\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"12\"] > b"
+                "div[data-rank=\"12\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"13\"] > .rank"
@@ -1230,10 +1476,10 @@
                 "div[data-rank=\"13\"] > .participant-cell > .person"
               ],
               [
-                "div[data-rank=\"13\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"13\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"13\"] > b"
+                "div[data-rank=\"13\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"15\"] > .rank"
@@ -1242,19 +1488,19 @@
                 "div[data-rank=\"15\"] > .participant-cell > .person"
               ],
               [
-                "div[data-rank=\"15\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"15\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"15\"] > b"
+                "div[data-rank=\"15\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"17\"] > .rank"
               ],
               [
-                "div[data-rank=\"17\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"17\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"17\"] > b"
+                "div[data-rank=\"17\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"19\"] > .rank"
@@ -1263,10 +1509,10 @@
                 "div[data-rank=\"19\"] > .participant-cell > .person"
               ],
               [
-                "div[data-rank=\"19\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"19\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"19\"] > b"
+                "div[data-rank=\"19\"] > .score-cell > .rank-gap"
               ],
               [
                 ".date"
@@ -1281,10 +1527,128 @@
           }
         ]
       },
-      "parity": {
-        "dynamicClassToggle": true,
-        "textUnchanged": true
-      }
+      "semantics": [
+        {
+          "id": "20",
+          "rank": "1",
+          "name": "لطفي",
+          "total": "92"
+        },
+        {
+          "id": "17",
+          "rank": "2",
+          "name": "أيوب",
+          "total": "90"
+        },
+        {
+          "id": "16",
+          "rank": "3",
+          "name": "أبو أوس",
+          "total": "89"
+        },
+        {
+          "id": "4",
+          "rank": "4",
+          "name": "العندليب",
+          "total": "85"
+        },
+        {
+          "id": "6",
+          "rank": "5",
+          "name": "أبو عزام",
+          "total": "85"
+        },
+        {
+          "id": "11",
+          "rank": "6",
+          "name": "مصطفى عبده",
+          "total": "85"
+        },
+        {
+          "id": "14",
+          "rank": "7",
+          "name": "أبا عتاب",
+          "total": "84"
+        },
+        {
+          "id": "1",
+          "rank": "8",
+          "name": "أبو تغريد (زيد)",
+          "total": "84"
+        },
+        {
+          "id": "9",
+          "rank": "9",
+          "name": "أبو رمزي",
+          "total": "83"
+        },
+        {
+          "id": "7",
+          "rank": "10",
+          "name": "أبو شيخة",
+          "total": "81"
+        },
+        {
+          "id": "13",
+          "rank": "11",
+          "name": "سعيد",
+          "total": "79"
+        },
+        {
+          "id": "3",
+          "rank": "12",
+          "name": "أبو يحيى",
+          "total": "79"
+        },
+        {
+          "id": "15",
+          "rank": "13",
+          "name": "علي قوول",
+          "total": "78"
+        },
+        {
+          "id": "2",
+          "rank": "14",
+          "name": "أبو مناف",
+          "total": "77"
+        },
+        {
+          "id": "12",
+          "rank": "15",
+          "name": "ليمان",
+          "total": "75"
+        },
+        {
+          "id": "10",
+          "rank": "16",
+          "name": "أبو حمد",
+          "total": "75"
+        },
+        {
+          "id": "5",
+          "rank": "17",
+          "name": "أبو عبيدة",
+          "total": "71"
+        },
+        {
+          "id": "8",
+          "rank": "18",
+          "name": "موسى (العجوز)",
+          "total": "71"
+        },
+        {
+          "id": "19",
+          "rank": "19",
+          "name": "محمد عثمان",
+          "total": "69"
+        },
+        {
+          "id": "18",
+          "rank": "20",
+          "name": "أبو صالح",
+          "total": "62"
+        }
+      ]
     },
     {
       "file": "standings-story-light.html",
@@ -1292,7 +1656,7 @@
       "height": 1920,
       "stress": false,
       "shot": "shots/standings-story-light.png",
-      "bytes": 235270,
+      "bytes": 235961,
       "errors": [],
       "checks": {
         "card": {
@@ -1404,6 +1768,10 @@
         "minimumRowFont": 30,
         "rowCount": 9
       },
+      "parity": {
+        "dynamicClassToggle": true,
+        "textUnchanged": true
+      },
       "axe": {
         "violations": [],
         "incomplete": [
@@ -1414,19 +1782,19 @@
                 "div[data-rank=\"4\"] > .rank"
               ],
               [
-                "div[data-rank=\"4\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"4\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"4\"] > b"
+                "div[data-rank=\"4\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"6\"] > .rank"
               ],
               [
-                "div[data-rank=\"6\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"6\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"6\"] > b"
+                "div[data-rank=\"6\"] > .score-cell > .rank-gap"
               ],
               [
                 "div[data-rank=\"19\"] > .rank"
@@ -1435,10 +1803,10 @@
                 "div[data-rank=\"19\"] > .participant-cell > .person"
               ],
               [
-                "div[data-rank=\"19\"] > .participant-cell > .row-subline > .rank-gap"
+                "div[data-rank=\"19\"] > .score-cell > b"
               ],
               [
-                "div[data-rank=\"19\"] > b"
+                "div[data-rank=\"19\"] > .score-cell > .rank-gap"
               ],
               [
                 ".date"
@@ -1453,10 +1821,62 @@
           }
         ]
       },
-      "parity": {
-        "dynamicClassToggle": true,
-        "textUnchanged": true
-      }
+      "semantics": [
+        {
+          "id": "20",
+          "rank": "1",
+          "name": "لطفي",
+          "total": "92"
+        },
+        {
+          "id": "17",
+          "rank": "2",
+          "name": "أيوب",
+          "total": "90"
+        },
+        {
+          "id": "16",
+          "rank": "3",
+          "name": "أبو أوس",
+          "total": "89"
+        },
+        {
+          "id": "4",
+          "rank": "4",
+          "name": "العندليب",
+          "total": "85"
+        },
+        {
+          "id": "6",
+          "rank": "5",
+          "name": "أبو عزام",
+          "total": "85"
+        },
+        {
+          "id": "11",
+          "rank": "6",
+          "name": "مصطفى عبده",
+          "total": "85"
+        },
+        {
+          "id": "8",
+          "rank": "18",
+          "name": "موسى (العجوز)",
+          "total": "71"
+        },
+        {
+          "id": "19",
+          "rank": "19",
+          "name": "محمد عثمان",
+          "total": "69"
+        },
+        {
+          "id": "18",
+          "rank": "20",
+          "name": "أبو صالح",
+          "total": "62"
+        }
+      ]
     }
   ],
   "logoUpdate": {
@@ -1565,5 +1985,465 @@
       "sheet": "crests-light-check.png"
     },
     "comparison": "standings-light-dark-compare.html"
+  },
+  "crestUpdate": {
+    "task": "001-T009c",
+    "lightCrests": [
+      {
+        "name": "al-ahli",
+        "bytes": 1044,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "arsenal",
+        "bytes": 3568,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "al-hilal",
+        "bytes": 706,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "chelsea",
+        "bytes": 5002,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "barcelona",
+        "bytes": 799,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "shakhtar",
+        "bytes": 853,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 3
+      },
+      {
+        "name": "roma",
+        "bytes": 2828,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "atletico-madrid",
+        "bytes": 1209,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 3,
+        "allColors": 5
+      },
+      {
+        "name": "al-qadsiah",
+        "bytes": 959,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 1,
+        "allColors": 4
+      },
+      {
+        "name": "galatasaray",
+        "bytes": 4226,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "rangers",
+        "bytes": 5002,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "al-shabab",
+        "bytes": 3703,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "liverpool",
+        "bytes": 5932,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "fenerbahce",
+        "bytes": 1294,
+        "colorsIncludingFrame": 5,
+        "newBorder": "#12142E",
+        "clubColors": 4,
+        "allColors": 5
+      },
+      {
+        "name": "sporting-cp",
+        "bytes": 5044,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "manchester-city",
+        "bytes": 7016,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 3,
+        "allColors": 5
+      },
+      {
+        "name": "al-nassr",
+        "bytes": 2141,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "psv",
+        "bytes": 942,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "milan",
+        "bytes": 817,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 3
+      },
+      {
+        "name": "ajax",
+        "bytes": 679,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "bayern-munich",
+        "bytes": 1165,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "celtic",
+        "bytes": 6607,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "porto",
+        "bytes": 2362,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 1,
+        "allColors": 4
+      },
+      {
+        "name": "al-ittihad",
+        "bytes": 801,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 3
+      },
+      {
+        "name": "feyenoord",
+        "bytes": 937,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 5
+      },
+      {
+        "name": "dortmund",
+        "bytes": 3033,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 1,
+        "allColors": 3
+      },
+      {
+        "name": "juventus",
+        "bytes": 831,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 3
+      },
+      {
+        "name": "benfica",
+        "bytes": 6483,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "psg",
+        "bytes": 2660,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 2,
+        "allColors": 4
+      },
+      {
+        "name": "marseille",
+        "bytes": 1339,
+        "colorsIncludingFrame": 3,
+        "newBorder": "#12142E",
+        "clubColors": 1,
+        "allColors": 4
+      },
+      {
+        "name": "dinamo-zagreb",
+        "bytes": 916,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 3,
+        "allColors": 5
+      },
+      {
+        "name": "real-madrid",
+        "bytes": 1211,
+        "colorsIncludingFrame": 4,
+        "newBorder": "#12142E",
+        "clubColors": 3,
+        "allColors": 4
+      }
+    ],
+    "comparison": "../crests/_compare-light.html",
+    "cardComparison": "_crests-compare.html",
+    "tintContrast": [
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.355137 0.27898 0.161569)",
+        "background": "color(srgb 0.987137 0.945569 0.878275)",
+        "ratio": 7.9077606120196196
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-post-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "color(srgb 0.355137 0.27898 0.161569)",
+        "background": "color(srgb 0.987137 0.945569 0.878275)",
+        "ratio": 7.9077606120196196
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "color(srgb 0.0738039 0.296314 0.205569)",
+        "background": "color(srgb 0.889098 0.962353 0.924235)",
+        "ratio": 8.847423494201834
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "color(srgb 0.347137 0.124314 0.170902)",
+        "background": "color(srgb 0.985569 0.901647 0.912)",
+        "ratio": 10.604847776859359
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      },
+      {
+        "file": "standings-story-light.html",
+        "color": "rgb(61, 46, 153)",
+        "background": "rgb(234, 230, 248)",
+        "ratio": 8.380185881074683
+      }
+    ],
+    "minimumTintTextContrast": 7.9077606120196196,
+    "sizes": {
+      "standingsGroup": 32,
+      "standingsGap": 8,
+      "duelAndProfile": 48,
+      "duelAndProfileGap": 12,
+      "individualClub": 64
+    },
+    "publishStatus": "local-only-authentication-unavailable"
   }
 }

@@ -584,3 +584,8 @@ a:focus-visible {
 .card:not(.table-card):not(.story):not(.square) .safe{gap:var(--sp-2)}
 .square .brand-heading .center{text-align:start}
 .certificate .brand-heading{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)}
+/* C10: إيقاع مجموعة الأندية نفسه في الكروت الواسعة؛ المقاس المدمج للترتيب في table-v2.css. */
+.card .mini-clubs,.card .profile-clubs,.card .club-grid{gap:var(--sp-3);direction:rtl;align-items:center}
+.duel-person .mini-clubs .crest,.profile-clubs .crest{width:48px;height:52.8px}
+.club-panel .crest,.match-row>.crest{width:64px;height:70.4px}
+.card .club-grid{align-items:stretch}

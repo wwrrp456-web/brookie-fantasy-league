@@ -47,3 +47,23 @@ html.light-mode .table-v2 .movement{background:var(--c-text);color:var(--c-bg)}
 html.light-mode .table-v2 .leader .rank{background:var(--c-text);color:var(--c-gold);border-radius:var(--r-sm);padding-inline:var(--sp-2)}
 html.light-mode .table-v2 .crest{background:var(--c-surface-2)}
 html.light-mode .table-v2 .movement{border-radius:var(--r-sm)}
+/* C10: مجموعة متسقة في المنصة والصفوف، والفارق مستقل عن الأندية. */
+.table-v2:not(.story) .content{gap:var(--sp-1)}
+.table-v2:not(.story) .safe{gap:var(--sp-1)}
+.table-v2:not(.story) .podium-card{height:160px;padding:0}
+.table-v2 .mini-clubs{gap:var(--sp-2);direction:rtl;align-items:center}
+.table-v2 .podium-card .mini-clubs .crest,.table-v2 .v2-row .mini-clubs .crest{width:32px;height:35.2px}
+.table-v2:not(.story) .v2-row{height:72px;grid-template-columns:32px 44px minmax(0,1fr) 110px}
+.table-v2:not(.story) .v2-row .person{line-height:34px}
+.table-v2 .row-subline{min-height:35.2px}
+.table-v2 .score-cell{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.table-v2 .score-cell .total{line-height:40px}
+.table-v2 .score-cell .rank-gap{line-height:30px}
+.table-v2.story .v2-row{grid-template-columns:48px 56px minmax(0,1fr) 136px}
+.table-v2.story .score-cell .total{line-height:60px}
+html.light-mode .table-v2 .crest{background:none}
+html.light-mode .table-v2 .movement{color:var(--c-text-2);background:var(--c-surface-2)}
+html.light-mode .table-v2 .movement:has(.up){color:color-mix(in srgb,var(--c-up) 34%,var(--c-text));background:color-mix(in srgb,var(--c-up) 12%,var(--c-surface-1))}
+html.light-mode .table-v2 .movement:has(.down){color:color-mix(in srgb,var(--c-down) 34%,var(--c-text));background:color-mix(in srgb,var(--c-down) 12%,var(--c-surface-1))}
+html.light-mode .table-v2 .movement .up,html.light-mode .table-v2 .movement .down{color:inherit}
+html.light-mode .table-v2 .leader .rank{color:color-mix(in srgb,var(--c-gold) 34%,var(--c-text));background:color-mix(in srgb,var(--c-gold) 16%,var(--c-surface-1))}
