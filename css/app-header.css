@@ -1,10 +1,10 @@
 /* هيدر مضغوط + شريط تبويبات بإشارات تمرير (001-T013، FR-02/FR-03، SC-06).
  * محمَّل بعد site-polish.css ليتغلّب بالتخصيص (header.app-header) لا بـ!important.
- * الهيدر داكن بكل الأوضاع: الشعار الأبيض مصمَّم لخلفية داكنة (سؤال الشعار الفاتح مفتوح عند المراجع). */
+ * الهيدر يتبع الثيم (F3): فاتح بالوضع الفاتح مع logoLight (نصه كحلي)، وداكن بالداكن مع الشعار الأبيض. */
 header.app-header{
   padding:0;text-align:start;
-  background:radial-gradient(120% 160% at 50% 0%, var(--ink2) 0%, var(--ink) 75%);
-  color:white;border-bottom:1px solid var(--c-border-strong);box-shadow:none;
+  background:var(--c-surface-1);
+  color:var(--c-text);border-bottom:1px solid var(--c-border);box-shadow:none;
 }
 header.app-header::after{display:none;}
 .header-inner{
@@ -33,7 +33,7 @@ header.app-header .champion-crown{position:static;font-size:1.3rem;animation:non
   .header-inner{height:104px;padding-inline:var(--sp-6);}
   .brand-mark{display:none;}
   .brand-logo{display:block;}
-  .brand-label{border-inline-start:1px solid var(--c-border-strong);padding-inline-start:var(--sp-4);}
+  .brand-label{border-inline-start:1px solid var(--c-border);padding-inline-start:var(--sp-4);}
 }
 
 /* ---------- شريط التبويبات ---------- */
@@ -44,6 +44,7 @@ header.app-header .champion-crown{position:static;font-size:1.3rem;animation:non
 }
 /* تلاشي عند الحافة اليسرى (RTL: هناك التبويبات المخفية) يظهر فقط لو فيه تبويبات أخرى */
 .tab-shell nav.tabs.has-more{
+  margin-left:44px;   /* مساحة للسهم: ما يغطي نص التبويب (F3) */
   -webkit-mask-image:linear-gradient(to right,transparent 0,black 40px);
   mask-image:linear-gradient(to right,transparent 0,black 40px);
 }
@@ -60,7 +61,8 @@ header.app-header .champion-crown{position:static;font-size:1.3rem;animation:non
 }
 .tab-more[hidden]{display:none;}
 @media (min-width:900px){
-  .tab-shell nav.tabs,.tab-shell nav.tabs.has-more{padding-inline:0;-webkit-mask-image:none;mask-image:none;}
+  .tab-shell nav.tabs,.tab-shell nav.tabs.has-more{
+  margin-left:0;padding-inline:0;-webkit-mask-image:none;mask-image:none;}
   .tab-shell nav.tabs button{flex:1;text-align:center;}
   .tab-more{display:none;}
 }
