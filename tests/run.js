@@ -92,6 +92,42 @@ check('شهادة: بطل غير موجود بين المشاركين ← نقص
 check('شهادة: اسم فارغ ← نقص', context.validateCertificateData(1, [{id:1, name:'  '}]).length, 1);
 check('شهادة: بطل صالح ← لا نواقص', context.validateCertificateData(16, context.PARTICIPANTS), []);
 
+// ---------- 000-T006: Firebase الوهمي (tools/fake-firebase.js) ----------
+const asyncTests = (async () => {
+  const ffSrc = fs.readFileSync(path.join(ROOT, 'tools/fake-firebase.js'), 'utf8');
+  const win = {__FIXTURE__: {data: {rounds: [{n: 1}]}, extra: {wall: {a: 1}}}, __OVERRIDES__: {currentChampionId: 7}, console};
+  win.window = win;
+  vm.runInContext(ffSrc, vm.createContext(win), {filename: 'fake-firebase.js'});
+  const db = win.firebase.database();
+  check('وهمي: get يقرأ data من fixture', (await db.ref('brookie/brookie-fantasy-s2-data').get()).val(), {rounds: [{n: 1}]});
+  check('وهمي: overrides تحت brookie/ مباشرة', (await db.ref('brookie/currentChampionId').get()).val(), 7);
+  check('وهمي: مسار غير موجود ← exists() = false', (await db.ref('brookie/nope').get()).exists(), false);
+  await db.ref('brookie/x/y').set(5);
+  check('وهمي: set ثم get', (await db.ref('brookie/x').get()).val(), {y: 5});
+  await db.ref('brookie/x').update({'y': 6, 'z/w': 1});
+  check('وهمي: update بمسارات متداخلة', (await db.ref('brookie/x').get()).val(), {y: 6, z: {w: 1}});
+  await db.ref('brookie/visitors/total').transaction(v => (v || 0) + 1);
+  await db.ref('brookie/visitors/total').transaction(v => (v || 0) + 1);
+  check('وهمي: transaction', (await db.ref('brookie/visitors/total').get()).val(), 2);
+  await db.ref('brookie/x').remove();
+  check('وهمي: remove يحذف الفرع', (await db.ref('brookie/x').get()).exists(), false);
+  const k = db.ref('brookie/list').push({a: 1}).key;
+  await Promise.resolve();
+  check('وهمي: push يولّد مفتاحًا ويكتب القيمة', (await db.ref('brookie/list/' + k).get()).val(), {a: 1});
+  const seen = [];
+  db.ref('brookie/live').on('value', s => seen.push(s.val()));
+  await Promise.resolve(); await Promise.resolve();
+  await db.ref('brookie/live').set(1);
+  await Promise.resolve(); await Promise.resolve();
+  check('وهمي: on(value) يستدعي فورًا ثم مع كل كتابة', seen, [null, 1]);
+  let err = null;
+  try { db.ref('brookie/a').orderByChild('x'); } catch (e) { err = e.message; }
+  check('وهمي: دالة غير مدعومة ترمي خطأ واضحًا', /غير مدعوم/.test(err || ''), true);
+  check('وهمي: الدالة غير المدعومة تُسجَّل', win.__FAKE_FIREBASE__.unsupported, ['ref.orderByChild()']);
+})();
+
 // ---------- الخلاصة ----------
-console.log(`\n${pass} ✅ / ${fail} ❌`);
-process.exit(fail > 0 ? 1 : 0);
+asyncTests.then(() => {
+  console.log(`\n${pass} ✅ / ${fail} ❌`);
+  process.exit(fail > 0 ? 1 : 0);
+}, e => { console.log('❌ خطأ غير متوقع في الاختبارات غير المتزامنة:', e); process.exit(1); });
