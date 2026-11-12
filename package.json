@@ -1,0 +1,16 @@
+{
+  "name": "brookie-fantasy-league-dev",
+  "private": true,
+  "description": "أدوات التطوير فقط (لقطات وفحوص وخطوط). الموقع نفسه بدون أي اعتمادية وقت التشغيل.",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "devDependencies": {
+    "@fontsource/tajawal": "5.3.0",
+    "pixelmatch": "7.1.0",
+    "playwright": "1.63.0",
+    "pngjs": "7.0.0"
+  }
+}

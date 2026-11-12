@@ -133,34 +133,71 @@
 > **لتقليل تعارض `tests/run.js`:** أضف اختباراتك **في آخر الملف** تحت عنوان واضح لمهمتك. وتعارض الدمج تحلّه أنت.
 > **تعليم الإنجاز:** `- [x] T### …` في `tasks.md` الميزة **بعد** دمج الـPR فقط.
 
-### ⬜ S7 · 000-T006 · `tools/fake-firebase.js`
+### ✅ S7 · 000-T006 · `tools/fake-firebase.js`
 - **المرجع:** `specs/000-foundation/tasks.md` (T006) و`plan.md` §3 "tools/fake-firebase.js". **الفرع:** `feat/000-T006-fake-firebase` · **التقرير:** `specs/reports/000-T006.md`
 - **المطلوب:** المحاكاة حسب الخطة، وتقرأ `tests/fixtures/season.json` و`overrides.json` (موجودين). أي دالة غير مدعومة ترمي خطأ واضح (ما تمر بصمت). **لا تكتب في Firebase الحي أبدًا، وتحجب أي طلب شبكة خارجي.**
 - **الأدلة:** `index.html` تُحمَّل بالمحاكاة بدون أي خطأ في الكونسول (Playwright)، ولقطة الترتيب تظهر جولات حقيقية بعد الجولة 2 (JPEG ≤ 300KB)، و`node tests/run.js` أخضر.
 
-### ⬜ S8 · 000-T007 · `package.json` + الخط المحلي
+### ✅ S8 · 000-T007 · `package.json` + الخط المحلي
 - **المرجع:** `tasks.md` (T007) و`plan.md` (القرار D4). **الفرع:** `feat/000-T007-local-font` · **التقرير:** `specs/reports/000-T007.md`
 - **المطلوب:** حسب المهمة حرفيًا. الخط من حزمة `@fontsource/tajawal` (رخصة OFL محفوظة)، ويستبدل رابط Google Fonts في `index.html` و`report.html`. **احذف `assets/icons/fonts/` المكرر** وأربط `assets/icons/_sheet.html` بـ`css/fonts.css`. و`package.json` للتطوير فقط (devDependencies).
 - **الأدلة:** الموقع يعرض Tajawal بدون أي طلب لـ`fonts.googleapis.com` (Playwright مع حجب الشبكة)، وحجم الخطوط الأربعة ≤ 200KB، ولقطتان قبل وبعد للصفحة الرئيسية (الفرق متوقع صغير)، و`node tests/run.js` أخضر.
 
-### ⬜ S9 · 000-T010 · `tools/lint.js` + خط الأساس
+### 🔁 S9 · 000-T010 · `tools/lint.js` + خط الأساس
 - **المرجع:** `tasks.md` (T010) و`plan.md` §3 "tools/lint.js" (جدول المقاييس السبعة). **الفرع:** `feat/000-T010-lint` · **التقرير:** `specs/reports/000-T010.md`
 - **المطلوب:** المقاييس السبعة، و`lint-baseline.json` بقيم الخط الأولي الفعلية (اكتب في التقرير القيم اللي طلعت، وقارنها بالمتوقعة في المهمة). **أي زيادة تفشل، و`--update-baseline` للتخفيض فقط.**
 - **الأدلة:** تشغيل نظيف على الريبو الحين، واختبار سلبي (SC-04): إضافة `#123456` لأي ملف CSS ← الفحص يفشل (ولقطة الفشل في التقرير).
 
-### ⬜ S10 · 000-T005 · `tools/make-fixture.js`
+### ✅ S10 · 000-T005 · `tools/make-fixture.js`
 - **المرجع:** `tasks.md` (T005) و`specs/reports/000-T05a.md` (قواعد التعقيم). **الفرع:** `feat/000-T005-make-fixture` · **التقرير:** `specs/reports/000-T005.md`
 - **المطلوب:** الأداة تطبّق قواعد التعقيم على أي نسخة احتياطية. **لا ترفع أي نسخة خام للريبو أبدًا.** الاختبار بعينة خام **صغيرة مصطنعة** تبنيها أنت داخل الاختبار.
 - **الأدلة:** الاختبار أخضر ويثبت (أ) تعليق ← نص تجريبي، (ب) حذف `snapshot`، (ج) الجولات ما تغيّرت، و`node tests/run.js` أخضر.
 
-### ⬜ S11 · 002-T001 + 002-T002 (في PR واحد) · `js/core/ar-format.js`
+### ✅ S11 · 002-T001 + 002-T002 (في PR واحد) · `js/core/ar-format.js`
 - **المرجع:** `specs/002-language-voice/tasks.md` (T001 وT002)، و`plan.md`، و`glossary.md` (المعدودات). **الفرع:** `feat/002-T001-ar-format` · **التقرير:** `specs/reports/002-T001.md`
 - **ليش PR واحد:** المهمتان في نفس الملف.
 - **المطلوب:** `formatCount` و`pickForm` و`formatList` و`formatDate` حسب القبول بالحرف (≥ 90 حالة للعدد، والتاريخ ميلادي + هجري بأرقام لاتينية والمنطقة الزمنية الرياض). سطر `<script>` في `index.html` و`report.html` بعد `config.js`، والاختبارات في `tests/run.js`. **لا تستبدل أي نص موجود في الموقع** (الترحيل مهمة لاحقة).
 - **الأدلة:** عدد الاختبارات الجديدة ونتيجتها، وجدول عينات (10 أرقام × 3 معدودات) في التقرير.
 
-### ⬜ S12 · 003-T001 · `escapeHtml` الموحّدة · ⏹️ توقف بعده
+### ✅ S12 · 003-T001 · `escapeHtml` الموحّدة
 - **المرجع:** `specs/003-security/tasks.md` (T001) و`plan.md`. **الفرع:** `feat/003-T001-escape-html` · **التقرير:** `specs/reports/003-T001.md`
 - **المطلوب:** `escapeHtml` في `js/core/dom-utils.js` وتطبيقها على محتوى الزوار في الملفات الستة المذكورة. **تعديل `innerHTML` في الأماكن المذكورة فقط.**
 - **الأدلة:** رسالة تجريبية `<img src=x onerror=alert(1)>` في كل مكان إدخال تُعرض كنص (لقطة أو اختبار لكل مكان)، و`node tests/run.js` أخضر.
 - ⏹️ **بعد S12 توقف.** المراجع يراجع الدفعة ويكتب أوامر الدمج.
+
+---
+## الدفعة 2 (12 نوفمبر): مراجعة S7–S12
+> **ادمج بالترتيب ده** (عشان `.gitignore` و`package.json` يدخلون أول). كل PR: تأكد من الـSHA، وحلّ تعارض `tests/run.js` بالإبقاء على **كل** الاختبارات، وشغّل `node tests/run.js` بعد كل دمج (لازم 0 ❌)، وعلّم `- [x] T###` في `tasks.md` الميزة.
+
+### ⬜ M13 · ادمج PR #20 (000-T007 الخط المحلي + package.json) أول واحد
+- **SHA:** `9dc51e89ea3dfdbc3a414062ea4b43736d972b9b` · الحكم: `specs/reports/000-T007-review.md` · علّم 000-T007.
+
+### ⬜ M14 · ادمج PR #19 (000-T006 Firebase وهمي)
+- **SHA:** `0b51698442582cc0a3c5354001e722ca919d9564` · الحكم: `000-T006-review.md` · علّم 000-T006.
+
+### ⬜ M15 · ادمج PR #22 (000-T005 أداة التعقيم)
+- **SHA:** `50294dc83e14834dc747a53ac13df047b957151f` · الحكم: `000-T005-review.md` · علّم 000-T005.
+
+### ⬜ M16 · ادمج PR #23 (002-T001 وT002 ar-format)
+- **SHA:** `bed13064e59e9a26ac1493ccbbdda73d7eb33464` · الحكم: `002-T001-review.md` · علّم 002-T001 وT002.
+
+### ⬜ M17 · ادمج PR #24 (003-T001 escapeHtml)
+- **SHA:** `06032b827c80b9d7b8543d68a5976aef0515584d` · الحكم: `003-T001-review.md` · علّم 003-T001. وبعد الدمج شغّل `tests/e2e/escape-html.e2e.js` على الفرع المدموج وسجّل النتيجة في `merge-log.md`.
+
+### ⬜ F1 · إصلاح PR #21 (000-T010 lint): `node_modules/` انرفع فيه
+- **الحكم:** `specs/reports/000-T010-review.md` (🔁). الأدوات سليمة، والمشكلة بس إن الفرع فيه 274 ملف من `node_modules/`.
+- **الإصلاح (على فرعك `feat/000-T010-lint`، بعد M13 عشان `.gitignore` يكون موجود):**
+  1. ابنِ الفرع من جديد من آخر فرع التكامل: `git checkout -B feat/000-T010-lint origin/claude/broki-site-summary-qvjzoi`.
+  2. جيب ملفاتك الأربعة فقط من الـcommit القديم (`90cda79`): `tools/lint.js` و`lint-baseline.json` و`tests/run.js` (طبّق تعديلاتك عليه من جديد على النسخة المدموجة) و`specs/reports/000-T010.md`. **لا `node_modules` ولا `package-lock.json` جديد.**
+  3. تأكد: `git diff --stat origin/claude/broki-site-summary-qvjzoi` ما فيه `node_modules`، وجدول `git ls-files | grep -c node_modules` = 0.
+  4. `git push --force-with-lease` على فرعك نفسه (فرع PR #21)، **بدون دمج**، واكتب في تقرير `000-T010.md` سطر "أُعيد بناء الفرع بدون node_modules (F1)".
+
+### ⬜ S13 · 000-T008 · `tools/snap.js`
+- **المرجع:** `specs/000-foundation/tasks.md` (T008) و`plan.md` §3 "tools/snap.js". **الفرع:** `feat/000-T008-snap` (من فرع التكامل بعد M13–M17) · **التقرير:** `specs/reports/000-T008.md`
+- **المطلوب:** حسب الخطة: يستخدم `fake-firebase.js` و`season.json` و`css/fonts.css`، ويثبّت الوقت (ما يعتمد على الساعة الحالية)، ويشتغل بدون إنترنت. المخرجات: 28 لقطة تبويب + (6 كروت × 3 حالات) + `report.json`. **`node_modules/` و`snapshots/` و`diff/` في `.gitignore` (موجودة من #20)، فلا ترفعها.**
+- **الأدلة:** SC-01: تشغيلتان متتاليتان تعطي صورًا **متطابقة بكسليًا** (اكتب الأمر والنتيجة)، وعدد اللقطات، وزمن التشغيل، ولقطتان أمثلة (JPEG ≤ 300KB) في `specs/reports/img/000-T008/`.
+
+### ⬜ S14 · 000-T009 · `tools/snap-diff.js` · ⏹️ توقف بعده
+- **المرجع:** `tasks.md` (T009) و`plan.md` §3 "tools/snap-diff.js". **الفرع:** `feat/000-T009-snap-diff` (بعد S13) · **التقرير:** `specs/reports/000-T009.md`
+- **القبول:** تعديل لون واحد تجريبي (**لا تدمجه**) يظهر في `diff/summary.md` بالصور المتأثرة فقط. أرفق الملخص في التقرير.
+- ⏹️ **بعد S14 توقف.** وأنا أراجع، وأكتب لك `000-T011` (`verify.yml`) بعد دمج lint.
