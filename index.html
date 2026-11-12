@@ -106,32 +106,22 @@
 <div class="wrap">
 
   <section class="panel active" id="panel-standings">
-    <div id="countdownBox"></div>
-
-    <div class="me-picker">
-      <span class="u-fs-0-82rem u-fw-700">مين أنت؟</span>
-      <select id="mePicker"><option value="">— اختر اسمك —</option></select>
-      <input type="text" id="meCodeInput" class="me-code-input" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)" style="display:none;">
-      <button type="button" class="btn" id="meCodeConfirmBtn" style="display:none;">تأكيد ✅</button>
-      <button type="button" class="btn ghost" id="meCodeCancelBtn" style="display:none;">إلغاء</button>
+    <!-- ترتيب الشاشة الأولى (FR-16، 001-T015): حالتي ← الجدول ← أنديتي ← بطل الجولة وممّاتها ← القصة ← الميداليات (مفتوحة دائمًا، R-07) ← أقسام مطوية -->
+    <div class="my-status">
+      <div class="me-picker" id="mePickerBox">
+        <span class="u-fs-0-82rem u-fw-700">مين أنت؟</span>
+        <select id="mePicker"><option value="">— اختر اسمك —</option></select>
+        <input type="text" id="meCodeInput" class="me-code-input" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)" style="display:none;">
+        <button type="button" class="btn" id="meCodeConfirmBtn" style="display:none;">تأكيد ✅</button>
+        <button type="button" class="btn ghost" id="meCodeCancelBtn" style="display:none;">إلغاء</button>
+      </div>
+      <div id="meCodeMsg"></div>
+      <div id="badgeToastBox"></div>
+      <div id="myDashboardBox" style="display:none;"></div>
     </div>
-    <div id="meCodeMsg"></div>
 
-    <div id="badgeToastBox"></div>
-
-    <div id="whatsNewCardBox"></div>
-
-    <div id="myDashboardBox" style="display:none;"></div>
-
-    <div id="mySeasonDuelsBox"></div>
-
-    <div id="predictionBox"></div>
-
-    <div id="championHeroBox"></div>
-
-    <div id="heroesBox"></div>
-
-    <div id="roundStoryCardBox"></div>
+    <div id="newRoundBannerBox"></div>
+    <div id="standingsBox" class="loading">جارٍ تحميل البيانات...</div>
 
     <div class="toolbar">
       <button class="btn ghost" id="refreshBtn">🔄 تحديث</button>
@@ -147,23 +137,38 @@
     <div id="refreshMsg"></div>
     <div id="copyBox"></div>
     <div id="standingsImgBox"></div>
-
     <div id="refreshSummaryBox"></div>
-    <div id="newRoundBannerBox"></div>
 
-    <div id="standingsBox" class="loading">جارٍ تحميل البيانات...</div>
+    <!-- أنديتي هذا الأسبوع: مكان محجوز، يظهر لما تتوفر بيانات ميزة 005 (FR-16 البند 3) -->
+    <div id="myClubsWeekBox" hidden></div>
 
-    <div id="honorBoardBox"></div>
-    <div id="badgesBox"></div>
+    <div id="championHeroBox"></div>
+    <div id="heroesBox"></div>
+    <div id="roundStoryCardBox"></div>
+
+    <!-- لوحة الميداليات ظاهرة دائمًا ولا تنطوي (R-07) -->
     <div id="medalsBox"></div>
-    <div id="rankHistoryBox"></div>
-    <div id="surprisesBox"></div>
-    <div id="myAchievementsBox"></div>
-    <div id="nightModeBox"></div>
 
-    <div id="weeklyDuelsBox"></div>
-
-    <div id="bottomRaceBox"></div>
+    <div class="folds" id="standingsFolds">
+      <details class="fold" id="foldHonor"><summary><span class="fold-icon" data-icon="trophy"></span><span class="fold-title">لوحة الشرف والأوسمة</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body"><div id="honorBoardBox"></div><div id="badgesBox"></div></div></details>
+      <details class="fold" id="foldDuels"><summary><span class="fold-icon" data-icon="swords"></span><span class="fold-title">المواجهات العشوائية</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body"><div id="weeklyDuelsBox"></div></div></details>
+      <details class="fold" id="foldPredict"><summary><span class="fold-icon" data-icon="poll"></span><span class="fold-title">التوقع والتصويت</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body"><div id="predictionBox"></div></div></details>
+      <details class="fold" id="foldBottom"><summary><span class="fold-icon" data-icon="trend-down"></span><span class="fold-title">سباق الهروب من القاع</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body"><div id="bottomRaceBox"></div></div></details>
+      <details class="fold" id="foldMore"><summary><span class="fold-icon" data-icon="more"></span><span class="fold-title">المزيد من الترتيب</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body">
+          <div id="countdownBox"></div>
+          <div id="whatsNewCardBox"></div>
+          <div id="mySeasonDuelsBox"></div>
+          <div id="rankHistoryBox"></div>
+          <div id="surprisesBox"></div>
+          <div id="myAchievementsBox"></div>
+          <div id="nightModeBox"></div>
+        </div></details>
+    </div>
   </section>
 
   <section class="panel" id="panel-participants">
