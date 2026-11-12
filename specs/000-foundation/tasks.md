@@ -48,11 +48,11 @@
 
 - [x] T007 [P] [US2] [Sonnet] `package.json` + الخط المحلي — 🆕 `package.json` (devDependencies فقط)، و🆕 `assets/fonts/`، و🆕 `css/fonts.css`، و`index.html` و`report.html` (استبدال رابط Google Fonts)، و`.gitignore`، وحذف `assets/icons/fonts/` المكرر وربط `assets/icons/_sheet.html` بـ`css/fonts.css`
   - القبول: الموقع يعرض Tajawal بدون أي طلب لـ`fonts.googleapis.com`؛ والملفات الأربعة (400/500/700/800، عربية ولاتينية) ≤ 200KB مجتمعة
-- [ ] T008 [US2] [Sonnet] `snap.js` (يعتمد على T005، T006، T007)
+- [x] T008 [US2] [Sonnet] `snap.js` (يعتمد على T005، T006، T007)
   - القبول: SC-01 تشغيلتان متتاليتان تعطي صورًا متطابقة؛ و28 لقطة تبويب + (6 كروت × 3 حالات) + `report.json`؛ ويشتغل بدون إنترنت
-- [ ] T009 [US2] [Sonnet] `snap-diff.js` (يعتمد على T008)
+- [x] T009 [US2] [Sonnet] `snap-diff.js` (يعتمد على T008)
   - القبول: تعديل لون واحد تجريبي يظهر في `diff/summary.md` بالصور المتأثرة فقط
-- [ ] T010 [P] [US1] [Sonnet] `lint.js` + خط الأساس
+- [x] T010 [P] [US1] [Sonnet] `lint.js` + خط الأساس
   - القبول: خط الأساس الأولي مسجّل: hex ≈ 196، وإيموجي ≈ 580، و`style=""` = 166، و`numberNoun` ≈ 83، و`rawDates` = 9 (بعد T002 ينقص 1)، و`!important` = 21؛ وSC-04 إضافة `#123456` لأي ملف CSS تفشل الفحص
 - [ ] T011 [US1] [Sonnet] `verify.yml` (يعتمد على T008، T009، T010)
   - القبول: PR تجريبي يُظهر فحص `verify` أخضر، مع artifact اللقطات والملخص في صفحة الفحص
