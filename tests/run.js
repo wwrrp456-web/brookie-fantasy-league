@@ -249,8 +249,44 @@ const asyncTests = (async () => {
   check('وهمي: الدالة غير المدعومة تُسجَّل', win.__FAKE_FIREBASE__.unsupported, ['ref.orderByChild()']);
 })();
 
+// ---------- 000-T009: tools/snap-diff.js (يحتاج pngjs وpixelmatch من npm ci، يُتخطى لو غير مثبّتين) ----------
+const asyncDiffTests = (async () => {
+  let PNG;
+  try { PNG = require('pngjs').PNG; require.resolve('pixelmatch'); } catch (e) { console.log('⏭️ اختبارات snap-diff متخطاة (pngjs/pixelmatch غير مثبّتين: npm ci)'); return; }
+  const os = require('os');
+  const {main: diffMain} = require(path.join(ROOT, 'tools/snap-diff.js'));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'snapdiff-'));
+  const mk = (dir, name, w, h, px) => {
+    const img = new PNG({width: w, height: h});
+    for (let i = 0; i < img.data.length; i += 4) { img.data[i] = 20; img.data[i + 1] = 30; img.data[i + 2] = 60; img.data[i + 3] = 255; }
+    (px || []).forEach(([x, y, c]) => { const o = (y * w + x) * 4; img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; });
+    fs.mkdirSync(path.join(tmp, dir), {recursive: true});
+    fs.writeFileSync(path.join(tmp, dir, name), PNG.sync.write(img));
+  };
+  mk('base', 'same.png', 20, 20); mk('head', 'same.png', 20, 20);
+  mk('base', 'color.png', 20, 20); mk('head', 'color.png', 20, 20, [[3, 3, [255, 0, 0]], [4, 3, [255, 0, 0]]]);
+  mk('base', 'resized.png', 20, 20); mk('head', 'resized.png', 20, 30);
+  mk('base', 'removed.png', 10, 10); mk('head', 'added.png', 10, 10);
+  const log = console.log; console.log = () => {};
+  let code; try { code = await diffMain(['--base', path.join(tmp, 'base'), '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'diff')]); } finally { console.log = log; }
+  const md = fs.readFileSync(path.join(tmp, 'diff/summary.md'), 'utf8');
+  check('snap-diff: لا يفشل على الفروق (exit 0)', code, 0);
+  check('snap-diff: الصورة المتغيّرة بلون واحد في الملخص', /`color\.png`/.test(md), true);
+  check('snap-diff: الصورة المطابقة ما تظهر في الجدول', /`same\.png`/.test(md), false);
+  check('snap-diff: تغيّر الحجم يُعد متغيّرًا مع ملاحظة', /`resized\.png`.*20×20 ← 20×30/.test(md), true);
+  check('snap-diff: جديدة ومحذوفة تُسرد', [/## جديدة[\s\S]*`added\.png`/.test(md), /## محذوفة[\s\S]*`removed\.png`/.test(md)], [true, true]);
+  check('snap-diff: صورة قبل|بعد|فرق للمتغيّرة فقط', [fs.existsSync(path.join(tmp, 'diff/color.png')), fs.existsSync(path.join(tmp, 'diff/same.png'))], [true, false]);
+  const wide = PNG.sync.read(fs.readFileSync(path.join(tmp, 'diff/color.png')));
+  check('snap-diff: عرض الصورة المركّبة = 3 صور + فاصلين', wide.width, 20 * 3 + 16 * 2);
+  const empty = path.join(tmp, 'empty'); fs.mkdirSync(empty);
+  const errl = console.error; console.error = () => {};
+  let bad; try { bad = await diffMain(['--base', empty, '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'd2')]); } finally { console.error = errl; }
+  check('snap-diff: مجلد فاضي ← exit 2', bad, 2);
+  fs.rmSync(tmp, {recursive: true, force: true});
+})();
+
 // ---------- الخلاصة ----------
-asyncTests.then(() => {
+Promise.all([asyncTests, asyncDiffTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
   process.exit(fail > 0 ? 1 : 0);
 }, e => { console.log('❌ خطأ غير متوقع في الاختبارات غير المتزامنة:', e); process.exit(1); });
