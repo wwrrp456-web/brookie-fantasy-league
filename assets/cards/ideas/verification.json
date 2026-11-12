@@ -1,0 +1,2280 @@
+{
+  "task": "001-T009d",
+  "source": "specs/001-ui-visual-overhaul/card-data.json",
+  "sourceSHA256": "4fb6f68a4fe7d7535271c4e468615977d4c0b654c9b9503add5f70b2656cf47a",
+  "testCount": 237,
+  "lint": "passed",
+  "existingCardSnapshots": 18,
+  "primaryScreenshots": 8,
+  "supplementaryPartTwoScreenshots": 2,
+  "runs": [
+    {
+      "d": "a",
+      "theme": "dark",
+      "count": 12,
+      "part": 1,
+      "shot": "shots/a-dark.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg",
+        "../../crests/al-nassr.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/ajax.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/dortmund.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/feyenoord.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/chelsea.svg",
+        "../../crests/porto.svg"
+      ]
+    },
+    {
+      "d": "a",
+      "theme": "light",
+      "count": 12,
+      "part": 1,
+      "shot": "shots/a-light.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg",
+        "../../crests/light/al-nassr.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/ajax.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/dortmund.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/feyenoord.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/chelsea.svg",
+        "../../crests/light/porto.svg"
+      ]
+    },
+    {
+      "d": "b",
+      "theme": "dark",
+      "count": 10,
+      "part": 1,
+      "shot": "shots/b-dark.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "chase-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg",
+        "../../crests/al-nassr.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/ajax.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/dortmund.svg"
+      ]
+    },
+    {
+      "d": "b",
+      "theme": "light",
+      "count": 10,
+      "part": 1,
+      "shot": "shots/b-light.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "chase-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg",
+        "../../crests/light/al-nassr.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/ajax.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/dortmund.svg"
+      ]
+    },
+    {
+      "d": "c",
+      "theme": "dark",
+      "count": 10,
+      "part": 1,
+      "shot": "shots/c-dark.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "split-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg",
+        "../../crests/al-nassr.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/ajax.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/dortmund.svg"
+      ]
+    },
+    {
+      "d": "c",
+      "theme": "light",
+      "count": 10,
+      "part": 1,
+      "shot": "shots/c-light.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "split-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg",
+        "../../crests/light/al-nassr.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/ajax.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/dortmund.svg"
+      ]
+    },
+    {
+      "d": "d",
+      "theme": "dark",
+      "count": 4,
+      "part": 1,
+      "shot": "shots/d-dark.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "elevated-grid",
+          "gap": 80,
+          "rowHeight": 320
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg"
+      ]
+    },
+    {
+      "d": "d",
+      "theme": "light",
+      "count": 4,
+      "part": 1,
+      "shot": "shots/d-light.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "elevated-grid",
+          "gap": 80,
+          "rowHeight": 320
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg"
+      ]
+    },
+    {
+      "d": "c",
+      "theme": "dark",
+      "count": 10,
+      "part": 2,
+      "shot": "shots/c-dark-part2.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "split-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/feyenoord.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/chelsea.svg",
+        "../../crests/porto.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/sporting-cp.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/psg.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/bayern-munich.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/milan.svg",
+        "../../crests/arsenal.svg",
+        "../../crests/al-qadsiah.svg",
+        "../../crests/juventus.svg",
+        "../../crests/dinamo-zagreb.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/atletico-madrid.svg",
+        "../../crests/fenerbahce.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/al-ahli.svg",
+        "../../crests/marseille.svg",
+        "../../crests/al-shabab.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/liverpool.svg"
+      ]
+    },
+    {
+      "d": "c",
+      "theme": "light",
+      "count": 10,
+      "part": 2,
+      "shot": "shots/c-light-part2.png",
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "split-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/feyenoord.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/chelsea.svg",
+        "../../crests/light/porto.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/sporting-cp.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/psg.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/bayern-munich.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/arsenal.svg",
+        "../../crests/light/al-qadsiah.svg",
+        "../../crests/light/juventus.svg",
+        "../../crests/light/dinamo-zagreb.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/atletico-madrid.svg",
+        "../../crests/light/fenerbahce.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/al-ahli.svg",
+        "../../crests/light/marseille.svg",
+        "../../crests/light/al-shabab.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/liverpool.svg"
+      ]
+    },
+    {
+      "d": "a",
+      "count": 8,
+      "theme": "dark",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg"
+      ]
+    },
+    {
+      "d": "a",
+      "count": 8,
+      "theme": "light",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg"
+      ]
+    },
+    {
+      "d": "a",
+      "count": 10,
+      "theme": "dark",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg",
+        "../../crests/al-nassr.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/ajax.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/real-madrid.svg",
+        "../../crests/dortmund.svg"
+      ]
+    },
+    {
+      "d": "a",
+      "count": 10,
+      "theme": "light",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "clean-list",
+          "gap": 16,
+          "rowHeight": 48
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg",
+        "../../crests/light/al-nassr.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/ajax.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/real-madrid.svg",
+        "../../crests/light/dortmund.svg"
+      ]
+    },
+    {
+      "d": "b",
+      "count": 8,
+      "theme": "dark",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "chase-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/rangers.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/manchester-city.svg"
+      ]
+    },
+    {
+      "d": "b",
+      "count": 8,
+      "theme": "light",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "chase-list",
+          "gap": 16,
+          "rowHeight": 56
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/rangers.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/manchester-city.svg"
+      ]
+    },
+    {
+      "d": "d",
+      "count": 6,
+      "theme": "dark",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "elevated-grid",
+          "gap": 56,
+          "rowHeight": 224
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/shakhtar.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/roma.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/psv.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/galatasaray.svg",
+        "../../crests/al-ittihad.svg",
+        "../../crests/barcelona.svg",
+        "../../crests/benfica.svg",
+        "../../crests/al-hilal.svg",
+        "../../crests/milan.svg",
+        "../../crests/celtic.svg"
+      ]
+    },
+    {
+      "d": "d",
+      "count": 6,
+      "theme": "light",
+      "part": 1,
+      "shot": null,
+      "errors": [],
+      "unshadowed": true,
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "collisions": [],
+      "minimumText": 32,
+      "groups": [
+        {
+          "class": "elevated-grid",
+          "gap": 56,
+          "rowHeight": 224
+        }
+      ],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85
+        }
+      ],
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "logo": {
+        "left": 848,
+        "right": 992,
+        "top": 88,
+        "bottom": 253.46875,
+        "width": 144,
+        "height": 165.46875
+      },
+      "images": [
+        "../../brand/proki-logo-light.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/shakhtar.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/roma.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/psv.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/galatasaray.svg",
+        "../../crests/light/al-ittihad.svg",
+        "../../crests/light/barcelona.svg",
+        "../../crests/light/benfica.svg",
+        "../../crests/light/al-hilal.svg",
+        "../../crests/light/milan.svg",
+        "../../crests/light/celtic.svg"
+      ]
+    }
+  ]
+}
