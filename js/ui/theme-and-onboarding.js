@@ -12,7 +12,7 @@ function applyLightModePref(){
   // ثابتة بكل الأوضاع، فالنسخة المصمَّمة أصلًا لخلفية داكنة هي الأنسب تباينًا،
   // وهذا ما أكّده المستخدم برفع صورة توضّح الشعار الملوّن الصحيح المطلوب.
   const logoEl = document.getElementById('logoImg');
-  if(logoEl) logoEl.src = on ? LOGO_BASE64_LIGHT : LOGO_BASE64;
+  if(logoEl) logoEl.src = logoURL(on);
   if(btn){
     // النص يعكس الوضع الحالي فعليًا (لا الوضع اللي بيتحول له عند الضغط) —
     // تفاديًا لالتباس "يقول فاتح وهو داكن" الذي أبلغ عنه المستخدم.

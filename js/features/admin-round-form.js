@@ -614,7 +614,7 @@ function prepareRoundForm(num, opts={}){
         ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${sharedCount} مشاركين — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span>`
         : '';
       html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}">
-        <div class="team-block-head">${clubCrestSVG(team, 22)}<span>${team}</span>${sharedBadge}</div>
+        <div class="team-block-head">${crestHTML(team, 22)}<span>${team}</span>${sharedBadge}</div>
         <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev, team)).join('')}</div>
         <button type="button" class="btn ghost add-match-btn">+ إضافة مباراة أخرى لهذا النادي</button>
       </div>`;

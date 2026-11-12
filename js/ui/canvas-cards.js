@@ -108,7 +108,7 @@ function loadCardLogoImage(){
     img.onerror = ()=> resolve(null);
     // النسخة البيضاء من الشعار (نفس شعار الهيدر بالوضع الداكن) — كل كروت
     // المشاركة بخلفية داكنة موحّدة (#040421 → #000000 أو مشابه).
-    img.src = LOGO_BASE64;
+    img.src = logoURL(false);
   });
   return _cardLogoPromise;
 }

@@ -260,7 +260,7 @@ function renderStandings(){
     else if(pos<=6) tier='tier-silver';
     else if(pos>standings.length-3) tier='tier-danger';
 
-    const clubs = p.teams.map(t=>clubCrestSVG(t, 19)).join('');
+    const clubs = p.teams.map(t=>crestHTML(t, 19)).join('');
 
     const meCls = (MY_ID === s.id) ? 'is-me' : '';
     html += `<tr class="standings-row ${tier} ${i%2?'zebra':''} ${meCls}" data-pid="${s.id}">

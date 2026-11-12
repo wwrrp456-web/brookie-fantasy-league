@@ -345,6 +345,54 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   fs.rmSync(tmp, {recursive: true, force: true});
 }
 
+// ---------- 001-T012: js/ui/crests.js (ثلاثة مصادر، <img>، الدرع الاحتياطي بلا PNG) ----------
+const asyncCrestTests = (async () => {
+  const {resolveObjectURL} = require('buffer');
+  const sb = {console, Blob, URL};
+  sb.window = sb;
+  const cctx = vm.createContext(sb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
+  const run = code => vm.runInContext(code, cctx);
+  const blobText = async url => resolveObjectURL(url).text();
+  // المصدر 2: المحسّن
+  check('crests: نادٍ له ملف ← المصدر المحسّن (enhanced)', run("crestSource('الهلال').kind + ':' + crestSource('الهلال').slug"), 'enhanced:al-hilal');
+  // المصدر 1: الرسمي يغلب المحسّن، ويُلغى فيرجع المحسّن
+  run("CRESTS_OFFICIAL['al-hilal'] = '<svg id=\"official-test\" viewBox=\"0 0 10 10\"/>'; resetCrestCache();");
+  check('crests: ملف في official ← يظهر بدل المحسّن', run("crestSource('الهلال').kind"), 'official');
+  const offUrl = run("crestURL('الهلال')");
+  check('crests: <img> الرسمي محتواه هو SVG الرسمي (مو المحسّن)', /official-test/.test(await blobText(offUrl)), true);
+  run("delete CRESTS_OFFICIAL['al-hilal']; resetCrestCache();");
+  check('crests: حذف الرسمي ← يرجع المحسّن', run("crestSource('الهلال').kind"), 'enhanced');
+  // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
+  check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
+  const fb = run("crestSource('نادي وهمي').svg");
+  check('crests: الدرع الاحتياطي SVG صالح بالإطار والعنوان واسم النادي', [/^<svg[\s>]/.test(fb), /<title>نادي وهمي<\/title>/.test(fb), /fill="#9B7BF5"/.test(fb)], [true, true, true]);
+  // كل الأنماط ذات الرموز المتجهة (بدل أقنعة PNG)
+  const patterns = ['eiffel', 'clover', 'saudiMap', 'ship', 'lion', 'wolf', 'lock', 'ball', 'phoenix', 'cannon', 'eagle'];
+  const bad = [];
+  patterns.forEach(pt => {
+    const svg = run(`CLUB_STYLE['نادي-${pt}'] = {bg: '#112233', fg: '#fff', accent: '#ddeeff', pattern: '${pt}'}; fallbackCrestSVG('نادي-${pt}')`);
+    if (!/<svg x="[\d.]+" y="[\d.]+" width="[\d.]+" height="[\d.]+" viewBox="[^"]+"[^>]*fill="#ddeeff"/.test(svg) || /<image|base64|<mask/.test(svg)) bad.push(pt);
+  });
+  check('crests: 11 نمطًا تستعمل الرمز المتجه (svg متداخل بلون النادي) بلا <image> ولا base64 ولا mask', bad, []);
+  const all = run("Object.keys(CLUB_STYLE).filter(n => !n.startsWith('نادي-')).map(n => fallbackCrestSVG(n))");
+  check('crests: الدرع الاحتياطي لكل أندية CLUB_STYLE الـ32 بلا PNG/base64', [all.length, all.some(x => /<image|base64/.test(x))], [32, false]);
+  // crestHTML: <img> صغير ومعزول ومهرَّب
+  const html = run("crestHTML('الهلال', 20)");
+  check('crests: crestHTML ← <img class=crest> بأبعاد صريحة (20×22) وalt وtitle، وأقصر من 400 حرف', [/^<img class="crest" src="blob:/.test(html), /width="20" height="22"/.test(html), /alt="الهلال" title="الهلال"/.test(html), html.length < 400], [true, true, true, true]);
+  check('crests: اسم نادٍ فيه علامة اقتباس يُهرَّب في alt/title', /alt="a&quot;b"/.test(run("crestHTML('a\"b', 18)")), true);
+  check('crests: نفس النادي ← نفس العنوان (مخزَّن)، ونادٍ ثاني ← عنوان ثاني', [run("crestURL('الهلال') === crestURL('الهلال')"), run("crestURL('الهلال') !== crestURL('النصر')")], [true, true]);
+  // الشعار الرئيسي
+  const dark = await blobText(run("logoURL(false)")), light = await blobText(run("logoURL(true)"));
+  check('crests: الشعار الداكن = الأبيض الأحادي، والفاتح ما فيه الكحلي #12142E (نصه صار أبيض)', [/^<svg/.test(dark), /^<svg/.test(light), /#12142E/i.test(light), /#12142E/i.test(dark), dark === light], [true, true, false, false, false]);
+  // لا بقايا: brand-assets محذوف ولا إحالة له ولا clubCrestSVG
+  const refs = [];
+  (function walk(d) { fs.readdirSync(d, {withFileTypes: true}).forEach(e => { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(js|html)$/.test(e.name)) { const t = fs.readFileSync(p, 'utf8'); if (/clubCrestSVG|brand-assets|LOGO_BASE64|_ICON_PNG_BASE64/.test(t)) refs.push(path.relative(ROOT, p)); } }); })(path.join(ROOT, 'js'));
+  ['index.html', 'report.html'].forEach(f => { if (/brand-assets|clubCrestSVG|LOGO_BASE64/.test(fs.readFileSync(path.join(ROOT, f), 'utf8'))) refs.push(f); });
+  check('crests: js/data/brand-assets.js محذوف ولا بقيت أي إحالة (clubCrestSVG وLOGO_BASE64 والأيقونات PNG)', [fs.existsSync(path.join(ROOT, 'js/data/brand-assets.js')), refs], [false, []]);
+})();
+
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
 {
   const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));
@@ -494,7 +542,7 @@ const asyncDiffTests = (async () => {
 }
 
 // ---------- الخلاصة ----------
-Promise.all([asyncTests, asyncDiffTests]).then(() => {
+Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
   process.exit(fail > 0 ? 1 : 0);
 }, e => { console.log('❌ خطأ غير متوقع في الاختبارات غير المتزامنة:', e); process.exit(1); });
