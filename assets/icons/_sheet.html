@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>أيقونات بروكي — الدفعة التجريبية</title>
+  <title>أيقونات بروكي — المكتبة الكاملة</title>
   <style>
 /* العربية */
 @font-face {
@@ -42,7 +42,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-    :root{--c-bg:#0A0B1E;--c-surface:#12142E;--c-text:#F4F5FF;--c-brand:#7B61FF;--c-white:#FFFFFF;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-6:24px;--sp-8:32px;--r:12px;--font:Tajawal,system-ui,sans-serif}
+    :root{--c-bg:#0B0D1F;--c-surface:#12142E;--c-text:#F4F5FF;--c-brand:#7B5CFF;--c-white:#FFFFFF;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-6:24px;--sp-8:32px;--r:12px;--font:Tajawal,system-ui,sans-serif}
     *{box-sizing:border-box}
     body{margin:0;background:var(--c-bg);color:var(--c-text);font:16px/1.7 var(--font)}
     main{width:min(100%,1120px);margin:auto;padding:var(--sp-6) var(--sp-4) var(--sp-8)}
@@ -66,13 +66,13 @@
 <body>
 <main>
   <header class="intro">
-    <h1>أيقونات بروكي — الدفعة التجريبية</h1>
-    <p>ست أيقونات بخط موحّد على شبكة 24×24، وبسماكة 1.75، وحواف مستديرة. كل رسم معروض بالحجم الفعلي عند 16 و24 و48px؛ لا يتغير وزن الخط بين الأيقونات.</p>
-    <p class="status">اعتمد المنظّم أسلوب هذه الدفعة. الأيقونات ترث لون استخدامها؛ استكمال المكتبة في متابعة مستقلة. <a href="REPORT.md">تقرير قرارات الأسلوب والتحقق</a></p>
+    <h1>أيقونات بروكي — المكتبة الكاملة</h1>
+    <p>المكتبة الكاملة: 56 أيقونة بخط موحّد على شبكة 24×24، وبسماكة 1.75، وحواف مستديرة. كل رسم معروض بالحجم الفعلي عند 16 و24 و48px؛ لا يتغير وزن الخط بين الأيقونات.</p>
+    <p class="status">امتداد للأسلوب المعتمد في الدفعة التجريبية. الأيقونات ترث لون استخدامها، والخلفية الداكنة تتبع R-10. <a href="../../specs/reports/001-T05-full.md">تقرير المكتبة وسلوك الاتجاهات</a> · <a href="REPORT.md">مرجع أسلوب الدفعة المعتمدة</a></p>
   </header>
   <section class="theme dark" aria-labelledby="dark-title">
     <h2 id="dark-title">الخلفية الداكنة</h2>
-    <p class="theme-note">خلفية #0A0B1E، ورسم #F4F5FF</p>
+    <p class="theme-note">خلفية #0B0D1F، ورسم #F4F5FF</p>
     <div class="grid"></div>
   </section>
   <section class="theme light" aria-labelledby="light-title">
@@ -83,7 +83,7 @@
   <noscript><p class="error">يتطلب عرض الملفات المتجهة تفعيل JavaScript وفتح الصفحة عبر خادم محلي.</p></noscript>
 </main>
 <script>
-  const icons=[['trophy','بطولة'],['crown','متصدر أو بطل'],['flame','سلسلة انتصارات'],['skull-zero','الممة'],['swords','مواجهة'],['chart-bar','إحصاءات']];
+  const icons=[["trophy","بطولة"],["crown","متصدر أو بطل"],["medal","ميدالية"],["flame","سلسلة انتصارات"],["snowflake","ثبات"],["skull-zero","الممة"],["swords","مواجهة"],["bolt","أعلى نقاط جولة"],["rocket","أكبر صعود"],["trend-up","اتجاه صاعد"],["trend-down","اتجاه هابط"],["arrow-up","صعود"],["arrow-down","هبوط"],["target","هدف"],["shield","دفاع"],["ball","كرة"],["chart-bar","إحصاءات"],["crystal-ball","توقع"],["poll","تصويت"],["mic","قصة الجولة"],["wall","الجدار"],["comment","تعليق"],["clipboard","ملف المشارك"],["calendar","تقويم"],["clock","عد تنازلي"],["bell","إشعارات"],["user","مشارك"],["users","مجموعة مشاركين"],["search","بحث"],["share","مشاركة"],["download","تنزيل"],["image","صورة"],["refresh","تحديث"],["live","مباشر"],["lock","قفل"],["unlock","فتح القفل"],["settings","إعدادات"],["info","معلومات"],["warning","تنبيه"],["check","تأكيد"],["close","إغلاق"],["plus","إضافة"],["trash","حذف"],["edit","تعديل"],["save","حفظ"],["link","رابط"],["sun","الوضع الفاتح"],["moon","الوضع الداكن"],["gift","ما الجديد"],["sparkles","احتفال"],["scale","كسر التعادل"],["certificate","شهادة"],["whatsapp-share","مشاركة للمحادثة"],["chevron-down","توسيع"],["chevron-left","اتجاه لليسار"],["more","المزيد"]];
   async function render(){
     for(const [name,label] of icons){
       const response=await fetch(name+'.svg');
