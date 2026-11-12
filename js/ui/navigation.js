@@ -30,6 +30,15 @@ function renderUpdateDot(){
 }
 
 // ---------- Rendering ----------
+// يخفي الأقسام المطوية الفاضية (لا بيانات لها حاليًا) بدل طيّة فاضية (001-T015)
+function syncFolds(){
+  document.querySelectorAll('#standingsFolds details.fold').forEach(f=>{
+    const body = f.querySelector('.fold-body');
+    const empty = !body || Array.from(body.children).every(c => !c.textContent.trim() && !c.querySelector('img,svg,canvas,input,select,button'));
+    f.hidden = empty;
+  });
+}
+
 function renderAll(){
   renderHeroes();
   renderRoundStoryCard();
@@ -94,6 +103,7 @@ function renderAll(){
   renderHallOfFame();
   renderSeasonsArchive();
   checkChampionAlerts();
+  syncFolds();
   // آخر استدعاء دائمًا — تعتمد على وجود كل عناوين تبويب الإحصائيات بالـDOM فعليًا
   renderStatsQuickNav();
 }

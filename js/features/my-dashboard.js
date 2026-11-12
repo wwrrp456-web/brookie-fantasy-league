@@ -177,6 +177,8 @@ async function loadMyId(){
 function renderMyDashboard(){
   const box = document.getElementById('myDashboardBox');
   if(!box) return;
+  const pickerBox = document.getElementById('mePickerBox');
+  if(pickerBox) pickerBox.classList.remove('is-compact', 'open');
   if(MY_ID === null){ box.style.display='none'; box.innerHTML=''; return; }
   const me = PARTICIPANTS.find(p=>p.id===MY_ID);
   const st = computeStandings();
@@ -187,8 +189,8 @@ function renderMyDashboard(){
   const rank = idx+1;
   const mv = getMovements();
   const myMove = mv[MY_ID]||0;
-  const moveLabel = myMove>0 ? `▲${myMove}` : myMove<0 ? `▼${Math.abs(myMove)}` : '—';
-  const moveColor = myMove>0 ? '#3DD47E' : myMove<0 ? '#FF6B5E' : '#8A8A8A';
+  const myHist = buildParticipantHistory(MY_ID);
+  const roundPts = myHist.length ? myHist[myHist.length-1].points : '—';
 
   let rivalHtml = '';
   const above = idx>0 ? st[idx-1] : null;
@@ -219,19 +221,30 @@ function renderMyDashboard(){
   const whatINeedHtml = buildWhatINeedHTML(meRow, st, idx);
 
   box.style.display = 'block';
+  // "حالتي" (FR-16 البند 1): المركز، والرصيد، والحركة، ونقاط الجولة في صف واحد؛ والباقي (المنافسون، وما أحتاجه، والتوقع، والمشاركة) داخل طيّة
   box.innerHTML = `
     <div class="my-dash-card">
-      <div class="my-dash-head">👋 أهلًا ${me.name}</div>
-      <div class="my-dash-stats">
-        <div class="my-dash-stat"><span class="my-dash-num">${rank}</span><span class="my-dash-label">مركزك</span></div>
-        <div class="my-dash-stat"><span class="my-dash-num">${meRow.total}</span><span class="my-dash-label">نقاطك</span></div>
-        <div class="my-dash-stat"><span class="my-dash-num" style="color:${moveColor};">${moveLabel}</span><span class="my-dash-label">حركتك</span></div>
+      <div class="my-dash-top">
+        <div class="my-dash-head">حالتي · ${me.name}</div>
+        <button type="button" class="btn ghost my-dash-change" id="meChangeBtn">${ICONS.user}<span>تغيير</span></button>
       </div>
-      ${rivalHtml}
-      ${whatINeedHtml}
-      ${predHtml}
-      <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+      <div class="my-dash-stats">
+        <div class="my-dash-stat"><span class="my-dash-num">${rank}</span><span class="my-dash-label">المركز</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${meRow.total}</span><span class="my-dash-label">الرصيد</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${movementHTML(myMove)}</span><span class="my-dash-label">الحركة</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${roundPts}</span><span class="my-dash-label">نقاط الجولة</span></div>
+      </div>
+      <details class="my-dash-more">
+        <summary>تفاصيل وضعي</summary>
+        ${rivalHtml}
+        ${whatINeedHtml}
+        ${predHtml}
+        <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+      </details>
     </div>`;
+  if(pickerBox) pickerBox.classList.add('is-compact');
+  const changeBtn = document.getElementById('meChangeBtn');
+  if(changeBtn && pickerBox) changeBtn.addEventListener('click', ()=> pickerBox.classList.toggle('open'));
   const shareBtn = document.getElementById('shareMyRankBtn');
   if(shareBtn) shareBtn.addEventListener('click', shareMyRank);
 }
