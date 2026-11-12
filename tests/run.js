@@ -379,6 +379,10 @@ const asyncDiffTests = (async () => {
   check('lint: تخفيض ← ينجح مع تلميح تسجيل التحسّن', lint().status, 0);
   lint('--update-baseline');
   check('lint: --update-baseline يخفّض خط الأساس للقيمة الحالية', JSON.parse(fs.readFileSync(path.join(tmp, 'lint-baseline.json'), 'utf8')).hexColors, 1);
+  // إصلاح (001-T003): regex الإيموجي كان عامًا (/g) مع .test() لكل سطر، فيتذبذب العدّ حسب lastIndex (ثلاثة أسطر متتالية تُحسب سطرين)
+  fs.writeFileSync(path.join(tmp, 'js/emoji.js'), "a = '😀';\nb = '🏆';\nc = '🔥';\nd = 'x';\ne = '⭐';\n");
+  check('lint: عدّ الإيموجي بالأسطر ثابت (لا يتأثر بـlastIndex): 4 أسطر', require(path.join(ROOT, 'tools/lint.js')).measure(tmp).counts.emoji, 4);
+  fs.rmSync(path.join(tmp, 'js/emoji.js'));
   fs.mkdirSync(path.join(tmp, 'js/core'));
   fs.writeFileSync(path.join(tmp, 'js/core/b.js'), "// #fff في تعليق ما يُحسب\n/* #eee\n#ddd */\nconst x = 'https://a.b/#abc';\n");
   check('lint: التعليقات لا تُحسب والنصوص تُحسب (css=1 + js=1)', require(path.join(ROOT, 'tools/lint.js')).measure(tmp).counts.hexColors, 2);
