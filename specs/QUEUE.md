@@ -13,7 +13,7 @@
 | 🛠️ Sonnet | M24 ← M25 | دمج #32 (نقل `style=""`) و#31 (جرد النصوص)، ✅ | ⬜ |
 | 🛠️ Sonnet | F2 ← M26 | إصلاح #30 (`snap.js` يتخطى صفحة غير موجودة في الأساس) ثم دمجه بشرط | ⬜ |
 | 🛠️ Sonnet | S21 | 001-T012 `crestHTML()` بثلاثة مصادر + حذف base64، ثم يتوقف | ⬜ |
-| 🎨 Codex | C6 | 001-T008 موك-أب الشاشات (**شغّال الحين**) | 🟨 |
+| 🎨 Codex | — | موك-أب الشاشات (#33) خلص، **ينتظر اعتماد المنظّم** | ⏸️ |
 
 ## ينتظر Opus 🧠
 
@@ -30,6 +30,7 @@
 
 | المطلوب | يفتح |
 |---|---|
+| **اعتماد الموك-أب** (PR #33): الصور أرسلتها لك. قل "معتمد" أو اكتب ملاحظاتك | الدمج، ثم مرحلة الواجهة (001-T013…T020) |
 | **إعدادات GitHub (مرة وحدة، بعد دمج M21):** 1) Settings ← General ← Pull Requests ← فعّل **Allow auto-merge**. 2) Settings ← Branches ← Add branch ruleset (أو Add rule) لـ`main`: ✔ Require a pull request before merging، و✔ Require status checks to pass ← اختر **verify**. (فرع التكامل مو `main`، فهذا يحمي النشر النهائي) | 000-T012 |
 | بريد لحساب المنظّم في Firebase | ميزة 003 |
 | إعدادات GitHub (Auto-merge + حماية `main`) | 000-T012، بعد دمج `verify.yml` (S15) |
