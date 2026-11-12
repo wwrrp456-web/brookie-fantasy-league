@@ -241,6 +241,46 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   }
 }
 
+// ---------- 001-T010: tools/build-assets.js (توليد js/generated/assets.js حتمي) ----------
+{
+  const os = require('os');
+  const {build} = require(path.join(ROOT, 'tools/build-assets.js'));
+  const thrown = f => { try { f(); return null; } catch (e) { return e.message; } };
+  const gen = fs.readFileSync(path.join(ROOT, 'js/generated/assets.js'), 'utf8');
+  const a1 = build(ROOT), a2 = build(ROOT);
+  check('build-assets: توليدان متتاليان متطابقان حرفيًا', a1 === a2, true);
+  check('build-assets: الملف المرفوع js/generated/assets.js محدَّث (يطابق ناتج التوليد)', gen === a1, true);
+  const ctx2 = vm.createContext({});
+  vm.runInContext(gen + ';this.R = {ICONS, CRESTS, CREST_NAMES, MOTIFS, LOGO_SVG, CRESTS_OFFICIAL};', ctx2);
+  const R = ctx2.R;
+  const sorted = o => JSON.stringify(Object.keys(o)) === JSON.stringify(Object.keys(o).slice().sort());
+  check('build-assets: المحتوى = 56 أيقونة و32 شعارًا بأسمائها و11 رمزًا وشعار PROKI (3) ورسمية فاضية',
+    [Object.keys(R.ICONS).length, Object.keys(R.CRESTS).length, Object.keys(R.CREST_NAMES).length, Object.keys(R.MOTIFS).length, Object.keys(R.LOGO_SVG).sort(), Object.keys(R.CRESTS_OFFICIAL).length],
+    [56, 32, 32, 11, ['logo', 'logoLight', 'mark'], 0]);
+  check('build-assets: كل المجموعات مرتبة أبجديًا', [R.ICONS, R.CRESTS, R.CREST_NAMES, R.MOTIFS].every(sorted), true);
+  check('build-assets: كل قيمة تبدأ بـ<svg وبلا <image أو base64 أو <?xml', Object.values(Object.assign({}, R.ICONS, R.CRESTS, R.MOTIFS, R.LOGO_SVG)).every(v => /^<svg[\s>]/.test(v) && !/<image|base64|<\?xml/.test(v)), true);
+  // جذر مصطنع
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ba-'));
+  const w = (f, c) => { fs.mkdirSync(path.dirname(path.join(tmp, f)), {recursive: true}); fs.writeFileSync(path.join(tmp, f), c); };
+  w('assets/icons/zeta.svg', '<?xml version="1.0"?>\n<svg viewBox="0 0 24 24"><path d="M1 1"/></svg>\n');
+  w('assets/icons/alpha.svg', '<svg viewBox="0 0 24 24"/>');
+  w('assets/icons/_sheet.html', '<html/>'); w('assets/icons/_hidden.svg', '<svg/>');
+  w('assets/crests/ajax.svg', '<svg id="a"/>'); w('assets/crests.json', JSON.stringify({ajax: 'أياكس'}));
+  const t1 = build(tmp);
+  const ctx3 = vm.createContext({}); vm.runInContext(t1 + ';this.R = {ICONS, CRESTS, CREST_NAMES, MOTIFS, LOGO_SVG, CRESTS_OFFICIAL};', ctx3);
+  check('build-assets (مصطنع): ترتيب أبجدي، وحذف سطر <?xml?>، وتجاهل ملفات _', [Object.keys(ctx3.R.ICONS), ctx3.R.ICONS.zeta], [['alpha', 'zeta'], '<svg viewBox="0 0 24 24"><path d="M1 1"/></svg>']);
+  check('build-assets (مصطنع): غياب motifs وbrand وofficial ← {} وبلا خطأ', [Object.keys(ctx3.R.MOTIFS).length, Object.keys(ctx3.R.LOGO_SVG).length, Object.keys(ctx3.R.CRESTS_OFFICIAL).length], [0, 0, 0]);
+  w('assets/crests/official/ajax.svg', '<svg id="official"/>');
+  const ctx4 = vm.createContext({}); vm.runInContext(build(tmp) + ';this.O = CRESTS_OFFICIAL;', ctx4);
+  check('build-assets (مصطنع): وجود assets/crests/official يملأ CRESTS_OFFICIAL', Object.keys(ctx4.O), ['ajax']);
+  w('assets/icons/bad.svg', '<div>not svg</div>');
+  check('build-assets (مصطنع): ملف لا يبدأ بـ<svg يرمي خطأ واضحًا', /ما يبدأ بوسم <svg>/.test(thrown(() => build(tmp)) || ''), true);
+  fs.rmSync(path.join(tmp, 'assets/icons/bad.svg'));
+  w('assets/crests/orphan.svg', '<svg/>');
+  check('build-assets (مصطنع): شعار بلا اسم في crests.json يرمي خطأ', /crests\.json لا يطابق/.test(thrown(() => build(tmp)) || ''), true);
+  fs.rmSync(tmp, {recursive: true, force: true});
+}
+
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
 {
   const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));

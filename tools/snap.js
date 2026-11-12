@@ -3,13 +3,14 @@
  *
  *   node tools/snap.js [--label head] [--root .] [--fixture tests/fixtures/season.json]
  *                      [--overrides tests/fixtures/overrides.json]
- *                      [--now 2026-11-12T00:05:53Z] [--only tabs|cards] [--out snapshots]
+ *                      [--now 2026-11-12T00:05:53Z] [--only tabs|cards|pages] [--out snapshots]
  *
  * - خادم ثابت (نفس منطق .claude/static-server.js) على منفذ عشوائي، وكل طلب خارج نفس المنشأ يُحجب.
  * - يحقن: Firebase الوهمي (tools/fake-firebase.js) وبيانات الـfixture، والوقت المجمّد (page.clock.setFixedTime)،
  *   و Math.random ببذرة ثابتة، و brookie-onboarded=1، ووضع الثيم، ويوقف الحركات (animation/transition).
  * - التبويبات: 7 × عرضان (390، 1366) × ثيمان (داكن، فاتح) = 28 لقطة كاملة الطول.
  * - الكروت: 6 دوال بناء × 3 حالات (full، incomplete، long) = 18 لقطة.
+ * - الصفحات: لوحة معاينة الأصول assets/preview.html × عرضان × ثيمان = 4 لقطات (001-T010).
  * - المخرجات: <out>/<label>/*.png + report.json (أخطاء الكونسول، والطلبات المحجوبة، والدوال الوهمية الناقصة).
  * - exit 1 لو فيه خطأ JS غير متوقع أو بناء كرت فشل بدون سبب متوقع.
  * القيمة الافتراضية لـ--now = تاريخ تصدير النسخة الاحتياطية (fixture.exportedAt)، فتبقى النتائج ثابتة عبر الأيام. */
@@ -55,14 +56,14 @@ function initScript({ light }) {
   })();`;
 }
 
-async function openPage(browser, ctx, { width, light }) {
+async function openPage(browser, ctx, { width, light, url = '/index.html' }) {
   const context = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: 1, locale: 'ar', timezoneId: 'Asia/Riyadh', reducedMotion: 'reduce' });
   const page = await context.newPage();
   await page.clock.setFixedTime(new Date(ctx.now));
   await page.addInitScript(initScript({ light }));
   const report = await fakeFirebase.install(page, { fixture: ctx.fixture, overrides: ctx.overrides, allowOrigin: ctx.origin });
   report.consoleErrors.length = 0;
-  await page.goto(ctx.origin + '/index.html');
+  await page.goto(ctx.origin + url);
   await page.addStyleTag({ content: FREEZE_CSS });
   await page.evaluate(async () => { try { await document.fonts.ready; } catch (e) {} });
   await page.waitForTimeout(700);
@@ -102,6 +103,19 @@ async function snapTabs(browser, ctx, outDir, files, reports) {
       fs.writeFileSync(path.join(outDir, name), await fullShot(page, width));
       files.push(name);
     }
+    reports.push(report);
+    await context.close();
+  }
+}
+
+// صفحات مستقلة غير index.html (لوحة معاينة الأصول): عرضان × ثيمان
+const PAGES = [{ name: 'preview', url: '/assets/preview.html' }];
+async function snapPages(browser, ctx, outDir, files, reports) {
+  for (const pg of PAGES) for (const width of WIDTHS) for (const theme of THEMES) {
+    const { page, context, report } = await openPage(browser, ctx, { width, light: theme === 'light', url: pg.url });
+    const name = `page-${pg.name}-${width}-${theme}.png`;
+    fs.writeFileSync(path.join(outDir, name), await fullShot(page, width));
+    files.push(name);
     reports.push(report);
     await context.close();
   }
@@ -162,7 +176,7 @@ async function main(argv) {
   const root = path.resolve(arg('--root', path.join(__dirname, '..')));
   const label = arg('--label', 'head');
   const only = arg('--only', null);
-  if (only && !['tabs', 'cards'].includes(only)) { console.error('--only لازم يكون tabs أو cards'); return 2; }
+  if (only && !['tabs', 'cards', 'pages'].includes(only)) { console.error('--only لازم يكون tabs أو cards أو pages'); return 2; }
   const outDir = path.resolve(arg('--out', 'snapshots'), label);
   const fixture = JSON.parse(fs.readFileSync(path.resolve(arg('--fixture', path.join(__dirname, '../tests/fixtures/season.json'))), 'utf8'));
   const overrides = JSON.parse(fs.readFileSync(path.resolve(arg('--overrides', path.join(__dirname, '../tests/fixtures/overrides.json'))), 'utf8'));
@@ -176,8 +190,9 @@ async function main(argv) {
   const ctx = { fixture, overrides, now, origin };
   const files = [], reports = [], cardErrors = [];
   try {
-    if (only !== 'cards') await snapTabs(browser, ctx, outDir, files, reports);
-    if (only !== 'tabs') await snapCards(browser, ctx, outDir, files, reports, cardErrors);
+    if (!only || only === 'tabs') await snapTabs(browser, ctx, outDir, files, reports);
+    if (!only || only === 'pages') await snapPages(browser, ctx, outDir, files, reports);
+    if (!only || only === 'cards') await snapCards(browser, ctx, outDir, files, reports, cardErrors);
   } finally {
     await browser.close();
     srv.close();
@@ -188,7 +203,7 @@ async function main(argv) {
   for (const r of reports) unsupported.push(...(await r.unsupported().catch(() => [])));
   const report = {
     label, root, now, seconds: Math.round((Date.now() - t0) / 100) / 10,
-    files: files.length, tabs: files.filter(f => f.startsWith('tab-')).length, cards: files.filter(f => f.startsWith('card-')).length,
+    files: files.length, tabs: files.filter(f => f.startsWith('tab-')).length, pages: files.filter(f => f.startsWith('page-')).length, cards: files.filter(f => f.startsWith('card-')).length,
     consoleErrors: uniq([].concat(...reports.map(r => r.consoleErrors))),
     pageErrors: uniq([].concat(...reports.map(r => r.pageErrors))),
     blockedRequests: uniq([].concat(...reports.map(r => r.blocked))).sort(),
@@ -196,7 +211,7 @@ async function main(argv) {
     cardErrors
   };
   fs.writeFileSync(path.join(outDir, 'report.json'), JSON.stringify(report, null, 2) + '\n');
-  console.log(`لقطات: ${report.tabs} تبويب + ${report.cards} كرت = ${report.files} ملف في ${path.relative(process.cwd(), outDir) || outDir} (${report.seconds} ث)`);
+  console.log(`لقطات: ${report.tabs} تبويب + ${report.pages} صفحة + ${report.cards} كرت = ${report.files} ملف في ${path.relative(process.cwd(), outDir) || outDir} (${report.seconds} ث)`);
   const fatal = report.pageErrors.length + report.consoleErrors.length + report.unsupportedFirebase.length + cardErrors.length;
   if (report.consoleErrors.length) console.error('أخطاء كونسول:\n  ' + report.consoleErrors.join('\n  '));
   if (report.pageErrors.length) console.error('أخطاء صفحة:\n  ' + report.pageErrors.join('\n  '));
