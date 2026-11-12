@@ -1,0 +1,18 @@
+/* مقترح مستقل؛ لا يغير الموك أب المعتمد. */
+.status{margin-bottom:var(--sp-4)}
+.table-head,.standing-row{grid-template-columns:28px 32px minmax(0,1fr) 60px 12px;gap:var(--sp-1)}
+.standing-row{height:56px;min-height:56px;padding-block:var(--sp-1)}
+.participant-cell{display:flex;flex-direction:column;gap:0;min-width:0;align-items:flex-start}
+.standing-row .row-name{max-width:100%;line-height:20px;font-weight:800}
+.clubs-mini{height:26.4px;gap:var(--sp-1)}
+.score-cell{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.standing-row .score{font-size:var(--fs-xl)}
+.gap{font-size:var(--fs-xs);color:var(--c-text-2);white-space:nowrap}
+.standing-row>.movement{justify-content:center;gap:0;min-height:24px;border-radius:var(--r-sm);background:var(--c-surface-2);font-size:var(--fs-xs)}
+.standing-row .rank{font-weight:800}
+.podium .rank{font-size:var(--fs-lg);border-radius:var(--r-sm);background:var(--c-surface-2);line-height:32px}
+.podium:first-of-type .rank{color:var(--c-gold)}
+.standing:nth-of-type(even){background:var(--c-bg)}
+.standing.me{background:var(--c-surface-2);border-color:var(--c-brand-strong)}
+.bottom-zone .standing-row{border-inline-start:2px solid var(--c-down);padding-inline-start:10px}
+.table-head{font-size:var(--fs-xs)}
