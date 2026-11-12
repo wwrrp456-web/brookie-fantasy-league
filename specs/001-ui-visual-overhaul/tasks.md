@@ -53,7 +53,7 @@
 
 ## م3 · دمج الأصول (تحتاج 002-T001)
 
-- [ ] T010 [Sonnet] `build-assets.js` + لوحة المعاينة
+- [x] T010 [Sonnet] `build-assets.js` + لوحة المعاينة
   - **الملفات:** 🆕 `tools/build-assets.js`، و🆕 `js/generated/assets.js`، و🆕 `assets/preview.html`
   - **القبول:** التوليد بدون أخطاء، واللوحة ضمن لقطات `snap.js`.
 
