@@ -45,7 +45,7 @@
 - **المطلوب:**
   1. **باقي القائمة كاملة** في قسم BRIEF-1 بـ`codex-briefs.md` (كل الأسماء ما عدا الست المنجزة).
   2. حدّث `_sheet.html` تعرض **كل** الأيقونات على 16 و24 و48px، وغيّر الخلفية الداكنة إلى `#0B0D1F` (R-10). وحدّث اللقطة `_sheet-preview.png`.
-  3. لا تضيف خطوط جديدة. استخدم الموجود في `assets/icons/fonts/`.
+  3. لا تضيف خطوط جديدة. استخدم `css/fonts.css` و`assets/fonts/`.
 - **القبول:**
   - كل شروط BRIEF-1.
   - لا أيقونتين متشابهتين لدرجة الالتباس على 16px. أزواج تحتاج انتباه خاص: `trend-up` و`arrow-up`، و`check` و`close`، و`lock` و`unlock`، و`user` و`users`، و`share` و`whatsapp-share`، و`comment` و`wall`.

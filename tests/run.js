@@ -164,6 +164,78 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   console.log(`   (formatCount: ${counted} حالة جدولية)`);
 }
 
+
+// ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
+{
+  const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));
+  const SECRET_C = 'كلام خاص كتبه عضو 123', SECRET_W = 'رسالة جدار سرية';
+  const raw = {
+    version: 2, exportedAt: '2026-11-12T00:00:00.000Z',
+    data: {
+      rounds: [{number: 3, entries: [null, [{ga: 0, gf: 2, opp: 'أ', result: 'win', ti: 0}]], lastModified: 'x'}],
+      roundComments: {'3': [null, {name: 'سعيد', text: SECRET_C, time: 1}], 'challenge_r4': {'6': {name: 'أبو عزام', time: 2, vote: 15}}},
+      activityLog: [{action: '💾 حفظ الجولة 3', time: 't1', snapshot: {rounds: [1, 2, 3], big: 'x'.repeat(1000)}}, {action: 'دخول', time: 't2'}]
+    },
+    predictions: {enabled: false, entries: {}},
+    extra: {wall: {'3': {'-k1': {pid: 5, name: 'سعيد', text: SECRET_W, time: 3, reactions: {'7': true}}}}, nameReactions: null, seasonDuels: null}
+  };
+  const {fixture, stats} = sanitize(raw, 'عينة اختبار');
+  const out = JSON.stringify(fixture);
+  check('تعقيم (أ): نص التعليق ← نص تجريبي', fixture.data.roundComments['3'][1].text, 'تعليق تجريبي 1');
+  check('تعقيم (أ): نص الجدار ← نص تجريبي', fixture.extra.wall['3']['-k1'].text, 'رسالة تجريبية 1');
+  check('تعقيم (أ): لا أثر للنص الأصلي في الناتج', out.includes(SECRET_C) || out.includes(SECRET_W), false);
+  check('تعقيم (أ): الاسم والوقت والتفاعلات والأصوات تبقى', [fixture.data.roundComments['3'][1].name, fixture.data.roundComments['3'][1].time, fixture.extra.wall['3']['-k1'].reactions, fixture.data.roundComments.challenge_r4['6'].vote], ['سعيد', 1, {'7': true}, 15]);
+  check('تعقيم (ب): snapshot محذوف من سجل النشاط', out.includes('"snapshot"'), false);
+  check('تعقيم (ب): نص الإجراء والوقت يبقون', fixture.data.activityLog.map(e => [e.action, e.time]), [['💾 حفظ الجولة 3', 't1'], ['دخول', 't2']]);
+  check('تعقيم (ج): الجولات ما تغيّرت', fixture.data.rounds, raw.data.rounds);
+  check('تعقيم: الإحصاءات', [stats.rounds, stats.commentsReplaced, stats.wallReplaced, stats.snapshotsRemoved], [1, 1, 1, 1]);
+  check('تعقيم: الأصل ما تعدّل', raw.data.roundComments['3'][1].text, SECRET_C);
+  let bad = null;
+  try { sanitize({version: 1, data: {}}); } catch (e) { bad = e.message; }
+  check('تعقيم: نسخة غير version 2 ← خطأ واضح', /version: 2/.test(bad || ''), true);
+  // اتساق مع ملف T05a: إعادة تعقيم الملف الجاهز ما تغيّر بياناته (idempotent)
+  const season = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8'));
+  const again = sanitize(season).fixture;
+  check('تعقيم: season.json الجاهز يبقى كما هو بعد إعادة التعقيم', [again.data, again.predictions, again.extra], [season.data, season.predictions, season.extra]);
+  check('تعقيم: season.json ≤ 500KB', fs.statSync(path.join(ROOT, 'tests/fixtures/season.json')).size <= 500 * 1024, true);
+}
+
+// ---------- 000-T006: Firebase الوهمي (tools/fake-firebase.js) ----------
+const asyncTests = (async () => {
+  const ffSrc = fs.readFileSync(path.join(ROOT, 'tools/fake-firebase.js'), 'utf8');
+  const win = {__FIXTURE__: {data: {rounds: [{n: 1}]}, extra: {wall: {a: 1}}}, __OVERRIDES__: {currentChampionId: 7}, console};
+  win.window = win;
+  vm.runInContext(ffSrc, vm.createContext(win), {filename: 'fake-firebase.js'});
+  const db = win.firebase.database();
+  check('وهمي: get يقرأ data من fixture', (await db.ref('brookie/brookie-fantasy-s2-data').get()).val(), {rounds: [{n: 1}]});
+  check('وهمي: overrides تحت brookie/ مباشرة', (await db.ref('brookie/currentChampionId').get()).val(), 7);
+  check('وهمي: مسار غير موجود ← exists() = false', (await db.ref('brookie/nope').get()).exists(), false);
+  await db.ref('brookie/x/y').set(5);
+  check('وهمي: set ثم get', (await db.ref('brookie/x').get()).val(), {y: 5});
+  await db.ref('brookie/x').update({'y': 6, 'z/w': 1});
+  check('وهمي: update بمسارات متداخلة', (await db.ref('brookie/x').get()).val(), {y: 6, z: {w: 1}});
+  await db.ref('brookie/visitors/total').transaction(v => (v || 0) + 1);
+  await db.ref('brookie/visitors/total').transaction(v => (v || 0) + 1);
+  check('وهمي: transaction', (await db.ref('brookie/visitors/total').get()).val(), 2);
+  await db.ref('brookie/x').remove();
+  check('وهمي: remove يحذف الفرع', (await db.ref('brookie/x').get()).exists(), false);
+  const k = db.ref('brookie/list').push({a: 1}).key;
+  await Promise.resolve();
+  check('وهمي: push يولّد مفتاحًا ويكتب القيمة', (await db.ref('brookie/list/' + k).get()).val(), {a: 1});
+  const seen = [];
+  db.ref('brookie/live').on('value', s => seen.push(s.val()));
+  await Promise.resolve(); await Promise.resolve();
+  await db.ref('brookie/live').set(1);
+  await Promise.resolve(); await Promise.resolve();
+  check('وهمي: on(value) يستدعي فورًا ثم مع كل كتابة', seen, [null, 1]);
+  let err = null;
+  try { db.ref('brookie/a').orderByChild('x'); } catch (e) { err = e.message; }
+  check('وهمي: دالة غير مدعومة ترمي خطأ واضحًا', /غير مدعوم/.test(err || ''), true);
+  check('وهمي: الدالة غير المدعومة تُسجَّل', win.__FAKE_FIREBASE__.unsupported, ['ref.orderByChild()']);
+})();
+
 // ---------- الخلاصة ----------
-console.log(`\n${pass} ✅ / ${fail} ❌`);
-process.exit(fail > 0 ? 1 : 0);
+asyncTests.then(() => {
+  console.log(`\n${pass} ✅ / ${fail} ❌`);
+  process.exit(fail > 0 ? 1 : 0);
+}, e => { console.log('❌ خطأ غير متوقع في الاختبارات غير المتزامنة:', e); process.exit(1); });
