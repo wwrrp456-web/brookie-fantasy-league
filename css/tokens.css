@@ -1,0 +1,54 @@
+/* رموز التصميم (Design Tokens) لهوية PROKI — 001-T001، plan.md §4، ألوان الشاشة حسب R-10.
+ * الملف يُعرّف فقط: لا يُربط بأي متغيّر قديم ولا يستبدل أي قيمة موجودة (الربط مهمة T002).
+ * يُحمَّل أول ملف CSS في index.html وreport.html.
+ *
+ * الثيم: الداكن افتراضي على :root، والفاتح تحت `html.light-mode` (الآلية الفعلية في الموقع:
+ * js/ui/theme-and-onboarding.js يبدّل الكلاس على documentElement، وليس data-theme).
+ * قيم الفاتح مأخوذة من `html.light-mode` الحالية في css/base.css (cream/paper/text/text2/muted/line)،
+ * وما ليس له مقابل هناك (--c-surface-2 وعتبات الألوان الدلالية) اقتراح أولي يحتاج اعتماد المراجع/المنظّم. */
+:root {
+  /* ألوان الهوية: داكن (الافتراضي) */
+  --c-bg: #0B0D1F;
+  --c-surface-1: #12142E;
+  --c-surface-2: #1A1D40;
+  --c-border: rgba(255, 255, 255, .08);
+  --c-border-strong: rgba(123, 92, 255, .45);
+  --c-text: #F4F5FF;
+  --c-text-2: #A9ADCF;
+  --c-text-3: #6E7299;
+  --c-brand: #7B5CFF;                /* لون التمييز الوحيد */
+  --c-brand-strong: #6246EA;
+  --c-brand-blue: #00B4FF;           /* أزرق الهوية: لتدرج P والرسومات فقط، ليس لون تمييز ثانيًا (R-10) */
+  --g-brand: linear-gradient(135deg, #00B4FF, #7B5CFF);   /* تدرج الهوية */
+  /* دلالية فقط */
+  --c-gold: #F5B83D;
+  --c-up: #22C55E;
+  --c-down: #EF4444;
+  --c-info: #38BDF8;
+
+  /* الخط والمقاسات */
+  --font: 'Tajawal', system-ui, sans-serif;
+  --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 20px; --fs-xl: 24px; --fs-2xl: 32px;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-6: 24px; --sp-8: 32px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-pill: 999px;
+}
+
+/* الوضع الفاتح بنفس الأسماء (Q-23) */
+html.light-mode {
+  --c-bg: #F3F1FA;
+  --c-surface-1: #FDFCFF;
+  --c-surface-2: #EAE6F8;
+  --c-border: rgba(123, 92, 255, .18);
+  --c-border-strong: rgba(123, 92, 255, .45);
+  --c-text: #0B0D1F;
+  --c-text-2: #3D2E99;
+  --c-text-3: #6E6690;
+  --c-brand: #7B5CFF;
+  --c-brand-strong: #6246EA;
+  --c-brand-blue: #00B4FF;
+  --g-brand: linear-gradient(135deg, #00B4FF, #7B5CFF);
+  --c-gold: #F5B83D;
+  --c-up: #22C55E;
+  --c-down: #EF4444;
+  --c-info: #38BDF8;
+}
