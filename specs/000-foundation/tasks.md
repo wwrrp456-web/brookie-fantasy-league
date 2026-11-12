@@ -47,6 +47,7 @@
 - **بديل:** إضافة النطاق `proki-fantasy-default-rtdb.firebaseio.com` في إعدادات شبكة البيئة، فتقرأ الأدوات Firebase مباشرة (قراءة فقط).
 
 ### ⬜ T05 · `make-fixture.js` + `season.json` · 🛠️
+- **أُنجز:** season.json وoverrides.json ✅ (PR #15)
 - **يعتمد على:** T04
 - **تحديث (12 نوفمبر 2026):** `season.json` و`overrides.json` جاهزين من PR #15. المطلوب الحين: `tools/make-fixture.js` يطبّق **نفس قواعد التعقيم** الموثقة في `specs/reports/000-T05a.md` على أي نسخة احتياطية مستقبلية، مع اختبار في `tests/run.js` على عينة خام **صغيرة مصطنعة** (فيها تعليق ولقطة snapshot) يتأكد إن الناتج معقّم وإن الجولات ما تغيّرت.
 - **الملفات:** 🆕 `tools/make-fixture.js`، و🆕 `tests/fixtures/season.json`، و🆕 `tests/fixtures/overrides.json`
