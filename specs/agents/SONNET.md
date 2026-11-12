@@ -86,16 +86,16 @@
 - النص حوالي السطر 670 (`والمرجعين بـindex.html/league.html`): احذف ذكر `league.html` بحيث يقول المرجع `index.html` فقط. **لا تعدّل غير هالنص.**
 - الأدلة: الـdiff (سطر واحد) و`node tests/run.js`.
 
-### ⬜ M7 · ادمج PR #13 (000-T03b نص index.html)
+### ✅ M7 · ادمج PR #13 (000-T03b نص index.html)
 - **SHA:** `4af6de8090f80a72a5ec81f0410e91f619479994` · الحكم: `specs/reports/000-T03b-review.md`
 
-### ⬜ M8 · ادمج PR #14 (001-T05 مكتبة الأيقونات الكاملة)
+### ✅ M8 · ادمج PR #14 (001-T05 مكتبة الأيقونات الكاملة)
 - **SHA:** `a912c94197bca4aeacc07d964f297ef46332fa8d` · الحكم: `specs/reports/001-T05-full-review.md` · بعدها علّم T05 ✅ في `001-ui-visual-overhaul/tasks.md`.
 
-### ⬜ M9 · ادمج PR #15 (000-T05a بيانات الاختبار المعقّمة)
+### ✅ M9 · ادمج PR #15 (000-T05a بيانات الاختبار المعقّمة)
 - **SHA:** `27efad912b09c8ff965388f1dd429a766d059e94` · الحكم في وصف الـPR (جهّزه Opus بطلب المنظّم) · بعدها اكتب تحت T05 في `000-foundation/tasks.md`: "season.json وoverrides.json ✅ (PR #15)".
 
-### ⬜ S5 · تركيب Spec Kit (R-12) · ⏹️ توقف بعده
+### ✅ S5 · تركيب Spec Kit (R-12) · PR #16
 - **المرجع:** `specs/SPECKIT-MIGRATION.md` (اقرأه كامل، خصوصًا القسمين 3 و5).
 - **الفرع:** `feat/speckit-install`
 - **المطلوب:**
@@ -113,3 +113,7 @@
   - **أجوبة الأسئلة الخمسة** في القسم 5 من `SPECKIT-MIGRATION.md`، من الكود والتوثيق الفعلي مو من الذاكرة.
   - `node tests/run.js` أخضر.
 - **التقرير:** `specs/reports/speckit-install.md`
+
+### ⬜ M10 · ادمج PR #16 (S5 تركيب Spec Kit) · ⏹️ توقف بعده
+- **SHA:** `925b894cf6e03778058e04eef5574bbe40a220a6` · الحكم: `specs/reports/speckit-install-review.md`
+- بعد الدمج: سجّل في `merge-log.md`، وارفع على فرع التكامل. **لا تبدأ أي مهمة كود أخرى**: المراجع الحين يحوّل `tasks.md` للميزات الأربع لصيغة Spec Kit (MASTER-PLAN A3–A6)، وأوامر الكود الجاية تنكتب بعدها بالصيغة الجديدة.
