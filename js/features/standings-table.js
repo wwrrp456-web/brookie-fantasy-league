@@ -255,7 +255,7 @@ function renderStandings(){
       <th class="col-team">المشارك</th>
       <th class="col-sec">ممة</th>
       <th class="col-sec">جديد</th>
-      <th class="col-score">نقاط</th>
+      <th class="col-score">الرصيد</th>
       <th class="col-toggle"></th>
     </tr></thead><tbody>`;
 
@@ -314,10 +314,10 @@ function renderStandings(){
             <thead><tr><th>الجولة</th><th>نقاط الجولة</th><th>التراكمي</th></tr></thead>
             <tbody>
               ${JOINED_AFTER_ROUND1[s.id]
-                ? `<tr><td>الجولة 1</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>`
+                ? `<tr><td>الجولة 1</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>`
                 : `<tr><td>الجولة 1</td><td>${(ROUND1_POINTS[s.id]||0)}</td><td>${(ROUND1_POINTS[s.id]||0)}</td></tr>`}
               ${JOINED_AFTER_ROUND2[s.id]
-                ? `<tr><td>الجولة 2</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>
+                ? `<tr><td>الجولة 2</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>
                    <tr><td>الرصيد الافتتاحي</td><td>${s.carry}</td><td>${s.carry}</td></tr>`
                 : `<tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>`}
               ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.points}${h.points===0?' <span class="mumma">ممة</span>':''}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
@@ -330,9 +330,9 @@ function renderStandings(){
 
   html += '</tbody></table></div>';
   html += `<div class="table-legend">
-    <div class="legend-item"><span class="legend-swatch" style="background:#16A6EA;"></span>مراكز الصدارة</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#7A52EE;"></span>منطقة المطاردة</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#FF4438;"></span>المراكز الأخيرة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-info);"></span>مراكز الصدارة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-brand);"></span>منطقة المطاردة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-down);"></span>المراكز الأخيرة</div>
   </div>`;
   if(!hasRounds){
     html += '<p style="color:var(--muted);font-size:0.78rem;margin:10px 2px 0;">النقاط الحالية من كشف المطابقة المعتمد. عمود «جديد» يبدأ بالتحرك مع أول جولة تُسجَّل.</p>';
