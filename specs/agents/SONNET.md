@@ -92,6 +92,9 @@
 ### ⬜ M8 · ادمج PR #14 (001-T05 مكتبة الأيقونات الكاملة)
 - **SHA:** `a912c94197bca4aeacc07d964f297ef46332fa8d` · الحكم: `specs/reports/001-T05-full-review.md` · بعدها علّم T05 ✅ في `001-ui-visual-overhaul/tasks.md`.
 
+### ⬜ M9 · ادمج PR #15 (000-T05a بيانات الاختبار المعقّمة)
+- **SHA:** `27efad912b09c8ff965388f1dd429a766d059e94` · الحكم في وصف الـPR (جهّزه Opus بطلب المنظّم) · بعدها اكتب تحت T05 في `000-foundation/tasks.md`: "season.json وoverrides.json ✅ (PR #15)".
+
 ### ⬜ S5 · تركيب Spec Kit (R-12) · ⏹️ توقف بعده
 - **المرجع:** `specs/SPECKIT-MIGRATION.md` (اقرأه كامل، خصوصًا القسمين 3 و5).
 - **الفرع:** `feat/speckit-install`
