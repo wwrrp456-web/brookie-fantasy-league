@@ -1,26 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg class="crest" width="100" height="110.00000000000001" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ريال مدريد">
-    <defs>
-      <clipPath id="shc4ebxya_585">
-        <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" transform="translate(50,56) scale(0.82) translate(-50,-56)"/>
-      </clipPath>
-      <linearGradient id="glc4ebxya_585" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.38"/>
-        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <title>ريال مدريد</title>
-    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" fill="#1B1F5E"/>
-    <g clip-path="url(#shc4ebxya_585)">
-      <rect x="0" y="0" width="100" height="110" fill="#FEFEFE"/>
-      <path d="M27 64 L27 42 L38 52 L50 30 L62 52 L73 42 L73 64 Z" fill="#FEBE10"/>
-      <rect x="25" y="64" width="50" height="9" rx="2" fill="#FEBE10"/>
-      <circle cx="27" cy="42" r="4" fill="#FEBE10"/>
-      <circle cx="50" cy="30" r="4.5" fill="#FEBE10"/>
-      <circle cx="73" cy="42" r="4" fill="#FEBE10"/>
-    </g>
-    <g clip-path="url(#shc4ebxya_585)">
-      <rect x="0" y="0" width="100" height="46" fill="url(#glc4ebxya_585)"/>
-    </g>
-    
-  </svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="crest" width="100" height="110" viewBox="0 0 100 110" role="img" aria-label="ريال مدريد">
+<title>ريال مدريد</title>
+<defs><clipPath id="crest-real-madrid-clip"><path d="M10.4 11H89.6V57.8C89.6 81.2 71.6 94.7 50 101 28.4 94.7 10.4 81.2 10.4 57.8Z"/></clipPath></defs>
+<path class="crest-border" d="M6 6H94V58C94 84 74 99 50 106 26 99 6 84 6 58Z" fill="#1B1F5E" stroke="#fff" stroke-opacity=".8" stroke-width="2.4" stroke-linejoin="round"/>
+<g clip-path="url(#crest-real-madrid-clip)">
+<rect x="0" y="0" width="100" height="110" fill="#FEFEFE" /><path d="M27 64 L27 42 L38 52 L50 30 L62 52 L73 42 L73 64 Z" fill="#FEBE10" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round" /><rect x="25" y="64" width="50" height="9" rx="2" fill="#FEBE10" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round" /><circle cx="27" cy="42" r="4" fill="#FEBE10" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round" /><circle cx="50" cy="30" r="4.5" fill="#FEBE10" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round" /><circle cx="73" cy="42" r="4" fill="#FEBE10" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round" />
+</g>
+</svg>
