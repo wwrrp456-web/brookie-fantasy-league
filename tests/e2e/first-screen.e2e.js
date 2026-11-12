@@ -38,6 +38,22 @@ async function open(browser, width) {
     check('ترتيب الأقسام حسب FR-16', order, true);
     check('"أنديتي هذا الأسبوع": مكان محجوز مخفي', await p.evaluate(() => { const e = document.getElementById('myClubsWeekBox'); return !!e && e.hidden; }), true);
 
+    // F5: بلوك عنوان الصفحة وعنوان بطاقة الجدول
+    const head = await p.evaluate(() => ({
+      eyebrow: document.getElementById('standingsEyebrow').textContent.trim(),
+      title: document.querySelector('.page-title').textContent.trim(),
+      share: !!document.querySelector('#pageShareBtn svg'),
+      caption: document.querySelector('#standingsBox .table-title').textContent.trim(),
+      pill: document.querySelector('#standingsBox .pill').textContent.trim(),
+      n: document.querySelectorAll('tr.standings-row').length
+    }));
+    check('عنوان الصفحة: "الموسم الثاني · الجولة N" و"كل نقطة تفرق."', [/^الموسم الثاني · الجولة \d+$/.test(head.eyebrow), head.title], [true, 'كل نقطة تفرق.']);
+    check('زر "مشاركة" بأيقونة، وأزرار المشاركة والتحميل القديمة باقية', [head.share, await p.evaluate(() => ['shareStandingsBtn', 'dlStandingsBtn', 'dlStandingsStoryBtn'].every(i => !!document.getElementById(i)))], [true, true]);
+    check('عنوان بطاقة الجدول "الترتيب العام" + شارة العدد بـformatCount', [head.caption, head.pill], ['الترتيب العام', await p.evaluate(n => formatCount(n, 'مشارك'), head.n)]);
+    await p.evaluate(() => { window.__shared = 0; window.shareStandingsImage = async () => { window.__shared++; }; });
+    await p.click('#pageShareBtn');
+    check('زر "مشاركة" يستدعي shareStandingsImage()', await p.evaluate(() => window.__shared), 1);
+
     // الميداليات: ظاهرة، وبلا زر/عنصر طي، وخارج أي <details>
     const med = await p.evaluate(() => {
       const b = document.getElementById('medalsBox');

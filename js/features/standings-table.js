@@ -219,6 +219,12 @@ function renderSmartProfile(){
     </div>`;
 }
 
+// زر "مشاركة" في عنوان الصفحة: نفس مشاركة صورة الترتيب الموجودة (تتحوّل للتنزيل لو ما فيه مشاركة)
+(function(){
+  const b = document.getElementById('pageShareBtn');
+  if(b) b.addEventListener('click', ()=>{ if(typeof shareStandingsImage === 'function') shareStandingsImage(); });
+})();
+
 // اللمس على أي مكان في الصف يفتح تفاصيله (صف موسّع واحد في وقته، FR-14). الروابط والأزرار الداخلية للتفاصيل ما تقلبه.
 function onStandingsRowTap(e){
   const tr = e.target.closest && e.target.closest('tr.standings-row');
@@ -247,7 +253,10 @@ function renderStandings(){
     });
   }
 
-  let html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
+  const eyebrow = document.getElementById('standingsEyebrow');
+  if(eyebrow) eyebrow.textContent = hasRounds ? `الموسم الثاني · الجولة ${getCurrentRoundNumber()}` : 'الموسم الثاني';
+  let html = `<div class="table-caption"><h2 class="table-title">الترتيب العام</h2><span class="pill">${formatCount(standings.length, 'مشارك')}</span></div>`;
+  html += '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
   html += `<table class="league-table">
     <thead><tr>
       <th class="col-rank">#</th>
