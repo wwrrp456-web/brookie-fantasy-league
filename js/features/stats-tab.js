@@ -209,7 +209,7 @@ function renderClubStats(){
   list.forEach((cst,i)=>{
     html += `<tr>
       <td style="color:#8A8A8A;">${i+1}</td>
-      <td class="cs-name"><div class="cs-name-inner">${clubCrestSVG(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
+      <td class="cs-name"><div class="cs-name-inner">${crestHTML(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
       <td style="color:#8A8A8A;">${cst.played}</td>
       <td style="color:#3DD47E;">${cst.w}</td>
       <td style="color:#16A6EA;">${cst.d}</td>
@@ -300,7 +300,7 @@ function renderClubMap(){
       const isOwned = owners.length>0;
       const ownersStr = isOwned ? owners.join('، ') : '';
       html += `<div class="club-map-chip${isOwned?' owned':''}">
-        ${clubCrestSVG(club,18)}
+        ${crestHTML(club,18)}
         <span>${club}</span>
         ${isOwned?`<span class="club-map-owners">(${ownersStr})</span>`:''}
       </div>`;

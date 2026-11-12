@@ -430,7 +430,7 @@ function renderRound2Section(){
       <div class="r2-clubs">
         ${r2.clubs.map(c=>`
           <div class="r2-club-row">
-            ${clubCrestSVG(c.name, 26)}
+            ${crestHTML(c.name, 26)}
             <div class="r2-club-matches">
               <div class="r2-club-name">${c.name}</div>
               ${c.matches.length ? c.matches.map(m=>`
@@ -529,7 +529,7 @@ function renderRounds(){
               // تُعرض كل مباراة بسطر مستقل، بنفس أسلوب r2-match-line بالجولة 2.
               const es = getTeamRoundEntries(entries, ti);
               return `<div class="r2-club-row">
-                ${clubCrestSVG(t, 26)}
+                ${crestHTML(t, 26)}
                 <div class="r2-club-matches">
                   <div class="r2-club-name">${t}</div>
                   ${es.length ? es.map(e=> e.result==='no_match' ? `
