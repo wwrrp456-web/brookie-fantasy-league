@@ -60,7 +60,7 @@
 - **لا تغيّر** أي حرف منفرد (`FCP` بورتو مثلًا) ولا ألوان أي نادٍ. أي اقتراح بديل في `<slug>.alt.svg`.
 - `_compare.html`: قبل وبعد على 24 و48 و96px. ثم توقف، لأن المنظّم يعتمد الدفعة قبل الباقي.
 
-### ⬜ C5 · 001-T06 · تحسين الشعارات الـ27 الباقية · BRIEF-2
+### ✅ C5 · 001-T06 · تحسين الشعارات الـ27 الباقية · BRIEF-2
 - **الفرع:** `codex/001-T06-rest` (من آخر فرع التكامل **بعد دمج PR #17**، فتأكد إن `assets/crests/_compare.html` موجود عندك) · **الكتابة في:** `assets/crests/` · **التقرير:** `specs/reports/001-T06-rest.md`
 - **المنظّم اعتمد أسلوب الدفعة التجريبية (PR #17)**: الإطار الرفيع، والتاج الأوضح، وإزالة اللمعة. **طبّق نفس القرارات حرفيًا** (راجع `specs/reports/001-T06.md`: سماكة الحد 2.4، والشفافية 0.8، والقناع الداخلي).
 - **الأندية (27):** `manchester-city` `milan` `psg` `chelsea` `galatasaray` `al-qadsiah` `juventus` `dinamo-zagreb` `benfica` `dortmund` `atletico-madrid` `fenerbahce` `al-nassr` `ajax` `arsenal` `celtic` `bayern-munich` `feyenoord` `rangers` `sporting-cp` `psv` `roma` `al-shabab` `liverpool` `al-ahli` `marseille` `shakhtar`
