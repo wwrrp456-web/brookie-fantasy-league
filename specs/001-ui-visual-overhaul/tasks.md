@@ -12,7 +12,7 @@
 
 ## م1 · الرموز والتنظيف (بعد 000)
 
-- [ ] T001 [Sonnet] `css/tokens.css`
+- [x] T001 [Sonnet] `css/tokens.css`
   - **الملفات:** 🆕 `css/tokens.css`، و`index.html` (أول `<link>`)، و`report.html`
   - **القبول:** لا تغيّر بصري (فرق اللقطات = 0)، والرموز متاحة بالوضعين.
 

@@ -54,7 +54,7 @@
   - القبول: تعديل لون واحد تجريبي يظهر في `diff/summary.md` بالصور المتأثرة فقط
 - [x] T010 [P] [US1] [Sonnet] `lint.js` + خط الأساس
   - القبول: خط الأساس الأولي مسجّل: hex ≈ 196، وإيموجي ≈ 580، و`style=""` = 166، و`numberNoun` ≈ 83، و`rawDates` = 9 (بعد T002 ينقص 1)، و`!important` = 21؛ وSC-04 إضافة `#123456` لأي ملف CSS تفشل الفحص
-- [ ] T011 [US1] [Sonnet] `verify.yml` (يعتمد على T008، T009، T010)
+- [x] T011 [US1] [Sonnet] `verify.yml` (يعتمد على T008، T009، T010)
   - القبول: PR تجريبي يُظهر فحص `verify` أخضر، مع artifact اللقطات والملخص في صفحة الفحص
 - [ ] T012 [US1] [المنظّم] إعدادات GitHub، مرة واحدة (يعتمد على T011)
   1. Settings ← General ← Pull Requests ← فعّل **Allow auto-merge**
