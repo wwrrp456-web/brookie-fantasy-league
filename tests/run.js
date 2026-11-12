@@ -283,8 +283,9 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
 
 // ---------- 001-T010 (F2): snap.js يتخطّى الصفحات اللي ملفها غير موجود تحت --root بدون ما يعدّها خطأ ----------
 {
-  let hasPw = true; try { require.resolve('playwright'); } catch (e) { hasPw = false; }
-  if (!hasPw) console.log('⏭️ اختبار تخطّي الصفحات في snap.js متخطّى (playwright غير مثبّت: npm ci)');
+  // يحتاج متصفح Chromium فعليًا (وظيفة verify في CI ما تثبّته: فيها npm ci فقط، واللقطات في وظيفتين ثانيتين)
+  let hasPw = true; try { const pw = require('playwright'); hasPw = fs.existsSync(pw.chromium.executablePath()); } catch (e) { hasPw = false; }
+  if (!hasPw) console.log('⏭️ اختبار تخطّي الصفحات في snap.js متخطّى (Chromium غير مثبّت: npx playwright install chromium)');
   else {
     const {spawnSync} = require('child_process');
     const os = require('os');
