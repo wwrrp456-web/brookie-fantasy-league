@@ -1,0 +1,142 @@
+{
+  "task": "001-T008",
+  "base": "bfe1e4cbe06f334a8fcffd154fdc824f8516c2c7",
+  "unitTests": {
+    "passed": 237,
+    "failed": 0
+  },
+  "lint": "passed",
+  "existingAppSnapshots": {
+    "tabs": 28,
+    "consoleErrors": 0,
+    "pageErrors": 0
+  },
+  "mockups": [
+    {
+      "file": "standings-mobile.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": 52,
+      "fifthRowBottom": 820.359375,
+      "medalCards": 4,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "standings-desktop.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": 52,
+      "fifthRowBottom": 820.359375,
+      "medalCards": 4,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "standings-desktop.html",
+      "width": 1366,
+      "headerHeight": 105,
+      "overflow": false,
+      "rowHeight": 52,
+      "fifthRowBottom": 848.359375,
+      "medalCards": 4,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "rounds-mobile.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": null,
+      "fifthRowBottom": null,
+      "medalCards": 0,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "participants-mobile.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": null,
+      "fifthRowBottom": null,
+      "medalCards": 0,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "stats-mobile.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": null,
+      "fifthRowBottom": null,
+      "medalCards": 0,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "empty-states.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": null,
+      "fifthRowBottom": null,
+      "medalCards": 0,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "light-mode.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": 52,
+      "fifthRowBottom": 820.359375,
+      "medalCards": 4,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    },
+    {
+      "file": "index.html",
+      "width": 390,
+      "headerHeight": 69,
+      "overflow": false,
+      "rowHeight": null,
+      "fifthRowBottom": null,
+      "medalCards": 0,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": []
+    }
+  ]
+}
