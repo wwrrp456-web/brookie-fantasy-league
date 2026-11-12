@@ -30,7 +30,7 @@ const FORBIDDEN = ['المتسابق', 'المتسابقين', 'المتسابق
 const NOT_AR_LETTER = '(?![\\u0621-\\u064A\\u064B-\\u0652])';
 const RE = {
   hex: /#[0-9a-fA-F]{3,8}\b/,
-  emoji: /\p{Extended_Pictographic}(?:️|‍\p{Extended_Pictographic})*/gu,
+  emoji: /\p{Extended_Pictographic}/u,
   inlineStyle: /style="/,
   numberNoun: new RegExp('\\$\\{[^}]*\\}\\s*(?:' + COUNTED.join('|') + ')' + NOT_AR_LETTER),
   rawDate: /toLocale(?:Date)?String\(/,
