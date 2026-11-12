@@ -143,7 +143,7 @@
 - **المطلوب:** حسب المهمة حرفيًا. الخط من حزمة `@fontsource/tajawal` (رخصة OFL محفوظة)، ويستبدل رابط Google Fonts في `index.html` و`report.html`. **احذف `assets/icons/fonts/` المكرر** وأربط `assets/icons/_sheet.html` بـ`css/fonts.css`. و`package.json` للتطوير فقط (devDependencies).
 - **الأدلة:** الموقع يعرض Tajawal بدون أي طلب لـ`fonts.googleapis.com` (Playwright مع حجب الشبكة)، وحجم الخطوط الأربعة ≤ 200KB، ولقطتان قبل وبعد للصفحة الرئيسية (الفرق متوقع صغير)، و`node tests/run.js` أخضر.
 
-### 🔁 S9 · 000-T010 · `tools/lint.js` + خط الأساس
+### ✅ S9 · 000-T010 · `tools/lint.js` + خط الأساس
 - **المرجع:** `tasks.md` (T010) و`plan.md` §3 "tools/lint.js" (جدول المقاييس السبعة). **الفرع:** `feat/000-T010-lint` · **التقرير:** `specs/reports/000-T010.md`
 - **المطلوب:** المقاييس السبعة، و`lint-baseline.json` بقيم الخط الأولي الفعلية (اكتب في التقرير القيم اللي طلعت، وقارنها بالمتوقعة في المهمة). **أي زيادة تفشل، و`--update-baseline` للتخفيض فقط.**
 - **الأدلة:** تشغيل نظيف على الريبو الحين، واختبار سلبي (SC-04): إضافة `#123456` لأي ملف CSS ← الفحص يفشل (ولقطة الفشل في التقرير).
@@ -169,22 +169,22 @@
 ## الدفعة 2 (12 نوفمبر): مراجعة S7–S12
 > **ادمج بالترتيب ده** (عشان `.gitignore` و`package.json` يدخلون أول). كل PR: تأكد من الـSHA، وحلّ تعارض `tests/run.js` بالإبقاء على **كل** الاختبارات، وشغّل `node tests/run.js` بعد كل دمج (لازم 0 ❌)، وعلّم `- [x] T###` في `tasks.md` الميزة.
 
-### ⬜ M13 · ادمج PR #20 (000-T007 الخط المحلي + package.json) أول واحد
+### ✅ M13 · ادمج PR #20 (000-T007 الخط المحلي + package.json) أول واحد
 - **SHA:** `9dc51e89ea3dfdbc3a414062ea4b43736d972b9b` · الحكم: `specs/reports/000-T007-review.md` · علّم 000-T007.
 
-### ⬜ M14 · ادمج PR #19 (000-T006 Firebase وهمي)
+### ✅ M14 · ادمج PR #19 (000-T006 Firebase وهمي)
 - **SHA:** `0b51698442582cc0a3c5354001e722ca919d9564` · الحكم: `000-T006-review.md` · علّم 000-T006.
 
-### ⬜ M15 · ادمج PR #22 (000-T005 أداة التعقيم)
+### ✅ M15 · ادمج PR #22 (000-T005 أداة التعقيم)
 - **SHA:** `50294dc83e14834dc747a53ac13df047b957151f` · الحكم: `000-T005-review.md` · علّم 000-T005.
 
-### ⬜ M16 · ادمج PR #23 (002-T001 وT002 ar-format)
+### ✅ M16 · ادمج PR #23 (002-T001 وT002 ar-format)
 - **SHA:** `bed13064e59e9a26ac1493ccbbdda73d7eb33464` · الحكم: `002-T001-review.md` · علّم 002-T001 وT002.
 
-### ⬜ M17 · ادمج PR #24 (003-T001 escapeHtml)
+### ✅ M17 · ادمج PR #24 (003-T001 escapeHtml)
 - **SHA:** `06032b827c80b9d7b8543d68a5976aef0515584d` · الحكم: `003-T001-review.md` · علّم 003-T001. وبعد الدمج شغّل `tests/e2e/escape-html.e2e.js` على الفرع المدموج وسجّل النتيجة في `merge-log.md`.
 
-### ⬜ F1 · إصلاح PR #21 (000-T010 lint): `node_modules/` انرفع فيه
+### ✅ F1 · إصلاح PR #21 (000-T010 lint): `node_modules/` انرفع فيه
 - **الحكم:** `specs/reports/000-T010-review.md` (🔁). الأدوات سليمة، والمشكلة بس إن الفرع فيه 274 ملف من `node_modules/`.
 - **الإصلاح (على فرعك `feat/000-T010-lint`، بعد M13 عشان `.gitignore` يكون موجود):**
   1. ابنِ الفرع من جديد من آخر فرع التكامل: `git checkout -B feat/000-T010-lint origin/claude/broki-site-summary-qvjzoi`.
@@ -192,12 +192,45 @@
   3. تأكد: `git diff --stat origin/claude/broki-site-summary-qvjzoi` ما فيه `node_modules`، وجدول `git ls-files | grep -c node_modules` = 0.
   4. `git push --force-with-lease` على فرعك نفسه (فرع PR #21)، **بدون دمج**، واكتب في تقرير `000-T010.md` سطر "أُعيد بناء الفرع بدون node_modules (F1)".
 
-### ⬜ S13 · 000-T008 · `tools/snap.js`
+### ✅ S13 · 000-T008 · `tools/snap.js`
 - **المرجع:** `specs/000-foundation/tasks.md` (T008) و`plan.md` §3 "tools/snap.js". **الفرع:** `feat/000-T008-snap` (من فرع التكامل بعد M13–M17) · **التقرير:** `specs/reports/000-T008.md`
 - **المطلوب:** حسب الخطة: يستخدم `fake-firebase.js` و`season.json` و`css/fonts.css`، ويثبّت الوقت (ما يعتمد على الساعة الحالية)، ويشتغل بدون إنترنت. المخرجات: 28 لقطة تبويب + (6 كروت × 3 حالات) + `report.json`. **`node_modules/` و`snapshots/` و`diff/` في `.gitignore` (موجودة من #20)، فلا ترفعها.**
 - **الأدلة:** SC-01: تشغيلتان متتاليتان تعطي صورًا **متطابقة بكسليًا** (اكتب الأمر والنتيجة)، وعدد اللقطات، وزمن التشغيل، ولقطتان أمثلة (JPEG ≤ 300KB) في `specs/reports/img/000-T008/`.
 
-### ⬜ S14 · 000-T009 · `tools/snap-diff.js` · ⏹️ توقف بعده
+### ✅ S14 · 000-T009 · `tools/snap-diff.js`
 - **المرجع:** `tasks.md` (T009) و`plan.md` §3 "tools/snap-diff.js". **الفرع:** `feat/000-T009-snap-diff` (بعد S13) · **التقرير:** `specs/reports/000-T009.md`
 - **القبول:** تعديل لون واحد تجريبي (**لا تدمجه**) يظهر في `diff/summary.md` بالصور المتأثرة فقط. أرفق الملخص في التقرير.
 - ⏹️ **بعد S14 توقف.** وأنا أراجع، وأكتب لك `000-T011` (`verify.yml`) بعد دمج lint.
+
+---
+## الدفعة 3 (12 نوفمبر): بعد lint وsnap وsnap-diff
+> نفس القواعد: SHA، وحل تعارض `tests/run.js` بالإبقاء على **كل** الاختبارات، و`node tests/run.js` بعد كل دمج. صيغة التعليم `- [x] T###`.
+
+### ⬜ M18 · ادمج PR #21 (000-T010 lint، بعد الإصلاح)
+- **SHA:** `28d49354b92698aab3b8063f27bf914f7cb1e2a7` · الحكم: `specs/reports/000-T010-review.md` · علّم 000-T010. **قبل الدمج تأكد:** `git ls-tree -r --name-only origin/feat/000-T010-lint | grep -c node_modules` = 0.
+
+### ⬜ M19 · ادمج PR #25 (000-T008 snap.js)
+- **SHA:** `81fa5146c17579ea4954cdd0e9450f658618ec8c` · الحكم: `000-T008-review.md` · علّم 000-T008.
+
+### ⬜ M20 · ادمج PR #26 (000-T009 snap-diff.js)
+- **SHA:** `4fb69ac06406d513504f13605a54f87a1255d247` · الحكم: `000-T009-review.md` · علّم 000-T009.
+
+### ⬜ S15 · 000-T011 · `.github/workflows/verify.yml`
+- **المرجع:** `specs/000-foundation/tasks.md` (T011) و`plan.md` §3 "verify.yml". **الفرع:** `feat/000-T011-verify` · **التقرير:** `specs/reports/000-T011.md`
+- **المطلوب:** الخطوات حسب الخطة (اسم الوظيفة **`verify`** بالضبط، لأنه الفحص الإلزامي في حماية `main`). **تعديلات المراجع:**
+  1. لقطات الأساس (base) والحالية (head) في **وظيفتين متوازيتين**، ثم وظيفة `verify` تنزّل المخرجات وتشغّل `snap-diff` (فيصير الزمن ≈ نصف). وكلها تحت اسم فحص واحد إلزامي `verify` (الوظيفة النهائية هي اللي تفشل أو تنجح).
+  2. صور الفرق تُرفع كـartifact **بعد القص** حول المنطقة المتغيّرة (±200px، وحد أقصى 4000px ارتفاعًا) عشان ما تضخم. القص يكون داخل `tools/snap-diff.js` بمعامل `--crop` (بدون كسر السلوك الحالي)، مع اختبار.
+  3. `node tests/run.js` و`node tools/lint.js` يفشلان الفحص لو فشلوا.
+  4. ملخص `diff/summary.md` يُضاف لـ`$GITHUB_STEP_SUMMARY`.
+- **الأدلة:** بما إن PR نفسه يشغّل الـworkflow (لو GitHub Actions مفعّلة على الريبو): رابط التشغيل ونتيجته. ولو Actions غير مفعّلة، اكتب ذلك في التقرير بوضوح، **وأنا أبلّغ المنظّم**. وفي الحالتين تأكد من صحة الملف: `python3 -c "import yaml,sys;yaml.safe_load(open('.github/workflows/verify.yml'))"` (أو ما يعادله).
+
+### ⬜ S16 · 001-T001 · `css/tokens.css`
+- **المرجع:** `specs/001-ui-visual-overhaul/tasks.md` (T001) و`plan.md` §4 (الرموز، بألوان R-10 المحدّثة). **الفرع:** `feat/001-T001-tokens` · **التقرير:** `specs/reports/001-T001.md`
+- **المطلوب:** 🆕 `css/tokens.css` بالرموز كما في الخطة (الداكن افتراضي، والفاتح تحت `[data-theme="light"]` حسب نظام الثيم الحالي في الموقع، **تحقق من آلية الثيم في الكود قبل ما تختار المحدد**)، وأول `<link>` في `index.html` و`report.html`. **ما تستبدل أي قيمة موجودة ولا تربط أي متغير قديم** (هذا T002). الملف يعرّف فقط.
+- **القبول/الأدلة:** **لا تغيّر بصري**: شغّل `node tools/snap.js --label base` قبل التعديل و`--label head` بعده، ثم `node tools/snap-diff.js`، والملخص **`المتغيّر: 0`** في التقرير. والرموز متاحة بالوضعين (اختبار Playwright بسيط يقرأ `getComputedStyle(document.documentElement).getPropertyValue('--c-bg')` في الداكن والفاتح). و`lint.js` ما يزيد (ملف `tokens.css` مستثنى من `hexColors`).
+
+### ⬜ S17 · 002-T004 · قواعد اللغة في `lint.js` · ⏹️ توقف بعده
+- **المرجع:** `specs/002-language-voice/tasks.md` (T004) و`plan.md` §4 (جدول القواعد الأربع). **الفرع:** `feat/002-T004-lint-rules` · **التقرير:** `specs/reports/002-T004.md`
+- **المطلوب:** المقاييس `numberNoun` و`rawDates` و`forbiddenTerms` موجودة من T010، فتأكد إنها تطابق جدول الخطة (النمط والنطاق، واستثناء `ar-format.js` لـ`numberNoun` و`rawDates`). وأضف **`hardcodedCounts`** (أرقام مكتوبة داخل نص عربي في ملفات الميزات، مثل "13 دوريًا")، وسجّل خط أساسها في `lint-baseline.json`.
+- **القبول:** كل قاعدة من الأربع لها **اختبار سلبي** (إدخال مخالفة ← الفحص يفشل)، وخط الأساس مسجّل، والاختبارات خضراء.
+- ⏹️ **بعد S17 توقف.** وأنا أراجع وأكتب أوامر الدفعة الجاية.
