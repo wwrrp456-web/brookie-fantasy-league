@@ -68,10 +68,10 @@
 
   /* تفاصيل سريعة في توسيع الصف */
   .quick-hist{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
-  .quick-hist-pill{min-width:34px;padding:3px 6px;border-radius:6px;text-align:center;font-size:0.7rem;font-weight:700;background:rgba(255,255,255,0.08);color:#E0E0E0;}
-  .quick-hist-pill.hi{background:rgba(61,212,126,0.2);color:#3DD47E;}
-  .quick-hist-pill.mumma{background:rgba(201,85,44,0.2);color:#FF6B5E;}
-  .quick-hist-mini-label{font-size:0.62rem;color:#8A8A8A;margin-bottom:4px;}
+  .quick-hist-pill{min-width:34px;padding:3px 6px;border-radius:6px;text-align:center;font-size:0.7rem;font-weight:700;background:var(--c-surface-1);color:var(--c-text);}
+  .quick-hist-pill.hi{background:var(--c-surface-1);color:var(--c-up);}
+  .quick-hist-pill.mumma{background:var(--c-surface-1);color:var(--c-down);}
+  .quick-hist-mini-label{font-size:0.62rem;color:var(--c-text-2);margin-bottom:4px;}
 
   /* لوحة المفاجآت */
   .surprises-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0 22px;}
@@ -120,14 +120,15 @@
   .league-table{
     width:100%;
     border-collapse:collapse;
-    background:#000000;
-    border-radius:10px;
+    background:var(--c-surface-1);
+    border:1px solid var(--c-border);
+    border-radius:var(--r-lg);
     overflow:hidden;
-    color:#F0F0F0;
+    color:var(--c-text);
   }
   .league-table thead th{
-    background:#141414;
-    color:#9A9A9A;
+    background:var(--c-surface-2);
+    color:var(--c-text-2);
     font-size:0.7rem;
     font-weight:700;
     padding:10px 6px;
@@ -139,17 +140,16 @@
     padding:11px 6px;
     text-align:center;
     font-size:0.84rem;
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    border-bottom:1px solid var(--c-border);
   }
   .league-table tbody tr:last-child td{border-bottom:none;}
-  .league-table tbody tr.zebra td{background:#0C0C0C;}
 
   /* شريط الحافة الملون حسب المركز */
   .pos-cell{
     position:relative;
     width:38px;
     font-weight:700;
-    color:#C4C4C4;
+    color:var(--c-text-2);
     font-size:0.82rem;
     padding-inline-start:12px!important;
   }
@@ -158,60 +158,68 @@
     position:absolute;
     inset-inline-start:0; top:0; bottom:0;
     width:6px;
-    background:#2E2E2E;
+    background:var(--c-border);
   }
-  tr.tier-gold .pos-cell::before{background:#16A6EA;box-shadow:0 0 8px rgba(22,166,234,0.5);}
+  tr.tier-gold .pos-cell::before{background:var(--c-info);}
   /* لون منطقة المطاردة (تصدر بنفسجي بدل الأزرق القريب جدًا من لون الصدارة —
      طلب المستخدم 6 سبتمبر 2026 بعد ملاحظته صعوبة التمييز بينهما بالعين). */
-  tr.tier-silver .pos-cell::before{background:#7A52EE;box-shadow:0 0 8px rgba(122,82,238,0.5);}
-  tr.tier-danger .pos-cell::before{background:#FF4438;box-shadow:0 0 8px rgba(255,68,56,0.4);}
+  tr.tier-silver .pos-cell::before{background:var(--c-brand);}
+  tr.tier-danger .pos-cell::before{background:var(--c-down);}
 
   /* خانة اللاعب */
   .team-cell{
     text-align:start!important;
     padding-inline-start:2px!important;
   }
-  .team-cell-inner{display:flex;align-items:center;gap:8px;}
-  .team-cell-name{font-weight:700;font-size:0.85rem;color:#fff;line-height:1.25;}
-  .team-cell-clubs{display:flex;gap:3px;margin-top:3px;}
-  .team-cell-clubs .crest{width:19px;height:21px;}
+  .team-cell-inner{display:flex;align-items:center;gap:var(--sp-2);}
+  .team-cell-text{min-width:0;}
+  .team-cell-name{font-weight:700;font-size:0.85rem;color:var(--c-text);line-height:1.25;}
+  .team-cell-clubs{display:flex;gap:var(--sp-1);flex:none;}
+  .team-cell-clubs .crest{width:24px;height:26.4px;}
 
-  .stat-strong{font-weight:800;color:#fff;font-size:0.9rem;}
-  .stat-dim{color:#8A8A8A;font-size:0.8rem;}
-  .stat-new{color:#3DD47E;font-weight:700;}
-  .stat-new.zero{color:#7A7A7A;font-weight:400;}
+  .stat-strong{font-weight:800;color:var(--c-text);font-size:0.9rem;}
+  .stat-dim{color:var(--c-text-2);font-size:0.8rem;}
+  .stat-new{color:var(--c-up);font-weight:700;}
+  .stat-new.zero{color:var(--c-text-3);font-weight:400;}
 
   .detail-toggle{
-    background:none;border:none;color:#8A8A8A;
-    cursor:pointer;font-size:0.95rem;padding:4px 6px;
-    font-family:inherit;
+    background:none;border:none;color:var(--c-text-2);
+    cursor:pointer;padding:4px 6px;
+    font-family:inherit;display:inline-grid;place-items:center;
   }
+  .detail-toggle svg{width:16px;height:16px;transition:rotate .15s ease;}
+  .detail-toggle[aria-expanded="true"] svg{rotate:180deg;}
+  tr.standings-row{cursor:pointer;}
+  .col-rank{width:34px;}.col-move{width:30px;}.col-toggle{width:30px;}
+  /* ملخص الصف المضغوط: الصف ≤ 56px، والأعمدة الثانوية للكمبيوتر فقط (FR-14) */
+  .league-table tbody tr.standings-row td{padding-block:var(--sp-2);}
+  @media (max-width:899px){.col-sec{display:none;}}
   .detail-row td{
-    background:#161616;
+    background:var(--c-surface-2);
     padding:0!important;
-    border-bottom:1px solid rgba(255,255,255,0.08)!important;
+    border-bottom:1px solid var(--c-border)!important;
   }
   .detail-inner{padding:12px 10px;}
   .detail-clubs{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
-  .detail-clubs .club-mini .club-name{color:#A8A8A8;}
+  .detail-clubs .club-mini .club-name{color:var(--c-text-2);}
   .club-toggle{cursor:pointer;}
   .club-toggle summary{list-style:none;cursor:pointer;}
   .club-toggle summary::-webkit-details-marker{display:none;}
   .club-toggle-stats{
-    margin-top:6px;font-size:0.62rem;color:#16A6EA;text-align:center;
-    background:rgba(22,166,234,0.12);border-radius:6px;padding:4px 6px;
+    margin-top:6px;font-size:0.62rem;color:var(--c-info);text-align:center;
+    background:var(--c-surface-1);border-radius:6px;padding:4px 6px;
     max-width:80px;line-height:1.3;
   }
   .detail-table{width:100%;border-collapse:collapse;}
   .detail-table th{
-    color:#8A8A8A;font-size:0.7rem;font-weight:700;
+    color:var(--c-text-2);font-size:0.7rem;font-weight:700;
     padding:5px 4px;text-align:center;
-    border-bottom:1px solid rgba(255,255,255,0.12);
+    border-bottom:1px solid var(--c-border);
   }
   .detail-table td{
-    color:#E0E0E0;font-size:0.76rem;
+    color:var(--c-text);font-size:0.76rem;
     padding:6px 4px;text-align:center;
-    border-bottom:1px dotted rgba(255,255,255,0.09);
+    border-bottom:1px dotted var(--c-border);
   }
   .table-legend{
     display:flex;gap:14px;flex-wrap:wrap;
@@ -224,14 +232,14 @@
 
   /* ===== حركة المراكز ===== */
   .mv{font-size:0.68rem;font-weight:800;display:inline-block;min-width:24px;}
-  .mv-up{color:#3DD47E;}
-  .mv-down{color:#FF6B5E;}
-  .mv-same{color:#5A5A5A;}
+  .mv-up{color:var(--c-up);}
+  .mv-down{color:var(--c-down);}
+  .mv-same{color:var(--c-text-3);}
 
   /* ===== تمييز "أنت" ===== */
-  tr.is-me td{background:rgba(22,166,234,0.16)!important;}
+  .league-table tbody tr.is-me td{background:var(--c-surface-2);}
   tr.is-me .team-cell-name::after{
-    content:'أنت';font-size:0.58rem;background:#16A6EA;color:#000;
+    content:'أنت';font-size:0.58rem;background:var(--c-brand);color:white;
     padding:1px 5px;border-radius:8px;margin-inline-start:5px;font-weight:800;
     vertical-align:middle;
   }

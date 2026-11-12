@@ -374,9 +374,21 @@ async function castChallengeVote(targetPid){
   renderRoundChallenge();
 }
 
+// صف موسّع واحد في وقته: فتح صف يطوي غيره (001-T014)
 function toggleExpand(pid){
   const row = document.getElementById('expand-'+pid);
-  if(row) row.style.display = row.style.display==='table-row' ? 'none' : 'table-row';
+  if(!row) return;
+  const open = row.style.display !== 'table-row';
+  document.querySelectorAll('tr.detail-row').forEach(r=>{ r.style.display = 'none'; });
+  document.querySelectorAll('tr.standings-row').forEach(r=>{
+    const b = r.querySelector('.detail-toggle'); if(b) b.setAttribute('aria-expanded', 'false');
+    r.classList.remove('is-open');
+  });
+  if(open){
+    row.style.display = 'table-row';
+    const main = row.previousElementSibling;
+    if(main){ main.classList.add('is-open'); const b = main.querySelector('.detail-toggle'); if(b) b.setAttribute('aria-expanded', 'true'); }
+  }
 }
 
 // شارة نتيجة صغيرة (فوز/تعادل/خسارة/لا توجد مباراة) بلون مناسب
