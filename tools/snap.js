@@ -120,7 +120,11 @@ async function prepareState(page, state) {
       DATA.rounds.forEach(r => { if (r && Array.isArray(r.entries)) r.entries[victim.id] = null; });
       pid = victim.id;
     }
-    if (st === 'long') { CHAMPION_ID = champ.id; champ.name = longName; }
+    if (st === 'long') {
+      // الاسم الأطول لمتصدّر الترتيب (يظهر في كروت الترتيب والستوري) وهو أيضًا البطل (كرت البطل والشهادة وملفه)
+      const leader = PARTICIPANTS.find(p => p.id === computeStandings()[0].id);
+      leader.name = longName; CHAMPION_ID = leader.id; pid = leader.id;
+    }
     return pid;
   }, [state, LONGEST_NAME]);
 }
