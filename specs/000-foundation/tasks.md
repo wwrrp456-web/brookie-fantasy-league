@@ -33,10 +33,10 @@
   - ✅ بطل الموسم الأول: **أبو تغريد (زيد)** = المشارك `id:1` (12 نوفمبر 2026). نقاطه في سجل أبطال المواسم بـFirebase وما وصلت مع النسخة
   - ✅ النسخة الاحتياطية `brookie-backup-2026-11-12.json` (2.5MB): الجولات 3–10، وسجل النشاط (43)، وتعليقات جولتين، والإعدادات. ما فيها رموز ولا أسرار، لكن فيها نصوص كتبها أعضاء
   - ⚠️ **الملف الخام ما يُرفع للريبو أبدًا** (عام). وOpus جهّز المعقّم (PR #15)
-- [ ] T005 [US2] [Sonnet] `tools/make-fixture.js` — 🆕 `tools/make-fixture.js`، وفي `tests/run.js` اختبار. **أُنجز مسبقًا:** `tests/fixtures/season.json` و`overrides.json` (PR #15، `specs/reports/000-T05a.md`)
+- [x] T005 [US2] [Sonnet] `tools/make-fixture.js` — 🆕 `tools/make-fixture.js`، وفي `tests/run.js` اختبار. **أُنجز مسبقًا:** `tests/fixtures/season.json` و`overrides.json` (PR #15، `specs/reports/000-T05a.md`)
   - المطلوب الحين: الأداة تطبّق **نفس قواعد التعقيم** (تعليقات ← نص تجريبي، حذف `snapshot` من سجل النشاط، `extra` فاضية) على أي نسخة احتياطية مستقبلية
   - القبول: اختبار على عينة خام **صغيرة مصطنعة** (فيها تعليق ولقطة snapshot) يثبت إن الناتج معقّم وإن الجولات ما تغيّرت؛ وعدد الجولات والمشاركين والنقاط مطابق للنسخة الأصلية؛ والناتج ≤ 500KB
-- [ ] T006 [P] [US2] [Sonnet] `fake-firebase.js` — 🆕 `tools/fake-firebase.js` (حسب `plan.md` §3)
+- [x] T006 [P] [US2] [Sonnet] `fake-firebase.js` — 🆕 `tools/fake-firebase.js` (حسب `plan.md` §3)
   - القبول: `index.html` تُحمَّل مع المحاكاة وبيانات `season.json` بدون أي خطأ في الكونسول، والترتيب يعرض جولات حقيقية بعد الجولة 2
 
 ---
@@ -46,7 +46,7 @@
 **الهدف:** فحص آلي يقدر يمنع الدمج، ولقطات قبل وبعد.
 **اختبار مستقل:** PR تجريبي يظهر عليه فحص `verify` أخضر مع اللقطات.
 
-- [ ] T007 [P] [US2] [Sonnet] `package.json` + الخط المحلي — 🆕 `package.json` (devDependencies فقط)، و🆕 `assets/fonts/`، و🆕 `css/fonts.css`، و`index.html` و`report.html` (استبدال رابط Google Fonts)، و`.gitignore`، وحذف `assets/icons/fonts/` المكرر وربط `assets/icons/_sheet.html` بـ`css/fonts.css`
+- [x] T007 [P] [US2] [Sonnet] `package.json` + الخط المحلي — 🆕 `package.json` (devDependencies فقط)، و🆕 `assets/fonts/`، و🆕 `css/fonts.css`، و`index.html` و`report.html` (استبدال رابط Google Fonts)، و`.gitignore`، وحذف `assets/icons/fonts/` المكرر وربط `assets/icons/_sheet.html` بـ`css/fonts.css`
   - القبول: الموقع يعرض Tajawal بدون أي طلب لـ`fonts.googleapis.com`؛ والملفات الأربعة (400/500/700/800، عربية ولاتينية) ≤ 200KB مجتمعة
 - [ ] T008 [US2] [Sonnet] `snap.js` (يعتمد على T005، T006، T007)
   - القبول: SC-01 تشغيلتان متتاليتان تعطي صورًا متطابقة؛ و28 لقطة تبويب + (6 كروت × 3 حالات) + `report.json`؛ ويشتغل بدون إنترنت

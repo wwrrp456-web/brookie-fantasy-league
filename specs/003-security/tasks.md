@@ -12,7 +12,7 @@
 
 ## المرحلة 1: تنظيف مستقل (يبدأ فورًا)
 
-- [ ] T001 [P] [Sonnet] `escapeHtml` الموحّدة + تطبيقها على محتوى الزوار (S-07) — `js/core/dom-utils.js`، و`round-wall.js`، و`season-duel.js`، و`report-main.js`، و`admin-community-reports.js`، و`name-reactions.js`
+- [x] T001 [P] [Sonnet] `escapeHtml` الموحّدة + تطبيقها على محتوى الزوار (S-07) — `js/core/dom-utils.js`، و`round-wall.js`، و`season-duel.js`، و`report-main.js`، و`admin-community-reports.js`، و`name-reactions.js`
   - القبول: رسالة تجريبية `<img src=x onerror=alert(1)>` في كل مكان إدخال تُعرض كنص
 
 ## المرحلة 2: الدخول والتحقق (القاعدة تبقى مفتوحة)
