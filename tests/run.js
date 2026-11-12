@@ -241,6 +241,41 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   }
 }
 
+// ---------- 002-T005: tools/text-inventory.js على عينة مصطنعة صغيرة ----------
+{
+  const {scanJs, scanHtml, inventory, render} = require(path.join(ROOT, 'tools/text-inventory.js'));
+  const os = require('os');
+  const js = [
+    "// تعليق عربي ما يُجرد",
+    "const a = 'نص ثابت'; /* وهذا تعليق كتلة */",
+    "const b = `مرحبا ${name} يا ${cond ? 'أول' : 'ثاني'}`;",
+    "const c = \"English only\"; const url = 'https://x.y/z';",
+    "const d = '\\u0645\\u0631\\u062d\\u0628\\u0627';",
+    "const re = /['\"]نمط/; const e = 'بعد الـregex';",
+    "const f = `<b>وسم عربي</b>`;"
+  ].join('\n');
+  const items = scanJs(js).map(i => [i.kind, i.text]);
+  check('جرد JS: نص ثابت وقالب فيه ${} (والنصوص الداخلية بسطر مستقل) وHTML', items.filter(x => x[1] !== 'مرحبا ${name} يا ${cond ? \'أول\' : \'ثاني\'}').map(x => x[0] + ':' + x[1]),
+    ['نص ثابت:نص ثابت', 'نص ثابت:أول', 'نص ثابت:ثاني', 'نص ثابت:مرحبا', 'نص ثابت:بعد الـregex', 'HTML:<b>وسم عربي</b>']);
+  check('جرد JS: القالب يحتفظ بالتعبيرات ويصنَّف قالبًا', items.some(x => x[0] === 'قالب فيه ${}' && x[1].startsWith('مرحبا ${name} يا ${')), true);
+  check('جرد JS: التعليقات لا تُجرد، والإنجليزي والروابط خارج الجرد', [items.some(x => /تعليق/.test(x[1])), items.some(x => /English|https/.test(x[1]))], [false, false]);
+  check('جرد JS: الـregex (حتى لو فيه علامة اقتباس) لا يُجرد ولا يكسر الماسح', [items.some(x => /نمط/.test(x[1])), items.some(x => x[1] === 'بعد الـregex')], [false, true]);
+  const html = '<!-- تعليق HTML -->\n<h1 title="عنوان الصفحة">أهلًا بك</h1>\n<style>.a:after{content:"نص css"}</style>\n<p>text only</p>\n<script>\nconst x = \'نص داخل سكربت\';\n</script>';
+  const hi = scanHtml(html).map(i => [i.kind, i.text]);
+  check('جرد HTML: خاصية ونص بين وسوم ونص سكربت مضمّن، بلا تعليقات ولا style ولا إنجليزي',
+    hi.map(x => x[1]).sort(), ['أهلًا بك', 'نص داخل سكربت', 'title="عنوان الصفحة"'].sort());
+  // أرقام الأسطر + جذر مصطنع + حتمية الإخراج
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'inv-'));
+  fs.mkdirSync(path.join(tmp, 'js/generated'), {recursive: true});
+  fs.writeFileSync(path.join(tmp, 'js/a.js'), "// تعليق\n\nconst x = 'سطر ثالث';\nconst y = `سطر\nمتعدد ${1}`;\n");
+  fs.writeFileSync(path.join(tmp, 'js/generated/g.js'), "const x = 'مولَّد ما يُجرد';\n");
+  fs.writeFileSync(path.join(tmp, 'index.html'), '<p>\n  فقرة\n</p>\n');
+  const inv = inventory(tmp);
+  check('جرد: أرقام الأسطر صحيحة (بداية النص) و js/generated مستثنى', inv.map(f => [f.file, f.rows.map(r => r.line)]), [['index.html', [2]], ['js/a.js', [3, 4]]]);
+  check('جرد: الإخراج حتمي (مرتان متطابقتان) وعمود التصنيف فاضي', [render(inventory(tmp)).md === render(inv).md, /\| نص ثابت \|  \|/.test(render(inv).md)], [true, true]);
+  fs.rmSync(tmp, {recursive: true, force: true});
+}
+
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
 {
   const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));
