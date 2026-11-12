@@ -558,3 +558,29 @@ a:focus-visible {
 .certificate {
   background-size:1080px 1254px;
   background-position:top center}
+/* رأس موحد: الشعار والعنوان كتلة واحدة، مع فراغ متناظر وفاصل هادئ. */
+.card-header,.table-card .card-header,.story .card-header,.square .card-header{
+ height:auto;
+ display:grid;
+ grid-template-columns:176px minmax(0,1fr);
+ gap:var(--sp-8);
+ padding:var(--sp-8);
+ border-bottom:1px solid var(--c-border);
+ align-items:center;
+}
+.logo,.table-card .logo,.square .logo{
+ width:176px;
+ height:auto;
+ aspect-ratio:476/547;
+ object-fit:contain;
+}
+.brand-heading{min-width:0;text-align:start}
+.brand-heading .title-line{margin:0}
+.table-card .card-header,.square .card-header{
+ grid-template-columns:144px minmax(0,1fr);
+ padding:var(--sp-6);
+}
+.table-card .logo,.square .logo{width:144px}
+.card:not(.table-card):not(.story):not(.square) .safe{gap:var(--sp-2)}
+.square .brand-heading .center{text-align:start}
+.certificate .brand-heading{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)}

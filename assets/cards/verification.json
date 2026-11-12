@@ -75,7 +75,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/champion-post.png",
-      "bytes": 128418,
+      "bytes": 131788,
       "errors": [],
       "checks": {
         "card": {
@@ -109,6 +109,17 @@
           "الهلال\n\nلا مباراة"
         ],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -117,7 +128,7 @@
       "height": 1350,
       "stress": true,
       "shot": "shots/champion-post-stress.png",
-      "bytes": 138151,
+      "bytes": 141416,
       "errors": [],
       "checks": {
         "card": {
@@ -151,6 +162,17 @@
           "باريس سان جيرمان\n\nلا مباراة"
         ],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -159,7 +181,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/standings-post.png",
-      "bytes": 204774,
+      "bytes": 206219,
       "errors": [],
       "checks": {
         "card": {
@@ -191,140 +213,140 @@
         "ranking": [
           {
             "rank": 1,
-            "bottom": 420.390625,
+            "bottom": 408.46875,
             "height": 38,
             "name": "لطفي",
             "clipped": false
           },
           {
             "rank": 2,
-            "bottom": 458.390625,
+            "bottom": 446.46875,
             "height": 38,
             "name": "أيوب",
             "clipped": false
           },
           {
             "rank": 3,
-            "bottom": 496.390625,
+            "bottom": 484.46875,
             "height": 38,
             "name": "أبو أوس",
             "clipped": false
           },
           {
             "rank": 4,
-            "bottom": 534.390625,
+            "bottom": 522.46875,
             "height": 38,
             "name": "العندليب",
             "clipped": false
           },
           {
             "rank": 5,
-            "bottom": 572.390625,
+            "bottom": 560.46875,
             "height": 38,
             "name": "أبو عزام",
             "clipped": false
           },
           {
             "rank": 6,
-            "bottom": 610.390625,
+            "bottom": 598.46875,
             "height": 38,
             "name": "مصطفى عبده",
             "clipped": false
           },
           {
             "rank": 7,
-            "bottom": 648.390625,
+            "bottom": 636.46875,
             "height": 38,
             "name": "أبا عتاب",
             "clipped": false
           },
           {
             "rank": 8,
-            "bottom": 686.390625,
+            "bottom": 674.46875,
             "height": 38,
             "name": "أبو تغريد (زيد)",
             "clipped": false
           },
           {
             "rank": 9,
-            "bottom": 724.390625,
+            "bottom": 712.46875,
             "height": 38,
             "name": "أبو رمزي",
             "clipped": false
           },
           {
             "rank": 10,
-            "bottom": 762.390625,
+            "bottom": 750.46875,
             "height": 38,
             "name": "أبو شيخة",
             "clipped": false
           },
           {
             "rank": 11,
-            "bottom": 800.390625,
+            "bottom": 788.46875,
             "height": 38,
             "name": "سعيد",
             "clipped": false
           },
           {
             "rank": 12,
-            "bottom": 838.390625,
+            "bottom": 826.46875,
             "height": 38,
             "name": "أبو يحيى",
             "clipped": false
           },
           {
             "rank": 13,
-            "bottom": 876.390625,
+            "bottom": 864.46875,
             "height": 38,
             "name": "علي قوول",
             "clipped": false
           },
           {
             "rank": 14,
-            "bottom": 914.390625,
+            "bottom": 902.46875,
             "height": 38,
             "name": "أبو مناف",
             "clipped": false
           },
           {
             "rank": 15,
-            "bottom": 952.390625,
+            "bottom": 940.46875,
             "height": 38,
             "name": "ليمان",
             "clipped": false
           },
           {
             "rank": 16,
-            "bottom": 990.390625,
+            "bottom": 978.46875,
             "height": 38,
             "name": "أبو حمد",
             "clipped": false
           },
           {
             "rank": 17,
-            "bottom": 1028.390625,
+            "bottom": 1016.46875,
             "height": 38,
             "name": "أبو عبيدة",
             "clipped": false
           },
           {
             "rank": 18,
-            "bottom": 1066.390625,
+            "bottom": 1054.46875,
             "height": 38,
             "name": "موسى (العجوز)",
             "clipped": false
           },
           {
             "rank": 19,
-            "bottom": 1104.390625,
+            "bottom": 1092.46875,
             "height": 38,
             "name": "محمد عثمان",
             "clipped": false
           },
           {
             "rank": 20,
-            "bottom": 1142.390625,
+            "bottom": 1130.46875,
             "height": 38,
             "name": "أبو صالح",
             "clipped": false
@@ -332,6 +354,17 @@
         ],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 144,
+        "logoHeight": 165.46875,
+        "headerHeight": 214.46875,
+        "above": 24,
+        "below": 25,
+        "logoToHeading": 32,
+        "logoTop": 88,
+        "scaledWidth390": 52,
+        "headingWidth": 728
       }
     },
     {
@@ -340,7 +373,7 @@
       "height": 1920,
       "stress": false,
       "shot": "shots/standings-story.png",
-      "bytes": 162675,
+      "bytes": 166221,
       "errors": [],
       "checks": {
         "card": {
@@ -372,63 +405,63 @@
         "ranking": [
           {
             "rank": 1,
-            "bottom": 612.796875,
+            "bottom": 619.25,
             "height": 80,
             "name": "لطفي",
             "clipped": false
           },
           {
             "rank": 2,
-            "bottom": 692.796875,
+            "bottom": 699.25,
             "height": 80,
             "name": "أيوب",
             "clipped": false
           },
           {
             "rank": 3,
-            "bottom": 772.796875,
+            "bottom": 779.25,
             "height": 80,
             "name": "أبو أوس",
             "clipped": false
           },
           {
             "rank": 4,
-            "bottom": 852.796875,
+            "bottom": 859.25,
             "height": 80,
             "name": "العندليب",
             "clipped": false
           },
           {
             "rank": 5,
-            "bottom": 932.796875,
+            "bottom": 939.25,
             "height": 80,
             "name": "أبو عزام",
             "clipped": false
           },
           {
             "rank": 6,
-            "bottom": 1012.796875,
+            "bottom": 1019.25,
             "height": 80,
             "name": "مصطفى عبده",
             "clipped": false
           },
           {
             "rank": 18,
-            "bottom": 1200.796875,
+            "bottom": 1207.25,
             "height": 80,
             "name": "موسى (العجوز)",
             "clipped": false
           },
           {
             "rank": 19,
-            "bottom": 1280.796875,
+            "bottom": 1287.25,
             "height": 80,
             "name": "محمد عثمان",
             "clipped": false
           },
           {
             "rank": 20,
-            "bottom": 1360.796875,
+            "bottom": 1367.25,
             "height": 80,
             "name": "أبو صالح",
             "clipped": false
@@ -436,6 +469,17 @@
         ],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 232,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -444,7 +488,7 @@
       "height": 1920,
       "stress": true,
       "shot": "shots/standings-story-stress.png",
-      "bytes": 166138,
+      "bytes": 169733,
       "errors": [],
       "checks": {
         "card": {
@@ -476,63 +520,63 @@
         "ranking": [
           {
             "rank": 1,
-            "bottom": 612.796875,
+            "bottom": 619.25,
             "height": 80,
             "name": "أبو تغريد (زيد) الثاني",
             "clipped": false
           },
           {
             "rank": 2,
-            "bottom": 692.796875,
+            "bottom": 699.25,
             "height": 80,
             "name": "أيوب",
             "clipped": false
           },
           {
             "rank": 3,
-            "bottom": 772.796875,
+            "bottom": 779.25,
             "height": 80,
             "name": "أبو أوس",
             "clipped": false
           },
           {
             "rank": 4,
-            "bottom": 852.796875,
+            "bottom": 859.25,
             "height": 80,
             "name": "العندليب",
             "clipped": false
           },
           {
             "rank": 5,
-            "bottom": 932.796875,
+            "bottom": 939.25,
             "height": 80,
             "name": "أبو عزام",
             "clipped": false
           },
           {
             "rank": 6,
-            "bottom": 1012.796875,
+            "bottom": 1019.25,
             "height": 80,
             "name": "مصطفى عبده",
             "clipped": false
           },
           {
             "rank": 18,
-            "bottom": 1200.796875,
+            "bottom": 1207.25,
             "height": 80,
             "name": "موسى (العجوز)",
             "clipped": false
           },
           {
             "rank": 19,
-            "bottom": 1280.796875,
+            "bottom": 1287.25,
             "height": 80,
             "name": "محمد عثمان",
             "clipped": false
           },
           {
             "rank": 20,
-            "bottom": 1360.796875,
+            "bottom": 1367.25,
             "height": 80,
             "name": "أبو صالح",
             "clipped": false
@@ -540,6 +584,17 @@
         ],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 232,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -548,7 +603,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/season-wrap-post.png",
-      "bytes": 118596,
+      "bytes": 121974,
       "errors": [],
       "checks": {
         "card": {
@@ -580,6 +635,17 @@
         "ranking": [],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -588,7 +654,7 @@
       "height": 1080,
       "stress": false,
       "shot": "shots/profile-square.png",
-      "bytes": 78205,
+      "bytes": 81573,
       "errors": [],
       "checks": {
         "card": {
@@ -620,6 +686,17 @@
         "ranking": [],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 144,
+        "logoHeight": 165.46875,
+        "headerHeight": 214.46875,
+        "above": 24,
+        "below": 25,
+        "logoToHeading": 32,
+        "logoTop": 88,
+        "scaledWidth390": 52,
+        "headingWidth": 728
       }
     },
     {
@@ -628,7 +705,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/certificate-post.png",
-      "bytes": 179424,
+      "bytes": 184012,
       "errors": [],
       "checks": {
         "card": {
@@ -660,6 +737,17 @@
         "ranking": [],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 306.59375,
+        "above": 51.671875,
+        "below": 52.671875,
+        "logoToHeading": 32,
+        "logoTop": 115.671875,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -668,7 +756,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/duel-post.png",
-      "bytes": 114866,
+      "bytes": 118428,
       "errors": [],
       "checks": {
         "card": {
@@ -700,6 +788,17 @@
         "ranking": [],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -708,7 +807,7 @@
       "height": 1350,
       "stress": true,
       "shot": "shots/duel-post-stress.png",
-      "bytes": 130198,
+      "bytes": 133372,
       "errors": [],
       "checks": {
         "card": {
@@ -740,6 +839,17 @@
         "ranking": [],
         "noMatch": [],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     },
     {
@@ -748,7 +858,7 @@
       "height": 1350,
       "stress": false,
       "shot": "shots/my-clubs-post.png",
-      "bytes": 127496,
+      "bytes": 130702,
       "errors": [],
       "checks": {
         "card": {
@@ -782,7 +892,48 @@
           "الهلال\n\nلا مباراة"
         ],
         "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 96,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
       }
     }
-  ]
+  ],
+  "logoUpdate": {
+    "task": "001-T009b",
+    "beforeCommit": "8add300",
+    "layout": "صف موحد للشعار الكامل والعنوان، بحجم مدمج للجدول والمربع",
+    "comparison": "_logo-compare.html",
+    "preview": "_logo-compare.png",
+    "phoneCheck": {
+      "images": 16,
+      "widths": [
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390,
+        390
+      ],
+      "overflow": false
+    },
+    "contentTextUnchanged": true
+  }
 }
