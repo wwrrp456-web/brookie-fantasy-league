@@ -5,5 +5,6 @@
   "numberNoun": 82,
   "rawDates": 10,
   "forbiddenTerms": 15,
-  "importants": 21
+  "importants": 21,
+  "hardcodedCounts": 5
 }

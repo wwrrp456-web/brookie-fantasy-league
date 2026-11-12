@@ -180,6 +180,67 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
 }
 
 
+// ---------- 002-T004: قواعد اللغة الأربع في lint.js (لكل قاعدة اختبار سلبي) ----------
+{
+  const {spawnSync} = require('child_process');
+  const os = require('os');
+  const lintMod = require(path.join(ROOT, 'tools/lint.js'));
+  const ZERO = {hexColors: 0, emoji: 0, inlineStyles: 0, numberNoun: 0, rawDates: 0, forbiddenTerms: 0, importants: 0, hardcodedCounts: 0};
+  // ينشئ جذرًا مؤقتًا بالملفات المعطاة وخط أساس أصفار، ويرجع {measure, status, out}
+  const lintCase = files => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lintrule-'));
+    Object.entries(files).forEach(([f, c]) => { fs.mkdirSync(path.dirname(path.join(tmp, f)), {recursive: true}); fs.writeFileSync(path.join(tmp, f), c); });
+    fs.writeFileSync(path.join(tmp, 'lint-baseline.json'), JSON.stringify(ZERO));
+    const r = spawnSync('node', [path.join(ROOT, 'tools/lint.js'), '--root', tmp], {encoding: 'utf8'});
+    const counts = lintMod.measure(tmp).counts;
+    fs.rmSync(tmp, {recursive: true, force: true});
+    return {counts, status: r.status, out: r.stdout + r.stderr};
+  };
+  const NN = 'const t = `${n} نقطة`;\n';
+  // 1) numberNoun
+  let r = lintCase({'js/features/a.js': NN});
+  check('قاعدة numberNoun: ${n} نقطة خارج ar-format ← يفشل', [r.status, r.counts.numberNoun, /numberNoun/.test(r.out)], [1, 1, true]);
+  check('قاعدة numberNoun: نفس السطر داخل js/core/ar-format.js مستثنى', lintCase({'js/core/ar-format.js': NN}).counts.numberNoun, 0);
+  check('قاعدة numberNoun: formatCount(n, "نقطة") سليم ولا يُحسب', lintCase({'js/features/a.js': "const t = formatCount(n, 'نقطة');\n"}).counts.numberNoun, 0);
+  // 2) rawDates
+  r = lintCase({'js/features/a.js': "const s = d.toLocaleDateString('ar');\n"});
+  check('قاعدة rawDates: toLocaleDateString خارج ar-format ← يفشل', [r.status, r.counts.rawDates, /rawDates/.test(r.out)], [1, 1, true]);
+  check('قاعدة rawDates: toLocaleString أيضًا', lintCase({'js/ui/b.js': "x = d.toLocaleString('ar-SA');\n"}).counts.rawDates, 1);
+  check('قاعدة rawDates: داخل js/core/ar-format.js مستثنى', lintCase({'js/core/ar-format.js': "const s = d.toLocaleDateString('ar');\n"}).counts.rawDates, 0);
+  // 3) forbiddenTerms
+  r = lintCase({'js/features/a.js': "const t = 'ترتيب المتسابق';\n"});
+  check('قاعدة forbiddenTerms: "المتسابق" في نص ← يفشل', [r.status, r.counts.forbiddenTerms, /forbiddenTerms/.test(r.out)], [1, 1, true]);
+  check('قاعدة forbiddenTerms: "اللاعب" و"رصيد الجولة" و index.html', [
+    lintCase({'js/features/a.js': "const t = 'اللاعب الأول';\n"}).counts.forbiddenTerms,
+    lintCase({'js/features/a.js': "const t = 'رصيد الجولة';\n"}).counts.forbiddenTerms,
+    lintCase({'index.html': '<p>المتسابق</p>\n'}).counts.forbiddenTerms], [1, 1, 1]);
+  check('قاعدة forbiddenTerms: "المشارك" سليم، والممنوع داخل تعليق لا يُحسب', [
+    lintCase({'js/features/a.js': "const t = 'المشارك';\n"}).counts.forbiddenTerms,
+    lintCase({'js/features/a.js': "// المتسابق سابقًا\nconst t = 1;\n"}).counts.forbiddenTerms], [0, 0]);
+  // 4) hardcodedCounts
+  r = lintCase({'js/features/a.js': "const t = 'يشارك فيه 13 دوريًا';\n"});
+  check('قاعدة hardcodedCounts: "13 دوريًا" مكتوب يدويًا في ملف ميزة ← يفشل', [r.status, r.counts.hardcodedCounts, /hardcodedCounts/.test(r.out)], [1, 1, true]);
+  check('قاعدة hardcodedCounts: خارج js/features (مثل js/core) لا يُحسب', lintCase({'js/core/a.js': "const t = 'فيه 13 دوريًا';\n"}).counts.hardcodedCounts, 0);
+  check('قاعدة hardcodedCounts: العدد من البيانات (${n}) والتعليقات لا تُحسب', [
+    lintCase({'js/features/a.js': 'const t = `فيه ${n} دوريًا`;\n'}).counts.hardcodedCounts,
+    lintCase({'js/features/a.js': '// فيه 13 دوريًا\nconst t = 1;\n'}).counts.hardcodedCounts], [0, 0]);
+  check('قاعدة hardcodedCounts: "3 جولات" و"20 مشاركًا" تُحسب', [
+    lintCase({'js/features/a.js': "t = 'على 3 جولات';\n"}).counts.hardcodedCounts,
+    lintCase({'js/features/a.js': "t = 'بين 20 مشاركًا';\n"}).counts.hardcodedCounts], [1, 1]);
+  // خط الأساس: لازم يسجّل المقاييس الثمانية، ونقص أي مقياس يفشل (ما يمر بصمت)
+  const realBase = JSON.parse(fs.readFileSync(path.join(ROOT, 'lint-baseline.json'), 'utf8'));
+  check('خط الأساس الفعلي يسجّل المقاييس الثمانية (بما فيها hardcodedCounts)', lintMod.METRICS.every(m => typeof realBase[m] === 'number') && lintMod.METRICS.length === 8, true);
+  {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lintbase-'));
+    fs.mkdirSync(path.join(tmp, 'js'));
+    const partial = Object.assign({}, ZERO); delete partial.hardcodedCounts;
+    fs.writeFileSync(path.join(tmp, 'lint-baseline.json'), JSON.stringify(partial));
+    const rr = spawnSync('node', [path.join(ROOT, 'tools/lint.js'), '--root', tmp], {encoding: 'utf8'});
+    check('خط أساس ناقص مقياسًا ← الفحص يفشل برسالة واضحة', [rr.status, /hardcodedCounts/.test(rr.stdout + rr.stderr)], [1, true]);
+    fs.rmSync(tmp, {recursive: true, force: true});
+  }
+}
+
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
 {
   const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));
@@ -267,8 +328,8 @@ const asyncDiffTests = (async () => {
   mk('base', 'color.png', 20, 20); mk('head', 'color.png', 20, 20, [[3, 3, [255, 0, 0]], [4, 3, [255, 0, 0]]]);
   mk('base', 'resized.png', 20, 20); mk('head', 'resized.png', 20, 30);
   mk('base', 'removed.png', 10, 10); mk('head', 'added.png', 10, 10);
-  const log = console.log; console.log = () => {};
-  let code; try { code = await diffMain(['--base', path.join(tmp, 'base'), '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'diff')]); } finally { console.log = log; }
+  // ما نُسكت console.log: التزامن مع بقية اختبارات الملف كان يبتلع رسائل الفشل (❌) فيظهر العدّاد بدون تفاصيل
+  const code = await diffMain(['--base', path.join(tmp, 'base'), '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'diff')]);
   const md = fs.readFileSync(path.join(tmp, 'diff/summary.md'), 'utf8');
   check('snap-diff: لا يفشل على الفروق (exit 0)', code, 0);
   check('snap-diff: الصورة المتغيّرة بلون واحد في الملخص', /`color\.png`/.test(md), true);
@@ -279,8 +340,7 @@ const asyncDiffTests = (async () => {
   const wide = PNG.sync.read(fs.readFileSync(path.join(tmp, 'diff/color.png')));
   check('snap-diff: عرض الصورة المركّبة = 3 صور + فاصلين', wide.width, 20 * 3 + 16 * 2);
   const empty = path.join(tmp, 'empty'); fs.mkdirSync(empty);
-  const errl = console.error; console.error = () => {};
-  let bad; try { bad = await diffMain(['--base', empty, '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'd2')]); } finally { console.error = errl; }
+  const bad = await diffMain(['--base', empty, '--head', path.join(tmp, 'head'), '--out', path.join(tmp, 'd2')]);
   check('snap-diff: مجلد فاضي ← exit 2', bad, 2);
   fs.rmSync(tmp, {recursive: true, force: true});
 })();
@@ -292,7 +352,7 @@ const asyncDiffTests = (async () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-'));
   fs.mkdirSync(path.join(tmp, 'css')); fs.mkdirSync(path.join(tmp, 'js'));
   const lint = (...a) => spawnSync('node', [path.join(ROOT, 'tools/lint.js'), '--root', tmp, ...a], {encoding: 'utf8'});
-  const base = (o) => fs.writeFileSync(path.join(tmp, 'lint-baseline.json'), JSON.stringify(Object.assign({hexColors: 0, emoji: 0, inlineStyles: 0, numberNoun: 0, rawDates: 0, forbiddenTerms: 0, importants: 0}, o)));
+  const base = (o) => fs.writeFileSync(path.join(tmp, 'lint-baseline.json'), JSON.stringify(Object.assign({hexColors: 0, emoji: 0, inlineStyles: 0, numberNoun: 0, rawDates: 0, forbiddenTerms: 0, importants: 0, hardcodedCounts: 0}, o)));
   base({});
   fs.writeFileSync(path.join(tmp, 'css/a.css'), 'a{color:var(--x)}\n');
   check('lint: ريبو نظيف مقابل خط أساس صفر ← ينجح', lint().status, 0);

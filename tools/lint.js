@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* فحص المقاييس السبعة مقابل خط الأساس (000-T010، plan.md §3 "tools/lint.js").
+/* فحص المقاييس الثمانية مقابل خط الأساس (000-T010، plan.md §3 "tools/lint.js").
  *
  * الاستعمال:
  *   node tools/lint.js                     يفحص ويقارن بـlint-baseline.json (أي زيادة = فشل، exit 1)
@@ -7,6 +7,7 @@
  *   node tools/lint.js --root <مسار>       يفحص جذر ثاني (مثل worktree فرع الأساس)
  *   node tools/lint.js --verbose           يطبع توزيع كل مقياس على الملفات
  *
+ * المقاييس الثمانية: hexColors وemoji وinlineStyles وnumberNoun وrawDates وforbiddenTerms وimportants وhardcodedCounts (002-T004).
  * المقياس = عدد **الأسطر** المطابقة (مثل grep -c)، ويُحسب بعد حذف التعليقات (JS: // و/* *​/، CSS: /* *​/، HTML: <!-- -->)،
  * لأن المقصود ما يظهر للمستخدم أو يتنفّذ، مو شرح المطوّر.
  * إذا لم يوجد lint-baseline.json: --update-baseline ينشئه لأول مرة بالقيم الحالية.
@@ -14,7 +15,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const METRICS = ['hexColors', 'emoji', 'inlineStyles', 'numberNoun', 'rawDates', 'forbiddenTerms', 'importants'];
+const METRICS = ['hexColors', 'emoji', 'inlineStyles', 'numberNoun', 'rawDates', 'forbiddenTerms', 'importants', 'hardcodedCounts'];
+const AR_FORMAT = 'js/core/ar-format.js';   // الملف الوحيد المسموح له يلصق رقمًا بمعدود ويستدعي دوال التاريخ مباشرة
 
 // المعدودات من glossary.md ("المعدودات المدعومة في formatCount")
 const COUNTED = ['نقطة', 'نقاط', 'نقطتان', 'نقطتين', 'مركز', 'مراكز', 'مركزًا', 'مركزان', 'جولة', 'جولات', 'جولتان', 'جولتين',
@@ -33,6 +35,8 @@ const RE = {
   numberNoun: new RegExp('\\$\\{[^}]*\\}\\s*(?:' + COUNTED.join('|') + ')' + NOT_AR_LETTER),
   rawDate: /toLocale(?:Date)?String\(/,
   forbidden: new RegExp(FORBIDDEN.join('|')),
+  // رقم مكتوب بالأرقام داخل نص عربي قبل معدود ("13 دوريًا"، "3 جولات"): لازم يُحسب من البيانات ويمر على formatCount (002 L-13)
+  hardcoded: new RegExp('(?<![\\w.$])\\d[\\d,]*\\s+(?:' + COUNTED.join('|') + ')' + NOT_AR_LETTER),
   important: /!important/
 };
 
@@ -78,11 +82,11 @@ function measure(root) {
   jsFiles.forEach(f => add('emoji', rel(f), count(stripJs(read(f)), RE.emoji)));
   // inlineStyles: index.html
   add('inlineStyles', 'index.html', count(indexText, RE.inlineStyle));
-  // numberNoun و rawDates (عدا ملف formatDate = js/core/ar-format.js) و forbiddenTerms
+  // numberNoun و rawDates (عدا js/core/ar-format.js)، و hardcodedCounts (js/features/** فقط)، و forbiddenTerms
   jsFiles.forEach(f => {
     const r = rel(f); const t = stripJs(read(f));
-    add('numberNoun', r, count(t, RE.numberNoun));
-    if (r !== 'js/core/ar-format.js') add('rawDates', r, count(t, RE.rawDate));
+    if (r !== AR_FORMAT) { add('numberNoun', r, count(t, RE.numberNoun)); add('rawDates', r, count(t, RE.rawDate)); }
+    if (r.startsWith('js/features/')) add('hardcodedCounts', r, count(t, RE.hardcoded));
     add('forbiddenTerms', r, count(t, RE.forbidden));
   });
   add('forbiddenTerms', 'index.html', count(indexText, RE.forbidden));
@@ -108,6 +112,11 @@ function main(argv) {
     return 1;
   }
 
+  const missingMetrics = baseline ? METRICS.filter(m => baseline[m] === undefined) : [];
+  if (missingMetrics.length && !update) {
+    console.error('❌ lint-baseline.json ينقصه: ' + missingMetrics.join('، ') + '. سجّله بـ: node tools/lint.js --update-baseline');
+    return 1;
+  }
   const worse = [], better = [];
   if (baseline) METRICS.forEach(m => {
     const b = baseline[m];
