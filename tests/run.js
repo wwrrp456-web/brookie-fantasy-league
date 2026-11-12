@@ -281,6 +281,33 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   fs.rmSync(tmp, {recursive: true, force: true});
 }
 
+// ---------- 001-T010 (F2): snap.js يتخطّى الصفحات اللي ملفها غير موجود تحت --root بدون ما يعدّها خطأ ----------
+{
+  let hasPw = true; try { require.resolve('playwright'); } catch (e) { hasPw = false; }
+  if (!hasPw) console.log('⏭️ اختبار تخطّي الصفحات في snap.js متخطّى (playwright غير مثبّت: npm ci)');
+  else {
+    const {spawnSync} = require('child_process');
+    const os = require('os');
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'snapskip-'));
+    const run = rootDir => spawnSync('node', [path.join(ROOT, 'tools/snap.js'), '--only', 'pages', '--root', rootDir, '--out', path.join(tmp, 'out'), '--label', path.basename(rootDir)], {encoding: 'utf8', timeout: 120000});
+    // أساس بلا assets/preview.html ← تخطّي (exit 0) وسجل في report.json
+    const baseRoot = path.join(tmp, 'base'); fs.mkdirSync(baseRoot);
+    const r1 = run(baseRoot);
+    const rep1 = JSON.parse(fs.readFileSync(path.join(tmp, 'out/base/report.json'), 'utf8'));
+    check('snap: صفحة غير موجودة تحت --root ← exit 0 (ما تُعدّ خطأ)', r1.status, 0);
+    check('snap: skippedPages يسجّل الصفحة، وما التُقطت لقطات لها', [rep1.skippedPages.map(x => x.page), rep1.pages, rep1.files], [['preview'], 0, 0]);
+    check('snap: يطبع سطر "تخطّي" واضحًا', /تخطّي الصفحة «preview»/.test(r1.stdout), true);
+    check('snap: التخطّي ما يضيف أخطاء كونسول/صفحة', [rep1.consoleErrors.length, rep1.pageErrors.length, rep1.cardErrors.length], [0, 0, 0]);
+    // رأس فيه الصفحة ← تُلتقط الـ4 ولا تخطّي
+    const headRoot = path.join(tmp, 'head'); fs.mkdirSync(path.join(headRoot, 'assets'), {recursive: true});
+    fs.writeFileSync(path.join(headRoot, 'assets/preview.html'), '<!doctype html><meta charset="utf-8"><title>x</title><p>ok</p>');
+    const r2 = run(headRoot);
+    const rep2 = JSON.parse(fs.readFileSync(path.join(tmp, 'out/head/report.json'), 'utf8'));
+    check('snap: صفحة موجودة ← تُلتقط 4 لقطات بدون تخطّي', [r2.status, rep2.pages, rep2.skippedPages.length], [0, 4, 0]);
+    fs.rmSync(tmp, {recursive: true, force: true});
+  }
+}
+
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------
 {
   const {sanitize} = require(path.join(ROOT, 'tools/make-fixture.js'));

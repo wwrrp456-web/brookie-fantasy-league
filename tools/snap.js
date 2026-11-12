@@ -110,8 +110,20 @@ async function snapTabs(browser, ctx, outDir, files, reports) {
 
 // صفحات مستقلة غير index.html (لوحة معاينة الأصول): عرضان × ثيمان
 const PAGES = [{ name: 'preview', url: '/assets/preview.html' }];
-async function snapPages(browser, ctx, outDir, files, reports) {
-  for (const pg of PAGES) for (const width of WIDTHS) for (const theme of THEMES) {
+// صفحة ملفها غير موجود تحت --root (مثل صفحة جديدة في الـPR والأساس ما فيه) تُتخطّى وتُسجَّل في report.json
+// (skippedPages) ولا تُعدّ خطأ (F2)؛ وsnap-diff يعرضها تلقائيًا "جديدة". هذا يخلّي أدوات الـPR تشتغل على كود الأساس.
+async function snapPages(browser, ctx, outDir, files, reports, skipped) {
+  for (const pg of PAGES) {
+    if (!fs.existsSync(path.join(ctx.root, pg.url))) {
+      skipped.push({ page: pg.name, file: pg.url.replace(/^\//, ''), reason: 'غير موجودة تحت --root' });
+      console.log(`تخطّي الصفحة «${pg.name}»: ${pg.url} غير موجودة تحت ${ctx.root}`);
+      continue;
+    }
+    await snapPage(browser, ctx, outDir, files, reports, pg);
+  }
+}
+async function snapPage(browser, ctx, outDir, files, reports, pg) {
+  for (const width of WIDTHS) for (const theme of THEMES) {
     const { page, context, report } = await openPage(browser, ctx, { width, light: theme === 'light', url: pg.url });
     const name = `page-${pg.name}-${width}-${theme}.png`;
     fs.writeFileSync(path.join(outDir, name), await fullShot(page, width));
@@ -187,11 +199,11 @@ async function main(argv) {
   fs.mkdirSync(outDir, { recursive: true });
   const { srv, origin } = await serve(root);
   const browser = await chromium.launch();
-  const ctx = { fixture, overrides, now, origin };
-  const files = [], reports = [], cardErrors = [];
+  const ctx = { fixture, overrides, now, origin, root };
+  const files = [], reports = [], cardErrors = [], skippedPages = [];
   try {
     if (!only || only === 'tabs') await snapTabs(browser, ctx, outDir, files, reports);
-    if (!only || only === 'pages') await snapPages(browser, ctx, outDir, files, reports);
+    if (!only || only === 'pages') await snapPages(browser, ctx, outDir, files, reports, skippedPages);
     if (!only || only === 'cards') await snapCards(browser, ctx, outDir, files, reports, cardErrors);
   } finally {
     await browser.close();
@@ -208,7 +220,8 @@ async function main(argv) {
     pageErrors: uniq([].concat(...reports.map(r => r.pageErrors))),
     blockedRequests: uniq([].concat(...reports.map(r => r.blocked))).sort(),
     unsupportedFirebase: uniq(unsupported),
-    cardErrors
+    cardErrors,
+    skippedPages
   };
   fs.writeFileSync(path.join(outDir, 'report.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(`لقطات: ${report.tabs} تبويب + ${report.pages} صفحة + ${report.cards} كرت = ${report.files} ملف في ${path.relative(process.cwd(), outDir) || outDir} (${report.seconds} ث)`);
