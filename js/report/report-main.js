@@ -271,8 +271,8 @@ function startLiveListeners(){
       const isInternal = r.opponent && CLUBS.includes(r.opponent);
       return `
       <div class="live-row">
-        <span>${r.club}${r.opponent?` ضد ${r.opponent}`:''}${isInternal?' <span class="match-tag">⚔️ داخلية</span>':''}</span>
-        <span class="${RESULT_CLASS[r.result]||''}">${RESULT_LABEL[r.result]||r.result} (${r.gf}-${r.ga})</span>
+        <span>${escapeHtml(r.club)}${r.opponent?` ضد ${escapeHtml(r.opponent)}`:''}${isInternal?' <span class="match-tag">⚔️ داخلية</span>':''}</span>
+        <span class="${escapeHtml(RESULT_CLASS[r.result]||'')}">${escapeHtml(RESULT_LABEL[r.result]||r.result)} (${escapeHtml(r.gf)}-${escapeHtml(r.ga)})</span>
       </div>`;
     }).join('');
   });
@@ -282,7 +282,7 @@ function startLiveListeners(){
     if(!snap.exists()){ box.innerHTML = '<div class="empty-hint">ما أحد سجّل نقاطه بعد</div>'; return; }
     const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
     box.innerHTML = rows.map(r=>`
-      <div class="live-row"><span>${r.name}</span><span style="font-weight:800;">${r.points} نقطة</span></div>`).join('');
+      <div class="live-row"><span>${escapeHtml(r.name)}</span><span style="font-weight:800;">${escapeHtml(r.points)} نقطة</span></div>`).join('');
   });
 }
 

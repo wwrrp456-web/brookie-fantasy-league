@@ -104,7 +104,7 @@ function duelStatusLabel(duel, status){
   if(status.phase==='pending') return '⏳ بانتظار الرد';
   if(status.phase==='declined') return '❌ مرفوض';
   if(status.phase==='cancelled') return '🚫 مُلغى';
-  if(status.phase==='in_progress') return `⚔️ جارٍ (${status.played}/3 جولات)`;
+  if(status.phase==='in_progress') return `⚔️ جارٍ (${escapeHtml(status.played)}/3 جولات)`;
   if(status.phase==='completed'){
     if(status.winnerPid===null) return '🤝 تعادل';
     return `🏆 فاز ${participantName(status.winnerPid)}`;
@@ -119,20 +119,20 @@ function duelCardHTML(key, duel, myPid){
   let actions = '';
   if(status.phase==='pending' && isOpponent){
     actions = `<div class="duel-card-actions">
-      <button type="button" class="btn secondary sd-accept-btn" data-key="${key}">✅ قبول</button>
-      <button type="button" class="btn ghost sd-decline-btn" data-key="${key}">❌ رفض</button>
+      <button type="button" class="btn secondary sd-accept-btn" data-key="${escapeHtml(key)}">✅ قبول</button>
+      <button type="button" class="btn ghost sd-decline-btn" data-key="${escapeHtml(key)}">❌ رفض</button>
     </div>`;
   } else if(status.phase==='pending' && isChallenger){
     actions = `<div class="duel-card-actions">
-      <button type="button" class="btn ghost sd-cancel-btn" data-key="${key}">🚫 إلغاء الطلب</button>
+      <button type="button" class="btn ghost sd-cancel-btn" data-key="${escapeHtml(key)}">🚫 إلغاء الطلب</button>
     </div>`;
   }
   const scoreLine = (status.phase==='in_progress' || status.phase==='completed')
-    ? `<div class="duel-card-score">${participantName(duel.challengerPid)} ${status.aSum} — ${status.bSum} ${participantName(duel.opponentPid)}</div>`
+    ? `<div class="duel-card-score">${participantName(duel.challengerPid)} ${escapeHtml(status.aSum)} — ${escapeHtml(status.bSum)} ${participantName(duel.opponentPid)}</div>`
     : '';
   return `<div class="duel-card season-duel-card">
     <div class="duel-card-title">${participantName(duel.challengerPid)} ⚔️ ${participantName(duel.opponentPid)}</div>
-    <div class="duel-card-sub">يبدأ من الجولة ${duel.startRound} · ${duelStatusLabel(duel, status)}</div>
+    <div class="duel-card-sub">يبدأ من الجولة ${escapeHtml(duel.startRound)} · ${duelStatusLabel(duel, status)}</div>
     ${scoreLine}
     ${actions}
   </div>`;

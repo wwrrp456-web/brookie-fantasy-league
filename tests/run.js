@@ -18,6 +18,8 @@ const FILES = [
   'js/data/season-2/clubs.js',
   'js/data/season-2/rounds-seed.js',
   'js/core/config.js',
+  'js/core/dom-utils.js',
+
   'js/core/ar-format.js',
   'js/core/storage.js',
   'js/core/standings-engine.js',
@@ -92,6 +94,19 @@ check('شهادة: بطل غير موجود بين المشاركين ← نقص
   context.validateCertificateData(9999, context.PARTICIPANTS).length, 1);
 check('شهادة: اسم فارغ ← نقص', context.validateCertificateData(1, [{id:1, name:'  '}]).length, 1);
 check('شهادة: بطل صالح ← لا نواقص', context.validateCertificateData(16, context.PARTICIPANTS), []);
+
+// ---------- 003-T001: escapeHtml (S-07) ----------
+{
+  const esc = context.escapeHtml;
+  check('escapeHtml: وسم صورة خبيث', esc('<img src=x onerror=alert(1)>'), '&lt;img src=x onerror=alert(1)&gt;');
+  check('escapeHtml: كسر خاصية بعلامة اقتباس', esc('" onmouseover="alert(1)" x="'), '&quot; onmouseover=&quot;alert(1)&quot; x=&quot;');
+  check('escapeHtml: علامة الاقتباس المفردة وعلامة &', esc("it's a&b"), 'it&#39;s a&amp;b');
+  check('escapeHtml: null وundefined ← نص فاضي', [esc(null), esc(undefined)], ['', '']);
+  check('escapeHtml: الأرقام والقيمة 0 تبقى', [esc(0), esc(12), esc(3.5)], ['0', '12', '3.5']);
+  check('escapeHtml: العربية والنص السليم يبقى كما هو', esc('أبو تغريد (زيد) 😀'), 'أبو تغريد (زيد) 😀');
+  check('escapeHtml: ما يبقى < ولا > ولا " ولا \' في ناتج نص خليط', /[<>"']/.test(esc('<a href="x" onclick=\'y\'>z</a>')), false);
+}
+
 
 // ---------- 002-T001/T002: js/core/ar-format.js ----------
 {
