@@ -59,3 +59,12 @@
 - الرموز المتجهة جاهزة في `assets/crests/motifs/` (من T07)، والأسماء في `assets/crests.json` معتمدة.
 - **لا تغيّر** أي حرف منفرد (`FCP` بورتو مثلًا) ولا ألوان أي نادٍ. أي اقتراح بديل في `<slug>.alt.svg`.
 - `_compare.html`: قبل وبعد على 24 و48 و96px. ثم توقف، لأن المنظّم يعتمد الدفعة قبل الباقي.
+
+### ⬜ C5 · 001-T06 · تحسين الشعارات الـ27 الباقية · BRIEF-2
+- **الفرع:** `codex/001-T06-rest` (من آخر فرع التكامل **بعد دمج PR #17**، فتأكد إن `assets/crests/_compare.html` موجود عندك) · **الكتابة في:** `assets/crests/` · **التقرير:** `specs/reports/001-T06-rest.md`
+- **المنظّم اعتمد أسلوب الدفعة التجريبية (PR #17)**: الإطار الرفيع، والتاج الأوضح، وإزالة اللمعة. **طبّق نفس القرارات حرفيًا** (راجع `specs/reports/001-T06.md`: سماكة الحد 2.4، والشفافية 0.8، والقناع الداخلي).
+- **الأندية (27):** `manchester-city` `milan` `psg` `chelsea` `galatasaray` `al-qadsiah` `juventus` `dinamo-zagreb` `benfica` `dortmund` `atletico-madrid` `fenerbahce` `al-nassr` `ajax` `arsenal` `celtic` `bayern-munich` `feyenoord` `rangers` `sporting-cp` `psv` `roma` `al-shabab` `liverpool` `al-ahli` `marseille` `shakhtar`
+- **الـ13 اللي فيها `<image>` (صور نقطية)** تُستبدل بالرموز المتجهة من `assets/crests/motifs/` **بنفس الموضع والحجم**: `al-nassr` `al-shabab` `arsenal` `benfica` `celtic` `chelsea` `galatasaray` `liverpool` `manchester-city` `psg` `rangers` `roma` `sporting-cp`. طابق كل نادٍ برمزه بالنظر في الشعار الحالي، وتأكد من `js/core/club-engine.js` (قراءة فقط، اسم `pattern` في كل نادٍ). الرمز يُلوَّن بلون الأصل (الأصل كان بـ`filter:invert(1)` فيطلع أبيض أو فاتح، فطابق النتيجة البصرية).
+- **الحروف المنفردة** (`al-qadsiah` H، و`marseille` M، و`dortmund` BVB، و`feyenoord` F): **لا تغيّرها**. وحوّل النص لمسارات بنفس طريقة FCP في الدفعة التجريبية. وأي بديل مقترح يكون ملف `<slug>.alt.svg` منفصل.
+- **التمييز على 24px:** المجموعات المتشابهة (الأزرق: `chelsea` `dinamo-zagreb`، والأحمر: `milan` `arsenal` `liverpool` `benfica` `al-qadsiah`، والأصفر: `dortmund`) تتميز بالنمط أو تباين الرمز بدون تغيير ألوان النادي.
+- **القبول:** نفس شروط BRIEF-2 والدفعة التجريبية. `_compare.html` يغطي الـ32 كلها (قبل وبعد على 24 و48 و96px)، وصفر `<image>` في الـ32، وكل ملف ≤ 8KB وبـ≤ 4 ألوان، وأسماء الملفات و`assets/crests.json` بدون تغيير. **لا ترسم نسخة من أي شعار رسمي.**
