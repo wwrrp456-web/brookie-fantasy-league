@@ -10,11 +10,11 @@
 
 | الوكيل | الأمر | المهمة | الحالة |
 |---|---|---|---|
-| 🛠️ Sonnet | M18–M20 | دمج #21 (lint) و#25 (snap) و#26 (snap-diff)، كلها ✅ | ⬜ |
-| 🛠️ Sonnet | S15 | 000-T011 `verify.yml` (وظيفتان متوازيتان + قص صور الفرق) | ⬜ |
-| 🛠️ Sonnet | S16 | 001-T001 `css/tokens.css` (بدون تغيير بصري، يثبت بـsnap-diff = 0) | ⬜ |
-| 🛠️ Sonnet | S17 | 002-T004 قاعدة `hardcodedCounts` + اختبارات سلبية، ثم يتوقف | ⬜ |
-| 🎨 Codex | — | ينتظر `css/tokens.css` (S16) عشان موك-أب 001-T008 | ⏸️ |
+| 🛠️ Sonnet | M21–M23 | دمج #27 (`verify.yml`) و#28 (`tokens.css`) و#29 (قواعد اللغة)، كلها ✅ | ⬜ |
+| 🛠️ Sonnet | S18 | 001-T010 `build-assets.js` + لوحة المعاينة | ⬜ |
+| 🛠️ Sonnet | S19 | 002-T005 أداة جرد النصوص | ⬜ |
+| 🛠️ Sonnet | S20 | 001-T003 تنظيف `style=""` (يحمي بـsnap-diff)، ثم يتوقف | ⬜ |
+| 🎨 Codex | C6 | 001-T008 موك-أب الشاشات (BRIEF-4) — **جاهز الحين** بعد دمج M22 | ⬜ |
 
 ## ينتظر Opus 🧠
 
@@ -23,12 +23,14 @@
 | **A5:** جدول تغطية FR/SC ← المهام لكل ميزة، و`/speckit-analyze`. الخطة والمهام تشير لرموز المشاكل (F-04…) وما فيها تتبّع صريح لـFR/SC. وأي ثغرة يُقرَّر لها: مهمة ناقصة ولا قرار. | `specs/00*/spec.md` و`tasks.md` |
 | **002-T002/FR-04:** `formatList` — `spec.md` يكتب "أ، ب و ج" و`plan.md` يكتب "أ، وب، وج" (المنفّذ اتبع الخطة، PR #23). وحّد الاثنين | `002/spec.md` FR-04 و`plan.md` |
 | **001-T002:** هدف `hexColors ≤ 80` (من خط الأساس الفعلي 320، مو 196). غالبًا يحتاج إعادة معايرة | `001/tasks.md` T002، و`lint-baseline.json` |
+| **003-T002..T006:** `auth.js` يعتمد تفعيل Anonymous وEmail في لوحة Firebase (المنظّم) قبل ما يشتغل. لازم يصمَّم بحيث يفشل بهدوء ولا يكسر الموقع قبل التفعيل. أراجعه أنا بعد تصميم الانتقال | `003/plan.md` §5 §6 |
 | **A7:** فحص نتيجة التحويل لـSpec Kit (جلسة قصيرة) | `specs/*/tasks.md` و`.specify/memory/constitution.md` |
 
 ## ينتظر المنظّم
 
 | المطلوب | يفتح |
 |---|---|
+| **إعدادات GitHub (مرة وحدة، بعد دمج M21):** 1) Settings ← General ← Pull Requests ← فعّل **Allow auto-merge**. 2) Settings ← Branches ← Add branch ruleset (أو Add rule) لـ`main`: ✔ Require a pull request before merging، و✔ Require status checks to pass ← اختر **verify**. (فرع التكامل مو `main`، فهذا يحمي النشر النهائي) | 000-T012 |
 | بريد لحساب المنظّم في Firebase | ميزة 003 |
 | إعدادات GitHub (Auto-merge + حماية `main`) | 000-T012، بعد دمج `verify.yml` (S15) |
 
