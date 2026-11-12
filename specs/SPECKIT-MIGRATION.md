@@ -24,10 +24,10 @@
 
 | الأمر | مين يشغّله |
 |---|---|
-| `/speckit-constitution` و`/speckit-specify` و`/speckit-clarify` و`/speckit-plan` و`/speckit-checklist` و`/speckit-tasks` و`/speckit-analyze` | 🔍 Opus (والمنظّم يعتمد spec وأجوبة clarify) |
+| `/speckit-constitution` و`/speckit-specify` و`/speckit-clarify` و`/speckit-plan` و`/speckit-checklist` و`/speckit-tasks` و`/speckit-analyze` | 🔎 المراجع للتحويل وanalyze، و🧠 Opus لمواصفات الميزات الجديدة (والمنظّم يعتمد spec وأجوبة clarify) |
 | `/speckit-implement` (و`/speckit-converge` إن وُجد) | 🛠️ Sonnet |
 | مهام الرسومات في `tasks.md` (معلّمة `[Codex]`) | 🎨 Codex، بالأمر الكامل في `codex-briefs.md` |
-| الدمج | 🛠️ Sonnet، بعد حكم ✅ من Opus (R-11) |
+| الدمج | 🛠️ Sonnet، بعد حكم ✅ من المراجع (R-11، R-13) |
 
 ## 3. المراحل
 
@@ -37,7 +37,7 @@ S1–S4 (Sonnet) وC1–C2 (Codex) تخلص وتندمج **بالصيغة الح
 ### المرحلة 1 · 🛠️ Sonnet · S5: تركيب Spec Kit
 الأمر الكامل في `agents/SONNET.md` (S5). باختصار: يركّب الأداة بدون ما يمس مواصفاتنا، ويكتب تقرير يوصف **الهيكل الفعلي** للإصدار المركّب. ومن هالتقرير نحسم الأسئلة المفتوحة في القسم 5.
 
-### المرحلة 2 · 🔍 Opus: تحويل المواصفات (بعد دمج S5)
+### المرحلة 2 · 🔎 المراجع: تحويل المواصفات (بعد دمج S5)، و🧠 Opus يفحص النتيجة (MASTER-PLAN A7)
 1. **O1 · الدستور:** نقله للمكان المعتمد بنفس البنود الـ26، وسطر إحالة في `specs/constitution.md`.
 2. **O2 · 000-foundation:** تحويل spec وplan وtasks للقوالب، مع **جدول ترقيم قديم ← جديد** (T01 ← T001…) في أول `tasks.md`، عشان التقارير القديمة تبقى مفهومة. والمهام المنجزة تتعلّم `[x]`.
 3. **O3 · 003-security** ثم **O4 · 002-language-voice** ثم **O5 · 001-ui-visual-overhaul**، بنفس الطريقة. ومهام Codex تتعلّم `[Codex]` وتحيل لـBRIEF في `codex-briefs.md`.
