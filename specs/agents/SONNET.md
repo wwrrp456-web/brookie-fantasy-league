@@ -69,22 +69,28 @@
 - **الأدلة:** لقطة `_sheet.html`، ولقطة لشعارات الموقع الحالية للمقارنة، وعدد الملفات.
 - **التقرير:** `specs/reports/001-T04.md`
 
-### ⬜ M3 · ادمج PR #9 (000-T02 الشهادة)
+### ✅ M3 · ادمج PR #9 (000-T02 الشهادة)
 - **SHA:** `44009bc9806651a7fb9209251045055535a6648c` · الحكم: `specs/reports/000-T02-review.md` · بعدها علّم T02 ✅ في `000-foundation/tasks.md`.
 
-### ⬜ M4 · ادمج PR #10 (000-T03 `league.html`)
+### ✅ M4 · ادمج PR #10 (000-T03 `league.html`)
 - **SHA:** `84d99b3c4c5a6c88c6c3913259caad35d35fa850` · الحكم: `specs/reports/000-T03-review.md` · بعدها علّم T03 ✅.
 
-### ⬜ M5 · ادمج PR #11 (001-T07b ألوان P)
+### ✅ M5 · ادمج PR #11 (001-T07b ألوان P)
 - **SHA:** `a67170a771ab8aa1123c3c01c9d9c5692e81a020` · الحكم: `specs/reports/001-T07b-review.md` · بعدها حدّث سطر "متابعة T07b" تحت T07 في `001-ui-visual-overhaul/tasks.md` إلى ✅.
 
-### ⬜ M6 · ادمج PR #12 (001-T04 تصدير الشعارات)
+### ✅ M6 · ادمج PR #12 (001-T04 تصدير الشعارات)
 - **SHA:** `298f34174ada202eef9e785fb895f30bd7a4f8a6` · الحكم: `specs/reports/001-T04-review.md` · بعدها علّم T04 ✅ في `001-ui-visual-overhaul/tasks.md`.
 
-### ⬜ S6 · تصحيح نص `index.html` اللي يذكر `league.html`
+### ✅ S6 · تصحيح نص `index.html` اللي يذكر `league.html`
 - **الفرع:** `feat/000-T03b-index-text` · **التقرير:** `specs/reports/000-T03b.md`
 - النص حوالي السطر 670 (`والمرجعين بـindex.html/league.html`): احذف ذكر `league.html` بحيث يقول المرجع `index.html` فقط. **لا تعدّل غير هالنص.**
 - الأدلة: الـdiff (سطر واحد) و`node tests/run.js`.
+
+### ⬜ M7 · ادمج PR #13 (000-T03b نص index.html)
+- **SHA:** `4af6de8090f80a72a5ec81f0410e91f619479994` · الحكم: `specs/reports/000-T03b-review.md`
+
+### ⬜ M8 · ادمج PR #14 (001-T05 مكتبة الأيقونات الكاملة)
+- **SHA:** `a912c94197bca4aeacc07d964f297ef46332fa8d` · الحكم: `specs/reports/001-T05-full-review.md` · بعدها علّم T05 ✅ في `001-ui-visual-overhaul/tasks.md`.
 
 ### ⬜ S5 · تركيب Spec Kit (R-12) · ⏹️ توقف بعده
 - **المرجع:** `specs/SPECKIT-MIGRATION.md` (اقرأه كامل، خصوصًا القسمين 3 و5).
