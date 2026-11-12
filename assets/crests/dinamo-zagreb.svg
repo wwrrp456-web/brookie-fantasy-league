@@ -1,25 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg class="crest" width="100" height="110.00000000000001" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="دينامو زغرب">
-    <defs>
-      <clipPath id="shcnd804g_583">
-        <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" transform="translate(50,56) scale(0.82) translate(-50,-56)"/>
-      </clipPath>
-      <linearGradient id="glcnd804g_583" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.38"/>
-        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <title>دينامو زغرب</title>
-    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" fill="rgba(0,0,0,0.55)"/>
-    <g clip-path="url(#shcnd804g_583)">
-      <rect x="0" y="0" width="100" height="110" fill="#1560BD"/>
-      <rect x="34" y="36" width="16" height="16" fill="#fff"/>
-      <rect x="50" y="36" width="16" height="16" fill="#CE151C"/>
-      <rect x="34" y="52" width="16" height="16" fill="#CE151C"/>
-      <rect x="50" y="52" width="16" height="16" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" class="crest" width="100" height="110" viewBox="0 0 100 110" role="img" aria-label="دينامو زغرب"><title>دينامو زغرب</title><defs><clipPath id="crest-dinamo-zagreb-clip"><path d="M10.4 11H89.6V57.8C89.6 81.2 71.6 94.7 50 101 28.4 94.7 10.4 81.2 10.4 57.8Z" /></clipPath></defs><path class="crest-border" d="M6 6H94V58C94 84 74 99 50 106 26 99 6 84 6 58Z" fill="rgba(0,0,0,0.55)" stroke="#fff" stroke-opacity=".8" stroke-width="2.4" stroke-linejoin="round" />
+<g clip-path="url(#crest-dinamo-zagreb-clip)">
+      <rect x="0" y="0" width="100" height="110" fill="#1560BD" />
+      <rect x="34" y="36" width="16" height="16" fill="#fff" />
+      <rect x="50" y="36" width="16" height="16" fill="#CE151C" />
+      <rect x="34" y="52" width="16" height="16" fill="#CE151C" />
+      <rect x="50" y="52" width="16" height="16" fill="#fff" />
     </g>
-    <g clip-path="url(#shcnd804g_583)">
-      <rect x="0" y="0" width="100" height="46" fill="url(#glcnd804g_583)"/>
-    </g>
-    
-  </svg>
+    </svg>

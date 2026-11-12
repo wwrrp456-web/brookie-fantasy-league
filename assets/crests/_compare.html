@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>شعارات بروكي — الدفعة التجريبية قبل وبعد</title>
+<title>شعارات بروكي — المقارنة الكاملة</title>
 <style>
 @font-face{font-family:Tajawal;font-style:normal;font-weight:400;font-display:swap;src:url(../icons/fonts/tajawal-arabic-400.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF}
 @font-face{font-family:Tajawal;font-style:normal;font-weight:700;font-display:swap;src:url(../icons/fonts/tajawal-arabic-700.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF}
@@ -12,14 +12,14 @@
 </head>
 <body><main>
 <header>
-<h1>الشعارات — دفعة تجريبية من خمسة</h1>
+<h1>الشعارات — المقارنة الكاملة للأندية الـ32</h1>
 <p>مقارنة الصور المصدّرة قبل التعديل بملفات SVG المحسّنة، على 24 و48 و96px بالثيمين. بقيت ألوان الأندية وحروف FCP، مع توحيد الإطار وتحسين التباين. اسحب منطقة المقارنة أفقيًا على الجوال لرؤية المقاسات الأكبر.</p>
-<p class="status">الدفعة تنتظر اعتماد المنظّم قبل استكمال بقية الشعارات. <a href="../../specs/reports/001-T06.md">تقرير التغييرات والتحقق</a></p>
+<p class="status">المجموعة كاملة: الأندية الـ32 بالإطار المعتمد، ورموز وحروف متجهة بلا صور مضمنة. <a href="../../specs/reports/001-T06-rest.md">تقرير التغييرات والتحقق</a></p>
 </header><div id="clubs"></div>
 <noscript><p class="error">يتطلب عرض المقارنة تفعيل JavaScript. صور المقارنة الأصلية محفوظة في before وملفات الشعارات المحسنة بجوار هذه الصفحة.</p></noscript>
 </main>
 <script>
-const clubs=[['al-hilal','الهلال'],['barcelona','برشلونة'],['real-madrid','ريال مدريد'],['al-ittihad','الاتحاد'],['porto','بورتو']];
+const clubs=[["al-hilal","الهلال"],["barcelona","برشلونة"],["manchester-city","مانشستر سيتي"],["milan","ميلان"],["psg","باريس سان جيرمان"],["chelsea","تشيلسي"],["porto","بورتو"],["al-ittihad","الاتحاد"],["galatasaray","غلطة سراي"],["al-qadsiah","القادسية"],["juventus","يوفنتوس"],["dinamo-zagreb","دينامو زغرب"],["benfica","بنفيكا"],["real-madrid","ريال مدريد"],["dortmund","بوروسيا دورتموند"],["atletico-madrid","أتلتيكو مدريد"],["fenerbahce","فنربخشة"],["al-nassr","النصر"],["ajax","أياكس"],["arsenal","أرسنال"],["celtic","سلتيك"],["bayern-munich","بايرن ميونيخ"],["feyenoord","فاينورد"],["rangers","رينجرز"],["sporting-cp","سبورتينغ لشبونة"],["psv","آيندهوفن"],["roma","روما"],["al-shabab","الشباب"],["liverpool","ليفربول"],["al-ahli","الأهلي السعودي"],["marseille","مارسيليا"],["shakhtar","شختار دونيتسك"]];
 for(const [slug,name] of clubs){
  const section=document.createElement('section');section.className='club';section.dataset.club=slug;
  const heading=document.createElement('header');heading.className='heading';const title=document.createElement('h2');title.textContent=name;const code=document.createElement('code');code.textContent=slug;heading.append(title,code);section.append(heading);

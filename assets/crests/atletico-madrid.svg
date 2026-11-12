@@ -1,31 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg class="crest" width="100" height="110.00000000000001" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="أتلتيكو مدريد">
-    <defs>
-      <clipPath id="shctdveqa_587">
-        <path d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" transform="translate(50,56) scale(0.82) translate(-50,-56)"/>
+<svg xmlns="http://www.w3.org/2000/svg" class="crest" width="100" height="110" viewBox="0 0 100 110" role="img" aria-label="أتلتيكو مدريد"><title>أتلتيكو مدريد</title><defs><clipPath id="crest-atletico-madrid-clip"><path d="M10.4 11H89.6V57.8C89.6 81.2 71.6 94.7 50 101 28.4 94.7 10.4 81.2 10.4 57.8Z" /></clipPath></defs><path class="crest-border" d="M6 6H94V58C94 84 74 99 50 106 26 99 6 84 6 58Z" fill="rgba(0,0,0,0.55)" stroke="#fff" stroke-opacity=".8" stroke-width="2.4" stroke-linejoin="round" />
+<g clip-path="url(#crest-atletico-madrid-clip)">
+      <rect x="0" y="0" width="100" height="110" fill="#0C2340" />
+      <clipPath id="crest-atletico-madrid-atcctdveqa_587">
+        <polygon points="0,60 100,20 100,110 0,110" />
       </clipPath>
-      <linearGradient id="glctdveqa_587" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.38"/>
-        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <title>أتلتيكو مدريد</title>
-    <path class="crest-border" d="M6 6 H94 V58 C94 84 74 99 50 106 C26 99 6 84 6 58 Z" fill="rgba(0,0,0,0.55)"/>
-    <g clip-path="url(#shctdveqa_587)">
-      <rect x="0" y="0" width="100" height="110" fill="#0C2340"/>
-      <clipPath id="atcctdveqa_587">
-        <polygon points="0,60 100,20 100,110 0,110"/>
-      </clipPath>
-      <g clip-path="url(#atcctdveqa_587)">
-        <rect x="0" y="0" width="20" height="110" fill="#fff"/>
-        <rect x="20" y="0" width="20" height="110" fill="#CB3524"/>
-        <rect x="40" y="0" width="20" height="110" fill="#fff"/>
-        <rect x="60" y="0" width="20" height="110" fill="#CB3524"/>
-        <rect x="80" y="0" width="20" height="110" fill="#fff"/>
+      <g clip-path="url(#crest-atletico-madrid-atcctdveqa_587)">
+        <rect x="0" y="0" width="20" height="110" fill="#fff" />
+        <rect x="20" y="0" width="20" height="110" fill="#CB3524" />
+        <rect x="40" y="0" width="20" height="110" fill="#fff" />
+        <rect x="60" y="0" width="20" height="110" fill="#CB3524" />
+        <rect x="80" y="0" width="20" height="110" fill="#fff" />
       </g>
     </g>
-    <g clip-path="url(#shctdveqa_587)">
-      <rect x="0" y="0" width="100" height="46" fill="url(#glctdveqa_587)"/>
-    </g>
-    
-  </svg>
+    </svg>
