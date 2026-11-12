@@ -124,7 +124,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "champion-post-stress.html",
@@ -181,7 +183,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "standings-post.html",
@@ -377,7 +381,9 @@
       "typography": {
         "minimumRowFont": 30,
         "rowCount": 20
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "standings-story.html",
@@ -496,7 +502,9 @@
       "typography": {
         "minimumRowFont": 30,
         "rowCount": 9
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "standings-story-stress.html",
@@ -615,7 +623,9 @@
       "typography": {
         "minimumRowFont": 30,
         "rowCount": 9
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "season-wrap-post.html",
@@ -670,7 +680,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "profile-square.html",
@@ -725,7 +737,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "certificate-post.html",
@@ -780,7 +794,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "duel-post.html",
@@ -835,7 +851,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "duel-post-stress.html",
@@ -890,7 +908,9 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
-      }
+      },
+      "axe": null,
+      "parity": null
     },
     {
       "file": "my-clubs-post.html",
@@ -947,6 +967,495 @@
       "typography": {
         "minimumRowFont": null,
         "rowCount": 0
+      },
+      "axe": null,
+      "parity": null
+    },
+    {
+      "file": "standings-post-light.html",
+      "width": 1080,
+      "height": 1350,
+      "stress": false,
+      "shot": "shots/standings-post-light.png",
+      "bytes": 244129,
+      "errors": [],
+      "checks": {
+        "card": {
+          "left": 0,
+          "right": 1080,
+          "top": 0,
+          "bottom": 1350,
+          "width": 1080,
+          "height": 1350
+        },
+        "safe": {
+          "left": 64,
+          "right": 1016,
+          "top": 64,
+          "bottom": 1190,
+          "width": 952,
+          "height": 1126
+        },
+        "footer": {
+          "left": 64,
+          "right": 1016,
+          "top": 1254,
+          "bottom": 1350,
+          "width": 952,
+          "height": 96
+        },
+        "out": [],
+        "overlaps": [],
+        "ranking": [
+          {
+            "rank": 1,
+            "bottom": 466.46875,
+            "height": 176,
+            "name": "لطفي",
+            "clipped": false
+          },
+          {
+            "rank": 2,
+            "bottom": 466.46875,
+            "height": 176,
+            "name": "أيوب",
+            "clipped": false
+          },
+          {
+            "rank": 3,
+            "bottom": 466.46875,
+            "height": 176,
+            "name": "أبو أوس",
+            "clipped": false
+          },
+          {
+            "rank": 4,
+            "bottom": 586.46875,
+            "height": 68,
+            "name": "العندليب",
+            "clipped": false
+          },
+          {
+            "rank": 5,
+            "bottom": 654.46875,
+            "height": 68,
+            "name": "أبو عزام",
+            "clipped": false
+          },
+          {
+            "rank": 6,
+            "bottom": 722.46875,
+            "height": 68,
+            "name": "مصطفى عبده",
+            "clipped": false
+          },
+          {
+            "rank": 7,
+            "bottom": 790.46875,
+            "height": 68,
+            "name": "أبا عتاب",
+            "clipped": false
+          },
+          {
+            "rank": 8,
+            "bottom": 858.46875,
+            "height": 68,
+            "name": "أبو تغريد (زيد)",
+            "clipped": false
+          },
+          {
+            "rank": 9,
+            "bottom": 926.46875,
+            "height": 68,
+            "name": "أبو رمزي",
+            "clipped": false
+          },
+          {
+            "rank": 10,
+            "bottom": 994.46875,
+            "height": 68,
+            "name": "أبو شيخة",
+            "clipped": false
+          },
+          {
+            "rank": 11,
+            "bottom": 1062.46875,
+            "height": 68,
+            "name": "سعيد",
+            "clipped": false
+          },
+          {
+            "rank": 12,
+            "bottom": 1130.46875,
+            "height": 68,
+            "name": "أبو يحيى",
+            "clipped": false
+          },
+          {
+            "rank": 13,
+            "bottom": 586.46875,
+            "height": 68,
+            "name": "علي قوول",
+            "clipped": false
+          },
+          {
+            "rank": 14,
+            "bottom": 654.46875,
+            "height": 68,
+            "name": "أبو مناف",
+            "clipped": false
+          },
+          {
+            "rank": 15,
+            "bottom": 722.46875,
+            "height": 68,
+            "name": "ليمان",
+            "clipped": false
+          },
+          {
+            "rank": 16,
+            "bottom": 790.46875,
+            "height": 68,
+            "name": "أبو حمد",
+            "clipped": false
+          },
+          {
+            "rank": 17,
+            "bottom": 858.46875,
+            "height": 68,
+            "name": "أبو عبيدة",
+            "clipped": false
+          },
+          {
+            "rank": 18,
+            "bottom": 926.46875,
+            "height": 68,
+            "name": "موسى (العجوز)",
+            "clipped": false
+          },
+          {
+            "rank": 19,
+            "bottom": 994.46875,
+            "height": 68,
+            "name": "محمد عثمان",
+            "clipped": false
+          },
+          {
+            "rank": 20,
+            "bottom": 1062.46875,
+            "height": 68,
+            "name": "أبو صالح",
+            "clipped": false
+          }
+        ],
+        "noMatch": [],
+        "nameClips": []
+      },
+      "header": {
+        "logoWidth": 144,
+        "logoHeight": 165.46875,
+        "headerHeight": 214.46875,
+        "above": 24,
+        "below": 25,
+        "logoToHeading": 32,
+        "logoTop": 88,
+        "scaledWidth390": 52,
+        "headingWidth": 728
+      },
+      "typography": {
+        "minimumRowFont": 30,
+        "rowCount": 20
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "h2"
+              ],
+              [
+                "h2 > span"
+              ],
+              [
+                "div[data-rank=\"4\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"4\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"4\"] > b"
+              ],
+              [
+                "div[data-rank=\"6\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"6\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"6\"] > b"
+              ],
+              [
+                "div[data-rank=\"8\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"8\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"8\"] > b"
+              ],
+              [
+                "div[data-rank=\"10\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"10\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"10\"] > b"
+              ],
+              [
+                "div[data-rank=\"12\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"12\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"12\"] > b"
+              ],
+              [
+                "div[data-rank=\"13\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"13\"] > .participant-cell > .person"
+              ],
+              [
+                "div[data-rank=\"13\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"13\"] > b"
+              ],
+              [
+                "div[data-rank=\"15\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"15\"] > .participant-cell > .person"
+              ],
+              [
+                "div[data-rank=\"15\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"15\"] > b"
+              ],
+              [
+                "div[data-rank=\"17\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"17\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"17\"] > b"
+              ],
+              [
+                "div[data-rank=\"19\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"19\"] > .participant-cell > .person"
+              ],
+              [
+                "div[data-rank=\"19\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"19\"] > b"
+              ],
+              [
+                ".date"
+              ],
+              [
+                "footer > span"
+              ],
+              [
+                "a"
+              ]
+            ]
+          }
+        ]
+      },
+      "parity": {
+        "dynamicClassToggle": true,
+        "textUnchanged": true
+      }
+    },
+    {
+      "file": "standings-story-light.html",
+      "width": 1080,
+      "height": 1920,
+      "stress": false,
+      "shot": "shots/standings-story-light.png",
+      "bytes": 235270,
+      "errors": [],
+      "checks": {
+        "card": {
+          "left": 0,
+          "right": 1080,
+          "top": 0,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "safe": {
+          "left": 64,
+          "right": 1016,
+          "top": 200,
+          "bottom": 1720,
+          "width": 952,
+          "height": 1520
+        },
+        "footer": {
+          "left": 64,
+          "right": 1016,
+          "top": 1824,
+          "bottom": 1920,
+          "width": 952,
+          "height": 96
+        },
+        "out": [],
+        "overlaps": [],
+        "ranking": [
+          {
+            "rank": 1,
+            "bottom": 715.25,
+            "height": 224,
+            "name": "لطفي",
+            "clipped": false
+          },
+          {
+            "rank": 2,
+            "bottom": 715.25,
+            "height": 224,
+            "name": "أيوب",
+            "clipped": false
+          },
+          {
+            "rank": 3,
+            "bottom": 715.25,
+            "height": 224,
+            "name": "أبو أوس",
+            "clipped": false
+          },
+          {
+            "rank": 4,
+            "bottom": 835.25,
+            "height": 112,
+            "name": "العندليب",
+            "clipped": false
+          },
+          {
+            "rank": 5,
+            "bottom": 947.25,
+            "height": 112,
+            "name": "أبو عزام",
+            "clipped": false
+          },
+          {
+            "rank": 6,
+            "bottom": 1059.25,
+            "height": 112,
+            "name": "مصطفى عبده",
+            "clipped": false
+          },
+          {
+            "rank": 18,
+            "bottom": 1255.25,
+            "height": 112,
+            "name": "موسى (العجوز)",
+            "clipped": false
+          },
+          {
+            "rank": 19,
+            "bottom": 1367.25,
+            "height": 112,
+            "name": "محمد عثمان",
+            "clipped": false
+          },
+          {
+            "rank": 20,
+            "bottom": 1479.25,
+            "height": 112,
+            "name": "أبو صالح",
+            "clipped": false
+          }
+        ],
+        "noMatch": [],
+        "nameClips": []
+      },
+      "header": {
+        "logoWidth": 176,
+        "logoHeight": 202.25,
+        "headerHeight": 267.25,
+        "above": 32,
+        "below": 33,
+        "logoToHeading": 32,
+        "logoTop": 232,
+        "scaledWidth390": 63.55555555555556,
+        "headingWidth": 680
+      },
+      "typography": {
+        "minimumRowFont": 30,
+        "rowCount": 9
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "div[data-rank=\"4\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"4\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"4\"] > b"
+              ],
+              [
+                "div[data-rank=\"6\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"6\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"6\"] > b"
+              ],
+              [
+                "div[data-rank=\"19\"] > .rank"
+              ],
+              [
+                "div[data-rank=\"19\"] > .participant-cell > .person"
+              ],
+              [
+                "div[data-rank=\"19\"] > .participant-cell > .row-subline > .rank-gap"
+              ],
+              [
+                "div[data-rank=\"19\"] > b"
+              ],
+              [
+                ".date"
+              ],
+              [
+                "footer > span"
+              ],
+              [
+                "a"
+              ]
+            ]
+          }
+        ]
+      },
+      "parity": {
+        "dynamicClassToggle": true,
+        "textUnchanged": true
       }
     }
   ],
@@ -1003,5 +1512,58 @@
     "beforeCommit": "bd56b09",
     "comparison": "_table-compare.html",
     "comparisonPNG": "_table-compare.png"
+  },
+  "lightMode": {
+    "decision": "R-14",
+    "templateStrategy": "المصدر الليلي نفسه؛ غلاف نهاري يستورده ويبدّل كلاس الثيم وملف الشعار فقط",
+    "contrast": {
+      "bg-post-light": {
+        "minimumBackgroundLuminance": 0.7916393578691585,
+        "primaryTextWorst": 15.420503007517892,
+        "secondaryTextWorst": 8.214323164459248
+      },
+      "bg-story-light": {
+        "minimumBackgroundLuminance": 0.783880707676389,
+        "primaryTextWorst": 15.27834914135984,
+        "secondaryTextWorst": 8.13859944811029
+      },
+      "tokenPairs": {
+        "0B0D1F/EAE6F8": 15.731872120857586,
+        "3D2E99/EAE6F8": 8.380185881074683,
+        "3D2E99/FDFCFF": 10.025715156534522,
+        "F5B83D/0B0D1F": 10.81553666221299,
+        "F3F1FA/0B0D1F": 17.19837163175197,
+        "22C55E/0B0D1F": 8.442905529064278,
+        "EF4444/0B0D1F": 5.112259012546173,
+        "7B5CFF/EAE6F8": 3.5649776871999133
+      }
+    },
+    "images": [
+      {
+        "file": "bg-post-light.webp",
+        "bytes": 10370,
+        "size": [
+          1080,
+          1350
+        ]
+      },
+      {
+        "file": "bg-story-light.webp",
+        "bytes": 14806,
+        "size": [
+          1080,
+          1920
+        ]
+      }
+    ],
+    "crests": {
+      "count": 32,
+      "sizes": [
+        24,
+        48
+      ],
+      "sheet": "crests-light-check.png"
+    },
+    "comparison": "standings-light-dark-compare.html"
   }
 }

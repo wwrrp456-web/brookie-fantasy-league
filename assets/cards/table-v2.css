@@ -40,3 +40,10 @@
 .table-v2.story .podium-name{min-height:72px}
 .podium-card.ranking-row .movement{font-size:30px;min-width:24px}
 .podium-card.ranking-row .movement .icon{width:24px;height:24px}
+/* R-14: المتغيرات نفسها؛ اختلاف الثيم محصور ببطاقتي الترتيب. */
+html.light-mode .table-v2{background-color:var(--c-bg);background-image:url(bg-post-light.webp)}
+html.light-mode .table-v2.story{background-image:url(bg-story-light.webp)}
+html.light-mode .table-v2 .movement{background:var(--c-text);color:var(--c-bg)}
+html.light-mode .table-v2 .leader .rank{background:var(--c-text);color:var(--c-gold);border-radius:var(--r-sm);padding-inline:var(--sp-2)}
+html.light-mode .table-v2 .crest{background:var(--c-surface-2)}
+html.light-mode .table-v2 .movement{border-radius:var(--r-sm)}
