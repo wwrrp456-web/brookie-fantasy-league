@@ -12,7 +12,6 @@
 
 const CREST_RATIO = 1.1;                 // ارتفاع الدرع = العرض × 1.1 (viewBox 100×110)
 const BORDER = '#9B7BF5';                // الإطار الذهبي الموحّد للدرع الاحتياطي (كان يلوّنه .crest-border بالـCSS)
-const LOGO_NAVY = /#12142E/gi;           // نص الشعار الفاتح الكحلي (R-10) ← أبيض على خلفية الهيدر الداكنة
 // الرموز المتجهة المستعملة في الدرع الاحتياطي. الـviewBox كامل لمن كانت صورته PNG مربعة 512، ومحصور على الشكل
 // (bbox) لمن كانت صورته بنسبتها الأصلية (قياسات حُسبت من المسارات بـgetBBox).
 const MOTIF_VIEWBOX = {
@@ -369,7 +368,7 @@ function drawCrest(ctx, club, x, y, w, h){
 function logoURL(light){
   const key = 'logo|' + (light ? 'light' : 'dark');
   if(!_crestUrls.has(key)){
-    const svg = light ? LOGO_SVG.logoLight.replace(LOGO_NAVY, '#FFFFFF') : LOGO_SVG.logo;
+    const svg = light ? LOGO_SVG.logoLight : LOGO_SVG.logo;
     _crestUrls.set(key, svgToURL(svg));
   }
   return _crestUrls.get(key);
@@ -383,5 +382,11 @@ function resetCrestCache(){ _crestUrls.clear(); _crestImgs.clear(); _slugByName 
   if(typeof document === 'undefined') return;
   const el = document.getElementById('logoImg');
   if(el) el.src = logoURL(false);
+  const mark = document.getElementById('logoMark');
+  if(mark) mark.src = svgToURL(LOGO_SVG.mark);
+  const contribute = document.getElementById('contributeLink');
+  if(contribute) contribute.innerHTML = ICONS.edit;
+  const more = document.getElementById('tabMoreBtn');
+  if(more) more.innerHTML = ICONS['chevron-left'];
 })();
 

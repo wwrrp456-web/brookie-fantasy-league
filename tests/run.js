@@ -385,7 +385,7 @@ const asyncCrestTests = (async () => {
   check('crests: نفس النادي ← نفس العنوان (مخزَّن)، ونادٍ ثاني ← عنوان ثاني', [run("crestURL('الهلال') === crestURL('الهلال')"), run("crestURL('الهلال') !== crestURL('النصر')")], [true, true]);
   // الشعار الرئيسي
   const dark = await blobText(run("logoURL(false)")), light = await blobText(run("logoURL(true)"));
-  check('crests: الشعار الداكن = الأبيض الأحادي، والفاتح ما فيه الكحلي #12142E (نصه صار أبيض)', [/^<svg/.test(dark), /^<svg/.test(light), /#12142E/i.test(light), /#12142E/i.test(dark), dark === light], [true, true, false, false, false]);
+  check('crests: الشعار الداكن = الأبيض الأحادي (بلا الكحلي)، والفاتح = logoLight كما هو بنصه الكحلي #12142E (F3)', [/^<svg/.test(dark), /^<svg/.test(light), /#12142E/i.test(light), /#12142E/i.test(dark), dark === light], [true, true, true, false, false]);
   // لا بقايا: brand-assets محذوف ولا إحالة له ولا clubCrestSVG
   const refs = [];
   (function walk(d) { fs.readdirSync(d, {withFileTypes: true}).forEach(e => { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(js|html)$/.test(e.name)) { const t = fs.readFileSync(p, 'utf8'); if (/clubCrestSVG|brand-assets|LOGO_BASE64|_ICON_PNG_BASE64/.test(t)) refs.push(path.relative(ROOT, p)); } }); })(path.join(ROOT, 'js'));

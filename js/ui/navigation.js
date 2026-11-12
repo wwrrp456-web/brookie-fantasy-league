@@ -99,6 +99,26 @@ function renderAll(){
 }
 
 // ---------- Tabs ----------
+// الشريط يتمركز على التبويب النشط تلقائيًا، ويعرض تلاشيًا وسهمًا لو فيه تبويبات مخفية (001-T013، FR-03)
+const tabsNav = document.getElementById('mainTabs');
+const tabMoreBtn = document.getElementById('tabMoreBtn');
+function centerActiveTab(smooth){
+  const nav = tabsNav; if(!nav) return;
+  const btn = nav.querySelector('button.active'); if(!btn) return;
+  const n = nav.getBoundingClientRect(), r = btn.getBoundingClientRect();
+  const delta = (r.left + r.width / 2) - (n.left + n.width / 2);
+  nav.scrollBy({left: delta, behavior: smooth ? 'smooth' : 'auto'});
+}
+// تبويبات مخفية جهة اليسار (في RTL هناك التبويبات اللاحقة) ← تلاشٍ وسهم
+function updateTabCues(){
+  const nav = tabsNav; if(!nav) return;
+  const n = nav.getBoundingClientRect();
+  const first = nav.querySelector('button');
+  const lefts = Array.from(nav.querySelectorAll('button')).map(b => b.getBoundingClientRect().left);
+  const more = !!first && Math.min.apply(null, lefts) < n.left - 2;
+  nav.classList.toggle('has-more', more);
+  if(tabMoreBtn) tabMoreBtn.hidden = !more;
+}
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
@@ -106,8 +126,18 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
     btn.classList.add('active');
     document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
     renderUpdateDot();
+    centerActiveTab(true);
   });
 });
+if(tabsNav){
+  tabsNav.addEventListener('scroll', updateTabCues, {passive:true});
+  window.addEventListener('resize', ()=>{ updateTabCues(); });
+  if(tabMoreBtn) tabMoreBtn.addEventListener('click', ()=>{
+    const rtl = getComputedStyle(tabsNav).direction === 'rtl';
+    tabsNav.scrollBy({left: (rtl ? -1 : 1) * tabsNav.clientWidth * 0.7, behavior: 'smooth'});
+  });
+  centerActiveTab(false); updateTabCues();
+}
 
 // ---------- مؤشر حالة الاتصال بالإنترنت ----------
 // بما إن الموقع صار يعمل جزئيًا بدون إنترنت (PWA + service worker)، هذه

@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="css/champion-honor.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/site-polish.css">
+<link rel="stylesheet" href="css/app-header.css">
 <link rel="stylesheet" href="css/utilities.css">
 </head>
 <body>
@@ -50,7 +51,6 @@
 <div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
 
 <div id="statusBarBox"></div>
-<div id="notificationCenterBox" class="notif-center"></div>
 <div id="liveFocusOverlay"></div>
 
 <div id="onboardOverlay" class="onboard-overlay" hidden>
@@ -73,18 +73,25 @@
   </div>
 </div>
 
-<header>
-  <img class="u-w-240px u-h-auto u-mb-10px u-filter-drop-shadow-0-4px-14px-rgba-0-0-0-0-35" id="logoImg" alt="شعار دوري بروكي الفانتازي">
-  <span id="championCrown" class="champion-crown" hidden>👑</span>
-  <p>الموسم الثاني</p>
-  <div class="u-d-flex u-gap-8px u-jc-center u-flexwrap-wrap u-mt-12px">
-    <button id="darkModeToggleBtn" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);" aria-pressed="false">☀️ الوضع الفاتح</button>
-    <a href="report.html" class="btn ghost" style="font-size:0.75rem;padding:6px 14px;color:#fff;border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.08);text-decoration:none;display:inline-block;">🧾 ساهم بالبيانات</a>
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span id="championCrown" class="champion-crown" hidden>👑</span>
+      <img id="logoMark" class="brand-mark" alt="" width="34" height="42">
+      <img id="logoImg" class="brand-logo" alt="شعار دوري بروكي الفانتازي" width="160" height="72">
+      <div class="brand-label"><h1>دوري بروكي الفانتازي</h1><p>الموسم الثاني</p></div>
+    </div>
+    <div class="header-actions">
+      <a href="report.html" id="contributeLink" class="icon-btn" aria-label="ساهم بالبيانات" title="ساهم بالبيانات"></a>
+      <button id="darkModeToggleBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="تبديل الوضع"></button>
+      <div id="notificationCenterBox" class="notif-center"></div>
+    </div>
   </div>
 </header>
 <div id="championBannerBox"></div>
 
-<nav class="tabs">
+<div class="tab-shell" id="tabShell">
+<nav class="tabs" id="mainTabs">
   <button data-tab="standings" class="active">الترتيب العام<span class="update-dot" id="standingsUpdateDot" hidden></span></button>
   <button data-tab="participants">المشاركون</button>
   <button data-tab="rounds">الجولات</button>
@@ -93,6 +100,8 @@
   <button data-tab="about">عن الدوري</button>
   <button data-tab="admin">المنظم</button>
 </nav>
+<button type="button" class="tab-more" id="tabMoreBtn" aria-label="مزيد من التبويبات" hidden></button>
+</div>
 
 <div class="wrap">
 

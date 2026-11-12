@@ -16,7 +16,8 @@ function applyLightModePref(){
   if(btn){
     // النص يعكس الوضع الحالي فعليًا (لا الوضع اللي بيتحول له عند الضغط) —
     // تفاديًا لالتباس "يقول فاتح وهو داكن" الذي أبلغ عنه المستخدم.
-    btn.textContent = on ? '☀️ الوضع الفاتح' : '🌙 الوضع الداكن';
+    btn.innerHTML = ICONS[on ? 'sun' : 'moon'];
+    btn.setAttribute('aria-label', on ? 'الوضع الفاتح مفعّل' : 'الوضع الداكن مفعّل');
     btn.setAttribute('aria-pressed', String(on));
     btn.title = on ? 'اضغط للتبديل إلى الوضع الداكن' : 'اضغط للتبديل إلى الوضع الفاتح';
   }
