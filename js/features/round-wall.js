@@ -26,12 +26,6 @@ let _wallMessages = {};
 // تهرب من HTML عشان نص أي مشارك ما يقدر يحقن وسوم بالصفحة — الميزات
 // القديمة المشابهة (roundComments) ما كانت تعمل هذا، لكن حجم الكتابة هنا
 // أكبر بكثير (رسائل متعددة من الجميع) فأضفناها احترازيًا لميزة جديدة.
-function escapeWallHtml(str){
-  const div = document.createElement('div');
-  div.textContent = String(str == null ? '' : str);
-  return div.innerHTML;
-}
-
 function getWallLastPostAt(){
   try{ return Number(localStorage.getItem('brookie_wall_last_post') || 0); }
   catch(e){ return 0; }
@@ -131,20 +125,20 @@ function renderRoundWallList(roundNum){
       const reactors = (msg.reactions && msg.reactions[emoji]) || {};
       const count = Object.keys(reactors).length;
       const mine = myPid && reactors[myPid];
-      return `<button type="button" class="wall-reaction-btn${mine ? ' mine' : ''}" data-emoji="${emoji}" data-key="${key}">
+      return `<button type="button" class="wall-reaction-btn${mine ? ' mine' : ''}" data-emoji="${emoji}" data-key="${escapeHtml(key)}">
         <span>${emoji}</span>${count > 0 ? `<span class="wall-reaction-count">${count}</span>` : ''}
       </button>`;
     }).join('');
     const deleteBtn = isAdmin
-      ? `<button type="button" class="wall-delete-btn" data-key="${key}" title="حذف الرسالة">🗑️</button>`
+      ? `<button type="button" class="wall-delete-btn" data-key="${escapeHtml(key)}" title="حذف الرسالة">🗑️</button>`
       : '';
     return `<div class="wall-message-item">
       <div class="wall-message-head">
-        <span class="wall-message-author">${escapeWallHtml(msg.name)}</span>
+        <span class="wall-message-author">${escapeHtml(msg.name)}</span>
         <span class="wall-message-time">${t}</span>
         ${deleteBtn}
       </div>
-      <div class="wall-message-text">${escapeWallHtml(msg.text)}</div>
+      <div class="wall-message-text">${escapeHtml(msg.text)}</div>
       <div class="wall-message-reactions">${reactionsHTML}</div>
     </div>`;
   }).join('');

@@ -6,6 +6,19 @@ function hashStr(s){
   return h;
 }
 
+// ---------- تعقيم HTML (003-T001، S-07، الدستور 23) ----------
+// كل نص يكتبه زائر (جدار، تقارير، نزالات، ردود فعل…) يمر عليها قبل أي innerHTML.
+// تهرب & < > " ' فتصلح للنص داخل وسم وللقيمة داخل خاصية ("…" أو '…').
+// تقبل أي نوع (رقم، null، undefined) وترجع نصًا.
+function escapeHtml(v){
+  return String(v == null ? '' : v)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
 // ---------- آخر تحديث ----------
 function timeAgo(ts){
   if(!ts) return 'غير معروف';

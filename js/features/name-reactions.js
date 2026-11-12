@@ -66,7 +66,7 @@ function paintNameReactionSlots(){
     const isOpen = _nrOpenPickerPid === pid;
     const badgeEmoji = (myReaction && Number(myReaction.targetPid)===pid) ? myReaction.emoji : '👏';
     let html = `<button type="button" class="name-reaction-badge${count>0?' has-count':''}" data-pid="${pid}">
-      <span>${badgeEmoji}</span>${count>0 ? `<span class="nr-count">${count}</span>` : ''}
+      <span>${escapeHtml(badgeEmoji)}</span>${count>0 ? `<span class="nr-count">${count}</span>` : ''}
     </button>`;
     if(isOpen){
       html += `<div class="name-reaction-picker">
