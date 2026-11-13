@@ -139,7 +139,6 @@
       <button class="btn secondary" id="shareStandingsBtn" style="display:none;">📤 شارك في واتساب</button>
       <button class="btn secondary" id="dlStandingsStoryBtn" style="display:none;">📱 ترتيب كستوري</button>
       <button class="btn" id="seasonWrapBtn" style="display:none;">📊 ملخص الموسم</button>
-      <button class="btn ghost" id="liveFocusOpenBtn">🔴 وضع مباشر</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
     <div id="refreshMsg"></div>
@@ -205,8 +204,8 @@
       <div id="roundPollBox"></div>
       <h2 class="section-title">🏆 أرشيف أبطال الجولات</h2>
       <div id="championsArchiveBox"></div>
-      <h2 class="section-title" style="margin-top:22px;">سجل الجولات</h2>
-      <div id="roundsBox" class="loading">جارٍ التحميل...</div>
+      <details class="fold" id="foldRoundsLog"><summary><span class="fold-icon" data-icon="clipboard"></span><span class="fold-title">سجل الجولات التفصيلي</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+        <div class="fold-body"><div id="roundsBox" class="loading">جارٍ التحميل...</div></div></details>
     </div>
   </section>
 
@@ -220,8 +219,6 @@
     <div id="statsCapture">
       <h2 class="section-title">تطوّر الترتيب</h2>
       <div id="chartBox"></div>
-      <div id="whatIfBox"></div>
-      <div id="scenarioBox"></div>
       <div id="clubSwapLabBox"></div>
       <div id="rankLeaderboardBox"></div>
       <div id="deathMapBox"></div>
@@ -231,7 +228,6 @@
       <div id="subGroupsBox"></div>
       <div id="hotColdStreaksBox"></div>
       <div id="h2hBox"></div>
-      <div id="seasonDuelBox"></div>
       <div id="predictionAccuracyBox"></div>
       <div id="predChallengeBox"></div>
       <div id="radarBox"></div>
@@ -242,6 +238,13 @@
       <div id="clubMapBox"></div>
       <div id="clubStatsBox"></div>
     </div>
+    <details class="fold" id="foldExtraTools"><summary><span class="fold-icon" data-icon="settings"></span><span class="fold-title">أدوات إضافية</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
+      <div class="fold-body">
+        <div class="toolbar"><button class="btn ghost" id="liveFocusOpenBtn">🔴 وضع مباشر</button></div>
+        <div id="whatIfBox"></div>
+        <div id="scenarioBox"></div>
+        <div id="seasonDuelBox"></div>
+      </div></details>
   </section>
 
   <section class="panel" id="panel-rules">

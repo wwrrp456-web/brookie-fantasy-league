@@ -8,7 +8,7 @@
 function renderStatsQuickNav(){
   const box = document.getElementById('statsQuickNavBox');
   if(!box) return;
-  const titles = Array.from(document.querySelectorAll('#statsCapture .section-title'));
+  const titles = Array.from(document.querySelectorAll('#statsCapture .section-title, #foldExtraTools .section-title'));
   if(titles.length < 2){ box.innerHTML=''; return; }
   box.innerHTML = `<div class="stats-quick-nav">${titles.map((el,i)=>{
     const id = el.id || (el.id = `statsSection_${i}`);
@@ -17,7 +17,7 @@ function renderStatsQuickNav(){
   box.querySelectorAll('.stats-quick-nav-chip').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const target = document.getElementById(btn.dataset.target);
-      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      if(target){ const d = target.closest('details'); if(d) d.open = true; target.scrollIntoView({behavior:'smooth', block:'start'}); }
     });
   });
 }
