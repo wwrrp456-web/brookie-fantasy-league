@@ -1,0 +1,591 @@
+/* قوالب ثابتة بأبعاد التصدير الفعلية؛ قيم الألوان من رموز الموقع فقط. */
+* {
+  box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--c-bg);
+  color:var(--c-text);
+  font-family:var(--font);
+  font-variant-numeric:tabular-nums}
+.card {
+  width:1080px;
+  height:1350px;
+  position:relative;
+  background:var(--c-bg) url(bg-post.webp) center/cover no-repeat;
+  isolation:isolate}
+.card.story {
+  height:1920px;
+  background-image:url(bg-story.webp)}
+.card.square {
+  height:1080px}
+.card.certificate {
+  background-image:url(cert-frame.webp)}
+.safe {
+  position:absolute;
+  inset:64px 64px 160px;
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp-6);
+  min-height:0}
+.story .safe {
+  top:200px;
+  bottom:200px}
+.card-header {
+  height:136px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none}
+.logo {
+  width:112px;
+  height:129px;
+  object-fit:contain}
+.card-footer {
+  position:absolute;
+  bottom:0;
+  inset-inline:64px;
+  height:96px;
+  border-top:1px solid var(--c-border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp-6);
+  font-size:var(--fs-lg);
+  line-height:1.6;
+  color:var(--c-text-2)}
+.card-footer a {
+  color:inherit;
+  text-decoration:none;
+  direction:ltr;
+  unicode-bidi:isolate;
+  font-size:var(--fs-lg)}
+h1,h2,h3,p {
+  margin:0}
+h1 {
+  font-size:calc(var(--fs-2xl)*1.5);
+  font-weight:800;
+  line-height:1.3}
+h2 {
+  font-size:calc(var(--fs-2xl)*1.25);
+  line-height:1.4}
+h3 {
+  font-size:var(--fs-2xl);
+  line-height:1.4}
+.eyebrow {
+  font-size:var(--fs-xl);
+  color:var(--c-text-2);
+  line-height:1.5}
+.muted {
+  color:var(--c-text-2)}
+.icon {
+  width:32px;
+  height:32px;
+  flex:none;
+  display:inline-block;
+  vertical-align:middle}
+.gold {
+  color:var(--c-gold)}
+.up {
+  color:var(--c-up)}
+.down {
+  color:var(--c-down)}
+.brand {
+  color:var(--c-brand)}
+.crest {
+  width:64px;
+  height:70.4px;
+  object-fit:contain;
+  flex:none}
+.title-line {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:var(--sp-4)}
+.title-line .icon {
+  width:48px;
+  height:48px;
+  color:var(--c-brand)}
+.title-line.champion-title .icon {
+  color:var(--c-gold)}
+.badge {
+  display:inline-flex;
+  align-items:center;
+  gap:var(--sp-2);
+  font-size:var(--fs-xl);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-pill);
+  background:var(--c-surface-1);
+  padding:var(--sp-2) var(--sp-4)}
+.content {
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp-4);
+  flex:1;
+  min-height:0}
+.center {
+  text-align:center}
+.participant-name {
+  font-size:calc(var(--fs-2xl)*2.25);
+  font-weight:800;
+  line-height:1.3;
+  overflow-wrap:anywhere;
+  text-wrap:balance}
+.points-block {
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:var(--sp-4)}
+.points-block strong {
+  font-size:calc(var(--fs-2xl)*4.5);
+  font-weight:800;
+  line-height:1.1}
+.points-block span {
+  font-size:var(--fs-2xl);
+  color:var(--c-text-2)}
+.date {
+  font-size:var(--fs-xl);
+  line-height:1.5;
+  color:var(--c-text-2);
+  text-align:center;
+  margin-top:auto}
+.club-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--sp-4)}
+.club-panel {
+  padding:var(--sp-4);
+  border:1px solid var(--c-border);
+  background:var(--c-surface-1);
+  border-radius:var(--r-lg);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--sp-2)}
+.club-panel .crest {
+  margin-bottom:var(--sp-1)}
+.club-name {
+  font-size:var(--fs-2xl);
+  font-weight:700;
+  line-height:1.4;
+  white-space:nowrap}
+.club-panel .club-name {
+  font-size:calc(var(--fs-sm)*2)}
+.opponent {
+  font-size:var(--fs-xl);
+  color:var(--c-text-2);
+  line-height:1.5}
+.score {
+  font-size:calc(var(--fs-2xl)*1.5);
+  font-weight:800;
+  direction:ltr;
+  unicode-bidi:isolate;
+  line-height:1.3}
+.no-match {
+  font-size:var(--fs-2xl);
+  line-height:1.5;
+  margin-block:auto;
+  color:var(--c-text-2)}
+.result-label {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--sp-2);
+  font-size:var(--fs-xl)}
+.result-label .icon {
+  width:24px;
+  height:24px}
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-block:1px solid var(--c-border);
+  padding:var(--sp-4) 0;
+  gap:var(--sp-3);
+  text-align:center}
+.metric {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--sp-2)}
+.metric small {
+  font-size:var(--fs-xl);
+  color:var(--c-text-2)}
+.metric b {
+  font-size:calc(var(--fs-2xl)*1.25);
+  line-height:1.3}
+.movement {
+  display:inline-flex;
+  align-items:center;
+  gap:var(--sp-1)}
+.tiebreak {
+  font-size:var(--fs-xl);
+  line-height:1.5;
+  color:var(--c-text-2);
+  text-align:center}
+.tiebreak .icon {
+  width:24px;
+  height:24px;
+  margin-inline-end:var(--sp-2)}
+.table-card .safe {
+  gap:var(--sp-3)}
+.table-card .card-header {
+  height:112px}
+.table-card .logo {
+  width:88px;
+  height:102px}
+.ranking-head,.ranking-row {
+  display:grid;
+  grid-template-columns:48px 56px 116px minmax(0,1fr) 76px;
+  align-items:center;
+  gap:var(--sp-3);
+  padding-inline:var(--sp-4)}
+.ranking-head {
+  height:36px;
+  font-size:var(--fs-xl);
+  color:var(--c-text-2)}
+.ranking-row {
+  height:38px;
+  font-size:calc(var(--fs-sm)*2);
+  border-top:1px solid var(--c-border)}
+.ranking-row .person {
+  font-size:calc(var(--fs-sm)*2);
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis}
+.ranking-row .rank,.ranking-row .total {
+  text-align:center;
+  font-weight:800}
+.ranking-row .movement {
+  justify-content:center;
+  font-size:var(--fs-xl)}
+.ranking-row .movement .icon {
+  width:20px;
+  height:20px}
+.mini-clubs {
+  display:flex;
+  gap:var(--sp-2);
+  align-items:center}
+.mini-clubs .crest {
+  width:28px;
+  height:30.8px}
+.ranking-row.mine {
+  background:var(--c-surface-2);
+  border:1px solid var(--c-border-strong)}
+.ranking-row.leader .rank {
+  color:var(--c-gold)}
+.table-note {
+  font-size:var(--fs-xl);
+  color:var(--c-text-2);
+  line-height:1.5}
+.table-card .title-line {
+  margin-bottom:var(--sp-2)}
+.story .safe {
+  gap:var(--sp-6)}
+.story .card-header {
+  height:136px}
+.story h1 {
+  font-size:calc(var(--fs-2xl)*1.75)}
+.story-ranking .ranking-row {
+  height:80px;
+  font-size:calc(var(--fs-2xl)*1.25)}
+.story-ranking .ranking-head {
+  height:48px}
+.story-ranking .ranking-row .person {
+  font-size:var(--fs-2xl)}
+.story-ranking .ranking-row .total {
+  font-size:calc(var(--fs-2xl)*1.5)}
+.story-ranking .mini-clubs .crest {
+  width:32px;
+  height:35.2px}
+.story-ranking .ranking-row {
+  grid-template-columns:48px 56px 128px minmax(0,1fr) 76px}
+.story .bottom-race {
+  margin-top:var(--sp-6)}
+.story .bottom-race h2 {
+  display:flex;
+  align-items:center;
+  gap:var(--sp-3);
+  margin-bottom:var(--sp-3)}
+.story .bottom-race h2 .icon {
+  color:var(--c-brand)}
+.story .table-note {
+  margin-top:var(--sp-4);
+  text-align:center}
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-6)}
+.stat-tile {
+  padding:var(--sp-6);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-lg);
+  background:var(--c-surface-1);
+  min-height:200px;
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp-3)}
+.stat-tile .icon {
+  color:var(--c-brand);
+  width:40px;
+  height:40px}
+.stat-tile b {
+  font-size:calc(var(--fs-2xl)*2);
+  line-height:1.1}
+.stat-tile p {
+  font-size:var(--fs-2xl);
+  line-height:1.4}
+.stat-tile small {
+  font-size:var(--fs-xl);
+  color:var(--c-text-2)}
+.empty-mummas {
+  display:flex;
+  gap:var(--sp-4);
+  align-items:center;
+  border:1px solid var(--c-border);
+  padding:var(--sp-6);
+  border-radius:var(--r-lg);
+  background:var(--c-surface-1);
+  font-size:var(--fs-2xl)}
+.empty-mummas .icon {
+  width:48px;
+  height:48px;
+  color:var(--c-brand)}
+.empty-mummas small {
+  display:block;
+  color:var(--c-text-2);
+  font-size:var(--fs-xl);
+  margin-top:var(--sp-1)}
+.square .card-header {
+  height:112px}
+.square .logo {
+  width:88px;
+  height:102px}
+.square .safe {
+  gap:var(--sp-4)}
+.square .content {
+  gap:var(--sp-4)}
+.profile-name {
+  font-size:calc(var(--fs-2xl)*1.875)}
+.profile-clubs {
+  display:flex;
+  justify-content:center;
+  gap:var(--sp-8);
+  text-align:center}
+.profile-clubs>div {
+  min-width:180px}
+.profile-clubs .club-name {
+  font-size:var(--fs-xl);
+  margin-top:var(--sp-2)}
+.profile-metrics .stat-tile {
+  min-height:136px;
+  padding:var(--sp-4);
+  gap:var(--sp-1);
+  text-align:center;
+  align-items:center}
+.profile-metrics .stat-tile b {
+  font-size:calc(var(--fs-2xl)*1.5)}
+.profile-metrics .stat-tile p {
+  font-size:var(--fs-xl)}
+.profile-badge {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:var(--sp-3);
+  font-size:var(--fs-2xl)}
+.profile-badge .icon {
+  color:var(--c-gold)}
+.certificate .content {
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:var(--sp-8)}
+.certificate .ceremony-icon {
+  width:96px;
+  height:96px;
+  color:var(--c-gold)}
+.certificate h1 {
+  font-size:calc(var(--fs-2xl)*2.25)}
+.certificate .participant-name {
+  font-size:calc(var(--fs-2xl)*2.125)}
+.certificate-copy {
+  font-size:calc(var(--fs-2xl)*1.25);
+  line-height:1.9;
+  max-width:800px;
+  text-wrap:balance}
+.certificate .season-title {
+  font-size:calc(var(--fs-2xl)*1.5);
+  color:var(--c-gold)}
+.certificate .date {
+  margin-top:var(--sp-6)}
+.duel-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--sp-6);
+  align-items:stretch}
+.duel-person {
+  background:var(--c-surface-1);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-lg);
+  padding:var(--sp-6);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--sp-4);
+  text-align:center;
+  min-width:0}
+.duel-person h2 {
+  font-size:calc(var(--fs-2xl)*1.75);
+  line-height:1.4;
+  min-height:156px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  max-width:100%;
+  text-wrap:balance;
+  overflow-wrap:anywhere}
+.duel-person .duel-score {
+  font-size:calc(var(--fs-2xl)*4.5);
+  line-height:1.1;
+  font-weight:800}
+.duel-person .mini-clubs .crest {
+  width:60px;
+  height:66px}
+.duel-person .mini-clubs {
+  gap:var(--sp-4)}
+.duel-person .eyebrow {
+  margin-top:var(--sp-2)}
+.duel-winner {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--sp-4);
+  border-block:1px solid var(--c-border);
+  padding-block:var(--sp-6);
+  text-align:center;
+  font-size:calc(var(--fs-2xl)*1.25);
+  line-height:1.5}
+.duel-winner .icon {
+  color:var(--c-gold);
+  width:48px;
+  height:48px}
+.duel-winner b {
+  font-size:calc(var(--fs-2xl)*1.5)}
+.duel-note {
+  font-size:var(--fs-xl);
+  line-height:1.6;
+  color:var(--c-text-2);
+  text-align:center}
+.matches {
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp-4)}
+.match-row {
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  align-items:center;
+  gap:var(--sp-6);
+  padding:var(--sp-6);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-lg);
+  background:var(--c-surface-1);
+  min-height:144px}
+.match-row .club-name {
+  font-size:var(--fs-2xl)}
+.match-row .opponent {
+  margin-top:var(--sp-2)}
+.match-row .result-label {
+  margin-top:var(--sp-2);
+  justify-content:flex-start}
+.match-row .no-match {
+  margin:0;
+  white-space:nowrap}
+.my-clubs .points-block strong {
+  font-size:calc(var(--fs-2xl)*3)}
+.gallery-page {
+  padding:var(--sp-6);
+  max-width:900px;
+  margin:auto;
+  font-size:var(--fs-md);
+  line-height:1.7}
+.gallery-page h1 {
+  font-size:var(--fs-2xl)}
+.gallery-page h2 {
+  font-size:var(--fs-xl);
+  margin-top:var(--sp-6)}
+.gallery-page p {
+  color:var(--c-text-2);
+  margin-block:var(--sp-3)}
+.gallery-links {
+  display:grid;
+  gap:var(--sp-3);
+  margin-top:var(--sp-4)}
+.gallery-link {
+  display:flex;
+  gap:var(--sp-3);
+  align-items:center;
+  padding:var(--sp-4);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-md);
+  background:var(--c-surface-1);
+  color:var(--c-text);
+  text-decoration:none}
+.gallery-link .icon {
+  color:var(--c-brand);
+  width:24px;
+  height:24px}
+.gallery-link small {
+  display:block;
+  color:var(--c-text-2);
+  font-size:var(--fs-sm)}
+.gallery-note {
+  font-size:var(--fs-sm)}
+a:focus-visible {
+  outline:2px solid var(--c-brand);
+  outline-offset:var(--sp-1)}
+
+.table-card .content {
+  gap:var(--sp-2)}
+
+.duel-person {
+  padding:var(--sp-4);
+  gap:var(--sp-3)}
+
+.my-clubs .content {
+  gap:var(--sp-3)}
+
+.certificate {
+  background-size:1080px 1254px;
+  background-position:top center}
+/* رأس موحد: الشعار والعنوان كتلة واحدة، مع فراغ متناظر وفاصل هادئ. */
+.card-header,.table-card .card-header,.story .card-header,.square .card-header{
+ height:auto;
+ display:grid;
+ grid-template-columns:176px minmax(0,1fr);
+ gap:var(--sp-8);
+ padding:var(--sp-8);
+ border-bottom:1px solid var(--c-border);
+ align-items:center;
+}
+.logo,.table-card .logo,.square .logo{
+ width:176px;
+ height:auto;
+ aspect-ratio:476/547;
+ object-fit:contain;
+}
+.brand-heading{min-width:0;text-align:start}
+.brand-heading .title-line{margin:0}
+.table-card .card-header,.square .card-header{
+ grid-template-columns:144px minmax(0,1fr);
+ padding:var(--sp-6);
+}
+.table-card .logo,.square .logo{width:144px}
+.card:not(.table-card):not(.story):not(.square) .safe{gap:var(--sp-2)}
+.square .brand-heading .center{text-align:start}
+.certificate .brand-heading{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)}
+/* C10: إيقاع مجموعة الأندية نفسه في الكروت الواسعة؛ المقاس المتكيف للترتيب في standings-card.css. */
+.card .mini-clubs,.card .profile-clubs,.card .club-grid{gap:var(--sp-3);direction:rtl;align-items:center}
+.duel-person .mini-clubs .crest,.profile-clubs .crest{width:48px;height:52.8px}
+.club-panel .crest,.match-row>.crest{width:64px;height:70.4px}
+.card .club-grid{align-items:stretch}

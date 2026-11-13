@@ -1,0 +1,1689 @@
+{
+  "task": "C13 / 001-T009f",
+  "decision": "R-16",
+  "size": [
+    1080,
+    1920
+  ],
+  "source": "specs/001-ui-visual-overhaul/card-data.json",
+  "dataVerified": true,
+  "defaultParticipants": 20,
+  "fixtures": "18: أول18؛ 24: نسخ آخر مشارك لاختبار الهندسة فقط، مع تنبيه ظاهر",
+  "layout": "standings-card.layout.md",
+  "tests": {
+    "passed": 237,
+    "failed": 0,
+    "lint": "نجح",
+    "snapCards": 18
+  },
+  "contrastLightWorstPixels": {
+    "primary": 15.27834914135984,
+    "secondary": 8.13859944811029,
+    "gold-rank": 7.014680893243606,
+    "up-icon": 7.944114043438675,
+    "down-icon": 10.051818744140752
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  "gallery": {
+    "index.html": {
+      "errors": [],
+      "links": 19,
+      "images": 0
+    },
+    "_logo-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 14
+    },
+    "_crests-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 2
+    },
+    "themeToggle": true,
+    "colors": {
+      ".person": "rgb(11, 13, 31)",
+      ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+      ".score": "rgb(11, 13, 31)",
+      ".motion": "rgb(61, 46, 153)",
+      ".rising .icon": "color(srgb 0.0738039 0.296314 0.205569)",
+      ".falling .icon": "color(srgb 0.347137 0.124314 0.170902)"
+    }
+  },
+  "samples": [
+    {
+      "n": 18,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-18-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 18,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-18-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-20-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-20-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-24-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-24-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
+      "stress": true,
+      "shot": "shots/standings-card-long-name-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "light",
+      "stress": true,
+      "shot": "shots/standings-card-long-name-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "dark",
+      "stress": true,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "light",
+      "stress": true,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "other": "champion-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "champion-post-stress.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "season-wrap-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "profile-square.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 920,
+        "width": 952,
+        "height": 856
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 984,
+        "bottom": 1080,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "certificate-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post-stress.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "my-clubs-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    }
+  ],
+  "deletedFiles": 56,
+  "unchangedTemplates": {
+    "assets/cards/champion-post.html": "4cb10086e6015862888013c160639ae0a437831ac3f51c57396bd84cbdf42f0f",
+    "assets/cards/duel-post.html": "6f10ff715e69bfc73245281369b9b58194ce08b03af8daf91b2c24bfaa2c4294",
+    "assets/cards/my-clubs-post.html": "c0ad61e97573949bbdcb89c067100bfbe600a6ce6cbd878c15a9477b04146a56",
+    "assets/cards/season-wrap-post.html": "f8b805aea7bb69eabd3bdf6e39ea7d1a753c19779c95cd0dd1e9c184a8b32274",
+    "assets/cards/profile-square.html": "128d13abe76e45a96ec7905ad54412854b27d62853faa8cbf4c80d5a1bb6895d",
+    "assets/cards/certificate-post.html": "fd3715928fa665144d8ad4c78aa69110840002456d57dfea1c119fed4270d7b4",
+    "assets/cards/champion-post-stress.html": "426967351d616c8560510afd0c1b12624ee1fd7d1d85e7dcb1c20f76bf3bc452",
+    "assets/cards/duel-post-stress.html": "979b93168f31d4ff472ac8bb7b46e48c552278141c0f9fb427a6bd2c36f7d6c6"
+  }
+}
