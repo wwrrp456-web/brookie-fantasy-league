@@ -6,6 +6,9 @@
   .duel-side.duel-win{background:rgba(122,82,238,0.18);}
   .duel-name{font-size:0.84rem;font-weight:700;color:var(--text);}
   .duel-pts{font-size:0.84rem;font-weight:800;color:var(--gold);}
+  .duel-share-btn{width:100%;margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:0.78rem;}
+  .duel-share-btn svg{width:16px;height:16px;}
+  .duel-share-msg:empty{display:none;}
   .duel-vs{text-align:center;font-size:0.68rem;font-weight:800;color:var(--muted);margin:2px 0;}
   .duel-draw{text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);margin-top:2px;}
   .duel-bye{display:flex;align-items:center;justify-content:center;min-height:64px;}

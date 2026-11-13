@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* مقارنة بطاقة الترتيب (الكانفس) بالقالب المرجع بكسليًا (001-T021، الأدلة (أ)/(ب)).
  *
- *   node tools/card-compare.js [--out card-diff] [--kind standings|wrap|profile] [--only 20-dark,wrap-light] [--max-pct 1]
+ *   node tools/card-compare.js [--out card-diff] [--kind standings|wrap|profile|duel] [--only 20-dark,wrap-light] [--max-pct 1]
  *
  * يبني بطاقة الترتيب بـ`buildStandingsCardCanvas` على بيانات القالب نفسها (assets/cards/standings-card.data.json، مطابقة لـspecs/001-ui-visual-overhaul/card-data.json)
  * بالحالات: 20 (الحقيقي)، 18، 24 (نسخ هندسية)، وأطول اسم (stress) × ليلي/نهاري، ويقارنها بـassets/cards/shots/standings-card-<حالة>-<ثيم>.png بـpixelmatch.
@@ -20,9 +20,17 @@ const CASES = [];
   CASES.push({ kind: 'wrap', c: 'normal', t, name: `wrap-${t}`, ref: `season-wrap-post${t === 'light' ? '-light' : ''}.png` });
   CASES.push({ kind: 'profile', c: 'normal', t, name: `profile-${t}`, ref: `profile-square${t === 'light' ? '-light' : ''}.png` });
 });
+// مواجهة الجولة (001-T024): العادي والضغط × داكن/فاتح؛ لقطات القالب duel-post{,-stress}{,-light}.png
+['', 'stress'].forEach(v => ['dark', 'light'].forEach(t => CASES.push({ kind: 'duel', c: v || 'normal', t, name: `duel-${v || 'normal'}-${t}`, ref: `duel-post${v ? '-stress' : ''}${t === 'light' ? '-light' : ''}.png` })));
 const CARD_DATE = '29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ';
 function wrapSample(card) {
   return { round: card.round, topTotal: { value: card.standings[0].total, name: card.standings[0].name }, bestRound: { points: card.champion.points, round: card.round }, mummas: card.mummas || [], date: CARD_DATE };
+}
+function duelSample(card, stress) {
+  const side = c => ({ id: c.id, name: c.name, clubs: c.clubs.map(x => x.club), points: c.roundPoints });
+  const [a, b] = card.duelCandidates.map(side);
+  if (stress) { b.name = 'أبو تغريد (زيد) الثاني'; b.clubs[0] = 'باريس سان جيرمان'; }
+  return { round: card.round, a, b, winner: a.points === b.points ? null : a.points > b.points ? 'a' : 'b', date: CARD_DATE };
 }
 function profileSample(card) {
   const st = card.standings.find(s => s.id === card.champion.id);
@@ -61,7 +69,13 @@ async function main(argv) {
       if (only ? !only.includes(cs.name) : (cs.kind !== (kind || 'standings'))) continue;
       const { page, context } = await snap.openPage(browser, ctx, { width: 1080, light: cs.t === 'light' });
       let res;
-      if (cs.kind === 'wrap' || cs.kind === 'profile') {
+      if (cs.kind === 'duel') {
+        const data = duelSample(readJson('specs/001-ui-visual-overhaul/card-data.json'), cs.c === 'stress');
+        res = await page.evaluate(async ([data, theme]) => {
+          const cv = await buildDuelCardCanvas({ theme, data });
+          return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
+        }, [data, cs.t]);
+      } else if (cs.kind === 'wrap' || cs.kind === 'profile') {
         const card = readJson('specs/001-ui-visual-overhaul/card-data.json');
         const data = cs.kind === 'wrap' ? wrapSample(card) : profileSample(card);
         res = await page.evaluate(async ([kind, data, theme]) => {

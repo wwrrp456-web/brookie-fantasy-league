@@ -73,10 +73,19 @@ function renderWeeklyDuels(){
       <div class="duel-vs">VS</div>
       <div class="duel-side ${bWin?'duel-win':''}"><span class="duel-name">${bWin?'🏅 ':''}${d.b.name}</span><span class="duel-pts">${d.bp}</span></div>
       ${(!aWin && !bWin) ? '<div class="duel-draw">تعادل</div>' : ''}
+      <button type="button" class="btn ghost duel-share-btn" data-a="${d.a.id}" data-b="${d.b.id}">${ICONS.share} مشاركة المواجهة</button>
+      <div class="duel-share-msg"></div>
     </div>`;
   });
   html += '</div>';
   box.innerHTML = html;
+  box.querySelectorAll('.duel-share-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try{ await exportDuelCard(Number(btn.dataset.a), Number(btn.dataset.b), btn.parentElement.querySelector('.duel-share-msg')); }
+      finally{ btn.disabled = false; }
+    });
+  });
 }
 
 // ---------- 2) سباق الهروب من القاع ----------
