@@ -3838,5 +3838,1072 @@
     ],
     "scope": "خمسة كروت فقط؛ الشهادة مؤجلة إلى C15 حسب أحدث CODEX.md",
     "certificateUnchanged": true
+  },
+  "C16": {
+    "task": "001-T009i",
+    "decision": "R-19",
+    "template": "certificate-post.html",
+    "sourceData": "certificate-ideas/data.json",
+    "layout": "cards.layout.md — القسم الأخير",
+    "size": [
+      1080,
+      1350
+    ],
+    "tests": {
+      "passed": 293,
+      "failed": 0,
+      "lint": "نجح",
+      "snapCards": 39
+    },
+    "pixelEquality": [
+      {
+        "shot": "certificate-post.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-dark.png",
+        "differingPixels": 0,
+        "sha256": "8686e97fcb47c1cfa56cc76dcdc47cc86ecefe0386ff724aabad611cf094acdf"
+      },
+      {
+        "shot": "certificate-post-stress.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-dark-long-name.png",
+        "differingPixels": 0,
+        "sha256": "19b28e55eed44a10a1b71513d28fa37a7012498ababf5f6f75b1ef5b17ad5514"
+      },
+      {
+        "shot": "certificate-post-light.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-light.png",
+        "differingPixels": 0,
+        "sha256": "6015c9020edf5f6969d51a37e41c64016f9958cd69ce7f81ed89e67e2f67f9f8"
+      },
+      {
+        "shot": "certificate-post-stress-light.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-light-long-name.png",
+        "differingPixels": 0,
+        "sha256": "58521cf6cbe776168e90b400a9e160f3dc375be8300fcb691b9f255b031cd7ab"
+      }
+    ],
+    "geometry": {
+      "fields": [
+        {
+          "label": "corners",
+          "x": 56,
+          "y": 56,
+          "w": 968,
+          "h": 1238,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 911,
+          "y": 89,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 89,
+          "y": 89,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 89,
+          "y": 1181,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 911,
+          "y": 1181,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "logo",
+          "x": 484,
+          "y": 88,
+          "w": 112,
+          "h": 128.703125,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "kicker",
+          "x": 96,
+          "y": 286,
+          "w": 888,
+          "h": 39,
+          "fontSize": "26px",
+          "weight": "400",
+          "lineHeight": "39px",
+          "align": "center"
+        },
+        {
+          "label": "heading",
+          "x": 96,
+          "y": 350,
+          "w": 888,
+          "h": 83.1875,
+          "fontSize": "64px",
+          "weight": "800",
+          "lineHeight": "83.2px",
+          "align": "center"
+        },
+        {
+          "label": "award-icon",
+          "x": 504,
+          "y": 452,
+          "w": 72,
+          "h": 72,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "recipient",
+          "x": 96,
+          "y": 548,
+          "w": 888,
+          "h": 114.390625,
+          "fontSize": "88px",
+          "weight": "800",
+          "lineHeight": "114.4px",
+          "align": "center"
+        },
+        {
+          "label": "honor",
+          "x": 96,
+          "y": 704,
+          "w": 888,
+          "h": 51,
+          "fontSize": "34px",
+          "weight": "400",
+          "lineHeight": "51px",
+          "align": "center"
+        },
+        {
+          "label": "copy",
+          "x": 180,
+          "y": 816,
+          "w": 720,
+          "h": 51,
+          "fontSize": "30px",
+          "weight": "400",
+          "lineHeight": "51px",
+          "align": "center"
+        },
+        {
+          "label": "seal",
+          "x": 160,
+          "y": 1036,
+          "w": 160,
+          "h": 160,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "IMG",
+          "x": 200,
+          "y": 1062.53125,
+          "w": 80,
+          "h": 106.9375,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "rule",
+          "x": 144,
+          "y": 996,
+          "w": 792,
+          "h": 1,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "signature",
+          "x": 384,
+          "y": 1082,
+          "w": 552,
+          "h": 42,
+          "fontSize": "28px",
+          "weight": "400",
+          "lineHeight": "42px",
+          "align": "center"
+        },
+        {
+          "label": "issue",
+          "x": 96,
+          "y": 1230,
+          "w": 888,
+          "h": 36,
+          "fontSize": "24px",
+          "weight": "400",
+          "lineHeight": "36px",
+          "align": "center"
+        }
+      ],
+      "texts": [
+        {
+          "label": "kicker",
+          "text": "دوري بروكي الفانتازي",
+          "x": 432.53125,
+          "y": 292,
+          "w": 214.921875,
+          "h": 26,
+          "baseline": 309
+        },
+        {
+          "label": "heading",
+          "text": "شهادة بطل الموسم",
+          "x": 241.015625,
+          "y": 359,
+          "w": 597.953125,
+          "h": 64,
+          "baseline": 400
+        },
+        {
+          "label": "recipient",
+          "text": "أبو تغريد (زيد)",
+          "x": 259.796875,
+          "y": 561,
+          "w": 560.390625,
+          "h": 88,
+          "baseline": 618
+        },
+        {
+          "label": "honor",
+          "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+          "x": 238.453125,
+          "y": 712,
+          "w": 603.09375,
+          "h": 34,
+          "baseline": 734
+        },
+        {
+          "label": "copy",
+          "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+          "x": 215.75,
+          "y": 826,
+          "w": 648.484375,
+          "h": 30,
+          "baseline": 845
+        },
+        {
+          "label": "signature",
+          "text": "إدارة دوري بروكي الفانتازي",
+          "x": 516.1875,
+          "y": 1089,
+          "w": 287.625,
+          "h": 28,
+          "baseline": 1107
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 349.65625,
+          "y": 1236,
+          "w": 23.234375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 372.890625,
+          "y": 1236,
+          "w": 48.421875,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 421.3125,
+          "y": 1236,
+          "w": 135.65625,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 556.96875,
+          "y": 1236,
+          "w": 11.90625,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 568.875,
+          "y": 1236,
+          "w": 15.734375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 584.609375,
+          "y": 1236,
+          "w": 48.84375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 633.453125,
+          "y": 1236,
+          "w": 75.984375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 709.4375,
+          "y": 1236,
+          "w": 20.90625,
+          "h": 24,
+          "baseline": 1251
+        }
+      ],
+      "innerSeal": {
+        "width": "138px",
+        "height": "138px"
+      },
+      "themeToggle": true
+    },
+    "contrast": {
+      "certificate-post.png": {
+        "minimum": 8.762882952577964,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "أبو تغريد (زيد)",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 10.81553666221299
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          }
+        ]
+      },
+      "certificate-post-stress.png": {
+        "minimum": 8.762882952577964,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 10.81553666221299
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          }
+        ]
+      },
+      "certificate-post-light.png": {
+        "minimum": 7.896222538067992,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "أبو تغريد (زيد)",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 7.896222538067992
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          }
+        ]
+      },
+      "certificate-post-stress-light.png": {
+        "minimum": 7.896222538067992,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 7.896222538067992
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          }
+        ]
+      }
+    },
+    "axe": {
+      "certificate-post": {
+        "violations": [],
+        "incomplete": []
+      },
+      "mobileGallery": {
+        "width": 390,
+        "imageWidth": 390,
+        "overflow": false
+      }
+    },
+    "gallery": {
+      "index.html": {
+        "errors": [],
+        "links": 29,
+        "images": 0
+      },
+      "cards-light-dark-compare.html": {
+        "errors": [],
+        "links": 24,
+        "images": 22
+      },
+      "themeToggle": true,
+      "colors": {
+        ".person": "rgb(11, 13, 31)",
+        ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+        ".score": "rgb(11, 13, 31)",
+        ".motion": "rgb(61, 46, 153)",
+        ".rising .icon": "color(srgb 0.0578039 0.168314 0.149569)",
+        ".falling .icon": "color(srgb 0.275137 0.0709804 0.117569)"
+      }
+    },
+    "samples": [
+      {
+        "idea": "classic",
+        "theme": "dark",
+        "stress": false,
+        "shot": "certificate-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد)",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "dark",
+        "stress": true,
+        "shot": "certificate-post-stress.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد) الثاني",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "light",
+        "stress": false,
+        "shot": "certificate-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد)",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo-light.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "light",
+        "stress": true,
+        "shot": "certificate-post-stress-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد) الثاني",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo-light.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      }
+    ]
   }
 }
