@@ -589,3 +589,25 @@ a:focus-visible {
 .duel-person .mini-clubs .crest,.profile-clubs .crest{width:48px;height:52.8px}
 .club-panel .crest,.match-row>.crest{width:64px;height:70.4px}
 .card .club-grid{align-items:stretch}
+
+/* R-17: أسطح نهارية مستقلة؛ المقاسات والإيقاع مشتركة بين الثيمين. */
+html.light-mode .card:not(.certificate){background-image:url(bg-post-light.webp)}
+html.light-mode .card .club-panel,
+html.light-mode .card .duel-person,
+html.light-mode .card .stat-tile,
+html.light-mode .card .match-row,
+html.light-mode .card .empty-mummas{
+ box-shadow:0 8px 24px color-mix(in srgb,var(--c-text) 6%,transparent);
+}
+html.light-mode .card .gold,
+html.light-mode .card .champion-title .icon,
+html.light-mode .card .duel-winner .icon,
+html.light-mode .card .profile-badge .icon{color:color-mix(in srgb,var(--c-gold) 34%,var(--c-text))}
+html.light-mode .card .up{color:color-mix(in srgb,var(--c-up) 34%,var(--c-text))}
+html.light-mode .card .down{color:color-mix(in srgb,var(--c-down) 34%,var(--c-text))}
+html.light-mode .card .result-label{
+ border-radius:var(--r-pill);
+ background:color-mix(in srgb,var(--c-up) 8%,var(--c-surface-1));
+}
+html.light-mode .card [data-result="loss"] .result-label{background:color-mix(in srgb,var(--c-down) 8%,var(--c-surface-1))}
+html.light-mode .card [data-result="draw"] .result-label{background:var(--c-surface-2)}
