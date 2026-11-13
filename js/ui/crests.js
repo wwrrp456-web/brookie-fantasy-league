@@ -2,7 +2,7 @@
  *
  * ثلاثة مصادر للشعار، بالترتيب (R-04: قرار الشعارات الرسمية بيد المنظّم بدون برمجة):
  *   1) CRESTS_OFFICIAL[slug]  شعار رسمي يضعه المنظّم في assets/crests/official/<slug>.svg
- *   2) CRESTS[slug]           الشعار المحسّن (assets/crests/<slug>.svg)
+ *   2) CRESTS[slug]           الشعار المحسّن (assets/crests/<slug>.svg)، وله نسخة فاتحة CRESTS_LIGHT[slug] تُختار في الوضع الفاتح (001-T012b)
  *   3) درع احتياطي مبنيّ من CLUB_STYLE (النمط والألوان) لنادٍ ما له ملف
  * الاسم ← slug من CREST_NAMES (assets/crests.json). كلها من js/generated/assets.js (يُحمَّل قبل هذا الملف).
  *
@@ -321,44 +321,71 @@ function fallbackCrestSVG(name){
 }
 
 // ───────────── الواجهة العامة ─────────────
-// {kind: 'official'|'enhanced'|'fallback', slug, svg} لنادٍ
-function crestSource(club){
-  const slug = _slugOf(club);
-  if(slug && CRESTS_OFFICIAL[slug]) return {kind: 'official', slug, svg: CRESTS_OFFICIAL[slug]};
-  if(slug && CRESTS[slug]) return {kind: 'enhanced', slug, svg: CRESTS[slug]};
-  return {kind: 'fallback', slug, svg: fallbackCrestSVG(club)};
+// الثيم المطلوب: opts.theme ('light'|'dark') صراحةً، وإلا من الصفحة (html.light-mode). بدون صفحة (اختبارات/عقدة) = dark
+function _crestTheme(opts){
+  if(opts && (opts.theme === 'light' || opts.theme === 'dark')) return opts.theme;
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.classList.contains('light-mode')) ? 'light' : 'dark';
 }
 
-function crestURL(club){
-  const src = crestSource(club);
-  const key = src.kind + '|' + (src.slug || '') + '|' + (src.kind === 'fallback' ? club : '');
+// {kind: 'official'|'enhanced'|'fallback', slug, theme, svg} لنادٍ. الأولوية: رسمي ← محسّن (بنسخته للثيم) ← احتياطي.
+// النسخة الفاتحة للمحسّن فقط (لو ما لقينا فاتحة نرجع للعادية). الرسمي والاحتياطي ما لهما نسخ فاتحة.
+function crestSource(club, opts){
+  const slug = _slugOf(club);
+  const theme = _crestTheme(opts);
+  if(slug && CRESTS_OFFICIAL[slug]) return {kind: 'official', slug, theme, svg: CRESTS_OFFICIAL[slug]};
+  if(slug && CRESTS[slug]){
+    const lightSvg = theme === 'light' ? CRESTS_LIGHT[slug] : null;
+    return {kind: 'enhanced', slug, theme, variant: lightSvg ? 'light' : 'dark', svg: lightSvg || CRESTS[slug]};
+  }
+  return {kind: 'fallback', slug, theme, svg: fallbackCrestSVG(club)};
+}
+
+function crestURL(club, opts){
+  const src = crestSource(club, opts);
+  const key = src.kind + '|' + (src.slug || '') + '|' + (src.kind === 'fallback' ? club : '') + '|' + (src.variant || '');
   if(!_crestUrls.has(key)) _crestUrls.set(key, svgToURL(src.svg));
   return _crestUrls.get(key);
 }
 
-// <img> بدل <svg> مضمّن: يعزل المعرّفات والألوان. الأبعاد صريحة (بدون قفز تخطيط)، والاسم alt وtitle
-function crestHTML(club, size){
+// <img> بدل <svg> مضمّن: يعزل المعرّفات والألوان. الأبعاد صريحة (بدون قفز تخطيط)، والاسم alt وtitle.
+// بدون opts.theme يتبع الصفحة، ويحمل data-crest-club ليتبدّل مع الثيم بدون إعادة تحميل (refreshCrestsTheme)
+function crestHTML(club, size, opts){
   const w = Number(size) || 24;
   const h = Math.round(w * CREST_RATIO * 100) / 100;
   const name = esc(club);
-  return `<img class="crest" src="${crestURL(club)}" width="${w}" height="${h}" alt="${name}" title="${name}" decoding="async">`;
+  const auto = (opts && opts.theme) ? '' : ` data-crest-club="${name}"`;
+  return `<img class="crest" src="${crestURL(club, opts)}" width="${w}" height="${h}" alt="${name}" title="${name}"${auto} decoding="async">`;
+}
+
+// عند تبديل الثيم: يبدّل src لكل شعار تلقائي معروض (بلا إعادة رسم الأقسام)
+function refreshCrestsTheme(){
+  if(typeof document === 'undefined') return;
+  document.querySelectorAll('img.crest[data-crest-club]').forEach(img => {
+    const club = img.getAttribute('data-crest-club');
+    const url = crestURL(club);
+    if(img.getAttribute('src') !== url) img.setAttribute('src', url);
+  });
 }
 
 // يحمّل صور كل الأندية (أو القائمة المعطاة) مرة وحدة ويخزّنها للرسم على الكانفس. يرجع Promise<Map>
-function preloadCrests(clubs){
+// opts.theme يحدد النسخة (الافتراضي: ثيم الصفحة). الذاكرة بمفتاح النادي|الثيم
+function _imgKey(club, opts){ return club + '|' + _crestTheme(opts); }
+function preloadCrests(clubs, opts){
   const list = clubs || Object.keys(CLUB_STYLE).concat(Object.values(CREST_NAMES)).filter((v, i, a) => a.indexOf(v) === i);
   return Promise.all(list.map(club => new Promise(resolve => {
-    if(_crestImgs.has(club)) return resolve(_crestImgs.get(club));
+    const k = _imgKey(club, opts);
+    if(_crestImgs.has(k)) return resolve(_crestImgs.get(k));
     const img = new Image();
-    img.onload = () => { _crestImgs.set(club, img); resolve(img); };
+    img.onload = () => { _crestImgs.set(k, img); resolve(img); };
     img.onerror = () => resolve(null);
-    img.src = crestURL(club);
+    img.src = crestURL(club, opts);
   }))).then(() => _crestImgs);
 }
 
-// يرسم شعار النادي على كانفس بالعرض w (والارتفاع w×1.1). يرجع false لو الشعار ما حُمّل بعد (استدعِ preloadCrests أولًا)
-function drawCrest(ctx, club, x, y, w, h){
-  const img = _crestImgs.get(club);
+// يرسم شعار النادي على كانفس بالعرض w (والارتفاع w×1.1). يرجع false لو الشعار ما حُمّل بعد (استدعِ preloadCrests أولًا بنفس opts).
+// opts.theme: محرك الكروت يمرّره صراحةً ('light' لبطاقة الترتيب النهارية)
+function drawCrest(ctx, club, x, y, w, h, opts){
+  const img = _crestImgs.get(_imgKey(club, opts));
   if(!img || !img.complete || !img.naturalWidth) return false;
   ctx.drawImage(img, x, y, w, h === undefined ? w * CREST_RATIO : h);
   return true;
