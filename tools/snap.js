@@ -24,7 +24,7 @@ const TABS = ['standings', 'participants', 'rounds', 'stats', 'rules', 'about', 
 const WIDTHS = [390, 1366];
 const THEMES = ['dark', 'light'];
 const STATES = ['full', 'incomplete', 'long'];
-const CARDS = ['championCard', 'championCardLight', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'seasonWrapLight', 'profileCard', 'profileCardLight', 'duelCard', 'duelCardLight', 'myClubsCard', 'myClubsCardLight', 'certificate'];
+const CARDS = ['championCard', 'championCardLight', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'seasonWrapLight', 'profileCard', 'profileCardLight', 'duelCard', 'duelCardLight', 'myClubsCard', 'myClubsCardLight', 'certificate', 'certificateLight'];
 const LONGEST_NAME = 'أبو تغريد (زيد) الثاني';
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -165,11 +165,11 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors, skipp
       const res = await page.evaluate(async ([c, p]) => {
         try {
           const build = { championCard: () => buildChampionCardCanvas({theme: 'dark'}), championCardLight: () => buildChampionCardCanvas({theme: 'light'}), standingsCard: () => buildStandingsCardCanvas({theme: 'dark'}), standingsCardLight: () => buildStandingsCardCanvas({theme: 'light'}),
-            seasonWrap: () => buildSeasonWrapCardCanvas({theme: 'dark'}), seasonWrapLight: () => buildSeasonWrapCardCanvas({theme: 'light'}), profileCard: id => buildParticipantProfileCardCanvas(id, {theme: 'dark'}), profileCardLight: id => buildParticipantProfileCardCanvas(id, {theme: 'light'}), duelCard: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'dark', data: getDuelCardData(d.a.id, d.b.id)}); }, duelCardLight: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'light', data: getDuelCardData(d.a.id, d.b.id)}); }, myClubsCard: id => buildMyClubsCardCanvas({theme: 'dark', data: getMyClubsCardData(getRoundHeroes().top.id)}), myClubsCardLight: id => buildMyClubsCardCanvas({theme: 'light', data: getMyClubsCardData(getRoundHeroes().top.id)}), certificate: () => buildChampionCertificateCanvas() }[c];
+            seasonWrap: () => buildSeasonWrapCardCanvas({theme: 'dark'}), seasonWrapLight: () => buildSeasonWrapCardCanvas({theme: 'light'}), profileCard: id => buildParticipantProfileCardCanvas(id, {theme: 'dark'}), profileCardLight: id => buildParticipantProfileCardCanvas(id, {theme: 'light'}), duelCard: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'dark', data: getDuelCardData(d.a.id, d.b.id)}); }, duelCardLight: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'light', data: getDuelCardData(d.a.id, d.b.id)}); }, myClubsCard: id => buildMyClubsCardCanvas({theme: 'dark', data: getMyClubsCardData(getRoundHeroes().top.id)}), myClubsCardLight: id => buildMyClubsCardCanvas({theme: 'light', data: getMyClubsCardData(getRoundHeroes().top.id)}), certificate: () => buildChampionCertificateCanvas({theme: 'dark', data: getCertificateCardData()}), certificateLight: () => buildChampionCertificateCanvas({theme: 'light', data: getCertificateCardData()}) }[c];
           if (typeof build !== 'function') return { ok: false, error: 'نوع الكرت غير معروف' };
           const cv = await build(p);
           return { ok: true, url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
-        } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+        } catch (e) { return { ok: false, error: String(e && e.message || e), name: e && e.name }; }
       }, [card, pid]);
       if (res.ok) {
         const name = `card-${card}-${state}.png`;
@@ -177,7 +177,8 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors, skipp
         files.push(name);
       } else {
         // كود الأساس (--label base) قد يسبق دوال الكروت الجديدة: تُسجَّل مُتجاوَزة لا خطأ. وفي head تبقى خطأً.
-        if (label === 'base' && /is not defined|is not a function/.test(res.error)) skippedCards.push({ card, state, reason: res.error });
+        if (state === 'incomplete' && res.name === 'CardDataError') skippedCards.push({ card, state, reason: 'متوقع: الكرت الناقص ما يُصدَّر (' + res.error + ')' });
+        else if (label === 'base' && /is not defined|is not a function/.test(res.error)) skippedCards.push({ card, state, reason: res.error });
         else cardErrors.push({ card, state, error: res.error });
       }
     }

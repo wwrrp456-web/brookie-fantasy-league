@@ -28,6 +28,45 @@ function validateProfileData(data){
   return out;
 }
 
+// ---------- ملخّص نهاية الموسم القابل للمشاركة (خاص بالمنظم) ----------
+// يجمع أبرز أرقام الموسم في كرت واحد بنفس هوية كرت بطل الجولة، على نمط
+// "الملخص السنوي" لتطبيقات الموسيقى — مصمم ليُنشر في المجموعة عند نهاية
+// الموسم أو أي وقت يرغب فيه المنظم بلمحة شاملة.
+function getSeasonWrapStats(){
+  const st = computeStandings();
+  const leader = st[0] || null;
+
+  // أفضل أداء فردي بجولة واحدة عبر كامل الموسم (تشمل جسر الجولة 2 وكل
+  // الجولات الحقيقية 3 فصاعدًا)
+  let bestRound = {name:'', points:-Infinity, round:null};
+  const bridgePts = getRound2BridgePointsMap();
+  PARTICIPANTS.forEach(p=>{
+    if(bridgePts[p.id] > bestRound.points) bestRound = {name:p.name, points:bridgePts[p.id], round:2};
+  });
+  DATA.rounds.forEach(round=>{
+    const stats = computeRoundStats(round);
+    PARTICIPANTS.forEach(p=>{
+      if(stats[p.id].points > bestRound.points) bestRound = {name:p.name, points:stats[p.id].points, round:round.number};
+    });
+  });
+
+  // الأكثر توقعًا صحيحًا — نفس ترتيب لوحة المتصدرين في قسم التوقعات
+  const acc = computePredictionAccuracy();
+  const predRanked = PARTICIPANTS
+    .map(p=>({name:p.name, correct:acc[p.id].correct, total:acc[p.id].total}))
+    .filter(a=>a.total>0)
+    .sort((a,b)=> b.correct-a.correct || (b.correct/b.total)-(a.correct/a.total));
+  const topPredictor = predRanked[0] || null;
+
+  // أطول سلسلة جولات متتالية بدون ممة (bestStreak محسوبة أصلاً في computeStandings)
+  let bestStreakOwner = {name:'', streak:0};
+  st.forEach(s=>{
+    if(s.bestStreak > bestStreakOwner.streak) bestStreakOwner = {name:s.name, streak:s.bestStreak};
+  });
+
+  return {leader, bestRound, topPredictor, bestStreakOwner};
+}
+
 // ---------- بيانات من محركات الموقع ----------
 function getSeasonWrapCardData(){
   const stats = getSeasonWrapStats();
