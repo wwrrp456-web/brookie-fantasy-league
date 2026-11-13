@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* مقارنة بطاقة الترتيب (الكانفس) بالقالب المرجع بكسليًا (001-T021، الأدلة (أ)/(ب)).
  *
- *   node tools/card-compare.js [--out card-diff] [--kind standings|champion|wrap|profile|duel] [--only 20-dark,champion-stress-light,wrap-light] [--max-pct 1]
+ *   node tools/card-compare.js [--out card-diff] [--kind standings|champion|wrap|profile|duel|myclubs] [--only 20-dark,champion-stress-light,wrap-light] [--max-pct 1]
  *
  * يبني بطاقة الترتيب بـ`buildStandingsCardCanvas` على بيانات القالب نفسها (assets/cards/standings-card.data.json، مطابقة لـspecs/001-ui-visual-overhaul/card-data.json)
  * بالحالات: 20 (الحقيقي)، 18، 24 (نسخ هندسية)، وأطول اسم (stress) × ليلي/نهاري، ويقارنها بـassets/cards/shots/standings-card-<حالة>-<ثيم>.png بـpixelmatch.
@@ -34,6 +34,8 @@ function championSample(card, stress) {
 });
 // مواجهة الجولة (001-T024): العادي والضغط × داكن/فاتح؛ لقطات القالب duel-post{,-stress}{,-light}.png
 ['', 'stress'].forEach(v => ['dark', 'light'].forEach(t => CASES.push({ kind: 'duel', c: v || 'normal', t, name: `duel-${v || 'normal'}-${t}`, ref: `duel-post${v ? '-stress' : ''}${t === 'light' ? '-light' : ''}.png` })));
+// نتائج أنديتي (001-T025): لقطات القالب my-clubs-post{,-light}.png
+['dark', 'light'].forEach(t => CASES.push({ kind: 'myclubs', c: 'normal', t, name: `myclubs-${t}`, ref: `my-clubs-post${t === 'light' ? '-light' : ''}.png` }));
 const CARD_DATE = '29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ';
 function wrapSample(card) {
   return { round: card.round, topTotal: { value: card.standings[0].total, name: card.standings[0].name }, bestRound: { points: card.champion.points, round: card.round }, mummas: card.mummas || [], date: CARD_DATE };
@@ -43,6 +45,10 @@ function duelSample(card, stress) {
   const [a, b] = card.duelCandidates.map(side);
   if (stress) { b.name = 'أبو تغريد (زيد) الثاني'; b.clubs[0] = 'باريس سان جيرمان'; }
   return { round: card.round, a, b, winner: a.points === b.points ? null : a.points > b.points ? 'a' : 'b', date: CARD_DATE };
+}
+function myClubsSample(card) {
+  const m = card.myClubs;
+  return { round: card.round, id: m.id, name: m.name, roundPoints: m.roundPoints, clubs: m.clubs.map(c => ({ club: c.club, result: c.result, opp: c.opp, gf: c.gf, ga: c.ga })), date: CARD_DATE };
 }
 function profileSample(card) {
   const st = card.standings.find(s => s.id === card.champion.id);
@@ -85,6 +91,12 @@ async function main(argv) {
         const data = championSample(readJson('specs/001-ui-visual-overhaul/card-data.json'), cs.c === 'stress');
         res = await page.evaluate(async ([data, theme]) => {
           const cv = await buildChampionCardCanvas({ theme, data });
+          return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
+        }, [data, cs.t]);
+      } else if (cs.kind === 'myclubs') {
+        const data = myClubsSample(readJson('specs/001-ui-visual-overhaul/card-data.json'));
+        res = await page.evaluate(async ([data, theme]) => {
+          const cv = await buildMyClubsCardCanvas({ theme, data });
           return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
         }, [data, cs.t]);
       } else if (cs.kind === 'duel') {
