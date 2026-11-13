@@ -1,2449 +1,1689 @@
 {
-  "task": "001-T009",
-  "data": {
-    "sourceSha256": "4fb6f68a4fe7d7535271c4e468615977d4c0b654c9b9503add5f70b2656cf47a",
-    "round": 10,
-    "stats": [
-      {
-        "icon": "calendar",
-        "value": 10,
-        "label": "الجولات المنجزة",
-        "hint": "حتى الجولة 10"
-      },
-      {
-        "icon": "crown",
-        "value": 92,
-        "label": "أعلى رصيد",
-        "hint": "لطفي"
-      },
-      {
-        "icon": "bolt",
-        "value": 6,
-        "label": "أعلى نقاط جولة",
-        "hint": "في الجولة 10"
-      },
-      {
-        "icon": "skull-zero",
-        "value": 0,
-        "label": "ممّات الجولة",
-        "hint": "لا أحد"
-      }
-    ],
-    "date": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-    "storyRanks": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      18,
-      19,
-      20
-    ]
-  },
-  "images": [
-    {
-      "file": "bg-post.webp",
-      "width": 1080,
-      "height": 1350,
-      "bytes": 7202
-    },
-    {
-      "file": "bg-story.webp",
-      "width": 1080,
-      "height": 1920,
-      "bytes": 7776
-    },
-    {
-      "file": "cert-frame.webp",
-      "width": 1080,
-      "height": 1350,
-      "bytes": 12658
-    }
+  "task": "C13 / 001-T009f",
+  "decision": "R-16",
+  "size": [
+    1080,
+    1920
   ],
+  "source": "specs/001-ui-visual-overhaul/card-data.json",
+  "dataVerified": true,
+  "defaultParticipants": 20,
+  "fixtures": "18: أول18؛ 24: نسخ آخر مشارك لاختبار الهندسة فقط، مع تنبيه ظاهر",
+  "layout": "standings-card.layout.md",
   "tests": {
     "passed": 237,
     "failed": 0,
-    "lint": "passed",
-    "legacyCardSnapshots": 18
+    "lint": "نجح",
+    "snapCards": 18
   },
-  "templates": [
-    {
-      "file": "champion-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/champion-post.png",
-      "bytes": 133037,
+  "contrastLightWorstPixels": {
+    "primary": 15.27834914135984,
+    "secondary": 8.13859944811029,
+    "gold-rank": 7.014680893243606,
+    "up-icon": 7.944114043438675,
+    "down-icon": 10.051818744140752
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  "gallery": {
+    "index.html": {
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [
-          "الهلال\n\nلا مباراة"
-        ],
-        "nameClips": []
+      "links": 19,
+      "images": 0
+    },
+    "_logo-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 14
+    },
+    "_crests-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 2
+    },
+    "themeToggle": true,
+    "colors": {
+      ".person": "rgb(11, 13, 31)",
+      ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+      ".score": "rgb(11, 13, 31)",
+      ".motion": "rgb(61, 46, 153)",
+      ".rising .icon": "color(srgb 0.0738039 0.296314 0.205569)",
+      ".falling .icon": "color(srgb 0.347137 0.124314 0.170902)"
+    }
+  },
+  "samples": [
+    {
+      "n": 18,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-18-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
       },
+      "out": [],
+      "overlap": [],
       "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
       },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
       },
-      "parity": null,
-      "axe": null,
-      "semantics": []
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
     },
     {
-      "file": "champion-post-stress.html",
-      "width": 1080,
-      "height": 1350,
+      "n": 18,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-18-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-20-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-20-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-24-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-24-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
       "stress": true,
-      "shot": "shots/champion-post-stress.png",
-      "bytes": 142501,
+      "shot": "shots/standings-card-long-name-dark.png",
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [
-          "باريس سان جيرمان\n\nلا مباراة"
-        ],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
       },
+      "out": [],
+      "overlap": [],
       "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
       },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
       },
-      "parity": null,
-      "axe": null,
-      "semantics": []
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
     },
     {
-      "file": "standings-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/standings-post.png",
-      "bytes": 245985,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [
-          {
-            "rank": 1,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "لطفي",
-            "clipped": false
-          },
-          {
-            "rank": 2,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "أيوب",
-            "clipped": false
-          },
-          {
-            "rank": 3,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "أبو أوس",
-            "clipped": false
-          },
-          {
-            "rank": 4,
-            "bottom": 558.46875,
-            "height": 72,
-            "name": "العندليب",
-            "clipped": false
-          },
-          {
-            "rank": 5,
-            "bottom": 630.46875,
-            "height": 72,
-            "name": "أبو عزام",
-            "clipped": false
-          },
-          {
-            "rank": 6,
-            "bottom": 702.46875,
-            "height": 72,
-            "name": "مصطفى عبده",
-            "clipped": false
-          },
-          {
-            "rank": 7,
-            "bottom": 774.46875,
-            "height": 72,
-            "name": "أبا عتاب",
-            "clipped": false
-          },
-          {
-            "rank": 8,
-            "bottom": 846.46875,
-            "height": 72,
-            "name": "أبو تغريد (زيد)",
-            "clipped": false
-          },
-          {
-            "rank": 9,
-            "bottom": 918.46875,
-            "height": 72,
-            "name": "أبو رمزي",
-            "clipped": false
-          },
-          {
-            "rank": 10,
-            "bottom": 990.46875,
-            "height": 72,
-            "name": "أبو شيخة",
-            "clipped": false
-          },
-          {
-            "rank": 11,
-            "bottom": 1062.46875,
-            "height": 72,
-            "name": "سعيد",
-            "clipped": false
-          },
-          {
-            "rank": 12,
-            "bottom": 1134.46875,
-            "height": 72,
-            "name": "أبو يحيى",
-            "clipped": false
-          },
-          {
-            "rank": 13,
-            "bottom": 558.46875,
-            "height": 72,
-            "name": "علي قوول",
-            "clipped": false
-          },
-          {
-            "rank": 14,
-            "bottom": 630.46875,
-            "height": 72,
-            "name": "أبو مناف",
-            "clipped": false
-          },
-          {
-            "rank": 15,
-            "bottom": 702.46875,
-            "height": 72,
-            "name": "ليمان",
-            "clipped": false
-          },
-          {
-            "rank": 16,
-            "bottom": 774.46875,
-            "height": 72,
-            "name": "أبو حمد",
-            "clipped": false
-          },
-          {
-            "rank": 17,
-            "bottom": 846.46875,
-            "height": 72,
-            "name": "أبو عبيدة",
-            "clipped": false
-          },
-          {
-            "rank": 18,
-            "bottom": 918.46875,
-            "height": 72,
-            "name": "موسى (العجوز)",
-            "clipped": false
-          },
-          {
-            "rank": 19,
-            "bottom": 990.46875,
-            "height": 72,
-            "name": "محمد عثمان",
-            "clipped": false
-          },
-          {
-            "rank": 20,
-            "bottom": 1062.46875,
-            "height": 72,
-            "name": "أبو صالح",
-            "clipped": false
-          }
-        ],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 144,
-        "logoHeight": 165.46875,
-        "headerHeight": 214.46875,
-        "above": 24,
-        "below": 25,
-        "logoToHeading": 32,
-        "logoTop": 88,
-        "scaledWidth390": 52,
-        "headingWidth": 728
-      },
-      "typography": {
-        "minimumRowFont": 30,
-        "rowCount": 20
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": [
-        {
-          "id": "20",
-          "rank": "1",
-          "name": "لطفي",
-          "total": "92"
-        },
-        {
-          "id": "17",
-          "rank": "2",
-          "name": "أيوب",
-          "total": "90"
-        },
-        {
-          "id": "16",
-          "rank": "3",
-          "name": "أبو أوس",
-          "total": "89"
-        },
-        {
-          "id": "4",
-          "rank": "4",
-          "name": "العندليب",
-          "total": "85"
-        },
-        {
-          "id": "6",
-          "rank": "5",
-          "name": "أبو عزام",
-          "total": "85"
-        },
-        {
-          "id": "11",
-          "rank": "6",
-          "name": "مصطفى عبده",
-          "total": "85"
-        },
-        {
-          "id": "14",
-          "rank": "7",
-          "name": "أبا عتاب",
-          "total": "84"
-        },
-        {
-          "id": "1",
-          "rank": "8",
-          "name": "أبو تغريد (زيد)",
-          "total": "84"
-        },
-        {
-          "id": "9",
-          "rank": "9",
-          "name": "أبو رمزي",
-          "total": "83"
-        },
-        {
-          "id": "7",
-          "rank": "10",
-          "name": "أبو شيخة",
-          "total": "81"
-        },
-        {
-          "id": "13",
-          "rank": "11",
-          "name": "سعيد",
-          "total": "79"
-        },
-        {
-          "id": "3",
-          "rank": "12",
-          "name": "أبو يحيى",
-          "total": "79"
-        },
-        {
-          "id": "15",
-          "rank": "13",
-          "name": "علي قوول",
-          "total": "78"
-        },
-        {
-          "id": "2",
-          "rank": "14",
-          "name": "أبو مناف",
-          "total": "77"
-        },
-        {
-          "id": "12",
-          "rank": "15",
-          "name": "ليمان",
-          "total": "75"
-        },
-        {
-          "id": "10",
-          "rank": "16",
-          "name": "أبو حمد",
-          "total": "75"
-        },
-        {
-          "id": "5",
-          "rank": "17",
-          "name": "أبو عبيدة",
-          "total": "71"
-        },
-        {
-          "id": "8",
-          "rank": "18",
-          "name": "موسى (العجوز)",
-          "total": "71"
-        },
-        {
-          "id": "19",
-          "rank": "19",
-          "name": "محمد عثمان",
-          "total": "69"
-        },
-        {
-          "id": "18",
-          "rank": "20",
-          "name": "أبو صالح",
-          "total": "62"
-        }
-      ]
-    },
-    {
-      "file": "standings-story.html",
-      "width": 1080,
-      "height": 1920,
-      "stress": false,
-      "shot": "shots/standings-story.png",
-      "bytes": 176076,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1920,
-          "width": 1080,
-          "height": 1920
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 200,
-          "bottom": 1720,
-          "width": 952,
-          "height": 1520
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1824,
-          "bottom": 1920,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [
-          {
-            "rank": 1,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "لطفي",
-            "clipped": false
-          },
-          {
-            "rank": 2,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أيوب",
-            "clipped": false
-          },
-          {
-            "rank": 3,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أبو أوس",
-            "clipped": false
-          },
-          {
-            "rank": 4,
-            "bottom": 835.25,
-            "height": 112,
-            "name": "العندليب",
-            "clipped": false
-          },
-          {
-            "rank": 5,
-            "bottom": 947.25,
-            "height": 112,
-            "name": "أبو عزام",
-            "clipped": false
-          },
-          {
-            "rank": 6,
-            "bottom": 1059.25,
-            "height": 112,
-            "name": "مصطفى عبده",
-            "clipped": false
-          },
-          {
-            "rank": 18,
-            "bottom": 1255.25,
-            "height": 112,
-            "name": "موسى (العجوز)",
-            "clipped": false
-          },
-          {
-            "rank": 19,
-            "bottom": 1367.25,
-            "height": 112,
-            "name": "محمد عثمان",
-            "clipped": false
-          },
-          {
-            "rank": 20,
-            "bottom": 1479.25,
-            "height": 112,
-            "name": "أبو صالح",
-            "clipped": false
-          }
-        ],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 232,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
-      },
-      "typography": {
-        "minimumRowFont": 30,
-        "rowCount": 9
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": [
-        {
-          "id": "20",
-          "rank": "1",
-          "name": "لطفي",
-          "total": "92"
-        },
-        {
-          "id": "17",
-          "rank": "2",
-          "name": "أيوب",
-          "total": "90"
-        },
-        {
-          "id": "16",
-          "rank": "3",
-          "name": "أبو أوس",
-          "total": "89"
-        },
-        {
-          "id": "4",
-          "rank": "4",
-          "name": "العندليب",
-          "total": "85"
-        },
-        {
-          "id": "6",
-          "rank": "5",
-          "name": "أبو عزام",
-          "total": "85"
-        },
-        {
-          "id": "11",
-          "rank": "6",
-          "name": "مصطفى عبده",
-          "total": "85"
-        },
-        {
-          "id": "8",
-          "rank": "18",
-          "name": "موسى (العجوز)",
-          "total": "71"
-        },
-        {
-          "id": "19",
-          "rank": "19",
-          "name": "محمد عثمان",
-          "total": "69"
-        },
-        {
-          "id": "18",
-          "rank": "20",
-          "name": "أبو صالح",
-          "total": "62"
-        }
-      ]
-    },
-    {
-      "file": "standings-story-stress.html",
-      "width": 1080,
-      "height": 1920,
+      "n": 20,
+      "theme": "light",
       "stress": true,
-      "shot": "shots/standings-story-stress.png",
-      "bytes": 181888,
+      "shot": "shots/standings-card-long-name-light.png",
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1920,
-          "width": 1080,
-          "height": 1920
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 200,
-          "bottom": 1720,
-          "width": 952,
-          "height": 1520
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1824,
-          "bottom": 1920,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [
-          {
-            "rank": 1,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أبو تغريد (زيد) الثاني",
-            "clipped": false
-          },
-          {
-            "rank": 2,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أيوب",
-            "clipped": false
-          },
-          {
-            "rank": 3,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أبو أوس",
-            "clipped": false
-          },
-          {
-            "rank": 4,
-            "bottom": 835.25,
-            "height": 112,
-            "name": "العندليب",
-            "clipped": false
-          },
-          {
-            "rank": 5,
-            "bottom": 947.25,
-            "height": 112,
-            "name": "أبو عزام",
-            "clipped": false
-          },
-          {
-            "rank": 6,
-            "bottom": 1059.25,
-            "height": 112,
-            "name": "مصطفى عبده",
-            "clipped": false
-          },
-          {
-            "rank": 18,
-            "bottom": 1255.25,
-            "height": 112,
-            "name": "موسى (العجوز)",
-            "clipped": false
-          },
-          {
-            "rank": 19,
-            "bottom": 1367.25,
-            "height": 112,
-            "name": "محمد عثمان",
-            "clipped": false
-          },
-          {
-            "rank": 20,
-            "bottom": 1479.25,
-            "height": 112,
-            "name": "أبو صالح",
-            "clipped": false
-          }
-        ],
-        "noMatch": [],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
       },
+      "out": [],
+      "overlap": [],
       "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 232,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
       },
-      "typography": {
-        "minimumRowFont": 30,
-        "rowCount": 9
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
       },
-      "parity": null,
-      "axe": null,
-      "semantics": [
-        {
-          "id": "20",
-          "rank": "1",
-          "name": "أبو تغريد (زيد) الثاني",
-          "total": "92"
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
         },
-        {
-          "id": "17",
-          "rank": "2",
-          "name": "أيوب",
-          "total": "90"
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
         },
-        {
-          "id": "16",
-          "rank": "3",
-          "name": "أبو أوس",
-          "total": "89"
-        },
-        {
-          "id": "4",
-          "rank": "4",
-          "name": "العندليب",
-          "total": "85"
-        },
-        {
-          "id": "6",
-          "rank": "5",
-          "name": "أبو عزام",
-          "total": "85"
-        },
-        {
-          "id": "11",
-          "rank": "6",
-          "name": "مصطفى عبده",
-          "total": "85"
-        },
-        {
-          "id": "8",
-          "rank": "18",
-          "name": "موسى (العجوز)",
-          "total": "71"
-        },
-        {
-          "id": "19",
-          "rank": "19",
-          "name": "محمد عثمان",
-          "total": "69"
-        },
-        {
-          "id": "18",
-          "rank": "20",
-          "name": "أبو صالح",
-          "total": "62"
-        }
-      ]
+        "allUnclipped": true
+      }
     },
     {
-      "file": "season-wrap-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/season-wrap-post.png",
-      "bytes": 121974,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
-      },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": []
-    },
-    {
-      "file": "profile-square.html",
-      "width": 1080,
-      "height": 1080,
-      "stress": false,
-      "shot": "shots/profile-square.png",
-      "bytes": 80183,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1080,
-          "width": 1080,
-          "height": 1080
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 920,
-          "width": 952,
-          "height": 856
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 984,
-          "bottom": 1080,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 144,
-        "logoHeight": 165.46875,
-        "headerHeight": 214.46875,
-        "above": 24,
-        "below": 25,
-        "logoToHeading": 32,
-        "logoTop": 88,
-        "scaledWidth390": 52,
-        "headingWidth": 728
-      },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": []
-    },
-    {
-      "file": "certificate-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/certificate-post.png",
-      "bytes": 184012,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 306.59375,
-        "above": 51.671875,
-        "below": 52.671875,
-        "logoToHeading": 32,
-        "logoTop": 115.671875,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
-      },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": []
-    },
-    {
-      "file": "duel-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/duel-post.png",
-      "bytes": 116879,
-      "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [],
-        "nameClips": []
-      },
-      "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
-      },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
-      },
-      "parity": null,
-      "axe": null,
-      "semantics": []
-    },
-    {
-      "file": "duel-post-stress.html",
-      "width": 1080,
-      "height": 1350,
+      "n": 24,
+      "theme": "dark",
       "stress": true,
-      "shot": "shots/duel-post-stress.png",
-      "bytes": 131766,
+      "shot": null,
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
       },
+      "out": [],
+      "overlap": [],
       "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
       },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
       },
-      "parity": null,
-      "axe": null,
-      "semantics": []
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
     },
     {
-      "file": "my-clubs-post.html",
-      "width": 1080,
-      "height": 1350,
-      "stress": false,
-      "shot": "shots/my-clubs-post.png",
-      "bytes": 130702,
+      "n": 24,
+      "theme": "light",
+      "stress": true,
+      "shot": null,
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [],
-        "noMatch": [
-          "الهلال\n\nلا مباراة"
-        ],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
       },
+      "out": [],
+      "overlap": [],
       "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 96,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
       },
-      "typography": {
-        "minimumRowFont": null,
-        "rowCount": 0
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
       },
-      "parity": null,
-      "axe": null,
-      "semantics": []
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
     },
     {
-      "file": "standings-post-light.html",
-      "width": 1080,
-      "height": 1350,
+      "other": "champion-post.html",
+      "n": null,
+      "theme": "dark",
       "stress": false,
-      "shot": "shots/standings-post-light.png",
-      "bytes": 258047,
+      "shot": null,
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1350,
-          "width": 1080,
-          "height": 1350
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 64,
-          "bottom": 1190,
-          "width": 952,
-          "height": 1126
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1254,
-          "bottom": 1350,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [
-          {
-            "rank": 1,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "لطفي",
-            "clipped": false
-          },
-          {
-            "rank": 2,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "أيوب",
-            "clipped": false
-          },
-          {
-            "rank": 3,
-            "bottom": 442.46875,
-            "height": 160,
-            "name": "أبو أوس",
-            "clipped": false
-          },
-          {
-            "rank": 4,
-            "bottom": 558.46875,
-            "height": 72,
-            "name": "العندليب",
-            "clipped": false
-          },
-          {
-            "rank": 5,
-            "bottom": 630.46875,
-            "height": 72,
-            "name": "أبو عزام",
-            "clipped": false
-          },
-          {
-            "rank": 6,
-            "bottom": 702.46875,
-            "height": 72,
-            "name": "مصطفى عبده",
-            "clipped": false
-          },
-          {
-            "rank": 7,
-            "bottom": 774.46875,
-            "height": 72,
-            "name": "أبا عتاب",
-            "clipped": false
-          },
-          {
-            "rank": 8,
-            "bottom": 846.46875,
-            "height": 72,
-            "name": "أبو تغريد (زيد)",
-            "clipped": false
-          },
-          {
-            "rank": 9,
-            "bottom": 918.46875,
-            "height": 72,
-            "name": "أبو رمزي",
-            "clipped": false
-          },
-          {
-            "rank": 10,
-            "bottom": 990.46875,
-            "height": 72,
-            "name": "أبو شيخة",
-            "clipped": false
-          },
-          {
-            "rank": 11,
-            "bottom": 1062.46875,
-            "height": 72,
-            "name": "سعيد",
-            "clipped": false
-          },
-          {
-            "rank": 12,
-            "bottom": 1134.46875,
-            "height": 72,
-            "name": "أبو يحيى",
-            "clipped": false
-          },
-          {
-            "rank": 13,
-            "bottom": 558.46875,
-            "height": 72,
-            "name": "علي قوول",
-            "clipped": false
-          },
-          {
-            "rank": 14,
-            "bottom": 630.46875,
-            "height": 72,
-            "name": "أبو مناف",
-            "clipped": false
-          },
-          {
-            "rank": 15,
-            "bottom": 702.46875,
-            "height": 72,
-            "name": "ليمان",
-            "clipped": false
-          },
-          {
-            "rank": 16,
-            "bottom": 774.46875,
-            "height": 72,
-            "name": "أبو حمد",
-            "clipped": false
-          },
-          {
-            "rank": 17,
-            "bottom": 846.46875,
-            "height": 72,
-            "name": "أبو عبيدة",
-            "clipped": false
-          },
-          {
-            "rank": 18,
-            "bottom": 918.46875,
-            "height": 72,
-            "name": "موسى (العجوز)",
-            "clipped": false
-          },
-          {
-            "rank": 19,
-            "bottom": 990.46875,
-            "height": 72,
-            "name": "محمد عثمان",
-            "clipped": false
-          },
-          {
-            "rank": 20,
-            "bottom": 1062.46875,
-            "height": 72,
-            "name": "أبو صالح",
-            "clipped": false
-          }
-        ],
-        "noMatch": [],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
       },
-      "header": {
-        "logoWidth": 144,
-        "logoHeight": 165.46875,
-        "headerHeight": 214.46875,
-        "above": 24,
-        "below": 25,
-        "logoToHeading": 32,
-        "logoTop": 88,
-        "scaledWidth390": 52,
-        "headingWidth": 728
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
       },
-      "typography": {
-        "minimumRowFont": 30,
-        "rowCount": 20
-      },
-      "parity": {
-        "dynamicClassToggle": true,
-        "textUnchanged": true
-      },
-      "axe": {
-        "violations": [],
-        "incomplete": [
-          {
-            "id": "color-contrast",
-            "nodes": [
-              [
-                "h2"
-              ],
-              [
-                "h2 > span"
-              ],
-              [
-                "div[data-rank=\"4\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"4\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"4\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"6\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"6\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"6\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"8\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"8\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"8\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"10\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"10\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"10\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"12\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"12\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"12\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"13\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"13\"] > .participant-cell > .person"
-              ],
-              [
-                "div[data-rank=\"13\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"13\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"15\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"15\"] > .participant-cell > .person"
-              ],
-              [
-                "div[data-rank=\"15\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"15\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"17\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"17\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"17\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"19\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"19\"] > .participant-cell > .person"
-              ],
-              [
-                "div[data-rank=\"19\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"19\"] > .score-cell > .rank-gap"
-              ],
-              [
-                ".date"
-              ],
-              [
-                "footer > span"
-              ],
-              [
-                "a"
-              ]
-            ]
-          }
-        ]
-      },
-      "semantics": [
-        {
-          "id": "20",
-          "rank": "1",
-          "name": "لطفي",
-          "total": "92"
-        },
-        {
-          "id": "17",
-          "rank": "2",
-          "name": "أيوب",
-          "total": "90"
-        },
-        {
-          "id": "16",
-          "rank": "3",
-          "name": "أبو أوس",
-          "total": "89"
-        },
-        {
-          "id": "4",
-          "rank": "4",
-          "name": "العندليب",
-          "total": "85"
-        },
-        {
-          "id": "6",
-          "rank": "5",
-          "name": "أبو عزام",
-          "total": "85"
-        },
-        {
-          "id": "11",
-          "rank": "6",
-          "name": "مصطفى عبده",
-          "total": "85"
-        },
-        {
-          "id": "14",
-          "rank": "7",
-          "name": "أبا عتاب",
-          "total": "84"
-        },
-        {
-          "id": "1",
-          "rank": "8",
-          "name": "أبو تغريد (زيد)",
-          "total": "84"
-        },
-        {
-          "id": "9",
-          "rank": "9",
-          "name": "أبو رمزي",
-          "total": "83"
-        },
-        {
-          "id": "7",
-          "rank": "10",
-          "name": "أبو شيخة",
-          "total": "81"
-        },
-        {
-          "id": "13",
-          "rank": "11",
-          "name": "سعيد",
-          "total": "79"
-        },
-        {
-          "id": "3",
-          "rank": "12",
-          "name": "أبو يحيى",
-          "total": "79"
-        },
-        {
-          "id": "15",
-          "rank": "13",
-          "name": "علي قوول",
-          "total": "78"
-        },
-        {
-          "id": "2",
-          "rank": "14",
-          "name": "أبو مناف",
-          "total": "77"
-        },
-        {
-          "id": "12",
-          "rank": "15",
-          "name": "ليمان",
-          "total": "75"
-        },
-        {
-          "id": "10",
-          "rank": "16",
-          "name": "أبو حمد",
-          "total": "75"
-        },
-        {
-          "id": "5",
-          "rank": "17",
-          "name": "أبو عبيدة",
-          "total": "71"
-        },
-        {
-          "id": "8",
-          "rank": "18",
-          "name": "موسى (العجوز)",
-          "total": "71"
-        },
-        {
-          "id": "19",
-          "rank": "19",
-          "name": "محمد عثمان",
-          "total": "69"
-        },
-        {
-          "id": "18",
-          "rank": "20",
-          "name": "أبو صالح",
-          "total": "62"
-        }
-      ]
+      "rowCount": 0
     },
     {
-      "file": "standings-story-light.html",
-      "width": 1080,
-      "height": 1920,
+      "other": "champion-post-stress.html",
+      "n": null,
+      "theme": "dark",
       "stress": false,
-      "shot": "shots/standings-story-light.png",
-      "bytes": 235961,
+      "shot": null,
       "errors": [],
-      "checks": {
-        "card": {
-          "left": 0,
-          "right": 1080,
-          "top": 0,
-          "bottom": 1920,
-          "width": 1080,
-          "height": 1920
-        },
-        "safe": {
-          "left": 64,
-          "right": 1016,
-          "top": 200,
-          "bottom": 1720,
-          "width": 952,
-          "height": 1520
-        },
-        "footer": {
-          "left": 64,
-          "right": 1016,
-          "top": 1824,
-          "bottom": 1920,
-          "width": 952,
-          "height": 96
-        },
-        "out": [],
-        "overlaps": [],
-        "ranking": [
-          {
-            "rank": 1,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "لطفي",
-            "clipped": false
-          },
-          {
-            "rank": 2,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أيوب",
-            "clipped": false
-          },
-          {
-            "rank": 3,
-            "bottom": 715.25,
-            "height": 224,
-            "name": "أبو أوس",
-            "clipped": false
-          },
-          {
-            "rank": 4,
-            "bottom": 835.25,
-            "height": 112,
-            "name": "العندليب",
-            "clipped": false
-          },
-          {
-            "rank": 5,
-            "bottom": 947.25,
-            "height": 112,
-            "name": "أبو عزام",
-            "clipped": false
-          },
-          {
-            "rank": 6,
-            "bottom": 1059.25,
-            "height": 112,
-            "name": "مصطفى عبده",
-            "clipped": false
-          },
-          {
-            "rank": 18,
-            "bottom": 1255.25,
-            "height": 112,
-            "name": "موسى (العجوز)",
-            "clipped": false
-          },
-          {
-            "rank": 19,
-            "bottom": 1367.25,
-            "height": 112,
-            "name": "محمد عثمان",
-            "clipped": false
-          },
-          {
-            "rank": 20,
-            "bottom": 1479.25,
-            "height": 112,
-            "name": "أبو صالح",
-            "clipped": false
-          }
-        ],
-        "noMatch": [],
-        "nameClips": []
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
       },
-      "header": {
-        "logoWidth": 176,
-        "logoHeight": 202.25,
-        "headerHeight": 267.25,
-        "above": 32,
-        "below": 33,
-        "logoToHeading": 32,
-        "logoTop": 232,
-        "scaledWidth390": 63.55555555555556,
-        "headingWidth": 680
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
       },
-      "typography": {
-        "minimumRowFont": 30,
-        "rowCount": 9
+      "rowCount": 0
+    },
+    {
+      "other": "season-wrap-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
       },
-      "parity": {
-        "dynamicClassToggle": true,
-        "textUnchanged": true
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
       },
-      "axe": {
-        "violations": [],
-        "incomplete": [
-          {
-            "id": "color-contrast",
-            "nodes": [
-              [
-                "div[data-rank=\"4\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"4\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"4\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"6\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"6\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"6\"] > .score-cell > .rank-gap"
-              ],
-              [
-                "div[data-rank=\"19\"] > .rank"
-              ],
-              [
-                "div[data-rank=\"19\"] > .participant-cell > .person"
-              ],
-              [
-                "div[data-rank=\"19\"] > .score-cell > b"
-              ],
-              [
-                "div[data-rank=\"19\"] > .score-cell > .rank-gap"
-              ],
-              [
-                ".date"
-              ],
-              [
-                "footer > span"
-              ],
-              [
-                "a"
-              ]
-            ]
-          }
-        ]
+      "rowCount": 0
+    },
+    {
+      "other": "profile-square.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 920,
+        "width": 952,
+        "height": 856
       },
-      "semantics": [
-        {
-          "id": "20",
-          "rank": "1",
-          "name": "لطفي",
-          "total": "92"
-        },
-        {
-          "id": "17",
-          "rank": "2",
-          "name": "أيوب",
-          "total": "90"
-        },
-        {
-          "id": "16",
-          "rank": "3",
-          "name": "أبو أوس",
-          "total": "89"
-        },
-        {
-          "id": "4",
-          "rank": "4",
-          "name": "العندليب",
-          "total": "85"
-        },
-        {
-          "id": "6",
-          "rank": "5",
-          "name": "أبو عزام",
-          "total": "85"
-        },
-        {
-          "id": "11",
-          "rank": "6",
-          "name": "مصطفى عبده",
-          "total": "85"
-        },
-        {
-          "id": "8",
-          "rank": "18",
-          "name": "موسى (العجوز)",
-          "total": "71"
-        },
-        {
-          "id": "19",
-          "rank": "19",
-          "name": "محمد عثمان",
-          "total": "69"
-        },
-        {
-          "id": "18",
-          "rank": "20",
-          "name": "أبو صالح",
-          "total": "62"
-        }
-      ]
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 984,
+        "bottom": 1080,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "certificate-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post-stress.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "my-clubs-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
     }
   ],
-  "logoUpdate": {
-    "task": "001-T009b",
-    "beforeCommit": "8add300",
-    "layout": "صف موحد للشعار الكامل والعنوان، بحجم مدمج للجدول والمربع",
-    "comparison": "_logo-compare.html",
-    "preview": "_logo-compare.png",
-    "phoneCheck": {
-      "images": 16,
-      "widths": [
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390,
-        390
-      ],
-      "overflow": false
-    },
-    "contentTextUnchanged": true
-  },
-  "tableUpdate": {
-    "task": "001-T014b",
-    "websitePR": 38,
-    "cardPR": 34,
-    "rowsPost": 20,
-    "rowsStory": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      18,
-      19,
-      20
-    ],
-    "minimumRowFont": 30,
-    "phoneScale": 0.3611111111111111,
-    "phoneMinimumRowFont": 10.833333333333334,
-    "gapSource": "previous.total - current.total",
-    "beforeCommit": "bd56b09",
-    "comparison": "_table-compare.html",
-    "comparisonPNG": "_table-compare.png"
-  },
-  "lightMode": {
-    "decision": "R-14",
-    "templateStrategy": "المصدر الليلي نفسه؛ غلاف نهاري يستورده ويبدّل كلاس الثيم وملف الشعار فقط",
-    "contrast": {
-      "bg-post-light": {
-        "minimumBackgroundLuminance": 0.7916393578691585,
-        "primaryTextWorst": 15.420503007517892,
-        "secondaryTextWorst": 8.214323164459248
-      },
-      "bg-story-light": {
-        "minimumBackgroundLuminance": 0.783880707676389,
-        "primaryTextWorst": 15.27834914135984,
-        "secondaryTextWorst": 8.13859944811029
-      },
-      "tokenPairs": {
-        "0B0D1F/EAE6F8": 15.731872120857586,
-        "3D2E99/EAE6F8": 8.380185881074683,
-        "3D2E99/FDFCFF": 10.025715156534522,
-        "F5B83D/0B0D1F": 10.81553666221299,
-        "F3F1FA/0B0D1F": 17.19837163175197,
-        "22C55E/0B0D1F": 8.442905529064278,
-        "EF4444/0B0D1F": 5.112259012546173,
-        "7B5CFF/EAE6F8": 3.5649776871999133
-      }
-    },
-    "images": [
-      {
-        "file": "bg-post-light.webp",
-        "bytes": 10370,
-        "size": [
-          1080,
-          1350
-        ]
-      },
-      {
-        "file": "bg-story-light.webp",
-        "bytes": 14806,
-        "size": [
-          1080,
-          1920
-        ]
-      }
-    ],
-    "crests": {
-      "count": 32,
-      "sizes": [
-        24,
-        48
-      ],
-      "sheet": "crests-light-check.png"
-    },
-    "comparison": "standings-light-dark-compare.html"
-  },
-  "crestUpdate": {
-    "task": "001-T009c",
-    "lightCrests": [
-      {
-        "name": "al-ahli",
-        "bytes": 1044,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "arsenal",
-        "bytes": 3568,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "al-hilal",
-        "bytes": 706,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "chelsea",
-        "bytes": 5002,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "barcelona",
-        "bytes": 799,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "shakhtar",
-        "bytes": 853,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 3
-      },
-      {
-        "name": "roma",
-        "bytes": 2828,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "atletico-madrid",
-        "bytes": 1209,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 3,
-        "allColors": 5
-      },
-      {
-        "name": "al-qadsiah",
-        "bytes": 959,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 1,
-        "allColors": 4
-      },
-      {
-        "name": "galatasaray",
-        "bytes": 4226,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "rangers",
-        "bytes": 5002,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "al-shabab",
-        "bytes": 3703,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "liverpool",
-        "bytes": 5932,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "fenerbahce",
-        "bytes": 1294,
-        "colorsIncludingFrame": 5,
-        "newBorder": "#12142E",
-        "clubColors": 4,
-        "allColors": 5
-      },
-      {
-        "name": "sporting-cp",
-        "bytes": 5044,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "manchester-city",
-        "bytes": 7016,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 3,
-        "allColors": 5
-      },
-      {
-        "name": "al-nassr",
-        "bytes": 2141,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "psv",
-        "bytes": 942,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "milan",
-        "bytes": 817,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 3
-      },
-      {
-        "name": "ajax",
-        "bytes": 679,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "bayern-munich",
-        "bytes": 1165,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "celtic",
-        "bytes": 6607,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "porto",
-        "bytes": 2362,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 1,
-        "allColors": 4
-      },
-      {
-        "name": "al-ittihad",
-        "bytes": 801,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 3
-      },
-      {
-        "name": "feyenoord",
-        "bytes": 937,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 5
-      },
-      {
-        "name": "dortmund",
-        "bytes": 3033,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 1,
-        "allColors": 3
-      },
-      {
-        "name": "juventus",
-        "bytes": 831,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 3
-      },
-      {
-        "name": "benfica",
-        "bytes": 6483,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "psg",
-        "bytes": 2660,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 2,
-        "allColors": 4
-      },
-      {
-        "name": "marseille",
-        "bytes": 1339,
-        "colorsIncludingFrame": 3,
-        "newBorder": "#12142E",
-        "clubColors": 1,
-        "allColors": 4
-      },
-      {
-        "name": "dinamo-zagreb",
-        "bytes": 916,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 3,
-        "allColors": 5
-      },
-      {
-        "name": "real-madrid",
-        "bytes": 1211,
-        "colorsIncludingFrame": 4,
-        "newBorder": "#12142E",
-        "clubColors": 3,
-        "allColors": 4
-      }
-    ],
-    "comparison": "../crests/_compare-light.html",
-    "cardComparison": "_crests-compare.html",
-    "tintContrast": [
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.355137 0.27898 0.161569)",
-        "background": "color(srgb 0.987137 0.945569 0.878275)",
-        "ratio": 7.9077606120196196
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-post-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "color(srgb 0.355137 0.27898 0.161569)",
-        "background": "color(srgb 0.987137 0.945569 0.878275)",
-        "ratio": 7.9077606120196196
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "color(srgb 0.0738039 0.296314 0.205569)",
-        "background": "color(srgb 0.889098 0.962353 0.924235)",
-        "ratio": 8.847423494201834
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "color(srgb 0.347137 0.124314 0.170902)",
-        "background": "color(srgb 0.985569 0.901647 0.912)",
-        "ratio": 10.604847776859359
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      },
-      {
-        "file": "standings-story-light.html",
-        "color": "rgb(61, 46, 153)",
-        "background": "rgb(234, 230, 248)",
-        "ratio": 8.380185881074683
-      }
-    ],
-    "minimumTintTextContrast": 7.9077606120196196,
-    "sizes": {
-      "standingsGroup": 32,
-      "standingsGap": 8,
-      "duelAndProfile": 48,
-      "duelAndProfileGap": 12,
-      "individualClub": 64
-    },
-    "publishStatus": "pushed-to-codex/001-T009"
+  "deletedFiles": 56,
+  "unchangedTemplates": {
+    "assets/cards/champion-post.html": "4cb10086e6015862888013c160639ae0a437831ac3f51c57396bd84cbdf42f0f",
+    "assets/cards/duel-post.html": "6f10ff715e69bfc73245281369b9b58194ce08b03af8daf91b2c24bfaa2c4294",
+    "assets/cards/my-clubs-post.html": "c0ad61e97573949bbdcb89c067100bfbe600a6ce6cbd878c15a9477b04146a56",
+    "assets/cards/season-wrap-post.html": "f8b805aea7bb69eabd3bdf6e39ea7d1a753c19779c95cd0dd1e9c184a8b32274",
+    "assets/cards/profile-square.html": "128d13abe76e45a96ec7905ad54412854b27d62853faa8cbf4c80d5a1bb6895d",
+    "assets/cards/certificate-post.html": "fd3715928fa665144d8ad4c78aa69110840002456d57dfea1c119fed4270d7b4",
+    "assets/cards/champion-post-stress.html": "426967351d616c8560510afd0c1b12624ee1fd7d1d85e7dcb1c20f76bf3bc452",
+    "assets/cards/duel-post-stress.html": "979b93168f31d4ff472ac8bb7b46e48c552278141c0f9fb427a6bd2c36f7d6c6"
   }
 }

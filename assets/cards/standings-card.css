@@ -1,0 +1,35 @@
+/* R-16: قالب نهائي واحد، وتكيّف رقمي موثق في standings-card.layout.md. */
+.standings-card{position:relative;width:1080px;height:1920px;isolation:isolate;background:var(--c-bg) url(bg-story.webp) center/cover no-repeat;color:var(--c-text);font-variant-numeric:tabular-nums}
+html.light-mode .standings-card{background-image:url(bg-story-light.webp)}
+.standings-safe{position:absolute;inset:64px 64px 160px;display:flex;flex-direction:column;gap:var(--sp-4);min-height:0}
+.standings-header{height:128px;flex:none;display:grid;grid-template-columns:88px 632px 160px;gap:var(--sp-6);align-items:center;padding:var(--sp-3);border-bottom:1px solid var(--c-border)}
+.standings-logo{width:88px;height:auto;aspect-ratio:476/547;object-fit:contain;display:block}
+.title-box{height:88px}
+.standings-header h1{font-size:44px;line-height:56px;height:56px;margin:0;font-weight:800}
+.standings-header .meta{font-size:24px;line-height:32px;height:32px;color:var(--c-text-2);margin:0}
+.count-box{text-align:end;color:var(--c-text-2)}
+#participant-count{font-size:24px;line-height:36px;margin:0;white-space:nowrap}
+.fixture-note{font-size:20px;line-height:28px;margin:0}
+.standings-content{display:flex;flex-direction:column;gap:var(--sp-2);min-height:0}
+.table-labels,.standing-person{display:grid;grid-template-columns:40px 80px 536px 136px 80px;gap:var(--sp-3);align-items:center;padding-inline:var(--sp-4)}
+.table-labels{height:40px;font-size:24px;line-height:1;color:var(--c-text-2);flex:none}
+.table-labels span:first-child,.table-labels span:nth-child(2),.table-labels span:nth-child(4),.table-labels span:last-child{text-align:center}
+.standings-list{display:flex;flex-direction:column;gap:var(--sp-4);min-height:0}
+.standing-person{height:var(--row-height);flex:0 0 var(--row-height);position:relative;border-radius:var(--r-sm)}
+.standing-person:nth-child(odd){background:var(--c-surface-1)}
+.standing-person::after{content:'';position:absolute;left:var(--sp-2);right:var(--sp-2);bottom:0;height:1px;background:var(--c-border)}
+.standing-person.group-start{margin-top:var(--sp-2)}
+.standing-person.me::before{content:'';position:absolute;inset-inline-start:0;top:var(--sp-1);bottom:var(--sp-1);width:2px;background:var(--c-brand);border-radius:var(--r-sm)}
+.standing-person .person{font-size:var(--name-size);font-weight:800;line-height:1;white-space:nowrap;min-width:0;margin:0}
+.standing-person .score{font-size:var(--score-size);font-weight:800;line-height:1;text-align:center;direction:ltr;unicode-bidi:isolate}
+.standing-person .rank{font-size:var(--rank-size);font-weight:800;line-height:1;text-align:center}
+.standing-person:first-child .rank{color:var(--c-gold)}
+html.light-mode .standing-person:first-child .rank{color:color-mix(in srgb,var(--c-gold) 34%,var(--c-text))}
+.standings-clubs{display:flex;align-items:center;justify-content:center;gap:var(--sp-2);direction:rtl}
+.standings-clubs .crest{width:var(--crest-size);height:calc(var(--crest-size)*1.1);object-fit:contain;display:block}
+.motion{display:flex;align-items:center;justify-content:center;gap:var(--sp-1);font-size:var(--motion-size);line-height:1;color:var(--c-text-2);white-space:nowrap}
+.motion .icon{width:var(--motion-size);height:var(--motion-size);flex:none}
+.motion.rising .icon{color:var(--c-up)}
+.motion.falling .icon{color:var(--c-down)}
+html.light-mode .motion.rising .icon{color:color-mix(in srgb,var(--c-up) 34%,var(--c-text))}
+html.light-mode .motion.falling .icon{color:color-mix(in srgb,var(--c-down) 34%,var(--c-text))}
