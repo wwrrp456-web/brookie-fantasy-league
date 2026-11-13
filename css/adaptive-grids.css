@@ -9,9 +9,8 @@
 }
 
 /* المشاركون: عمود واحد على الجوال، وأعمدة أكثر كلما اتسع العرض (شريط الترتيب يمتد كل الأعمدة) */
-#participantsBox{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:var(--sp-3);}
+#participantsBox{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:0 var(--sp-3);}   /* المسافة العمودية من margin-bottom البطاقة (site-polish) فيبقى الجوال مطابقًا لما قبل */
 #participantsBox>div:first-child{grid-column:1/-1;}
-#participantsBox .participant-card{margin-bottom:0;}
 
 /* الإحصائيات: كفاءة الأندية، والرادار، والأرقام القياسية */
 .club-eff-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:var(--sp-2);}
