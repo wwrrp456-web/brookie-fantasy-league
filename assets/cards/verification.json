@@ -1702,11 +1702,10 @@
       "my-clubs-post": "cbe0f9869302e05335f8146247baad86040534c420f46c7c5b96fe58bdca23f9",
       "season-wrap-post": "0def3db7c241d945c3fb47e3feab5f023d5244ee86f70bcfeb391c56dc4d56b2",
       "profile-square": "e566cd5e25bf5b411cb0b8519b50b47ae0cfd217776b0758903d18cebd96a6eb",
-      "certificate-post": "fcafd0cf6f8d977d4ac95bcbc5469400c55332c5628ba6a61c339f7ed6684d05",
       "champion-post-stress": "696f1bd63ab86d4e5b8a6b6f24bc1476253ff4bdfab5ce0e9a439b586bad075b",
       "duel-post-stress": "40944814361a7df1e84810d7f27ace94d70964ed7c326857309082ad82c189ce"
     },
-    "themeToggles": "6 كروت في الاتجاهين؛ النصوص والأرقام متطابقة",
+    "themeToggles": "5 كروت في الاتجاهين؛ النصوص والأرقام متطابقة",
     "contrastMethod": "خلفية Chromium بعد إخفاء حبر النص والصور والأيقونات مع حفظ صناديق التخطيط والظلال؛ أدنى تباين لجميع بكسلات كل صندوق نص وفق WCAG",
     "contrast": {
       "champion-post": {
@@ -2589,116 +2588,6 @@
           }
         ]
       },
-      "certificate-post": {
-        "minimum": 7.495056036516668,
-        "measurements": [
-          {
-            "text": "دوري بروكي الفانتازي",
-            "ratio": 8.695930862180804,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "شهادة بطل الموسم",
-            "ratio": 16.32461072308619,
-            "color": "rgb(11, 13, 31)"
-          },
-          {
-            "text": "أبو تغريد (زيد)",
-            "ratio": 16.32461072308619,
-            "color": "rgb(11, 13, 31)"
-          },
-          {
-            "text": "بطل الموسم الأول",
-            "ratio": 7.495056036516668,
-            "color": "color(srgb 0.355137 0.27898 0.161569)"
-          },
-          {
-            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول في دوري بروكي الفانتازي.",
-            "ratio": 16.32461072308619,
-            "color": "rgb(11, 13, 31)"
-          },
-          {
-            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول في دوري بروكي الفانتازي.",
-            "ratio": 16.32461072308619,
-            "color": "rgb(11, 13, 31)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.910544765645012,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.695930862180804,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.695930862180804,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.734721123218574,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.910544765645012,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.813847663124731,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.813847663124731,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
-            "ratio": 8.813847663124731,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.898232896112683,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.898232896112683,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.898232896112683,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.695930862180804,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.898232896112683,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "فوز 3 · تعادل 1 · خسارة 0",
-            "ratio": 8.734721123218574,
-            "color": "rgb(61, 46, 153)"
-          },
-          {
-            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
-            "ratio": 8.611389902875235,
-            "color": "rgb(61, 46, 153)"
-          }
-        ]
-      },
       "champion-post-stress": {
         "minimum": 8.611389902875235,
         "measurements": [
@@ -3533,9 +3422,6 @@
             "color": "rgb(61, 46, 153)"
           }
         ]
-      },
-      "certificate-frame": {
-        "minimum": 3.9542292764968963
       }
     },
     "axe": {
@@ -3569,12 +3455,6 @@
           "color-contrast"
         ]
       },
-      "certificate-post": {
-        "violations": [],
-        "incomplete": [
-          "color-contrast"
-        ]
-      },
       "mobileGallery": {
         "width": 390,
         "imageWidth": 390,
@@ -3584,7 +3464,7 @@
     "gallery": {
       "index.html": {
         "errors": [],
-        "links": 27,
+        "links": 26,
         "images": 0
       },
       "cards-light-dark-compare.html": {
@@ -3824,50 +3704,6 @@
         "minTextSize": 20
       },
       {
-        "name": "certificate-post",
-        "theme": "dark",
-        "shot": "shots/certificate-post.png",
-        "errors": [],
-        "out": [],
-        "overlap": [],
-        "safe": {
-          "x": 64,
-          "y": 64,
-          "w": 952,
-          "h": 1126
-        },
-        "footer": {
-          "x": 64,
-          "y": 1254,
-          "w": 952,
-          "h": 96
-        },
-        "imageCount": 1,
-        "minTextSize": 20
-      },
-      {
-        "name": "certificate-post",
-        "theme": "light",
-        "shot": "shots/certificate-post-light.png",
-        "errors": [],
-        "out": [],
-        "overlap": [],
-        "safe": {
-          "x": 64,
-          "y": 64,
-          "w": 952,
-          "h": 1126
-        },
-        "footer": {
-          "x": 64,
-          "y": 1254,
-          "w": 952,
-          "h": 96
-        },
-        "imageCount": 1,
-        "minTextSize": 20
-      },
-      {
         "name": "champion-post-stress",
         "theme": "dark",
         "shot": "shots/champion-post-stress.png",
@@ -3999,6 +3835,8 @@
         "imageCount": 61,
         "minTextSize": 20
       }
-    ]
+    ],
+    "scope": "خمسة كروت فقط؛ الشهادة مؤجلة إلى C15 حسب أحدث CODEX.md",
+    "certificateUnchanged": true
   }
 }
