@@ -240,6 +240,7 @@ function renderMyDashboard(){
         ${whatINeedHtml}
         ${predHtml}
         <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+        ${myClubsCardBlockHTML(MY_ID)}
       </details>
     </div>`;
   if(pickerBox) pickerBox.classList.add('is-compact');
@@ -247,6 +248,7 @@ function renderMyDashboard(){
   if(changeBtn && pickerBox) changeBtn.addEventListener('click', ()=> pickerBox.classList.toggle('open'));
   const shareBtn = document.getElementById('shareMyRankBtn');
   if(shareBtn) shareBtn.addEventListener('click', shareMyRank);
+  bindMyClubsCardBlock(MY_ID);
 }
 
 // نص شخصي جاهز للمشاركة بالواتساب — منفصل عن ملخص الموسم العام (خاص
