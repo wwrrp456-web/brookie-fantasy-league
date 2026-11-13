@@ -15,7 +15,7 @@
   tr:nth-child(2) .rank-badge{background:#CFC3AA;}
   tr:nth-child(3) .rank-badge{background:#D6A868;}
   .mumma{
-    display:inline-block;font-size:0.68rem;background:var(--coral);color:#fff;
+    display:inline-block;font-size:0.68rem;background:var(--coral);color:var(--on-coral);
     padding:1px 6px;border-radius:10px;margin-inline-start:4px;
   }
 
@@ -52,9 +52,9 @@
   .my-dash-label{display:block;font-size:0.68rem;color:var(--muted);margin-top:2px;}
   .my-dash-rival{font-size:0.8rem;color:var(--text2);margin-bottom:4px;}
   .my-dash-pred{font-size:0.82rem;color:var(--gold-light);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
-  .my-dash-need{font-size:0.82rem;color:#00C9A7;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px;}
+  .my-dash-need{font-size:0.82rem;color:var(--c-up);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px;}
   .my-dash-need-row{display:flex;justify-content:space-between;align-items:center;}
-  .my-dash-need-badge{background:rgba(0,201,167,0.15);border:1px solid rgba(0,201,167,0.4);border-radius:20px;padding:1px 8px;font-size:0.76rem;font-weight:700;color:#00C9A7;}
+  .my-dash-need-badge{background:rgba(0,201,167,0.15);border:1px solid rgba(0,201,167,0.4);border-radius:20px;padding:1px 8px;font-size:0.76rem;font-weight:700;color:var(--c-up);}
 
   /* لوحة الشرف */
   .honor-board{background:var(--paper);border:1px solid var(--gold);border-radius:14px;padding:16px;margin-bottom:14px;}

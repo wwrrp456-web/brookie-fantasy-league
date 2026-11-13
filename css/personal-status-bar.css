@@ -8,7 +8,7 @@
 .status-bar-sep{color:var(--muted);}
 .status-bar-rank{color:var(--gold);font-weight:800;}
 .status-bar-total{font-weight:700;}
-.status-bar-last.pos{color:#2ECC71;font-weight:700;}
+.status-bar-last.pos{color:var(--c-up);font-weight:700;}
 .status-bar-last.neg{color:var(--coral);font-weight:700;}
 
 /* مساحة أسفل الصفحة عشان الشريط الثابت ما يغطي آخر محتوى بأي تبويب */

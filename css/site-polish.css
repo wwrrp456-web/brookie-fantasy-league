@@ -26,7 +26,7 @@
 }
 html.light-mode{
   --edge:none; --shadow-1:0 1px 2px rgba(11,13,31,.06), 0 4px 14px rgba(61,46,153,.08);
-  --gold:#7C4DFF; --gold-light:#8F70FF; --text2:#311B92;
+  --gold:#7C4DFF; --gold-light:#6A3FF0; --text2:#311B92;   /* gold-light نصًا على الفاتح: 5.2:1 (SC-09) */
   --cream:#F1EFFA; --paper:#FFFFFF; --paper-2:#F7F5FF;
   --line:rgba(var(--accent-rgb),.16); --muted:#5F5885; --ring:var(--accent-2);
   --shadow-1:0 1px 2px rgba(11,13,31,.06), 0 4px 14px rgba(61,46,153,.08);

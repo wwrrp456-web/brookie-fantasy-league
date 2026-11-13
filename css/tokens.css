@@ -23,7 +23,7 @@
   /* دلالية فقط */
   --c-gold: #F5B83D;
   --c-up: #22C55E;
-  --c-down: #EF4444;
+  --c-down: #F87171;
   --c-info: #38BDF8;
 
   /* الخط والمقاسات */
@@ -48,7 +48,7 @@ html.light-mode {
   --c-brand-blue: #00B4FF;
   --g-brand: linear-gradient(135deg, #00B4FF, #7B5CFF);
   --c-gold: #F5B83D;
-  --c-up: #22C55E;
-  --c-down: #EF4444;
+  --c-up: #166534;
+  --c-down: #B91C1C;
   --c-info: #38BDF8;
 }

@@ -364,6 +364,13 @@ const asyncCrestTests = (async () => {
   check('crests: <img> الرسمي محتواه هو SVG الرسمي (مو المحسّن)', /official-test/.test(await blobText(offUrl)), true);
   run("delete CRESTS_OFFICIAL['al-hilal']; resetCrestCache();");
   check('crests: حذف الرسمي ← يرجع المحسّن', run("crestSource('الهلال').kind"), 'enhanced');
+  // 001-T020: readableColor/contrastTextOn (SC-09: النص ≥ 4.5:1)
+  const ratio = (a, b) => run(`(() => { const x = _rcParse('${a}'), y = _rcParse('${b}'); return _rcRatio(x, y); })()`);
+  const rc1 = run("readableColor('#4EC9E9')");   // سماوي فاتح على سطح داكن افتراضي (--paper غير معرّف بلا صفحة ← سطح داكن)
+  check('contrast: لون فاتح على سطح داكن يبقى كما هو لو تباينه كافٍ', run("readableColor('#9B7BF5')"), '#9B7BF5');
+  check('contrast: لون داكن على سطح داكن يُفتَّح حتى ≥ 4.6:1', ratio(run("readableColor('#7A4EE9')"), '#10102E') >= 4.6, true);
+  check('contrast: الصبغة ما تتغير (نفس hue تقريبًا)، والسداسي غير الصالح يرجع كما هو', [run("readableColor('var(--gold)')"), run("readableColor('red')")], ['var(--gold)', 'red']);
+  check('contrast: contrastTextOn يختار الحبر على الفاتح والأبيض على الداكن', [run("contrastTextOn('#00B4FF')"), run("contrastTextOn('#B3401A')"), run("contrastTextOn('#FFFF00')"), run("contrastTextOn('#202040')")], ['var(--ink)', 'white', 'var(--ink)', 'white']);
   // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
   check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
   const fb = run("crestSource('نادي وهمي').svg");

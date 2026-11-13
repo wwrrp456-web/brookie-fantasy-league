@@ -270,7 +270,7 @@ function renderScenario(){
     const ol=PARTICIPANTS.find(x=>x.id===lid);
     return `<div style="overflow-x:auto;margin-top:12px;">
       <table style="width:100%;border-collapse:collapse;font-size:0.84rem;">
-        <thead><tr style="background:var(--ink);color:var(--gold);">
+        <thead><tr style="background:var(--ink);color:white;">
           <th style="padding:6px;text-align:center;">#</th>
           <th style="padding:6px;text-align:right;">المشارك</th>
           <th style="padding:6px;text-align:center;">الحالي</th>
@@ -281,10 +281,10 @@ function renderScenario(){
           const pc2=PARTICIPANT_COLORS[s.id]||'var(--gold)';
           const hl=s.id===newLead.id?`background:${pc2}22;`:'';
           return `<tr style="border-bottom:1px solid var(--line);${hl}">
-            <td style="padding:6px;text-align:center;font-weight:800;color:${pc2};">${i+1}</td>
+            <td style="padding:6px;text-align:center;font-weight:800;color:${readableColor(pc2, 5.4)};">${i+1}</td>
             <td style="padding:6px;">${pp?.name||''}</td>
             <td style="padding:6px;text-align:center;color:var(--muted);">${s.total}</td>
-            <td style="padding:6px;text-align:center;font-weight:700;color:${pc2};">${s.proj}</td>
+            <td style="padding:6px;text-align:center;font-weight:700;color:${readableColor(pc2, 5.4)};">${s.proj}</td>
           </tr>`;
         }).join('')}</tbody>
       </table>
