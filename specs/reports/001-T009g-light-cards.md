@@ -1,5 +1,5 @@
 # تقرير 001-T009g-light-cards
-**المنفّذ:** Codex · **الفرع:** `codex/001-T009g` · **PR:** قيد الفتح على فرع التكامل · **الحالة:** منجز
+**المنفّذ:** Codex · **الفرع:** `codex/001-T009g` · **PR:** [#46](https://github.com/wwrrp456-web/brookie-fantasy-league/pull/46) · **الحالة:** منجز
 
 ## وش سويت
 
