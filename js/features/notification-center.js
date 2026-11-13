@@ -102,7 +102,7 @@ function renderNotificationCenter(){
           <span class="notif-item-icon">${it.icon}</span>
           <span class="notif-item-text">${it.text}</span>
         </div>`).join('')
-      : '<div class="notif-empty">لا تنبيهات جديدة 👍</div>'}
+      : emptyState({icon: 'bell', title: 'لا إشعارات جديدة', text: 'أنت مطّلع على آخر أخبار الدوري. ستظهر المستجدات هنا.'})}
     </div>`;
 
   const bellBtn = document.getElementById('notifBellBtn');

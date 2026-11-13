@@ -21,7 +21,7 @@ function renderPredictionAccuracy(){
 
   let html = `<h2 class="section-title" style="margin-top:22px;">🔮 لوحة أدق المتوقعين</h2>`;
   if(!list.length){
-    html += '<p class="rounds-subtitle" style="margin-top:0;">لسه ما فيه توقعات محسومة بنتيجة — تظهر هنا اللوحة أول ما تنحسم أول جولة فيها توقعات 🔮</p>';
+    html += emptyState({icon: 'poll', title: 'لا توقعات محسومة بعد', text: 'تظهر اللوحة هنا أول ما تنحسم أول جولة فيها توقعات.'});
     box.innerHTML = html;
     return;
   }
@@ -190,7 +190,7 @@ function renderMyDashboard(){
   const mv = getMovements();
   const myMove = mv[MY_ID]||0;
   const myHist = buildParticipantHistory(MY_ID);
-  const roundPts = myHist.length ? myHist[myHist.length-1].points : '—';
+  const roundPts = myHist.length ? myHist[myHist.length-1].points : emptyInline('لا جولات');
 
   let rivalHtml = '';
   const above = idx>0 ? st[idx-1] : null;
@@ -422,14 +422,14 @@ function renderMyAchievements(){
   const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
   const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
   const tiles = [
-    ['🔥','أفضل جولة',`${best} نقطة`,`جولة ${bestRound?.number||'–'}`],
-    ['📉','أضعف جولة',`${worst} نقطة`,`جولة ${worstRound?.number||'–'}`],
+    ['🔥','أفضل جولة',`${best} نقطة`,bestRound ? `جولة ${bestRound.number}` : ''],
+    ['📉','أضعف جولة',`${worst} نقطة`,worstRound ? `جولة ${worstRound.number}` : ''],
     ['📊','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
     ['🏆','أفضل مركز',`#${bestRank}`,''],
     ['😓','أسوأ مركز',`#${worstRank}`,''],
     ['👑','مرات في الصدارة',`${timesFirst}`,timesFirst===0?'لم تتصدر بعد':'مرة'],
     ['💪','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
-    ['⚽','ناديك المفضل',favClub?favClub[0]:'—',favClub?`${favClub[1]} مرات`:''],
+    ['⚽','ناديك المفضل',favClub?favClub[0]:'لا يوجد بعد',favClub?`${favClub[1]} مرات`:''],
   ];
   // طلب المستخدم 17 سبتمبر 2026 — عدّ الجولات يجب أن يشمل الجولتين 1 و2
   // (getCurrentRoundNumber())، لا DATA.rounds.length التي تستثنيهما فتُنقِص العدّ.

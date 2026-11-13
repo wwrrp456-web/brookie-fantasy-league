@@ -15,7 +15,7 @@ function roundTitlesHTML(titles){
 function renderHeroes(){
   const box = document.getElementById('heroesBox');
   const h = getRoundHeroes();
-  if(!h){ box.innerHTML=''; return; }
+  if(!h){ box.innerHTML = emptyState({icon: 'clock', title: 'الجولة لم تُسجّل بعد', text: 'تظهر نقاط الجولة وبطلها بعد أن يسجّل المنظّم النتائج.'}); return; }
   let html = '<div class="heroes-strip">';
   html += `<div class="hero-card gold">
     <div class="hero-label">👑 بطل الجولة ${h.roundNumber}</div>
