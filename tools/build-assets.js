@@ -84,24 +84,58 @@ function build(root) {
   ].join('\n');
 }
 
+// ألوان بطاقات الكانفس من css/tokens.css (مصدر واحد، بدون hex مكرّر في JS) — 001-T021، R-17.
+// :root = الداكن، html.light-mode = الفاتح. المفاتيح المطلوبة فقط، بالاسم من غير البادئة --c-.
+const CARD_TOKEN_KEYS = ['bg', 'surface-1', 'border', 'text', 'text-2', 'brand', 'gold', 'up', 'down'];
+function buildCardThemes(root) {
+  root = root || ROOT_DEFAULT;
+  const css = fs.readFileSync(path.join(root, 'css', 'tokens.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const block = sel => {
+    const m = css.match(new RegExp(sel.replace(/[.]/g, '\\.') + '\\s*\\{([^}]*)\\}'));
+    if (!m) throw new Error('tokens.css: ما لقيت الكتلة ' + sel);
+    return m[1];
+  };
+  const read = (body, theme) => {
+    const out = {};
+    CARD_TOKEN_KEYS.forEach(k => {
+      const m = body.match(new RegExp('--c-' + k + '\\s*:\\s*([^;]+);'));
+      if (!m) throw new Error(`tokens.css (${theme}): الرمز --c-${k} غير معرَّف`);
+      out[k] = m[1].trim().replace(/\s+/g, ' ');
+    });
+    return out;
+  };
+  const themes = { dark: read(block(':root'), 'dark'), light: read(block('html.light-mode'), 'light') };
+  return `/* ⚠️ مولَّد آليًا من css/tokens.css بـ tools/build-assets.js. لا تعدّله يدويًا: عدّل css/tokens.css ثم شغّل \`node tools/build-assets.js\`.
+ * ألوان بطاقات الكانفس بالثيمين (R-17): المصدر الوحيد للألوان في js/ui/card-kit.js. 001-T021. */
+const CARD_THEMES = ${JSON.stringify(themes, null, 2)};
+`;
+}
+
 function main(argv) {
   const arg = (n, d) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : d; };
   const root = path.resolve(arg('--root', ROOT_DEFAULT));
   const out = path.resolve(root, arg('--out', 'js/generated/assets.js'));
   let text;
   try { text = build(root); } catch (e) { console.error('❌ ' + e.message); return 1; }
+  const themesOut = path.resolve(path.dirname(out), 'card-themes.js');
+  let themesText;
+  try { themesText = buildCardThemes(root); } catch (e) { console.error('❌ ' + e.message); return 1; }
   if (argv.includes('--check')) {
-    const cur = fs.existsSync(out) ? fs.readFileSync(out, 'utf8') : null;
-    if (cur !== text) { console.error(`❌ ${path.relative(root, out)} غير محدَّث. شغّل: node tools/build-assets.js`); return 1; }
-    console.log(`✅ ${path.relative(root, out)} محدَّث`);
-    return 0;
+    let bad = 0;
+    [[out, text], [themesOut, themesText]].forEach(([f, t]) => {
+      const cur = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null;
+      if (cur !== t) { console.error(`❌ ${path.relative(root, f)} غير محدَّث. شغّل: node tools/build-assets.js`); bad = 1; }
+      else console.log(`✅ ${path.relative(root, f)} محدَّث`);
+    });
+    return bad;
   }
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, text);
+  fs.writeFileSync(themesOut, themesText);
   const count = n => (text.match(new RegExp(`\\nconst ${n} = \\{([\\s\\S]*?)\\n\\};`)) || [, ''])[1].split('\n  "').length - 1;
   console.log(`✅ ${path.relative(root, out)} (${(Buffer.byteLength(text) / 1024).toFixed(1)}KB) · أيقونات: ${count('ICONS')} · شعارات: ${count('CRESTS')} · رموز: ${count('MOTIFS')} · شعار PROKI: ${count('LOGO_SVG')} · فاتحة: ${count('CRESTS_LIGHT')} · رسمية: ${count('CRESTS_OFFICIAL')}`);
   return 0;
 }
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
-module.exports = { build, main };
+module.exports = { build, buildCardThemes, main };

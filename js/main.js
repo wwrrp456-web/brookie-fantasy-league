@@ -6,7 +6,6 @@ document.getElementById('champCardBtn').addEventListener('click', showChampionCa
 document.getElementById('seasonWrapBtn').addEventListener('click', showSeasonWrapCard);
 document.getElementById('dlStandingsBtn').addEventListener('click', downloadStandingsImage);
 document.getElementById('shareStandingsBtn').addEventListener('click', shareStandingsImage);
-document.getElementById('dlStandingsStoryBtn').addEventListener('click', downloadStandingsStoryImage);
 
 document.getElementById('dlParticipantsBtn').addEventListener('click', ()=>{
   downloadElementAsImage('participantsCapture', 'brookie-participants.png', 'participantsImgMsg', 'dlParticipantsBtn');

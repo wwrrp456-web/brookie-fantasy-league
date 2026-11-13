@@ -1,0 +1,9 @@
+/* نافذة اختيار وضع صورة الترتيب (داكن/فاتح) — 001-T021. متغيّرات tokens.css فقط. */
+.card-theme-sheet{position:fixed;inset:0;z-index:1200;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);}
+.card-theme-box{width:min(100%,420px);background:var(--c-surface-1);border:1px solid var(--c-border);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:var(--sp-6) var(--sp-4) var(--sp-4);display:grid;gap:var(--sp-4);}
+.card-theme-title{margin:0;font-size:var(--fs-lg);color:var(--c-text);text-align:center;}
+.card-theme-opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);}
+.card-theme-opt{display:flex;flex-direction:column;align-items:center;gap:var(--sp-2);padding:var(--sp-4);border:1px solid var(--c-border);border-radius:var(--r-md);background:var(--c-surface-2);color:var(--c-text);font:inherit;font-weight:700;cursor:pointer;min-height:96px;}
+.card-theme-opt svg{width:28px;height:28px;}
+.card-theme-opt.selected{border-color:var(--c-brand);box-shadow:0 0 0 2px var(--c-brand);}
+@media (min-width:640px){.card-theme-sheet{align-items:center}.card-theme-box{border-radius:var(--r-lg)}}

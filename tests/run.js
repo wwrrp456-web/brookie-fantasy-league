@@ -351,7 +351,7 @@ const asyncCrestTests = (async () => {
   const sb = {console, Blob, URL};
   sb.window = sb;
   const cctx = vm.createContext(sb);
-  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js']
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js', 'js/generated/card-themes.js', 'js/ui/card-layout.js', 'js/ui/card-kit.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
   const run = code => vm.runInContext(code, cctx);
   const blobText = async url => resolveObjectURL(url).text();
@@ -384,6 +384,17 @@ const asyncCrestTests = (async () => {
   check('crests-light: محسّن بلا نسخة فاتحة ← يرجع للعادية بالفاتح', run("(() => { const s = crestSource('الهلال', {theme: 'light'}); return [s.kind, s.variant, s.svg === CRESTS['al-hilal']]; })()"), ['enhanced', 'dark', true]);
   run("CRESTS_LIGHT['al-hilal'] = globalThis.__tmpLight; resetCrestCache();");
   check('crests-light: crestHTML بـopts.theme صريح بلا data-crest-club، وبدونه يحمله (تبديل بلا إعادة تحميل)', [/data-crest-club/.test(run("crestHTML('الهلال', 20, {theme: 'light'})")), /data-crest-club="الهلال"/.test(run("crestHTML('الهلال', 20)"))], [false, true]);
+  // 001-T021: card-kit وتخطيط بطاقة الترتيب (assets/cards/standings-card.layout.md)
+  const lay = JSON.parse(run("JSON.stringify([18,19,20,21,22,23,24].map(n => { const L = computeStandingsCardLayout(n); return [n, L.r, L.lastBottom, L.gap, L.scale.name, L.scale.crest]; }))"));
+  check('card-layout: جدول المواصفة n=18..24 (الصف r، نهاية آخر صف، الفراغ، مقاسات الاسم والشعار)', lay, [[18,64,1704,56,40,36],[19,62,1746,14,40,36],[20,58,1744,16,40,36],[21,54,1742,18,36,32],[22,51,1746,14,36,32],[23,48,1744,16,36,32],[24,46,1760,0,32,28]]);
+  check('card-layout: أول صف عند y=256، وفاصل إضافي 8 قبل الصفوف 6 و11 و16 و21', run("(() => { const L = computeStandingsCardLayout(24); return [L.rows[0].top, L.rows[5].top - L.rows[4].top - L.r, L.rows[4].top - L.rows[3].top - L.r, L.rows[10].top - L.rows[9].top - L.r]; })()"), [256, 24, 16, 24]);
+  check('card-kit: الثيمان من tokens (داكن ≠ فاتح) وكل الألوان المطلوبة موجودة', run("['bg','surface-1','border','text','text-2','brand','gold','up','down'].every(k => CARD_THEMES.dark[k] && CARD_THEMES.light[k]) && CARD_THEMES.dark.bg !== CARD_THEMES.light.bg"), true);
+  check('card-kit: cardMix يطابق color-mix(in srgb) وcardAccent: الفاتح مخلوط والداكن كما هو', [run("cardMix('#FF0000', '#0000FF', 0.34)"), run("cardAccent('light', 'gold') !== cardColor('light', 'gold')"), run("cardAccent('dark', 'gold') === cardColor('dark', 'gold')")], ['rgb(87, 0, 168)', true, true]);
+  const okData = "({round: 10, standings: [{rank: 1, name: 'أ', total: 5, move: 0, clubs: ['الهلال', 'برشلونة', 'آيندهوفن']}, {rank: 2, name: 'ب', total: 4, move: 1, clubs: ['الهلال', 'برشلونة', 'آيندهوفن']}]})";
+  check('card-kit: validateCardData يقبل بيانات كاملة', run(`validateCardData('standings', ${okData})`), []);
+  check('card-kit: validateCardData يرجع النواقص بالعربية (جولة، اسم، رصيد، أندية)', run("validateCardData('standings', {round: 0, standings: [{rank: 1, name: '', total: NaN, clubs: ['الهلال']}, {rank: 2, name: 'ب', total: 4, clubs: ['س', 'ص', 'ع']}]})"), ['رقم الجولة غير محدد', 'اسم المشارك ناقص في الصف 1', 'رصيد الصف 1 غير محدد', 'أندية الصف 1 ناقصة (المطلوب ثلاثة)']);
+  check('card-kit: بلا مشاركين أو بيانات فاضية ← رسالة عربية', [run("validateCardData('standings', {round: 3, standings: []})"), run("validateCardData('standings', null)")], [['لا يوجد مشاركون في الترتيب'], ['لا توجد بيانات للكرت']]);
+  check('card-kit: CardDataError يحمل النواقص', run("(() => { const e = new CardDataError(['أ', 'ب']); return [e.name, e.problems.length, e.message]; })()"), ['CardDataError', 2, 'أ، ب']);
   // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
   check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
   const fb = run("crestSource('نادي وهمي').svg");

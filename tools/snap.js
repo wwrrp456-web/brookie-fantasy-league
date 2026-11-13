@@ -24,7 +24,7 @@ const TABS = ['standings', 'participants', 'rounds', 'stats', 'rules', 'about', 
 const WIDTHS = [390, 1366];
 const THEMES = ['dark', 'light'];
 const STATES = ['full', 'incomplete', 'long'];
-const CARDS = ['championCard', 'standingsCard', 'standingsStory', 'seasonWrap', 'profileCard', 'certificate'];
+const CARDS = ['championCard', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'profileCard', 'certificate'];
 const LONGEST_NAME = 'أبو تغريد (زيد) الثاني';
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -155,7 +155,7 @@ async function prepareState(page, state) {
   }, [state, LONGEST_NAME]);
 }
 
-async function snapCards(browser, ctx, outDir, files, reports, cardErrors) {
+async function snapCards(browser, ctx, outDir, files, reports, cardErrors, skippedCards, label) {
   for (const state of STATES) {
     const { page, context, report } = await openPage(browser, ctx, { width: 1080, light: false });
     const pid = await prepareState(page, state);
@@ -163,8 +163,9 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors) {
     for (const card of CARDS) {
       const res = await page.evaluate(async ([c, p]) => {
         try {
-          const build = { championCard: () => buildChampionCard(), standingsCard: () => buildStandingsCard(), standingsStory: () => buildStandingsStoryCanvas(),
+          const build = { championCard: () => buildChampionCard(), standingsCard: () => buildStandingsCardCanvas({theme: 'dark'}), standingsCardLight: () => buildStandingsCardCanvas({theme: 'light'}),
             seasonWrap: () => buildSeasonWrapCard(), profileCard: id => buildParticipantProfileCard(id), certificate: () => buildChampionCertificateCanvas() }[c];
+          if (typeof build !== 'function') return { ok: false, error: 'نوع الكرت غير معروف' };
           const cv = await build(p);
           return { ok: true, url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
         } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
@@ -174,7 +175,9 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors) {
         fs.writeFileSync(path.join(outDir, name), Buffer.from(res.url.split(',')[1], 'base64'));
         files.push(name);
       } else {
-        cardErrors.push({ card, state, error: res.error });
+        // كود الأساس (--label base) قد يسبق دوال الكروت الجديدة: تُسجَّل مُتجاوَزة لا خطأ. وفي head تبقى خطأً.
+        if (label === 'base' && /is not defined|is not a function/.test(res.error)) skippedCards.push({ card, state, reason: res.error });
+        else cardErrors.push({ card, state, error: res.error });
       }
     }
     reports.push(report);
@@ -200,11 +203,11 @@ async function main(argv) {
   const { srv, origin } = await serve(root);
   const browser = await chromium.launch();
   const ctx = { fixture, overrides, now, origin, root };
-  const files = [], reports = [], cardErrors = [], skippedPages = [];
+  const files = [], reports = [], cardErrors = [], skippedPages = [], skippedCards = [];
   try {
     if (!only || only === 'tabs') await snapTabs(browser, ctx, outDir, files, reports);
     if (!only || only === 'pages') await snapPages(browser, ctx, outDir, files, reports, skippedPages);
-    if (!only || only === 'cards') await snapCards(browser, ctx, outDir, files, reports, cardErrors);
+    if (!only || only === 'cards') await snapCards(browser, ctx, outDir, files, reports, cardErrors, skippedCards, label);
   } finally {
     await browser.close();
     srv.close();
@@ -221,6 +224,7 @@ async function main(argv) {
     blockedRequests: uniq([].concat(...reports.map(r => r.blocked))).sort(),
     unsupportedFirebase: uniq(unsupported),
     cardErrors,
+    skippedCards,
     skippedPages
   };
   fs.writeFileSync(path.join(outDir, 'report.json'), JSON.stringify(report, null, 2) + '\n');
@@ -234,4 +238,4 @@ async function main(argv) {
 }
 
 if (require.main === module) main(process.argv.slice(2)).then(c => process.exit(c), e => { console.error(e); process.exit(2); });
-module.exports = { main, TABS, WIDTHS, THEMES, STATES, CARDS };
+module.exports = { main, serve, openPage, TABS, WIDTHS, THEMES, STATES, CARDS };
