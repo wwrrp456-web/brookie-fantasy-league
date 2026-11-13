@@ -61,10 +61,10 @@ function renderParticipants(){
   let html = `<div style="display:flex;gap:7px;margin-bottom:14px;">
     ${['rank','alpha','round'].map(mode => {
       const active = sortMode === mode;
-      return `<button onclick="document.getElementById('participantsBox').dataset.sortMode='${mode}';renderParticipants();"
+      return `<button class="sort-mode-btn" onclick="document.getElementById('participantsBox').dataset.sortMode='${mode}';renderParticipants();"
         style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${active?'var(--gold)':'var(--line)'};
                background:${active?'var(--gold)':'var(--paper)'};color:${active?'var(--on-gold)':'var(--text2)'};
-               font-family:inherit;font-size:0.75rem;font-weight:800;cursor:pointer;transition:all 0.15s;">${sortLabels[mode]}</button>`;
+               font-family:inherit;font-size:0.75rem;font-weight:800;cursor:pointer;">${sortLabels[mode]}</button>`;
     }).join('')}
   </div>`;
 

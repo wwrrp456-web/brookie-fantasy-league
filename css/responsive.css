@@ -84,11 +84,4 @@
     select, input[type="datetime-local"], input[type="number"]{min-height:42px;}
   }
 
-  /* احترام تفضيل تقليل الحركة */
-  @media (prefers-reduced-motion:reduce){
-    *{transition:none!important;animation:none!important;}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    .champion-crown{animation:none!important;}
-  }
+  /* احترام تفضيل تقليل الحركة: كتلة (prefers-reduced-motion) تحت كل قاعدة فيها transition أو animation بنفس المحدِّد (بلا !important) */

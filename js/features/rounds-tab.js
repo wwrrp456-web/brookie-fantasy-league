@@ -428,7 +428,7 @@ function renderRound2Section(){
       html += `<div class="r2-card">
         <div class="r2-head">
           <div class="r2-name">${p.name}</div>
-          <div class="r2-pts"><span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div>
+          <div class="r2-pts"><span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div>
         </div>
       </div>`;
       return;
@@ -477,7 +477,7 @@ function renderRound1Section(){
     html += `<div class="r1-simple-row">
       <div class="r1-rank">${i+1}</div>
       <div class="r1-name">${row.p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-      <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
+      <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
     </div>`;
   });
   html += `</div>`;

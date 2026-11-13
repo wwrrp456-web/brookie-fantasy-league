@@ -138,3 +138,10 @@
   .eff-more{margin-top:var(--sp-3);border-top:1px solid var(--c-border);padding-top:var(--sp-3);}
   .eff-more>summary{cursor:pointer;font-size:var(--fs-sm);font-weight:700;color:var(--c-brand);list-style:none;margin-bottom:var(--sp-3);}
   .eff-more>summary::-webkit-details-marker{display:none;}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .fingerprint-bar{transition:none;}
+  .whatif-row{transition:none;}
+  .race-bar{transition:none;}
+}
