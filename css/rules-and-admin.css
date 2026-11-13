@@ -29,8 +29,8 @@
   .story-chapter-title{font-size:0.82rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
   .story-chapter-body{font-size:0.84rem;color:var(--text2);line-height:1.8;}
   .story-chapter-body b{color:var(--text);}
-  .story-share-btn{margin-top:10px;padding:8px 16px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
-  .story-highlight{display:inline-block;background:rgba(203,162,68,0.15);border:1px solid rgba(203,162,68,0.3);border-radius:6px;padding:1px 7px;font-weight:700;color:var(--gold);}
+  .story-share-btn{margin-top:10px;padding:8px 16px;border-radius:8px;background:var(--gold);color:var(--on-gold);font-weight:700;font-size:0.82rem;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+  .story-highlight{display:inline-block;background:rgba(203,162,68,0.15);border:1px solid rgba(203,162,68,0.3);border-radius:6px;padding:1px 7px;font-weight:700;color:var(--gold-light);}
   .about-section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
   .about-section-title{font-weight:800;font-size:0.95rem;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
   .about-stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;}
@@ -74,7 +74,7 @@
   .community-report-row{padding:4px 0;}
   .community-report-view{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);}
   .community-report-view .actions{display:flex;gap:4px;flex-shrink:0;}
-  .community-report-view .actions button{font-size:0.68rem!important;padding:2px 8px!important;}
+  .community-report-view .actions button.btn{font-size:0.68rem;padding:2px 8px;}
   .community-report-edit{
     display:none;grid-template-columns:1.4fr 1fr 44px 44px auto auto;gap:5px;
     align-items:center;padding:6px 0;
@@ -83,7 +83,7 @@
   .community-report-edit select, .community-report-edit input{
     font-family:inherit;padding:5px;border:1px solid var(--line);border-radius:6px;font-size:0.78rem;
   }
-  .community-report-edit button{font-size:0.7rem!important;padding:5px 8px!important;white-space:nowrap;}
+  .community-report-edit button.btn{font-size:0.7rem;padding:5px 8px;white-space:nowrap;}
 
   /* لوحة المنظم كـaccordion قابل للطي بدل ثمانية أقسام مفتوحة دفعة واحدة —
      طلب المستخدم (6 سبتمبر 2026) تنظيف القائمة. نفس نمط .faq-item الموجود
@@ -151,7 +151,7 @@
   /* رقاقات "الجولات المحفوظة" — اضغط عليها للانتقال مباشرة لتعديل جولة سابقة
      بدل الحاجة لتذكّر رقمها وكتابته يدويًا (طلب المستخدم 6 سبتمبر 2026: أحيانًا
      تُكتشف أخطاء بحسابات جولة ماضية وتحتاج تصحيح بعد إدخالها بفترة) */
-  .past-round-chip{font-size:0.74rem!important;padding:4px 11px!important;}
+  .btn.past-round-chip{font-size:0.74rem;padding:4px 11px;}
 
   /* عمود الخصم: قائمة منسدلة بأندية التطبيق + حقل نصي إضافي يظهر فقط عند
      اختيار "غير ذلك" (فريق خارج القائمة) — طلب المستخدم 7 سبتمبر 2026. */
@@ -190,3 +190,8 @@
     .new-season-participant-row{grid-template-columns:1fr 1fr;}
   }
 
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .faq-item summary::before{transition:none;}
+  .admin-accordion summary::before{transition:none;}
+}

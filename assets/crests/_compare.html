@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>شعارات بروكي — المقارنة الكاملة</title>
+<link rel="stylesheet" href="../../css/fonts.css">
+<style>
+:root{--c-bg:#0B0D1F;--c-surface:#12142E;--c-text:#F4F5FF;--c-brand:#7B5CFF;--c-white:#FFFFFF;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-6:24px;--r:12px;--font:Tajawal,Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-text);font:16px/1.7 var(--font)}main{width:min(100%,1100px);margin:auto;padding:var(--sp-6) var(--sp-4)}h1{font-size:24px;margin:0}h2{font-size:20px;margin:0}h3{font-size:16px;margin:0 0 var(--sp-3)}p{margin:var(--sp-2) 0 var(--sp-4)}a{color:inherit;text-underline-offset:3px}.status{padding-inline-start:var(--sp-3);border-inline-start:3px solid var(--c-brand)}.club{border:1px solid currentColor;border-radius:var(--r);overflow:hidden;margin-top:var(--sp-6)}.heading{padding:var(--sp-4)}code{display:block;font-size:12px;direction:ltr;unicode-bidi:isolate}.theme{padding:var(--sp-4);background:var(--c-bg);color:var(--c-text)}.theme.light{background:var(--c-white);color:var(--c-surface)}.samples{overflow:auto}.sizes{display:flex;gap:var(--sp-6);justify-content:space-between;min-width:536px}.size{min-width:104px}.size-name{font-size:14px;margin-bottom:var(--sp-2);direction:ltr;text-align:center}.pair{display:flex;gap:var(--sp-4);direction:ltr;justify-content:center}figure{margin:0;min-width:44px;text-align:center}.visual{width:var(--size);height:calc(var(--size)*1.1);display:flex;align-items:center;justify-content:center;margin-inline:auto}.visual img{display:block;width:100%;height:100%;object-fit:contain}figcaption{font-size:12px;direction:rtl;margin-top:var(--sp-2)}.error{padding:var(--sp-4);border:1px solid currentColor}
+@media(max-width:600px){main{padding:var(--sp-4) var(--sp-3)}.sizes{gap:var(--sp-3);min-width:504px}.theme{padding:var(--sp-3)}}
+</style>
+</head>
+<body><main>
+<header>
+<h1>الشعارات — المقارنة الكاملة للأندية الـ32</h1>
+<p>مقارنة الصور المصدّرة قبل التعديل بملفات SVG المحسّنة، على 24 و48 و96px بالثيمين. بقيت ألوان الأندية وحروف FCP، مع توحيد الإطار وتحسين التباين. اسحب منطقة المقارنة أفقيًا على الجوال لرؤية المقاسات الأكبر.</p>
+<p class="status">المجموعة كاملة: الأندية الـ32 بالإطار المعتمد، ورموز وحروف متجهة بلا صور مضمنة. <a href="../../specs/reports/001-T06-rest.md">تقرير التغييرات والتحقق</a></p>
+</header><div id="clubs"></div>
+<noscript><p class="error">يتطلب عرض المقارنة تفعيل JavaScript. صور المقارنة الأصلية محفوظة في before وملفات الشعارات المحسنة بجوار هذه الصفحة.</p></noscript>
+</main>
+<script>
+const clubs=[["al-hilal","الهلال"],["barcelona","برشلونة"],["manchester-city","مانشستر سيتي"],["milan","ميلان"],["psg","باريس سان جيرمان"],["chelsea","تشيلسي"],["porto","بورتو"],["al-ittihad","الاتحاد"],["galatasaray","غلطة سراي"],["al-qadsiah","القادسية"],["juventus","يوفنتوس"],["dinamo-zagreb","دينامو زغرب"],["benfica","بنفيكا"],["real-madrid","ريال مدريد"],["dortmund","بوروسيا دورتموند"],["atletico-madrid","أتلتيكو مدريد"],["fenerbahce","فنربخشة"],["al-nassr","النصر"],["ajax","أياكس"],["arsenal","أرسنال"],["celtic","سلتيك"],["bayern-munich","بايرن ميونيخ"],["feyenoord","فاينورد"],["rangers","رينجرز"],["sporting-cp","سبورتينغ لشبونة"],["psv","آيندهوفن"],["roma","روما"],["al-shabab","الشباب"],["liverpool","ليفربول"],["al-ahli","الأهلي السعودي"],["marseille","مارسيليا"],["shakhtar","شختار دونيتسك"]];
+for(const [slug,name] of clubs){
+ const section=document.createElement('section');section.className='club';section.dataset.club=slug;
+ const heading=document.createElement('header');heading.className='heading';const title=document.createElement('h2');title.textContent=name;const code=document.createElement('code');code.textContent=slug;heading.append(title,code);section.append(heading);
+ for(const light of [false,true]){
+  const theme=document.createElement('div');theme.className='theme '+(light?'light':'dark');const h=document.createElement('h3');h.textContent=light?'الخلفية الفاتحة':'الخلفية الداكنة';const scroll=document.createElement('div');scroll.className='samples';const sizes=document.createElement('div');sizes.className='sizes';
+  for(const size of [24,48,96]){
+   const item=document.createElement('div');item.className='size';const label=document.createElement('div');label.className='size-name';label.textContent=size+'px';const pair=document.createElement('div');pair.className='pair';
+   for(const [text,src] of [['قبل','before/'+slug+'.png'],['بعد',slug+'.svg']]){
+    const figure=document.createElement('figure');const visual=document.createElement('div');visual.className='visual';visual.style.setProperty('--size',size+'px');const img=document.createElement('img');img.src=src;img.alt=name+' — '+text;img.width=size;img.height=size*1.1;const caption=document.createElement('figcaption');caption.textContent=text;visual.append(img);figure.append(visual,caption);pair.append(figure);
+   }
+   item.append(label,pair);sizes.append(item);
+  }
+  scroll.append(sizes);theme.append(h,scroll);section.append(theme);
+ }
+ document.getElementById('clubs').append(section);
+}
+</script></body></html>

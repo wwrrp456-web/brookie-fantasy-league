@@ -1,0 +1,4909 @@
+{
+  "task": "C13 / 001-T009f",
+  "decision": "R-16",
+  "size": [
+    1080,
+    1920
+  ],
+  "source": "specs/001-ui-visual-overhaul/card-data.json",
+  "dataVerified": true,
+  "defaultParticipants": 20,
+  "fixtures": "18: أول18؛ 24: نسخ آخر مشارك لاختبار الهندسة فقط، مع تنبيه ظاهر",
+  "layout": "standings-card.layout.md",
+  "tests": {
+    "passed": 237,
+    "failed": 0,
+    "lint": "نجح",
+    "snapCards": 18
+  },
+  "contrastLightWorstPixels": {
+    "primary": 15.27834914135984,
+    "secondary": 8.13859944811029,
+    "gold-rank": 7.014680893243606,
+    "up-icon": 7.944114043438675,
+    "down-icon": 10.051818744140752
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  "gallery": {
+    "index.html": {
+      "errors": [],
+      "links": 19,
+      "images": 0
+    },
+    "_logo-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 14
+    },
+    "_crests-compare.html": {
+      "errors": [],
+      "links": 1,
+      "images": 2
+    },
+    "themeToggle": true,
+    "colors": {
+      ".person": "rgb(11, 13, 31)",
+      ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+      ".score": "rgb(11, 13, 31)",
+      ".motion": "rgb(61, 46, 153)",
+      ".rising .icon": "color(srgb 0.0738039 0.296314 0.205569)",
+      ".falling .icon": "color(srgb 0.347137 0.124314 0.170902)"
+    }
+  },
+  "samples": [
+    {
+      "n": 18,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-18-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 18,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-18-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 18,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 320,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 8,
+          "rank": 18,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1640,
+            "bottom": 1704,
+            "width": 952,
+            "height": 64
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 19,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 19,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 318,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 19,
+          "rank": 19,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1684,
+            "bottom": 1746,
+            "width": 952,
+            "height": 62
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-20-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-20-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 21,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 21,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 310,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 21,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1688,
+            "bottom": 1742,
+            "width": 952,
+            "height": 54
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 22,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 22,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 307,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 22,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1695,
+            "bottom": 1746,
+            "width": 952,
+            "height": 51
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 23,
+      "theme": "light",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 23,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 304,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 23,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1696,
+            "bottom": 1744,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "dark",
+      "stress": false,
+      "shot": "shots/standings-card-24-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "light",
+      "stress": false,
+      "shot": "shots/standings-card-24-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "dark",
+      "stress": true,
+      "shot": "shots/standings-card-long-name-dark.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 20,
+      "theme": "light",
+      "stress": true,
+      "shot": "shots/standings-card-long-name-light.png",
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 20,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 314,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 20,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1686,
+            "bottom": 1744,
+            "width": 952,
+            "height": 58
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "dark",
+      "stress": true,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "n": 24,
+      "theme": "light",
+      "stress": true,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 24,
+      "rowGeometry": {
+        "first": {
+          "sourceId": 20,
+          "rank": 1,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 302,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "last": {
+          "sourceId": 18,
+          "rank": 24,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1714,
+            "bottom": 1760,
+            "width": 952,
+            "height": 46
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        "allUnclipped": true
+      }
+    },
+    {
+      "other": "champion-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "champion-post-stress.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "season-wrap-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "profile-square.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 920,
+        "width": 952,
+        "height": 856
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 984,
+        "bottom": 1080,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "certificate-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "duel-post-stress.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    },
+    {
+      "other": "my-clubs-post.html",
+      "n": null,
+      "theme": "dark",
+      "stress": false,
+      "shot": null,
+      "errors": [],
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "header": null,
+      "logo": null,
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "rowCount": 0
+    }
+  ],
+  "deletedFiles": 56,
+  "unchangedTemplates": {
+    "assets/cards/champion-post.html": "4cb10086e6015862888013c160639ae0a437831ac3f51c57396bd84cbdf42f0f",
+    "assets/cards/duel-post.html": "6f10ff715e69bfc73245281369b9b58194ce08b03af8daf91b2c24bfaa2c4294",
+    "assets/cards/my-clubs-post.html": "c0ad61e97573949bbdcb89c067100bfbe600a6ce6cbd878c15a9477b04146a56",
+    "assets/cards/season-wrap-post.html": "f8b805aea7bb69eabd3bdf6e39ea7d1a753c19779c95cd0dd1e9c184a8b32274",
+    "assets/cards/profile-square.html": "128d13abe76e45a96ec7905ad54412854b27d62853faa8cbf4c80d5a1bb6895d",
+    "assets/cards/certificate-post.html": "fd3715928fa665144d8ad4c78aa69110840002456d57dfea1c119fed4270d7b4",
+    "assets/cards/champion-post-stress.html": "426967351d616c8560510afd0c1b12624ee1fd7d1d85e7dcb1c20f76bf3bc452",
+    "assets/cards/duel-post-stress.html": "979b93168f31d4ff472ac8bb7b46e48c552278141c0f9fb427a6bd2c36f7d6c6"
+  },
+  "C14": {
+    "task": "C14 / 001-T009g",
+    "decision": "R-17",
+    "sourceBase": "056db4df230313e6e33fe871fbc5a34975244a76",
+    "tests": {
+      "passed": 268,
+      "failed": 0,
+      "lint": "نجح دون تراجع",
+      "snapCards": 18
+    },
+    "unchangedDarkPngSha256": {
+      "champion-post": "404ee5ce8a7f6512d766a336bd5a26ab39d6beb1f4b9d1ef11015f16a2065ef5",
+      "duel-post": "64829719af14631e37db444334bf4148506566648d59c9de1a03b952393a7cee",
+      "my-clubs-post": "cbe0f9869302e05335f8146247baad86040534c420f46c7c5b96fe58bdca23f9",
+      "season-wrap-post": "0def3db7c241d945c3fb47e3feab5f023d5244ee86f70bcfeb391c56dc4d56b2",
+      "profile-square": "e566cd5e25bf5b411cb0b8519b50b47ae0cfd217776b0758903d18cebd96a6eb",
+      "champion-post-stress": "696f1bd63ab86d4e5b8a6b6f24bc1476253ff4bdfab5ce0e9a439b586bad075b",
+      "duel-post-stress": "40944814361a7df1e84810d7f27ace94d70964ed7c326857309082ad82c189ce"
+    },
+    "themeToggles": "5 كروت في الاتجاهين؛ النصوص والأرقام متطابقة",
+    "contrastMethod": "خلفية Chromium بعد إخفاء حبر النص والصور والأيقونات مع حفظ صناديق التخطيط والظلال؛ أدنى تباين لجميع بكسلات كل صندوق نص وفق WCAG",
+    "contrast": {
+      "champion-post": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو أوس",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الهلال",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "لا مباراة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "برشلونة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام أتلتيكو مدريد",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "2 – 1",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "آيندهوفن",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام كامبور",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "5 – 2",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "المركز",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "3",
+            "ratio": 16.704386276131274,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الرصيد",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "89",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الحركة",
+            "ratio": 8.830882860887149,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "ثابت",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.910544765645012,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "duel-post": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "مواجهة الجولة 10",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "مواجهة الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "المشارك",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "لطفي",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "4",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "المشارك",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أيوب",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الفائز",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أيوب",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "تُحسم مواجهة الجولة بنقاط الجولة، لا بالرصيد التراكمي.",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "my-clubs-post": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "نتائج أنديتي",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو أوس",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الهلال",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "لا مباراة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "برشلونة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام أتلتيكو مدريد",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2 – 1",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "آيندهوفن",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام كامبور",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "5 – 2",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نتيجة كل مباراة من منظور النادي الظاهر.",
+            "ratio": 8.656035101357979,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "season-wrap-post": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · حتى الجولة 10",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · حتى الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم بالأرقام",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "10",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الجولات المنجزة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "حتى الجولة 10",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "حتى الجولة 10",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "92",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أعلى رصيد",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "لطفي",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "6",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أعلى نقاط جولة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "في الجولة 10",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "في الجولة 10",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "0",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "ممّات الجولة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "لا أحد",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "لا أحد",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الجميع سجّل نقاطًا في الجولة 10.",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الجميع سجّل نقاطًا في الجولة 10.",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الجميع سجّل نقاطًا في الجولة 10.",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "profile-square": {
+        "minimum": 8.695930862180804,
+        "measurements": [
+          {
+            "text": "الملف الشخصي · الموسم الثاني",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو أوس",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الهلال",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "برشلونة",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "آيندهوفن",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "3",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "المركز",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "89",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الرصيد",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "3",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الأندية",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.177308523233698,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.830882860887149,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.830882860887149,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.830882860887149,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "champion-post-stress": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "بطل الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "باريس سان جيرمان",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "لا مباراة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "برشلونة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام أتلتيكو مدريد",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "2 – 1",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "آيندهوفن",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أمام كامبور",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "5 – 2",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "فوز",
+            "ratio": 17.627173468720866,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "المركز",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "3",
+            "ratio": 16.704386276131274,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الرصيد",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "89",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "الحركة",
+            "ratio": 8.830882860887149,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "ثابت",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.910544765645012,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "كسر التعادل: 7 أهداف مسجلة، و3 أهداف مستقبلة.",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "duel-post-stress": {
+        "minimum": 8.611389902875235,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "مواجهة الجولة 10",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "مواجهة الجولة 10",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "المشارك",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "لطفي",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "4",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "المشارك",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "نقاط الجولة",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الفائز",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "تُحسم مواجهة الجولة بنقاط الجولة، لا بالرصيد التراكمي.",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.818635979817197,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.898232896112683,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      },
+      "standings-card-stress": {
+        "minimum": 8.369787208235893,
+        "measurements": [
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الموسم الثاني · الجولة 10",
+            "ratio": 8.623571893866782,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الترتيب العام",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "20 مشاركًا",
+            "ratio": 8.369787208235893,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "20 مشاركًا",
+            "ratio": 8.623571893866782,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "اختبار النص الطويل",
+            "ratio": 8.388180277973962,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "#",
+            "ratio": 8.507568213337711,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الحركة",
+            "ratio": 8.686989505107002,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "المشارك",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الأندية",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "الرصيد",
+            "ratio": 8.512098994901109,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "1",
+            "ratio": 8.64120220081142,
+            "color": "color(srgb 0.355137 0.27898 0.161569)"
+          },
+          {
+            "text": "لطفي",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "92",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أيوب",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "90",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "3",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو أوس",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "89",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "4",
+            "ratio": 16.53722904240468,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "العندليب",
+            "ratio": 16.397430519071747,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "85",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "5",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو عزام",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "85",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "6",
+            "ratio": 16.53722904240468,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 8.778584795397022,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "مصطفى عبده",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "85",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "7",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبا عتاب",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "84",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "8",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "4",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "84",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "9",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "4",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو رمزي",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "83",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "10",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو شيخة",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "81",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "11",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "سعيد",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "79",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "12",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "2",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو يحيى",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "79",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "13",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "علي قوول",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "78",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "14",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو مناف",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "77",
+            "ratio": 16.18423464687986,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "15",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "1",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "ليمان",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "75",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "16",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "1",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو حمد",
+            "ratio": 16.32461072308619,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "75",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "17",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "1",
+            "ratio": 10.025715156534522,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "أبو عبيدة",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "71",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "18",
+            "ratio": 16.545972404041244,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "1",
+            "ratio": 8.734721123218574,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "موسى (العجوز)",
+            "ratio": 16.165904510641266,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "71",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "19",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "محمد عثمان",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "69",
+            "ratio": 18.820974976096622,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "20",
+            "ratio": 16.397430519071747,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "أبو صالح",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "62",
+            "ratio": 16.206860457302472,
+            "color": "rgb(11, 13, 31)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.813847663124731,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "فوز 3 · تعادل 1 · خسارة 0",
+            "ratio": 8.695930862180804,
+            "color": "rgb(61, 46, 153)"
+          },
+          {
+            "text": "wwrrp456-web.github.io/brookie-fantasy-league/",
+            "ratio": 8.611389902875235,
+            "color": "rgb(61, 46, 153)"
+          }
+        ]
+      }
+    },
+    "axe": {
+      "champion-post": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "duel-post": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "my-clubs-post": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "season-wrap-post": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "profile-square": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "mobileGallery": {
+        "width": 390,
+        "imageWidth": 390,
+        "overflow": false
+      }
+    },
+    "gallery": {
+      "index.html": {
+        "errors": [],
+        "links": 26,
+        "images": 0
+      },
+      "cards-light-dark-compare.html": {
+        "errors": [],
+        "links": 20,
+        "images": 18
+      },
+      "themeToggle": true,
+      "colors": {
+        ".person": "rgb(11, 13, 31)",
+        ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+        ".score": "rgb(11, 13, 31)",
+        ".motion": "rgb(61, 46, 153)",
+        ".rising .icon": "color(srgb 0.0738039 0.296314 0.205569)",
+        ".falling .icon": "color(srgb 0.347137 0.124314 0.170902)"
+      }
+    },
+    "samples": [
+      {
+        "name": "champion-post",
+        "theme": "dark",
+        "shot": "shots/champion-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "champion-post",
+        "theme": "light",
+        "shot": "shots/champion-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "duel-post",
+        "theme": "dark",
+        "shot": "shots/duel-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 7,
+        "minTextSize": 20
+      },
+      {
+        "name": "duel-post",
+        "theme": "light",
+        "shot": "shots/duel-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 7,
+        "minTextSize": 20
+      },
+      {
+        "name": "my-clubs-post",
+        "theme": "dark",
+        "shot": "shots/my-clubs-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "my-clubs-post",
+        "theme": "light",
+        "shot": "shots/my-clubs-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "season-wrap-post",
+        "theme": "dark",
+        "shot": "shots/season-wrap-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 1,
+        "minTextSize": 20
+      },
+      {
+        "name": "season-wrap-post",
+        "theme": "light",
+        "shot": "shots/season-wrap-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 1,
+        "minTextSize": 20
+      },
+      {
+        "name": "profile-square",
+        "theme": "dark",
+        "shot": "shots/profile-square.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 856
+        },
+        "footer": {
+          "x": 64,
+          "y": 984,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "profile-square",
+        "theme": "light",
+        "shot": "shots/profile-square-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 856
+        },
+        "footer": {
+          "x": 64,
+          "y": 984,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "champion-post-stress",
+        "theme": "dark",
+        "shot": "shots/champion-post-stress.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "champion-post-stress",
+        "theme": "light",
+        "shot": "shots/champion-post-stress-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 4,
+        "minTextSize": 20
+      },
+      {
+        "name": "duel-post-stress",
+        "theme": "dark",
+        "shot": "shots/duel-post-stress.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 7,
+        "minTextSize": 20
+      },
+      {
+        "name": "duel-post-stress",
+        "theme": "light",
+        "shot": "shots/duel-post-stress-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1126
+        },
+        "footer": {
+          "x": 64,
+          "y": 1254,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 7,
+        "minTextSize": 20
+      },
+      {
+        "name": "standings-card-stress",
+        "theme": "dark",
+        "shot": "shots/standings-card-long-name-dark.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1696
+        },
+        "footer": {
+          "x": 64,
+          "y": 1824,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 61,
+        "minTextSize": 20
+      },
+      {
+        "name": "standings-card-stress",
+        "theme": "light",
+        "shot": "shots/standings-card-long-name-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "safe": {
+          "x": 64,
+          "y": 64,
+          "w": 952,
+          "h": 1696
+        },
+        "footer": {
+          "x": 64,
+          "y": 1824,
+          "w": 952,
+          "h": 96
+        },
+        "imageCount": 61,
+        "minTextSize": 20
+      }
+    ],
+    "scope": "خمسة كروت فقط؛ الشهادة مؤجلة إلى C15 حسب أحدث CODEX.md",
+    "certificateUnchanged": true
+  },
+  "C16": {
+    "task": "001-T009i",
+    "decision": "R-19",
+    "template": "certificate-post.html",
+    "sourceData": "certificate-ideas/data.json",
+    "layout": "cards.layout.md — القسم الأخير",
+    "size": [
+      1080,
+      1350
+    ],
+    "tests": {
+      "passed": 293,
+      "failed": 0,
+      "lint": "نجح",
+      "snapCards": 39
+    },
+    "pixelEquality": [
+      {
+        "shot": "certificate-post.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-dark.png",
+        "differingPixels": 0,
+        "sha256": "8686e97fcb47c1cfa56cc76dcdc47cc86ecefe0386ff724aabad611cf094acdf"
+      },
+      {
+        "shot": "certificate-post-stress.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-dark-long-name.png",
+        "differingPixels": 0,
+        "sha256": "19b28e55eed44a10a1b71513d28fa37a7012498ababf5f6f75b1ef5b17ad5514"
+      },
+      {
+        "shot": "certificate-post-light.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-light.png",
+        "differingPixels": 0,
+        "sha256": "6015c9020edf5f6969d51a37e41c64016f9958cd69ce7f81ed89e67e2f67f9f8"
+      },
+      {
+        "shot": "certificate-post-stress-light.png",
+        "source": "assets/cards/certificate-ideas/shots/classic-light-long-name.png",
+        "differingPixels": 0,
+        "sha256": "58521cf6cbe776168e90b400a9e160f3dc375be8300fcb691b9f255b031cd7ab"
+      }
+    ],
+    "geometry": {
+      "fields": [
+        {
+          "label": "corners",
+          "x": 56,
+          "y": 56,
+          "w": 968,
+          "h": 1238,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 911,
+          "y": 89,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 89,
+          "y": 89,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 89,
+          "y": 1181,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "corner",
+          "x": 911,
+          "y": 1181,
+          "w": 80,
+          "h": 80,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "logo",
+          "x": 484,
+          "y": 88,
+          "w": 112,
+          "h": 128.703125,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "kicker",
+          "x": 96,
+          "y": 286,
+          "w": 888,
+          "h": 39,
+          "fontSize": "26px",
+          "weight": "400",
+          "lineHeight": "39px",
+          "align": "center"
+        },
+        {
+          "label": "heading",
+          "x": 96,
+          "y": 350,
+          "w": 888,
+          "h": 83.1875,
+          "fontSize": "64px",
+          "weight": "800",
+          "lineHeight": "83.2px",
+          "align": "center"
+        },
+        {
+          "label": "award-icon",
+          "x": 504,
+          "y": 452,
+          "w": 72,
+          "h": 72,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "recipient",
+          "x": 96,
+          "y": 548,
+          "w": 888,
+          "h": 114.390625,
+          "fontSize": "88px",
+          "weight": "800",
+          "lineHeight": "114.4px",
+          "align": "center"
+        },
+        {
+          "label": "honor",
+          "x": 96,
+          "y": 704,
+          "w": 888,
+          "h": 51,
+          "fontSize": "34px",
+          "weight": "400",
+          "lineHeight": "51px",
+          "align": "center"
+        },
+        {
+          "label": "copy",
+          "x": 180,
+          "y": 816,
+          "w": 720,
+          "h": 51,
+          "fontSize": "30px",
+          "weight": "400",
+          "lineHeight": "51px",
+          "align": "center"
+        },
+        {
+          "label": "seal",
+          "x": 160,
+          "y": 1036,
+          "w": 160,
+          "h": 160,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "IMG",
+          "x": 200,
+          "y": 1062.53125,
+          "w": 80,
+          "h": 106.9375,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "rule",
+          "x": 144,
+          "y": 996,
+          "w": 792,
+          "h": 1,
+          "fontSize": "16px",
+          "weight": "400",
+          "lineHeight": "normal",
+          "align": "start"
+        },
+        {
+          "label": "signature",
+          "x": 384,
+          "y": 1082,
+          "w": 552,
+          "h": 42,
+          "fontSize": "28px",
+          "weight": "400",
+          "lineHeight": "42px",
+          "align": "center"
+        },
+        {
+          "label": "issue",
+          "x": 96,
+          "y": 1230,
+          "w": 888,
+          "h": 36,
+          "fontSize": "24px",
+          "weight": "400",
+          "lineHeight": "36px",
+          "align": "center"
+        }
+      ],
+      "texts": [
+        {
+          "label": "kicker",
+          "text": "دوري بروكي الفانتازي",
+          "x": 432.53125,
+          "y": 292,
+          "w": 214.921875,
+          "h": 26,
+          "baseline": 309
+        },
+        {
+          "label": "heading",
+          "text": "شهادة بطل الموسم",
+          "x": 241.015625,
+          "y": 359,
+          "w": 597.953125,
+          "h": 64,
+          "baseline": 400
+        },
+        {
+          "label": "recipient",
+          "text": "أبو تغريد (زيد)",
+          "x": 259.796875,
+          "y": 561,
+          "w": 560.390625,
+          "h": 88,
+          "baseline": 618
+        },
+        {
+          "label": "honor",
+          "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+          "x": 238.453125,
+          "y": 712,
+          "w": 603.09375,
+          "h": 34,
+          "baseline": 734
+        },
+        {
+          "label": "copy",
+          "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+          "x": 215.75,
+          "y": 826,
+          "w": 648.484375,
+          "h": 30,
+          "baseline": 845
+        },
+        {
+          "label": "signature",
+          "text": "إدارة دوري بروكي الفانتازي",
+          "x": 516.1875,
+          "y": 1089,
+          "w": 287.625,
+          "h": 28,
+          "baseline": 1107
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 349.65625,
+          "y": 1236,
+          "w": 23.234375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 372.890625,
+          "y": 1236,
+          "w": 48.421875,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 421.3125,
+          "y": 1236,
+          "w": 135.65625,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 556.96875,
+          "y": 1236,
+          "w": 11.90625,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 568.875,
+          "y": 1236,
+          "w": 15.734375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 584.609375,
+          "y": 1236,
+          "w": 48.84375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 633.453125,
+          "y": 1236,
+          "w": 75.984375,
+          "h": 24,
+          "baseline": 1251
+        },
+        {
+          "label": "issue",
+          "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+          "x": 709.4375,
+          "y": 1236,
+          "w": 20.90625,
+          "h": 24,
+          "baseline": 1251
+        }
+      ],
+      "innerSeal": {
+        "width": "138px",
+        "height": "138px"
+      },
+      "themeToggle": true
+    },
+    "contrast": {
+      "certificate-post.png": {
+        "minimum": 8.762882952577964,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "أبو تغريد (زيد)",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 10.81553666221299
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          }
+        ]
+      },
+      "certificate-post-stress.png": {
+        "minimum": 8.762882952577964,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 10.81553666221299
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.727969364366416
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 8.762882952577964
+          }
+        ]
+      },
+      "certificate-post-light.png": {
+        "minimum": 7.896222538067992,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "أبو تغريد (زيد)",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 7.896222538067992
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          }
+        ]
+      },
+      "certificate-post-stress-light.png": {
+        "minimum": 7.896222538067992,
+        "measurements": [
+          {
+            "text": "دوري بروكي الفانتازي",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "شهادة بطل الموسم",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "أبو تغريد (زيد) الثاني",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "بطل الموسم الأول من دوري بروكي الفانتازي",
+            "ratio": 7.896222538067992
+          },
+          {
+            "text": "تقديرًا لمشاركته المتميزة وتتويجه بطلًا للموسم الأول.",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "إدارة دوري بروكي الفانتازي",
+            "ratio": 17.19837163175197
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          },
+          {
+            "text": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+            "ratio": 9.161373167710858
+          }
+        ]
+      }
+    },
+    "axe": {
+      "certificate-post": {
+        "violations": [],
+        "incomplete": []
+      },
+      "mobileGallery": {
+        "width": 390,
+        "imageWidth": 390,
+        "overflow": false
+      }
+    },
+    "gallery": {
+      "index.html": {
+        "errors": [],
+        "links": 29,
+        "images": 0
+      },
+      "cards-light-dark-compare.html": {
+        "errors": [],
+        "links": 24,
+        "images": 22
+      },
+      "themeToggle": true,
+      "colors": {
+        ".person": "rgb(11, 13, 31)",
+        ".rank": "color(srgb 0.355137 0.27898 0.161569)",
+        ".score": "rgb(11, 13, 31)",
+        ".motion": "rgb(61, 46, 153)",
+        ".rising .icon": "color(srgb 0.0578039 0.168314 0.149569)",
+        ".falling .icon": "color(srgb 0.275137 0.0709804 0.117569)"
+      }
+    },
+    "samples": [
+      {
+        "idea": "classic",
+        "theme": "dark",
+        "stress": false,
+        "shot": "certificate-post.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد)",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "dark",
+        "stress": true,
+        "shot": "certificate-post-stress.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد) الثاني",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "light",
+        "stress": false,
+        "shot": "certificate-post-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد)",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo-light.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      },
+      {
+        "idea": "classic",
+        "theme": "light",
+        "stress": true,
+        "shot": "certificate-post-stress-light.png",
+        "errors": [],
+        "out": [],
+        "overlap": [],
+        "name": "أبو تغريد (زيد) الثاني",
+        "nameSize": 88,
+        "nameClipped": false,
+        "issue": "13 نوفمبر 2026 · 3 جمادى الآخرة 1448 هـ",
+        "fields": [
+          {
+            "label": "logo",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125
+          },
+          {
+            "label": "kicker",
+            "x": 96,
+            "y": 286,
+            "w": 888,
+            "h": 39
+          },
+          {
+            "label": "heading",
+            "x": 96,
+            "y": 350,
+            "w": 888,
+            "h": 83.1875
+          },
+          {
+            "label": "award-icon",
+            "x": 504,
+            "y": 452,
+            "w": 72,
+            "h": 72
+          },
+          {
+            "label": "recipient",
+            "x": 96,
+            "y": 548,
+            "w": 888,
+            "h": 114.390625
+          },
+          {
+            "label": "honor",
+            "x": 96,
+            "y": 704,
+            "w": 888,
+            "h": 51
+          },
+          {
+            "label": "copy",
+            "x": 180,
+            "y": 816,
+            "w": 720,
+            "h": 51
+          },
+          {
+            "label": "seal",
+            "x": 160,
+            "y": 1036,
+            "w": 160,
+            "h": 160
+          },
+          {
+            "label": "signature",
+            "x": 384,
+            "y": 1082,
+            "w": 552,
+            "h": 42
+          },
+          {
+            "label": "issue",
+            "x": 96,
+            "y": 1230,
+            "w": 888,
+            "h": 36
+          }
+        ],
+        "images": [
+          {
+            "src": "../brand/proki-logo-light.svg",
+            "x": 484,
+            "y": 88,
+            "w": 112,
+            "h": 128.703125,
+            "filter": "none",
+            "shadow": "none"
+          },
+          {
+            "src": "../brand/proki-mark.svg",
+            "x": 200,
+            "y": 1062.53125,
+            "w": 80,
+            "h": 106.9375,
+            "filter": "none",
+            "shadow": "none"
+          }
+        ]
+      }
+    ]
+  }
+}

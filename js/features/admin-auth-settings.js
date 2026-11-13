@@ -224,7 +224,6 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     renderH2H();
     document.getElementById('dlStandingsBtn').style.display='';
     document.getElementById('shareStandingsBtn').style.display='';
-    document.getElementById('dlStandingsStoryBtn').style.display='';
     document.getElementById('seasonWrapBtn').style.display='';
     // أزرار تحميل المشاركين/الجولات/الإحصائيات/اللائحة كصور خاصة بالمنظم أيضًا
     document.getElementById('participantsToolbar').style.display='';

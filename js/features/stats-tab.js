@@ -8,7 +8,7 @@
 function renderStatsQuickNav(){
   const box = document.getElementById('statsQuickNavBox');
   if(!box) return;
-  const titles = Array.from(document.querySelectorAll('#statsCapture .section-title'));
+  const titles = Array.from(document.querySelectorAll('#statsCapture .section-title, #foldExtraTools .section-title'));
   if(titles.length < 2){ box.innerHTML=''; return; }
   box.innerHTML = `<div class="stats-quick-nav">${titles.map((el,i)=>{
     const id = el.id || (el.id = `statsSection_${i}`);
@@ -17,7 +17,7 @@ function renderStatsQuickNav(){
   box.querySelectorAll('.stats-quick-nav-chip').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const target = document.getElementById(btn.dataset.target);
-      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      if(target){ const d = target.closest('details'); if(d) d.open = true; target.scrollIntoView({behavior:'smooth', block:'start'}); }
     });
   });
 }
@@ -77,9 +77,9 @@ function renderH2H(){
   let html = '<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>';
   html += `<div id="h2hCapture">
     <div class="h2h-picker">
-      <select id="h2hSelectA">${options}</select>
+      <select id="h2hSelectA" aria-label="المشارك الأول">${options}</select>
       <span class="h2h-vs">ضد</span>
-      <select id="h2hSelectB">${options}</select>
+      <select id="h2hSelectB" aria-label="المشارك الثاني">${options}</select>
     </div>
     <div id="h2hResult"></div>
   </div>`;
@@ -191,7 +191,7 @@ function renderChart(){
   series.forEach((s,si)=> legend += `<span><i style="background:${colors[si]}"></i>${s.name}</span>`);
   legend += '</div>';
 
-  box.innerHTML = `<div class="chart-wrap">${svg}</div>${legend}
+  box.innerHTML = `<div class="chart-wrap" tabindex="0" role="region" aria-label="مخطط تطوّر النقاط">${svg}</div>${legend}
     <p style="font-size:0.72rem;color:var(--muted);margin-top:8px;">الرسم يوضّح مركز أفضل 6 لاعبين عبر الجولات — كلما ارتفع الخط كان المركز أفضل.</p>`;
 }
 
@@ -208,14 +208,14 @@ function renderClubStats(){
     '</tr></thead><tbody>';
   list.forEach((cst,i)=>{
     html += `<tr>
-      <td style="color:#8A8A8A;">${i+1}</td>
-      <td class="cs-name"><div class="cs-name-inner">${clubCrestSVG(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
-      <td style="color:#8A8A8A;">${cst.played}</td>
-      <td style="color:#3DD47E;">${cst.w}</td>
-      <td style="color:#16A6EA;">${cst.d}</td>
-      <td style="color:#FF6B5E;">${cst.l}</td>
-      <td style="font-weight:800;color:#fff;">${cst.pts}</td>
-      <td style="color:#8A8A8A;">${cst.ownersCount}</td>
+      <td class="text-dim">${i+1}</td>
+      <td class="cs-name"><div class="cs-name-inner">${crestHTML(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
+      <td class="text-dim">${cst.played}</td>
+      <td class="cs-w">${cst.w}</td>
+      <td class="cs-d">${cst.d}</td>
+      <td class="cs-l">${cst.l}</td>
+      <td class="cs-pts">${cst.pts}</td>
+      <td class="text-dim">${cst.ownersCount}</td>
     </tr>`;
   });
   html += '</tbody></table></div>';
@@ -239,7 +239,7 @@ function renderWhatIf(){
       <div class="whatif-title">🧮 حاسبة "ماذا لو؟" — تخيّل الجولة القادمة</div>
       <div class="whatif-controls">
         <span class="whatif-label">لو حصل</span>
-        <select class="whatif-select" id="wiPid">${opts}</select>
+        <select class="whatif-select" id="wiPid" aria-label="المشارك">${opts}</select>
         <span class="whatif-label">على</span>
         <input type="number" class="whatif-input" id="wiPts" min="0" max="9" value="3" placeholder="نقاط">
         <span class="whatif-label">نقطة الجولة القادمة</span>
@@ -300,7 +300,7 @@ function renderClubMap(){
       const isOwned = owners.length>0;
       const ownersStr = isOwned ? owners.join('، ') : '';
       html += `<div class="club-map-chip${isOwned?' owned':''}">
-        ${clubCrestSVG(club,18)}
+        ${crestHTML(club,18)}
         <span>${club}</span>
         ${isOwned?`<span class="club-map-owners">(${ownersStr})</span>`:''}
       </div>`;
@@ -496,7 +496,7 @@ function renderRace(){
   if(!_raceInit){
     box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2>
       <div class="race-slider">
-        <label>الجولة:</label>
+        <label for="raceSlider">الجولة:</label>
         <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1">
         <span class="race-round-label" id="raceLabel">ج${DATA.rounds[n-1].number}</span>
       </div>
@@ -535,7 +535,7 @@ function updateRaceBars(){
       <span class="race-name">${rankIcon}${s.name}</span>
       <div class="race-bar-wrap">
         <div class="race-bar" style="width:${pct}%;background:${color};">
-          <span class="race-pts">${s.total} ن</span>
+          <span class="race-pts" style="color:${contrastTextOn(color)};">${s.total} ن</span>
         </div>
       </div>
     </div>`;
@@ -560,22 +560,24 @@ function renderClubEfficiency(){
   if(!list.length){ box.innerHTML=''; return; }
 
   const entries = list.slice().sort((a,b)=> b.avg - a.avg);
-  const maxAvg = Math.max(...entries.map(c=>c.avg), 1);
-
-  let html = '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
-  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">مرتبة حسب متوسط النقاط لكل مباراة — نفس أرقام جدول "أداء الأندية" أعلاه بالضبط</div>';
-  html += '<div class="club-eff-grid">';
-  entries.slice(0,18).forEach(c=>{
-    const pct = Math.round((c.avg/maxAvg)*100);
-    html += `<div class="club-eff-card">
-      <div class="club-eff-name">${c.name}</div>
-      <div class="club-eff-bar-wrap"><div class="club-eff-bar" style="width:${pct}%;"></div></div>
-      <div class="club-eff-stats">
-        <span>معدل ${Math.round(c.avg*10)/10} ن/مباراة</span>
-        <span>${c.w}ف ${c.d}ت ${c.l}خ</span>
-      </div>
+  // أشرطة نسبية على مقياس ثابت (أقصى متوسط ممكن = 3 نقاط للمباراة) فتظهر الفروق الحقيقية بين الأندية (FR-18، U-09)
+  const SCALE = 3;
+  let html = '<div class="club-eff">';
+  html += '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
+  html += '<p class="club-eff-note">متوسط النقاط لكل مباراة، مرتبة من الأعلى. الأشرطة على مقياس ثابت من 3.</p>';
+  const row = c => {
+    const avg = Math.round(c.avg*10)/10;
+    return `<div class="efficiency-row">
+      <div class="efficiency-label">${crestHTML(c.name, 20)}<span class="efficiency-name">${c.name}</span><small class="efficiency-record">${c.w}ف ${c.d}ت ${c.l}خ</small><b>${avg}</b></div>
+      <progress max="${SCALE}" value="${Math.min(c.avg, SCALE)}" aria-label="${c.name}: متوسط ${avg} من ${SCALE}"></progress>
     </div>`;
-  });
+  };
+  // أعلى 10 ظاهرة، والباقي بطيّة خفيفة (الطول، FR-18) بدون حذف أي نادٍ
+  const TOP = 10;
+  html += entries.slice(0, TOP).map(row).join('');
+  if(entries.length > TOP){
+    html += `<details class="eff-more"><summary>باقي الأندية (${formatCount(entries.length - TOP, 'نادٍ')})</summary>${entries.slice(TOP).map(row).join('')}</details>`;
+  }
   html += '</div>';
   box.innerHTML = html;
 }
@@ -599,7 +601,7 @@ function renderDeathMap(){
   });
 
   let html = '<h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2>';
-  html += '<div class="death-map"><table>';
+  html += '<div class="death-map" tabindex="0" role="region" aria-label="خريطة الممّات"><table>';
   html += '<tr><th>المشارك</th>';
   roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
   html += '<th>المجموع</th></tr>';
@@ -614,7 +616,7 @@ function renderDeathMap(){
     roundNums.forEach(n=>{
       const pts = histByRound[n];
       if(pts === undefined){
-        html += `<td class="dm-none">-</td>`;
+        html += `<td class="dm-none empty-cell" title="لا بيانات لهذه الجولة"></td>`;
       } else if(pts === 0){
         html += `<td class="dm-dead">☠️</td>`;
       } else {
@@ -634,7 +636,7 @@ function renderDeathMap(){
       const h = hist.find(x=>x.number===n);
       return h && h.points===0;
     }).length;
-    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count||'-'}</td>`;
+    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count}</td>`;
   });
   html += '<td></td></tr>';
   html += '</table></div>';

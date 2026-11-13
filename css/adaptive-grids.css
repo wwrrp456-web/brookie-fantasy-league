@@ -1,0 +1,18 @@
+/* شبكات متكيفة (001-T018، U-08): بطاقات المشاركين والإحصائيات والجولات تتكيّف بالعرض بدل التمدد أو الالتواء.
+ * أعمدة auto-fill/auto-fit بحد أدنى لكل بطاقة (min(100%, X) عشان ما تتجاوز عرض الشاشة)، والمسافات من --sp-* في tokens.css.
+ * بدون تمرير أفقي بين 360 و1440. محمَّل بعد surfaces.css ليتغلّب بالتخصيص لا بـ!important. */
+
+/* الكمبيوتر: عرض المحتوى أوسع ليتسع لأعمدة أكثر؛ النصوص الطويلة (اللائحة، عن الدوري، المنظّم) تبقى بعرض قراءة مريح */
+@media (min-width:1024px){
+  .wrap{max-width:1040px;}
+  #panel-rules,#panel-about,#panel-admin{max-width:780px;margin-inline:auto;}
+}
+
+/* المشاركون: عمود واحد على الجوال، وأعمدة أكثر كلما اتسع العرض (شريط الترتيب يمتد كل الأعمدة) */
+#participantsBox{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:0 var(--sp-3);}   /* المسافة العمودية من margin-bottom البطاقة (site-polish) فيبقى الجوال مطابقًا لما قبل */
+#participantsBox>div:first-child{grid-column:1/-1;}
+
+/* الإحصائيات: كفاءة الأندية، والرادار، والأرقام القياسية */
+.club-eff-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:var(--sp-2);}
+.radar-wrap{grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:var(--sp-3);}
+.badges-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:var(--sp-3);}

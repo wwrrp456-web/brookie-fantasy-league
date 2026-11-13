@@ -61,17 +61,17 @@ function renderParticipants(){
   let html = `<div style="display:flex;gap:7px;margin-bottom:14px;">
     ${['rank','alpha','round'].map(mode => {
       const active = sortMode === mode;
-      return `<button onclick="document.getElementById('participantsBox').dataset.sortMode='${mode}';renderParticipants();"
+      return `<button class="sort-mode-btn" onclick="document.getElementById('participantsBox').dataset.sortMode='${mode}';renderParticipants();"
         style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${active?'var(--gold)':'var(--line)'};
-               background:${active?'var(--gold)':'var(--paper)'};color:${active?'#fff':'var(--text2)'};
-               font-family:inherit;font-size:0.75rem;font-weight:800;cursor:pointer;transition:all 0.15s;">${sortLabels[mode]}</button>`;
+               background:${active?'var(--gold)':'var(--paper)'};color:${active?'var(--on-gold)':'var(--text2)'};
+               font-family:inherit;font-size:0.75rem;font-weight:800;cursor:pointer;">${sortLabels[mode]}</button>`;
     }).join('')}
   </div>`;
 
   sorted.forEach(p => {
     const s = rankMap[p.id] || {};
-    const rank = s.rank !== undefined ? s.rank : '—';
-    const total = s.total !== undefined ? s.total : '—';
+    const rank = s.rank !== undefined ? s.rank : 'غير مصنّف';
+    const total = s.total !== undefined ? s.total : 'غير مصنّف';
     const mumma = s.mummaCount || 0;
     const bestStreak = s.bestStreak || 0;
     const lastPts = s.lastPoints;
@@ -80,7 +80,7 @@ function renderParticipants(){
     const isTop = rank <= 3;
     const isDanger = typeof rank === 'number' && rank > totalCount - 3;
     const rankBg = rank === 1 ? 'var(--gold)' : isTop ? 'var(--sky)' : isDanger ? 'var(--coral)' : 'rgba(123,92,255,0.18)';
-    const rankClr = (isTop || isDanger) ? '#fff' : 'var(--text2)';
+    const rankClr = isDanger ? 'var(--on-coral)' : rank === 1 ? 'var(--on-gold)' : isTop ? 'var(--ink)' : 'var(--text2)';
 
     // sparkline — شريط نقاط كل جولة
     const history = buildParticipantHistory(p.id);

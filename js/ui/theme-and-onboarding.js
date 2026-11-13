@@ -11,12 +11,14 @@ function applyLightModePref(){
   // وليس نسخة "الألوان على الأبيض" (نص أسود، صفحة 3) لأن خلفية الهيدر داكنة
   // ثابتة بكل الأوضاع، فالنسخة المصمَّمة أصلًا لخلفية داكنة هي الأنسب تباينًا،
   // وهذا ما أكّده المستخدم برفع صورة توضّح الشعار الملوّن الصحيح المطلوب.
+  if(typeof refreshCrestsTheme === 'function') refreshCrestsTheme();
   const logoEl = document.getElementById('logoImg');
-  if(logoEl) logoEl.src = on ? LOGO_BASE64_LIGHT : LOGO_BASE64;
+  if(logoEl) logoEl.src = logoURL(on);
   if(btn){
     // النص يعكس الوضع الحالي فعليًا (لا الوضع اللي بيتحول له عند الضغط) —
     // تفاديًا لالتباس "يقول فاتح وهو داكن" الذي أبلغ عنه المستخدم.
-    btn.textContent = on ? '☀️ الوضع الفاتح' : '🌙 الوضع الداكن';
+    btn.innerHTML = ICONS[on ? 'sun' : 'moon'];
+    btn.setAttribute('aria-label', on ? 'الوضع الفاتح مفعّل' : 'الوضع الداكن مفعّل');
     btn.setAttribute('aria-pressed', String(on));
     btn.title = on ? 'اضغط للتبديل إلى الوضع الداكن' : 'اضغط للتبديل إلى الوضع الفاتح';
   }

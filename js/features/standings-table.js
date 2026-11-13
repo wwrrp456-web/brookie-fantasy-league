@@ -1,7 +1,7 @@
 /* جدول الترتيب + قصة الجولة + ملخص واتساب + ملخص التحديث الذكي */
 
 function movementHTML(delta){
-  if(delta === undefined || delta === 0) return '<span class="mv mv-same">—</span>';
+  if(delta === undefined || delta === 0) return `<span class="mv mv-same" role="img" aria-label="لم يتغير" title="لم يتغير">${ICONS.snowflake}</span>`;
   if(delta > 0) return `<span class="mv mv-up">▲${delta}</span>`;
   return `<span class="mv mv-down">▼${Math.abs(delta)}</span>`;
 }
@@ -209,7 +209,7 @@ function renderSmartProfile(){
         const pc=PARTICIPANT_COLORS[s.id]||'var(--gold)';
         return `<div style="background:var(--paper);border-radius:12px;padding:13px 14px;border-right:3px solid ${pc};">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span style="font-weight:800;color:${pc};">#${i+1}</span>
+            <span style="font-weight:800;color:${readableColor(pc)};">#${i+1}</span>
             <span style="font-weight:700;">${p?.name||''}</span>
             <span style="color:var(--muted);font-size:0.8rem;">${s.total} نقطة</span>
           </div>
@@ -217,6 +217,20 @@ function renderSmartProfile(){
         </div>`;
       }).join('')}
     </div>`;
+}
+
+// زر "مشاركة" في عنوان الصفحة: نفس مشاركة صورة الترتيب الموجودة (تتحوّل للتنزيل لو ما فيه مشاركة)
+(function(){
+  const b = document.getElementById('pageShareBtn');
+  if(b) b.addEventListener('click', ()=>{ if(typeof shareStandingsImage === 'function') shareStandingsImage(); });
+})();
+
+// اللمس على أي مكان في الصف يفتح تفاصيله (صف موسّع واحد في وقته، FR-14). الروابط والأزرار الداخلية للتفاصيل ما تقلبه.
+function onStandingsRowTap(e){
+  const tr = e.target.closest && e.target.closest('tr.standings-row');
+  if(!tr || !tr.dataset.pid) return;
+  if(e.target.closest('a, details, .name-reaction-slot button')) return;
+  toggleExpand(tr.dataset.pid);
 }
 
 function renderStandings(){
@@ -239,17 +253,19 @@ function renderStandings(){
     });
   }
 
-  let html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
+  const eyebrow = document.getElementById('standingsEyebrow');
+  if(eyebrow) eyebrow.textContent = hasRounds ? `الموسم الثاني · الجولة ${getCurrentRoundNumber()}` : 'الموسم الثاني';
+  let html = `<div class="table-caption"><h2 class="table-title">الترتيب العام</h2><span class="pill">${formatCount(standings.length, 'مشارك')}</span></div>`;
+  html += '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
   html += `<table class="league-table">
     <thead><tr>
-      <th style="width:34px;">#</th>
-      <th style="width:30px;">±</th>
-      <th class="col-team">اللاعب</th>
-      <th>الجولة</th>
-      <th>ممة</th>
-      <th>جديد</th>
-      <th>نقاط</th>
-      <th style="width:30px;"></th>
+      <th class="col-rank">#</th>
+      <th class="col-move">±</th>
+      <th class="col-team">المشارك</th>
+      <th class="col-sec">ممة</th>
+      <th class="col-sec">جديد</th>
+      <th class="col-score">الرصيد</th>
+      <th class="col-toggle"></th>
     </tr></thead><tbody>`;
 
   standings.forEach((s,i)=>{
@@ -260,27 +276,28 @@ function renderStandings(){
     else if(pos<=6) tier='tier-silver';
     else if(pos>standings.length-3) tier='tier-danger';
 
-    const clubs = p.teams.map(t=>clubCrestSVG(t, 19)).join('');
+    const clubs = p.teams.map(t=>crestHTML(t, 24)).join('');
 
     const meCls = (MY_ID === s.id) ? 'is-me' : '';
     html += `<tr class="standings-row ${tier} ${i%2?'zebra':''} ${meCls}" data-pid="${s.id}">
       <td class="pos-cell">${pos}</td>
       <td>${movementHTML(mv[s.id])}</td>
       <td class="team-cell">
-        <div>
-          <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}<span class="name-reaction-slot" data-pid="${s.id}"></span></div>
-          ${championDefensePathHTML(s.id)}
+        <div class="team-cell-inner">
           <div class="team-cell-clubs">${clubs}</div>
+          <div class="team-cell-text">
+            <div class="team-cell-name">${s.name}${championBadgeHTML(s.id)}<span class="name-reaction-slot" data-pid="${s.id}"></span></div>
+            ${championDefensePathHTML(s.id)}
+          </div>
         </div>
       </td>
-      <td class="stat-dim">${getCurrentRoundNumber()}</td>
-      <td class="stat-dim">${s.mummaCount}</td>
-      <td class="stat-new ${s.newPoints===0?'zero':''}">${s.newPoints>0?'+':''}${s.newPoints}</td>
+      <td class="stat-dim col-sec">${s.mummaCount}</td>
+      <td class="stat-new col-sec ${s.newPoints===0?'zero':''}">${s.newPoints>0?'+':''}${s.newPoints}</td>
       <td class="stat-strong">${s.total}</td>
-      <td><button class="detail-toggle" onclick="toggleExpand(${s.id})" aria-label="تفاصيل ${s.name}">▾</button></td>
+      <td class="col-toggle"><button class="detail-toggle" type="button" aria-expanded="false" aria-controls="expand-${s.id}" aria-label="تفاصيل ${s.name}">${ICONS['chevron-down']}</button></td>
     </tr>
     <tr class="detail-row" id="expand-${s.id}" style="display:none;">
-      <td colspan="8">
+      <td colspan="7">
         <div class="detail-inner">
           ${(()=>{
             const hist = buildParticipantHistory(s.id);
@@ -306,10 +323,10 @@ function renderStandings(){
             <thead><tr><th>الجولة</th><th>نقاط الجولة</th><th>التراكمي</th></tr></thead>
             <tbody>
               ${JOINED_AFTER_ROUND1[s.id]
-                ? `<tr><td>الجولة 1</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>`
+                ? `<tr><td>الجولة 1</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>`
                 : `<tr><td>الجولة 1</td><td>${(ROUND1_POINTS[s.id]||0)}</td><td>${(ROUND1_POINTS[s.id]||0)}</td></tr>`}
               ${JOINED_AFTER_ROUND2[s.id]
-                ? `<tr><td>الجولة 2</td><td colspan="2" style="color:#8A8A8A;">لم يلتحق بعد بالمسابقة</td></tr>
+                ? `<tr><td>الجولة 2</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>
                    <tr><td>الرصيد الافتتاحي</td><td>${s.carry}</td><td>${s.carry}</td></tr>`
                 : `<tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>`}
               ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.points}${h.points===0?' <span class="mumma">ممة</span>':''}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
@@ -322,14 +339,15 @@ function renderStandings(){
 
   html += '</tbody></table></div>';
   html += `<div class="table-legend">
-    <div class="legend-item"><span class="legend-swatch" style="background:#16A6EA;"></span>مراكز الصدارة</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#7A52EE;"></span>منطقة المطاردة</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#FF4438;"></span>المراكز الأخيرة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-info);"></span>مراكز الصدارة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-brand);"></span>منطقة المطاردة</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--c-down);"></span>المراكز الأخيرة</div>
   </div>`;
   if(!hasRounds){
     html += '<p style="color:var(--muted);font-size:0.78rem;margin:10px 2px 0;">النقاط الحالية من كشف المطابقة المعتمد. عمود «جديد» يبدأ بالتحرك مع أول جولة تُسجَّل.</p>';
   }
   box.innerHTML = html;
+  if(!box.dataset.rowTap){ box.dataset.rowTap = '1'; box.addEventListener('click', onStandingsRowTap); }
 
   if(animEnabled && Object.keys(oldRects).length){
     // بعض بيئات الاختبار (jsdom) لا تنفّذ requestAnimationFrame — نتراجع

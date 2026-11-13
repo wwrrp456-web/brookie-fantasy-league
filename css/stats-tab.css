@@ -46,7 +46,7 @@
   .whatif-label{font-size:0.8rem;color:var(--muted);white-space:nowrap;}
   .whatif-select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
   .whatif-input{width:72px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;text-align:center;}
-  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
+  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:var(--on-gold);font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
   .whatif-result{display:flex;flex-direction:column;gap:4px;}
   .whatif-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;font-size:0.82rem;transition:background 0.2s;}
   .whatif-row.changed{background:rgba(203,162,68,0.12);border:1px solid rgba(203,162,68,0.3);}
@@ -66,7 +66,7 @@
   .race-name{font-size:0.76rem;font-weight:700;color:var(--text);min-width:70px;text-align:right;}
   .race-bar-wrap{flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:20px;overflow:hidden;position:relative;}
   .race-bar{height:100%;border-radius:20px;transition:width 0.8s ease;display:flex;align-items:center;padding:0 6px;}
-  .race-pts{font-size:0.68rem;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.5);}
+  .race-pts{font-size:0.68rem;font-weight:700;color:white;white-space:nowrap;}
   .race-slider{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
   .race-slider label{font-size:0.8rem;color:var(--muted);}
   .race-slider input[type=range]{flex:1;min-width:120px;}
@@ -80,7 +80,7 @@
   .club-map-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:var(--paper);border:1px solid var(--line);font-size:0.78rem;}
   .club-map-chip.owned{border-color:var(--gold);background:rgba(203,162,68,0.08);}
   .club-map-owners{font-size:0.68rem;color:var(--muted);}
-  .club-map-chip.owned .club-map-owners{color:var(--gold);}
+  .club-map-chip.owned .club-map-owners{color:var(--gold-light);}
 
   /* تحدي التوقعات */
   .pred-challenge{margin:12px 0 22px;}
@@ -102,16 +102,52 @@
   .activity-log-time{color:var(--muted);font-size:0.72rem;white-space:nowrap;margin-inline-start:8px;}
 
   /* ===== الرسم البياني ===== */
-  .chart-wrap{background:#000;border-radius:10px;padding:12px 8px 8px;overflow-x:auto;}
+  .chart-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md,10px);padding:12px 8px 8px;overflow-x:auto;}
+  .chart-wrap svg text{fill:var(--muted);}
+  .chart-wrap svg line{stroke:var(--line);}
   .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:0.68rem;}
   .chart-legend span{display:flex;align-items:center;gap:4px;color:var(--muted);}
   .chart-legend i{width:12px;height:3px;border-radius:2px;display:inline-block;}
 
   /* ===== جدول إحصائيات الأندية ===== */
-  .club-stats-table{width:100%;border-collapse:collapse;background:#000;border-radius:10px;overflow:hidden;}
-  .club-stats-table th{background:#141414;color:#9A9A9A;font-size:0.68rem;padding:9px 5px;font-weight:700;}
-  .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:#E8E8E8;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .club-stats-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .club-stats-table th{background:var(--cream);color:var(--muted);font-size:0.68rem;padding:9px 5px;font-weight:700;}
+  .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:var(--text);border-bottom:1px solid var(--line);}
   .club-stats-table td.cs-name{text-align:start;}
+  /* ألوان أعمدة جدول أندية الموسم بالرموز (تباين ≥ 4.5:1 بالوضعين، 001-T028) */
+  .club-stats-table td.cs-w{color:var(--c-up);}
+  .club-stats-table td.cs-d{color:var(--accent-2);}
+  .club-stats-table td.cs-l{color:var(--c-down);}
+  .club-stats-table td.cs-pts{font-weight:800;color:var(--text);}
+  html:not(.light-mode) .club-stats-table td.cs-d{color:var(--c-info);}
   .cs-name-inner{display:flex;align-items:center;gap:7px;}
-  .cs-club-label{font-weight:700;font-size:0.78rem;color:#fff;}
+  .cs-club-label{font-weight:700;font-size:0.78rem;color:var(--text);}
 
+
+  /* كفاءة الأندية: صفوف بأشرطة نسبية، وسلاسل الحظ مجمّعة (001-T019، FR-18) */
+  .club-eff-note{font-size:var(--fs-xs);color:var(--c-text-2);margin:0 0 var(--sp-3);}
+  .efficiency-row+.efficiency-row{margin-top:var(--sp-3);}
+  .efficiency-label{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-1);font-size:var(--fs-sm);}
+  .efficiency-name{font-weight:700;color:var(--c-text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .efficiency-record{color:var(--c-text-3);font-size:var(--fs-xs);white-space:nowrap;}
+  .efficiency-label b{margin-inline-start:auto;color:var(--c-text);}
+  .efficiency-row progress{display:block;width:100%;height:8px;appearance:none;border:0;border-radius:var(--r-pill);background:var(--c-surface-2);}
+  .efficiency-row progress::-webkit-progress-bar{background:var(--c-surface-2);border-radius:var(--r-pill);}
+  .efficiency-row progress::-webkit-progress-value{background:var(--c-brand);border-radius:var(--r-pill);}
+  .efficiency-row progress::-moz-progress-bar{background:var(--c-brand);border-radius:var(--r-pill);}
+  .streak-groups{display:grid;gap:var(--sp-3);}
+  .streak-group{background:var(--c-surface-1);border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);}
+  .streak-group h3{margin:0;font-size:var(--fs-md);color:var(--c-text);}
+  .streak-group .muted{margin:var(--sp-1) 0 var(--sp-2);font-size:var(--fs-xs);color:var(--c-text-2);}
+  .streak-names{display:flex;flex-wrap:wrap;gap:var(--sp-2);}
+  .streak-names .pill{display:inline-flex;align-items:center;padding:var(--sp-1) var(--sp-2);font-size:var(--fs-xs);border:1px solid var(--c-border);border-radius:var(--r-pill);background:var(--c-surface-2);color:var(--c-text);}
+  .eff-more{margin-top:var(--sp-3);border-top:1px solid var(--c-border);padding-top:var(--sp-3);}
+  .eff-more>summary{cursor:pointer;font-size:var(--fs-sm);font-weight:700;color:var(--c-brand);list-style:none;margin-bottom:var(--sp-3);}
+  .eff-more>summary::-webkit-details-marker{display:none;}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .fingerprint-bar{transition:none;}
+  .whatif-row{transition:none;}
+  .race-bar{transition:none;}
+}

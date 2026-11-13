@@ -18,7 +18,7 @@
     animation:crownFloat 2.2s ease-in-out infinite;
   }
   @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-5px) rotate(4deg);}}
-  .participant-card.champion-golden{border:2px solid var(--gold)!important;box-shadow:0 0 0 1px var(--gold-light),0 4px 18px rgba(123,92,255,0.35);background:linear-gradient(180deg,rgba(123,92,255,0.10),transparent);}
+  .participant-card.champion-golden,html.light-mode .participant-card.champion-golden{border:2px solid var(--gold);box-shadow:0 0 0 1px var(--gold-light),0 4px 18px rgba(123,92,255,0.35);background:linear-gradient(180deg,rgba(123,92,255,0.10),transparent);}
   .champion-hero-card{background:linear-gradient(135deg,rgba(123,92,255,0.14),rgba(0,180,255,0.08));border:1.5px solid var(--gold);border-radius:16px;padding:18px;margin:14px 0;}
   .champion-defense-note{font-size:0.68rem;color:var(--muted);margin-top:2px;}
   .champion-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--paper);border:1.5px solid var(--gold);border-radius:14px;padding:14px 20px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:9998;max-width:90vw;text-align:center;font-size:0.85rem;color:var(--text);animation:champToastIn 0.3s ease;}
@@ -45,3 +45,9 @@
      2026). */
   #championCertBox canvas{max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;
     box-shadow:0 6px 22px rgba(0,0,0,0.3);}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .champion-crown{animation:none;}
+  .champion-toast{animation:none;}
+}

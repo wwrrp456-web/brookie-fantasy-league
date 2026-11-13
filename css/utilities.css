@@ -1,0 +1,52 @@
+/* أدوات تنسيق ذرّية (001-T003): كل كلاس تصريح واحد، نُقلت إليها قيم style="…" من index.html.
+ * أسماؤها تصف التصريح (u-<خاصية>-<قيمة>). يُحمَّل آخر ملف CSS ليغلب القواعد المتساوية بالخصوصية.
+ * ما نُقل: style="display:none" لأن JS يتحكم فيه بـel.style.display = '' (يبقى inline). وما فيه لون hex بلا متغيّر مطابق يبقى inline (لا ألوان جديدة). */
+.u-ai-center{align-items:center}
+.u-c-var-muted{color:var(--muted)}
+.u-c-var-text{color:var(--text)}
+.u-cur-pointer{cursor:pointer}
+.u-d-flex{display:flex}
+.u-filter-drop-shadow-0-4px-14px-rgba-0-0-0-0-35{filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35))}
+.u-flexwrap-wrap{flex-wrap:wrap}
+.u-fs-0-76rem{font-size:0.76rem}
+.u-fs-0-78rem{font-size:0.78rem}
+.u-fs-0-82rem{font-size:0.82rem}
+.u-fs-0-85rem{font-size:0.85rem}
+.u-fs-0-8rem{font-size:0.8rem}
+.u-fw-700{font-weight:700}
+.u-fw-800{font-weight:800}
+.u-gap-20px{gap:20px}
+.u-gap-6px{gap:6px}
+.u-gap-8px{gap:8px}
+.u-h-17px{height:17px}
+.u-h-18px{height:18px}
+.u-h-20px{height:20px}
+.u-h-auto{height:auto}
+.u-jc-center{justify-content:center}
+.u-jc-flex-end{justify-content:flex-end}
+.u-m-0-0-8px{margin:0 0 8px}
+.u-mb-10px{margin-bottom:10px}
+.u-mb-12px{margin-bottom:12px}
+.u-mb-6px{margin-bottom:6px}
+.u-mb-8px{margin-bottom:8px}
+.u-mt-10px{margin-top:10px}
+.u-mt-12px{margin-top:12px}
+.u-mt-14px{margin-top:14px}
+.u-mt-16px{margin-top:16px}
+.u-mt-4px{margin-top:4px}
+.u-mt-6px{margin-top:6px}
+.u-mt-8px{margin-top:8px}
+.u-mw-100px{max-width:100px}
+.u-mw-140px{max-width:140px}
+.u-mw-150px{max-width:150px}
+.u-mw-180px{max-width:180px}
+.u-mw-220px{max-width:220px}
+.u-mw-260px{max-width:260px}
+.u-mw-80px{max-width:80px}
+.u-mw-90px{max-width:90px}
+.u-ta-center{text-align:center}
+.u-w-100{width:100%}
+.u-w-17px{width:17px}
+.u-w-18px{width:18px}
+.u-w-20px{width:20px}
+.u-w-240px{width:240px}

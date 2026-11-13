@@ -6,6 +6,9 @@
   .duel-side.duel-win{background:rgba(122,82,238,0.18);}
   .duel-name{font-size:0.84rem;font-weight:700;color:var(--text);}
   .duel-pts{font-size:0.84rem;font-weight:800;color:var(--gold);}
+  .duel-share-btn{width:100%;margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:0.78rem;}
+  .duel-share-btn svg{width:16px;height:16px;}
+  .duel-share-msg:empty{display:none;}
   .duel-vs{text-align:center;font-size:0.68rem;font-weight:800;color:var(--muted);margin:2px 0;}
   .duel-draw{text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);margin-top:2px;}
   .duel-bye{display:flex;align-items:center;justify-content:center;min-height:64px;}
@@ -48,7 +51,7 @@
   .rc-time{font-size:0.68rem;color:var(--muted);white-space:nowrap;}
   .rc-add-form{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
   .rc-input{flex:1;min-width:140px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
-  .rc-submit{padding:5px 12px;border-radius:8px;font-size:0.78rem;font-weight:700;background:var(--gold);color:#000;border:none;cursor:pointer;}
+  .rc-submit{padding:5px 12px;border-radius:8px;font-size:0.78rem;font-weight:700;background:var(--gold);color:var(--on-gold);border:none;cursor:pointer;}
   .rc-locked{font-size:0.75rem;color:var(--muted);font-style:italic;}
 
   /* توقعات بطل الجولة القادمة */
@@ -144,3 +147,8 @@
     to{ transform:translateY(105vh) rotate(600deg); }
   }
 
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .season-progress-fill{transition:none;}
+  .night-mode-banner{animation:none;}
+}

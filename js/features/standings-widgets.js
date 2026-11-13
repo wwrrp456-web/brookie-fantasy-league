@@ -73,10 +73,19 @@ function renderWeeklyDuels(){
       <div class="duel-vs">VS</div>
       <div class="duel-side ${bWin?'duel-win':''}"><span class="duel-name">${bWin?'🏅 ':''}${d.b.name}</span><span class="duel-pts">${d.bp}</span></div>
       ${(!aWin && !bWin) ? '<div class="duel-draw">تعادل</div>' : ''}
+      <button type="button" class="btn ghost duel-share-btn" data-a="${d.a.id}" data-b="${d.b.id}">${ICONS.share} مشاركة المواجهة</button>
+      <div class="duel-share-msg"></div>
     </div>`;
   });
   html += '</div>';
   box.innerHTML = html;
+  box.querySelectorAll('.duel-share-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try{ await exportDuelCard(Number(btn.dataset.a), Number(btn.dataset.b), btn.parentElement.querySelector('.duel-share-msg')); }
+      finally{ btn.disabled = false; }
+    });
+  });
 }
 
 // ---------- 2) سباق الهروب من القاع ----------
@@ -168,13 +177,15 @@ function renderHonorBoard(){
   // أعلى نقاط إجمالية (متصدر الآن)
   const leader = st[0];
 
+  // البطاقة بلا بيانات (لا نقطة جولة، أو لا سلسلة، أو لا ثبات محسوب) تُحذف بدل ما تعرض "—" (U-07)
   const cards = [
     {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:`${leader.total} نقطة`},
-    {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name||'—', val:bestSingle.pts ? `${bestSingle.pts} ن. (ج${bestSingle.round})` : '—'},
-    {emoji:'💀', label:'أقل ممات', name:leastMumma.name||'—', val:`${leastMumma.mumma===Infinity?'—':leastMumma.mumma} ممة`},
-    {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.streak>0?longestStreak.name:'—', val:longestStreak.streak>0?`${longestStreak.streak} جولات متتالية`:'—'},
-    {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.std===Infinity?'—':mostStable.name, val:mostStable.std===Infinity?'—':`انحراف ±${mostStable.std}`},
-  ];
+    bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${bestSingle.pts} ن. (ج${bestSingle.round})`} : null,
+    leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:`${leastMumma.mumma} ممة`} : null,
+    longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:`${longestStreak.streak} جولات متتالية`} : null,
+    mostStable.std !== Infinity ? {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
+  ].filter(Boolean);
+
 
   box.innerHTML = `
     <div class="honor-board">
@@ -497,7 +508,7 @@ function renderRankLeaderboard(){
   const sorted = PARTICIPANTS.slice().sort((a,b)=>(finalRanks[a.id]||99)-(finalRanks[b.id]||99));
 
   let html = '<h2 class="section-title" style="margin-top:22px;">👑 لوحة قيادة الترتيب</h2>';
-  html += '<div class="rank-leaderboard"><table>';
+  html += '<div class="rank-leaderboard" tabindex="0" role="region" aria-label="لوحة أدق المتوقعين"><table>';
   html += '<tr><th>المشارك</th>';
   if(rounds.length > 0) html += '<th>قبل</th>';
   roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
@@ -508,12 +519,12 @@ function renderRankLeaderboard(){
     for(let i=0; i<=rounds.length; i++){
       if(i===0 && rounds.length===0) continue;
       const rm = ranksByRound[i];
-      const rank = rm && rm[p.id] ? rm[p.id] : '-';
+      const rank = rm && rm[p.id] ? rm[p.id] : '';
       let cls = '';
       if(rank===1) cls='rl-cell-1';
       else if(rank===2) cls='rl-cell-2';
       else if(rank===3) cls='rl-cell-3';
-      html += `<td class="${cls}">${rank}</td>`;
+      html += `<td class="${cls}${rank === '' ? ' empty-cell' : ''}">${rank}</td>`;
     }
     html += '</tr>';
   });

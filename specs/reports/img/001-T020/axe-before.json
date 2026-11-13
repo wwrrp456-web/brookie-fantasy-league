@@ -1,0 +1,250 @@
+{
+ "width": 390,
+ "themes": {
+  "dark": {
+   "standings": {
+    "violations": 0,
+    "nodes": [],
+    "passes": 39
+   },
+   "participants": {
+    "violations": 4,
+    "nodes": [
+     {
+      "target": "#participantsBox > div:nth-child(1) > button:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #8e6cff, font size: 9.0pt (12px), font weight:"
+     },
+     {
+      "target": "#participant-card-8 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 2.74 (foreground color: #ffffff, background color: #ff6f52, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": "#participant-card-19 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 2.74 (foreground color: #ffffff, background color: #ff6f52, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": "#participant-card-18 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 2.74 (foreground color: #ffffff, background color: #ff6f52, font size: 11.4pt (15.2px), font weig"
+     }
+    ],
+    "passes": 3
+   },
+   "rounds": {
+    "violations": 1,
+    "nodes": [
+     {
+      "target": ".r2-pts > .mumma",
+      "msg": "Element has insufficient color contrast of 2.74 (foreground color: #ffffff, background color: #ff6f52, font size: 7.2pt (9.6px), font weight"
+     }
+    ],
+    "passes": 2053
+   },
+   "stats": {
+    "violations": 18,
+    "nodes": [
+     {
+      "target": "#smartProfileBox > div > div:nth-child(3) > div:nth-child(1) > span:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 3.38 (foreground color: #7a4ee9, background color: #15153f, font size: 12.0pt (16px), font weight"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(9) > div:nth-child(1) > span:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 3.84 (foreground color: #9b4ee9, background color: #15153f, font size: 12.0pt (16px), font weight"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(18) > div:nth-child(1) > span:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 3.27 (foreground color: #4e5ae9, background color: #15153f, font size: 12.0pt (16px), font weight"
+     },
+     {
+      "target": ".race-row:nth-child(1) > .race-bar-wrap > .race-bar > .race-pts",
+      "msg": "Element has insufficient color contrast of 2.57 (foreground color: #ffffff, background color: #44aeca, font size: 8.2pt (10.88px), font weig"
+     },
+     {
+      "target": ".race-row:nth-child(4) > .race-bar-wrap > .race-bar > .race-pts",
+      "msg": "Element has insufficient color contrast of 2.02 (foreground color: #ffffff, background color: #7bca44, font size: 8.2pt (10.88px), font weig"
+     }
+    ],
+    "passes": 517
+   },
+   "rules": {
+    "violations": 0,
+    "nodes": [],
+    "passes": 9
+   },
+   "about": {
+    "violations": 29,
+    "nodes": [
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(2)",
+      "msg": "Element has insufficient color contrast of 3.74 (foreground color: #8e6cff, background color: #302a40, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(3)",
+      "msg": "Element has insufficient color contrast of 3.74 (foreground color: #8e6cff, background color: #302a40, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(4)",
+      "msg": "Element has insufficient color contrast of 3.74 (foreground color: #8e6cff, background color: #302a40, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(5)",
+      "msg": "Element has insufficient color contrast of 3.74 (foreground color: #8e6cff, background color: #302a40, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(6)",
+      "msg": "Element has insufficient color contrast of 3.74 (foreground color: #8e6cff, background color: #302a40, font size: 10.1pt (13.44px), font wei"
+     }
+    ],
+    "passes": 42
+   },
+   "admin": {
+    "violations": 0,
+    "nodes": [],
+    "passes": 21
+   }
+  },
+  "light": {
+   "standings": {
+    "violations": 14,
+    "nodes": [
+     {
+      "target": ".tier-silver.zebra[data-pid=\"4\"] > td:nth-child(2) > .mv-up.mv",
+      "msg": "Element has insufficient color contrast of 2.22 (foreground color: #22c55e, background color: #fdfcff, font size: 8.2pt (10.88px), font weig"
+     },
+     {
+      "target": ".tier-silver.standings-row[data-pid=\"6\"] > td:nth-child(2) > .mv-up.mv",
+      "msg": "Element has insufficient color contrast of 2.22 (foreground color: #22c55e, background color: #fdfcff, font size: 8.2pt (10.88px), font weig"
+     },
+     {
+      "target": ".tier-silver.zebra[data-pid=\"11\"] > td:nth-child(2) > .mv-up.mv",
+      "msg": "Element has insufficient color contrast of 2.22 (foreground color: #22c55e, background color: #fdfcff, font size: 8.2pt (10.88px), font weig"
+     },
+     {
+      "target": ".standings-row[data-pid=\"14\"] > td:nth-child(2) > .mv-up.mv",
+      "msg": "Element has insufficient color contrast of 2.22 (foreground color: #22c55e, background color: #fdfcff, font size: 8.2pt (10.88px), font weig"
+     },
+     {
+      "target": ".zebra.standings-row[data-pid=\"1\"] > td:nth-child(2) > .mv-down.mv",
+      "msg": "Element has insufficient color contrast of 3.68 (foreground color: #ef4444, background color: #fdfcff, font size: 8.2pt (10.88px), font weig"
+     }
+    ],
+    "passes": 24
+   },
+   "participants": {
+    "violations": 3,
+    "nodes": [
+     {
+      "target": "#participant-card-8 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #ffffff, background color: #c9552c, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": "#participant-card-19 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #ffffff, background color: #c9552c, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": "#participant-card-18 > div > div:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #ffffff, background color: #c9552c, font size: 11.4pt (15.2px), font weig"
+     }
+    ],
+    "passes": 5
+   },
+   "rounds": {
+    "violations": 258,
+    "nodes": [
+     {
+      "target": ".r2-card:nth-child(3) > .r2-head > .r2-pts",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": ".is-champion.r2-card:nth-child(4) > .r2-head > .r2-pts",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": ".r2-card:nth-child(5) > .r2-head > .r2-pts",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": ".r2-card:nth-child(6) > .r2-head > .r2-pts",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 11.4pt (15.2px), font weig"
+     },
+     {
+      "target": ".r2-card:nth-child(7) > .r2-head > .r2-pts",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 11.4pt (15.2px), font weig"
+     }
+    ],
+    "passes": 1796
+   },
+   "stats": {
+    "violations": 58,
+    "nodes": [
+     {
+      "target": "#smartProfileBox > div > div:nth-child(1) > div:nth-child(1) > span:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 1.93 (foreground color: #4ec9e9, background color: #ffffff, font size: 12.0pt (16px), font weight"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(1) > div:nth-child(2) > span:nth-child(4)",
+      "msg": "Element has insufficient color contrast of 3.54 (foreground color: #8f70ff, background color: #ffffff, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 3.52 (foreground color: #e94e90, background color: #ffffff, font size: 12.0pt (16px), font weight"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(2) > div:nth-child(2) > span:nth-child(4)",
+      "msg": "Element has insufficient color contrast of 3.54 (foreground color: #8f70ff, background color: #ffffff, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "#smartProfileBox > div > div:nth-child(3) > div:nth-child(2) > span:nth-child(4)",
+      "msg": "Element has insufficient color contrast of 3.54 (foreground color: #8f70ff, background color: #ffffff, font size: 10.1pt (13.44px), font wei"
+     }
+    ],
+    "passes": 461
+   },
+   "rules": {
+    "violations": 2,
+    "nodes": [
+     {
+      "target": ".rules-list > h4:nth-child(1)",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 10.3pt (13.76px), font wei"
+     },
+     {
+      "target": "h4:nth-child(9)",
+      "msg": "Element has insufficient color contrast of 4.35 (foreground color: #c9552c, background color: #ffffff, font size: 10.3pt (13.76px), font wei"
+     }
+    ],
+    "passes": 7
+   },
+   "about": {
+    "violations": 30,
+    "nodes": [
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(2)",
+      "msg": "Element has insufficient color contrast of 4.27 (foreground color: #7c4dff, background color: #f7f1e3, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(3)",
+      "msg": "Element has insufficient color contrast of 4.27 (foreground color: #7c4dff, background color: #f7f1e3, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(4)",
+      "msg": "Element has insufficient color contrast of 4.27 (foreground color: #7c4dff, background color: #f7f1e3, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(5)",
+      "msg": "Element has insufficient color contrast of 4.27 (foreground color: #7c4dff, background color: #f7f1e3, font size: 10.1pt (13.44px), font wei"
+     },
+     {
+      "target": "div[data-num=\"١\"] > .story-chapter-body > .story-highlight:nth-child(6)",
+      "msg": "Element has insufficient color contrast of 4.27 (foreground color: #7c4dff, background color: #f7f1e3, font size: 10.1pt (13.44px), font wei"
+     }
+    ],
+    "passes": 41
+   },
+   "admin": {
+    "violations": 0,
+    "nodes": [],
+    "passes": 21
+   }
+  }
+ },
+ "total": 417
+}

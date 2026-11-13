@@ -15,7 +15,7 @@ function roundTitlesHTML(titles){
 function renderHeroes(){
   const box = document.getElementById('heroesBox');
   const h = getRoundHeroes();
-  if(!h){ box.innerHTML=''; return; }
+  if(!h){ box.innerHTML = emptyState({icon: 'clock', title: 'الجولة لم تُسجّل بعد', text: 'تظهر نقاط الجولة وبطلها بعد أن يسجّل المنظّم النتائج.'}); return; }
   let html = '<div class="heroes-strip">';
   html += `<div class="hero-card gold">
     <div class="hero-label">👑 بطل الجولة ${h.roundNumber}</div>
@@ -255,7 +255,7 @@ function renderScenario(){
     <div style="background:var(--paper);border-radius:14px;padding:16px;">
       <p style="color:var(--muted);margin:0 0 12px;font-size:0.87rem;">ماذا لو حصل المتصدر على نقاط أقل في الجولات الـ${remaining} القادمة؟</p>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
-        <label style="font-size:0.88rem;color:var(--text2);">نقاط المتصدر/جولة:</label>
+        <label for="scenarioSlider" style="font-size:0.88rem;color:var(--text2);">نقاط المتصدر/جولة:</label>
         <input type="range" id="scenarioSlider" min="0" max="12" value="6" style="flex:1;min-width:120px;accent-color:var(--gold);">
         <span id="scenarioSliderVal" style="font-weight:800;color:var(--gold);min-width:28px;text-align:center;">6</span>
       </div>
@@ -270,7 +270,7 @@ function renderScenario(){
     const ol=PARTICIPANTS.find(x=>x.id===lid);
     return `<div style="overflow-x:auto;margin-top:12px;">
       <table style="width:100%;border-collapse:collapse;font-size:0.84rem;">
-        <thead><tr style="background:var(--ink);color:var(--gold);">
+        <thead><tr style="background:var(--ink);color:white;">
           <th style="padding:6px;text-align:center;">#</th>
           <th style="padding:6px;text-align:right;">المشارك</th>
           <th style="padding:6px;text-align:center;">الحالي</th>
@@ -281,10 +281,10 @@ function renderScenario(){
           const pc2=PARTICIPANT_COLORS[s.id]||'var(--gold)';
           const hl=s.id===newLead.id?`background:${pc2}22;`:'';
           return `<tr style="border-bottom:1px solid var(--line);${hl}">
-            <td style="padding:6px;text-align:center;font-weight:800;color:${pc2};">${i+1}</td>
+            <td style="padding:6px;text-align:center;font-weight:800;color:${readableColor(pc2, 5.4)};">${i+1}</td>
             <td style="padding:6px;">${pp?.name||''}</td>
             <td style="padding:6px;text-align:center;color:var(--muted);">${s.total}</td>
-            <td style="padding:6px;text-align:center;font-weight:700;color:${pc2};">${s.proj}</td>
+            <td style="padding:6px;text-align:center;font-weight:700;color:${readableColor(pc2, 5.4)};">${s.proj}</td>
           </tr>`;
         }).join('')}</tbody>
       </table>
@@ -374,9 +374,21 @@ async function castChallengeVote(targetPid){
   renderRoundChallenge();
 }
 
+// صف موسّع واحد في وقته: فتح صف يطوي غيره (001-T014)
 function toggleExpand(pid){
   const row = document.getElementById('expand-'+pid);
-  if(row) row.style.display = row.style.display==='table-row' ? 'none' : 'table-row';
+  if(!row) return;
+  const open = row.style.display !== 'table-row';
+  document.querySelectorAll('tr.detail-row').forEach(r=>{ r.style.display = 'none'; });
+  document.querySelectorAll('tr.standings-row').forEach(r=>{
+    const b = r.querySelector('.detail-toggle'); if(b) b.setAttribute('aria-expanded', 'false');
+    r.classList.remove('is-open');
+  });
+  if(open){
+    row.style.display = 'table-row';
+    const main = row.previousElementSibling;
+    if(main){ main.classList.add('is-open'); const b = main.querySelector('.detail-toggle'); if(b) b.setAttribute('aria-expanded', 'true'); }
+  }
 }
 
 // شارة نتيجة صغيرة (فوز/تعادل/خسارة/لا توجد مباراة) بلون مناسب
@@ -416,7 +428,7 @@ function renderRound2Section(){
       html += `<div class="r2-card">
         <div class="r2-head">
           <div class="r2-name">${p.name}</div>
-          <div class="r2-pts"><span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div>
+          <div class="r2-pts"><span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div>
         </div>
       </div>`;
       return;
@@ -430,7 +442,7 @@ function renderRound2Section(){
       <div class="r2-clubs">
         ${r2.clubs.map(c=>`
           <div class="r2-club-row">
-            ${clubCrestSVG(c.name, 26)}
+            ${crestHTML(c.name, 26)}
             <div class="r2-club-matches">
               <div class="r2-club-name">${c.name}</div>
               ${c.matches.length ? c.matches.map(m=>`
@@ -465,7 +477,7 @@ function renderRound1Section(){
     html += `<div class="r1-simple-row">
       <div class="r1-rank">${i+1}</div>
       <div class="r1-name">${row.p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-      <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span style="color:#8A8A8A;font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
+      <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
     </div>`;
   });
   html += `</div>`;
@@ -529,7 +541,7 @@ function renderRounds(){
               // تُعرض كل مباراة بسطر مستقل، بنفس أسلوب r2-match-line بالجولة 2.
               const es = getTeamRoundEntries(entries, ti);
               return `<div class="r2-club-row">
-                ${clubCrestSVG(t, 26)}
+                ${crestHTML(t, 26)}
                 <div class="r2-club-matches">
                   <div class="r2-club-name">${t}</div>
                   ${es.length ? es.map(e=> e.result==='no_match' ? `

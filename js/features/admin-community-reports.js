@@ -105,7 +105,7 @@ async function loadCommunityReports(){
         if(opponent && CLUBS.includes(opponent)){
           const mirror = byMatch[`${opponent}|${club}`];
           if(!mirror){
-            matchBadge = `<span class="match-badge match-badge-info">⚔️ داخلية — بانتظار تسجيل ${opponent}</span>`;
+            matchBadge = `<span class="match-badge match-badge-info">⚔️ داخلية — بانتظار تسجيل ${escapeHtml(opponent)}</span>`;
             hasIssue = true;
           }else{
             const rep = reports[0];
@@ -113,8 +113,8 @@ async function loadCommunityReports(){
             const matches = mirrorRep.result === invertMatchResult(rep.result)
               && Number(mirrorRep.gf) === Number(rep.ga) && Number(mirrorRep.ga) === Number(rep.gf);
             matchBadge = matches
-              ? `<span class="match-badge match-badge-ok">⚔️ داخلية — تُطابق تسجيل ${opponent} ✅</span>`
-              : `<span class="match-badge match-badge-warn">⚔️ داخلية — ⚠️ لا تُطابق تسجيل ${opponent}</span>`;
+              ? `<span class="match-badge match-badge-ok">⚔️ داخلية — تُطابق تسجيل ${escapeHtml(opponent)} ✅</span>`
+              : `<span class="match-badge match-badge-warn">⚔️ داخلية — ⚠️ لا تُطابق تسجيل ${escapeHtml(opponent)}</span>`;
             if(!matches) hasIssue = true;
           }
         }else if(opponent){
@@ -141,15 +141,15 @@ async function loadCommunityReports(){
         });
 
         html += `<div data-issue="${hasIssue?1:0}" style="padding:8px 0;border-bottom:1px dotted var(--line);">
-          <div style="font-weight:800;">${club}${opponent?` ضد ${opponent}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
+          <div style="font-weight:800;">${escapeHtml(club)}${opponent?` ضد ${escapeHtml(opponent)}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
           ${matchBadge ? `<div style="margin:3px 0 2px;">${matchBadge}</div>` : ''}`;
         reports.forEach((r,ri)=>{
           // كل تقرير له وضع عرض (view) ووضع تعديل (edit) — يبدأ العرض فقط
           // ظاهرًا، وزر "✏️ تعديل" يبدّل بينهما (المنظم اكتشف نتيجة خاطئة
           // مُرسَلة من زائر/متسابق ويحتاج يصححها أو يحذفها بلا رجوع للمُرسِل).
-          html += `<div class="community-report-row" data-id="${r.id}" data-round="${targetRound}">
+          html += `<div class="community-report-row" data-id="${escapeHtml(r.id)}" data-round="${targetRound}">
             <div class="community-report-view">
-              <span>${RESULT_LABEL_COMMUNITY[r.result]||r.result} (${r.gf}-${r.ga}) ${r.reporter ? '— أرسلها: '+r.reporter : ''}</span>
+              <span>${escapeHtml(RESULT_LABEL_COMMUNITY[r.result]||r.result)} (${escapeHtml(r.gf)}-${escapeHtml(r.ga)}) ${r.reporter ? '— أرسلها: '+escapeHtml(r.reporter) : ''}</span>
               <span class="actions">
                 <button type="button" class="btn ghost edit-report-btn">✏️ تعديل</button>
                 <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف</button>
@@ -157,14 +157,14 @@ async function loadCommunityReports(){
             </div>
             ${officialNotes[ri] || ''}
             <div class="community-report-edit">
-              <input type="text" class="edit-opp-input" placeholder="الخصم" value="${(r.opponent||'').replace(/"/g,'&quot;')}">
+              <input type="text" class="edit-opp-input" placeholder="الخصم" value="${escapeHtml(r.opponent||'')}">
               <select class="edit-res-select">
                 <option value="win" ${r.result==='win'?'selected':''}>فوز</option>
                 <option value="draw" ${r.result==='draw'?'selected':''}>تعادل</option>
                 <option value="loss" ${r.result==='loss'?'selected':''}>خسارة</option>
               </select>
-              <input type="number" class="edit-gf-input" min="0" placeholder="له" value="${r.gf}">
-              <input type="number" class="edit-ga-input" min="0" placeholder="عليه" value="${r.ga}">
+              <input type="number" class="edit-gf-input" min="0" placeholder="له" value="${escapeHtml(r.gf)}">
+              <input type="number" class="edit-ga-input" min="0" placeholder="عليه" value="${escapeHtml(r.ga)}">
               <button type="button" class="btn save-report-btn">💾 حفظ</button>
               <button type="button" class="btn ghost cancel-report-btn">إلغاء</button>
             </div>
@@ -187,7 +187,7 @@ async function loadCommunityReports(){
       PARTICIPANTS.forEach(p=>{
         if(entries[p.id]){
           html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);">
-            <span>${p.name}</span><span style="font-weight:800;">${entries[p.id].points} نقطة</span></div>`;
+            <span>${p.name}</span><span style="font-weight:800;">${escapeHtml(entries[p.id].points)} نقطة</span></div>`;
         }
       });
       html += '</div>';

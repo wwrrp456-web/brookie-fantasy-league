@@ -1,0 +1,14 @@
+/* مكوّن الحالة الفاضية (001-T017، U-07): بطاقة مركزية وقيمة فاضية خافتة بدل شرطة. متغيّرات tokens.css فقط. */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--sp-3);padding:var(--sp-8) var(--sp-4);background:var(--c-surface-1);border:1px solid var(--c-border);border-radius:var(--r-lg);}
+.empty-state-icon{color:var(--c-brand);display:inline-grid;}
+.empty-state-icon svg{width:40px;height:40px;}
+.empty-state-title{margin:0;font-size:var(--fs-lg);color:var(--c-text);}
+.empty-state-text{margin:0;font-size:var(--fs-sm);color:var(--c-text-2);max-width:32ch;}
+.empty-inline{font-size:var(--fs-xs);font-weight:600;color:var(--c-text-3);white-space:nowrap;}
+/* خلية لا بيانات لها (مثل خريطة الممات): نقطة خافتة بالـCSS بدل نص شرطة */
+.empty-cell::before{content:"·";color:var(--c-text-3);}
+/* حركة بلا تغيّر: أيقونة ثلجية خافتة بدل شرطة */
+.mv-same svg{width:14px;height:14px;vertical-align:middle;}
+.notif-dropdown .empty-state{padding:var(--sp-4);border:0;background:none;}
+.notif-dropdown .empty-state-icon svg{width:28px;height:28px;}
+.empty-state .btn{text-decoration:none;}

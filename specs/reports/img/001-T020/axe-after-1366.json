@@ -1,0 +1,80 @@
+{
+  "width": 1366,
+  "themes": {
+    "dark": {
+      "standings": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 67
+      },
+      "participants": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 33
+      },
+      "rounds": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 655
+      },
+      "stats": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 127
+      },
+      "rules": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 31
+      },
+      "about": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 45
+      },
+      "admin": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 30
+      }
+    },
+    "light": {
+      "standings": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 66
+      },
+      "participants": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 33
+      },
+      "rounds": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 655
+      },
+      "stats": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 127
+      },
+      "rules": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 31
+      },
+      "about": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 45
+      },
+      "admin": {
+        "violations": 0,
+        "nodes": [],
+        "passes": 30
+      }
+    }
+  },
+  "total": 0
+}

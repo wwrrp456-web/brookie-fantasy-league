@@ -1,0 +1,73 @@
+/* هيدر مضغوط + شريط تبويبات بإشارات تمرير (001-T013، FR-02/FR-03، SC-06).
+ * محمَّل بعد surfaces.css ليتغلّب بالتخصيص (header.app-header) لا بـ!important.
+ * الهيدر يتبع الثيم (F3): فاتح بالوضع الفاتح مع logoLight (نصه كحلي)، وداكن بالداكن مع الشعار الأبيض. */
+header.app-header{
+  padding:0;text-align:start;
+  background:var(--c-surface-1);
+  color:var(--c-text);border-bottom:1px solid var(--c-border);box-shadow:none;
+}
+header.app-header::after{display:none;}
+.header-inner{
+  height:68px;max-width:1200px;margin:0 auto;padding:var(--sp-3) var(--sp-4);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);
+}
+.brand{display:flex;align-items:center;gap:var(--sp-3);min-width:0;position:relative;}
+.brand-mark{width:34px;height:42px;flex:none;}
+.brand-logo{display:none;width:160px;height:72px;object-fit:contain;}
+.brand-label{display:grid;gap:var(--sp-1);min-width:0;}
+header.app-header h1{font-size:var(--fs-md);font-weight:800;line-height:1.25;margin:0;letter-spacing:0;white-space:nowrap;}
+header.app-header p{font-size:var(--fs-xs);font-weight:600;margin:0;letter-spacing:0;color:var(--c-text-2);}
+header.app-header .champion-crown{position:static;font-size:1.3rem;animation:none;}
+.header-actions{display:flex;align-items:center;gap:var(--sp-1);flex:none;}
+.header-actions .notif-center{position:static;}
+.icon-btn,.header-actions .notif-bell-btn{
+  width:40px;height:40px;border-radius:var(--r-md);padding:0;
+  border:1px solid var(--c-border);background:var(--c-surface-1);color:var(--c-text);
+  display:grid;place-items:center;cursor:pointer;text-decoration:none;box-shadow:none;position:relative;
+}
+.icon-btn svg,.notif-bell-btn svg,.tab-more svg{width:20px;height:20px;}
+.notif-bell-btn .notif-count{top:-6px;inset-inline-end:-6px;}
+.header-actions .notif-dropdown{top:48px;left:0;inset-inline-start:auto;}
+
+@media (min-width:900px){
+  .header-inner{height:104px;padding-inline:var(--sp-6);}
+  .brand-mark{display:none;}
+  .brand-logo{display:block;}
+  .brand-label{border-inline-start:1px solid var(--c-border);padding-inline-start:var(--sp-4);}
+}
+
+/* ---------- شريط التبويبات ---------- */
+.tab-shell{position:sticky;top:0;z-index:10;max-width:1200px;margin:0 auto;}
+.tab-shell nav.tabs{
+  position:static;gap:var(--sp-1);padding:0 var(--sp-3);
+  scroll-snap-type:x proximity;scroll-behavior:smooth;
+}
+/* تلاشي عند الحافة اليسرى (RTL: هناك التبويبات المخفية) يظهر فقط لو فيه تبويبات أخرى */
+.tab-shell nav.tabs.has-more{
+  margin-left:44px;   /* مساحة للسهم: ما يغطي نص التبويب (F3) */
+  -webkit-mask-image:linear-gradient(to right,transparent 0,black 40px);
+  mask-image:linear-gradient(to right,transparent 0,black 40px);
+}
+.tab-shell nav.tabs button{
+  min-height:48px;padding:var(--sp-3);font-size:var(--fs-sm);font-weight:700;
+  border-radius:0;border-bottom:3px solid transparent;background:none;box-shadow:none;scroll-snap-align:center;
+}
+.tab-shell nav.tabs button.active{
+  background:var(--c-surface-2);color:var(--c-text);box-shadow:none;border-bottom-color:var(--c-brand);
+}
+.tab-more{
+  position:absolute;left:0;top:0;width:44px;height:100%;border:0;padding:0;
+  display:grid;place-items:center;color:var(--c-brand);cursor:pointer;background:transparent;
+}
+.tab-more[hidden]{display:none;}
+@media (min-width:900px){
+  .tab-shell nav.tabs,.tab-shell nav.tabs.has-more{
+  margin-left:0;padding-inline:0;-webkit-mask-image:none;mask-image:none;}
+  .tab-shell nav.tabs button{flex:1;text-align:center;}
+  .tab-more{display:none;}
+}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .tab-shell nav.tabs{scroll-behavior:auto;}
+}

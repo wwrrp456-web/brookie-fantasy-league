@@ -94,7 +94,7 @@ function renderNotificationCenter(){
 
   box.innerHTML = `
     <button type="button" id="notifBellBtn" class="notif-bell-btn" aria-label="مركز التنبيهات">
-      🔔${items.length ? `<span class="notif-count">${items.length}</span>` : ''}
+      ${ICONS.bell}${items.length ? `<span class="notif-count">${items.length}</span>` : ''}
     </button>
     <div class="notif-dropdown" data-open="${wasOpen ? '1':'0'}" style="display:${wasOpen?'block':'none'};">
       ${items.length ? items.map((it,i)=>`
@@ -102,7 +102,7 @@ function renderNotificationCenter(){
           <span class="notif-item-icon">${it.icon}</span>
           <span class="notif-item-text">${it.text}</span>
         </div>`).join('')
-      : '<div class="notif-empty">لا تنبيهات جديدة 👍</div>'}
+      : emptyState({icon: 'bell', title: 'لا إشعارات جديدة', text: 'أنت مطّلع على آخر أخبار الدوري. ستظهر المستجدات هنا.'})}
     </div>`;
 
   const bellBtn = document.getElementById('notifBellBtn');

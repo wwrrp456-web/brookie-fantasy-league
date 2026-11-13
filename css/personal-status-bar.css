@@ -8,7 +8,7 @@
 .status-bar-sep{color:var(--muted);}
 .status-bar-rank{color:var(--gold);font-weight:800;}
 .status-bar-total{font-weight:700;}
-.status-bar-last.pos{color:#2ECC71;font-weight:700;}
+.status-bar-last.pos{color:var(--c-up);font-weight:700;}
 .status-bar-last.neg{color:var(--coral);font-weight:700;}
 
 /* مساحة أسفل الصفحة عشان الشريط الثابت ما يغطي آخر محتوى بأي تبويب */
@@ -17,4 +17,9 @@ body.has-status-bar.status-bar-collapsed{padding-bottom:34px;}
 
 @media (max-width:480px){
   .status-bar-content{font-size:0.76rem;}
+}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .status-bar-inner{transition:none;}
 }

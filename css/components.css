@@ -29,7 +29,7 @@
   .club-mini.sm .club-name{font-size:0.62rem;}
 
   .participant-teams-mini{display:flex;gap:6px;margin-top:4px;}
-  .expand-row td{padding:0!important;border-bottom:1px solid var(--line);}
+  table.standings .expand-row td{padding:0;border-bottom:1px solid var(--line);}
   .expand-content{background:rgba(122,82,238,0.10);padding:12px 10px;}
   .expand-content .club-mini{width:50px;}
   .history-table{width:100%;border-collapse:collapse;margin-top:8px;}
@@ -56,7 +56,7 @@
 
   /* زر نسخ صغير (رمز مشارك / رابط QR) — يعطي تأكيدًا بصريًا مؤقتًا "✅ تم النسخ"
      بدل الاعتماد على تحديد النص يدويًا (طلب المستخدم 6 سبتمبر 2026) */
-  .copy-btn{font-size:0.68rem!important;padding:3px 9px!important;}
+  .btn.copy-btn{font-size:0.68rem;padding:3px 9px;}
 
   /* نافذة تأكيد مخصّصة بهوية الموقع بدل نافذة confirm() الرمادية الافتراضية
      للمتصفح (6 سبتمبر 2026) — تُستخدم لكل إجراء حذف/استبدال لا رجعة فيه */
@@ -71,7 +71,7 @@
   .custom-confirm-msg{font-size:0.86rem;line-height:1.7;color:var(--text);margin-bottom:18px;}
   .custom-confirm-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
 
-  .add-match-btn{margin:4px 12px 0;font-size:0.7rem!important;padding:4px 10px!important;}
+  .btn.add-match-btn{margin:4px 12px 0;font-size:0.7rem;padding:4px 10px;}
   .team-input-row{
     display:grid;grid-template-columns:1.3fr 1fr 40px 40px 24px;gap:6px;
     padding:6px 12px;align-items:center;
@@ -89,3 +89,7 @@
 
   .loading{text-align:center;padding:40px 10px;color:var(--muted);}
 
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .new-round-banner{animation:none;}
+}

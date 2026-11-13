@@ -21,7 +21,7 @@ function renderPredictionAccuracy(){
 
   let html = `<h2 class="section-title" style="margin-top:22px;">🔮 لوحة أدق المتوقعين</h2>`;
   if(!list.length){
-    html += '<p class="rounds-subtitle" style="margin-top:0;">لسه ما فيه توقعات محسومة بنتيجة — تظهر هنا اللوحة أول ما تنحسم أول جولة فيها توقعات 🔮</p>';
+    html += emptyState({icon: 'poll', title: 'لا توقعات محسومة بعد', text: 'تظهر اللوحة هنا أول ما تنحسم أول جولة فيها توقعات.'});
     box.innerHTML = html;
     return;
   }
@@ -177,6 +177,8 @@ async function loadMyId(){
 function renderMyDashboard(){
   const box = document.getElementById('myDashboardBox');
   if(!box) return;
+  const pickerBox = document.getElementById('mePickerBox');
+  if(pickerBox) pickerBox.classList.remove('is-compact', 'open');
   if(MY_ID === null){ box.style.display='none'; box.innerHTML=''; return; }
   const me = PARTICIPANTS.find(p=>p.id===MY_ID);
   const st = computeStandings();
@@ -187,8 +189,8 @@ function renderMyDashboard(){
   const rank = idx+1;
   const mv = getMovements();
   const myMove = mv[MY_ID]||0;
-  const moveLabel = myMove>0 ? `▲${myMove}` : myMove<0 ? `▼${Math.abs(myMove)}` : '—';
-  const moveColor = myMove>0 ? '#3DD47E' : myMove<0 ? '#FF6B5E' : '#8A8A8A';
+  const myHist = buildParticipantHistory(MY_ID);
+  const roundPts = myHist.length ? myHist[myHist.length-1].points : emptyInline('لا جولات');
 
   let rivalHtml = '';
   const above = idx>0 ? st[idx-1] : null;
@@ -219,21 +221,34 @@ function renderMyDashboard(){
   const whatINeedHtml = buildWhatINeedHTML(meRow, st, idx);
 
   box.style.display = 'block';
+  // "حالتي" (FR-16 البند 1): المركز، والرصيد، والحركة، ونقاط الجولة في صف واحد؛ والباقي (المنافسون، وما أحتاجه، والتوقع، والمشاركة) داخل طيّة
   box.innerHTML = `
     <div class="my-dash-card">
-      <div class="my-dash-head">👋 أهلًا ${me.name}</div>
-      <div class="my-dash-stats">
-        <div class="my-dash-stat"><span class="my-dash-num">${rank}</span><span class="my-dash-label">مركزك</span></div>
-        <div class="my-dash-stat"><span class="my-dash-num">${meRow.total}</span><span class="my-dash-label">نقاطك</span></div>
-        <div class="my-dash-stat"><span class="my-dash-num" style="color:${moveColor};">${moveLabel}</span><span class="my-dash-label">حركتك</span></div>
+      <div class="my-dash-top">
+        <div class="my-dash-head">حالتي · ${me.name}</div>
+        <button type="button" class="btn ghost my-dash-change" id="meChangeBtn">${ICONS.user}<span>تغيير</span></button>
       </div>
-      ${rivalHtml}
-      ${whatINeedHtml}
-      ${predHtml}
-      <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+      <div class="my-dash-stats">
+        <div class="my-dash-stat"><span class="my-dash-num">${rank}</span><span class="my-dash-label">المركز</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${meRow.total}</span><span class="my-dash-label">الرصيد</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${movementHTML(myMove)}</span><span class="my-dash-label">الحركة</span></div>
+        <div class="my-dash-stat"><span class="my-dash-num">${roundPts}</span><span class="my-dash-label">نقاط الجولة</span></div>
+      </div>
+      <details class="my-dash-more">
+        <summary>تفاصيل وضعي</summary>
+        ${rivalHtml}
+        ${whatINeedHtml}
+        ${predHtml}
+        <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+        ${myClubsCardBlockHTML(MY_ID)}
+      </details>
     </div>`;
+  if(pickerBox) pickerBox.classList.add('is-compact');
+  const changeBtn = document.getElementById('meChangeBtn');
+  if(changeBtn && pickerBox) changeBtn.addEventListener('click', ()=> pickerBox.classList.toggle('open'));
   const shareBtn = document.getElementById('shareMyRankBtn');
   if(shareBtn) shareBtn.addEventListener('click', shareMyRank);
+  bindMyClubsCardBlock(MY_ID);
 }
 
 // نص شخصي جاهز للمشاركة بالواتساب — منفصل عن ملخص الموسم العام (خاص
@@ -409,14 +424,14 @@ function renderMyAchievements(){
   const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
   const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
   const tiles = [
-    ['🔥','أفضل جولة',`${best} نقطة`,`جولة ${bestRound?.number||'–'}`],
-    ['📉','أضعف جولة',`${worst} نقطة`,`جولة ${worstRound?.number||'–'}`],
+    ['🔥','أفضل جولة',`${best} نقطة`,bestRound ? `جولة ${bestRound.number}` : ''],
+    ['📉','أضعف جولة',`${worst} نقطة`,worstRound ? `جولة ${worstRound.number}` : ''],
     ['📊','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
     ['🏆','أفضل مركز',`#${bestRank}`,''],
     ['😓','أسوأ مركز',`#${worstRank}`,''],
     ['👑','مرات في الصدارة',`${timesFirst}`,timesFirst===0?'لم تتصدر بعد':'مرة'],
     ['💪','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
-    ['⚽','ناديك المفضل',favClub?favClub[0]:'—',favClub?`${favClub[1]} مرات`:''],
+    ['⚽','ناديك المفضل',favClub?favClub[0]:'لا يوجد بعد',favClub?`${favClub[1]} مرات`:''],
   ];
   // طلب المستخدم 17 سبتمبر 2026 — عدّ الجولات يجب أن يشمل الجولتين 1 و2
   // (getCurrentRoundNumber())، لا DATA.rounds.length التي تستثنيهما فتُنقِص العدّ.
@@ -424,14 +439,14 @@ function renderMyAchievements(){
     <div style="background:var(--paper);border-radius:14px;padding:16px;border:2px solid ${pc}44;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
-        <strong style="color:${pc};">${p?.name||''}</strong>
+        <strong style="color:${readableColor(pc)};">${p?.name||''}</strong>
         <span style="color:var(--muted);font-size:0.82rem;">— ${getCurrentRoundNumber()} جولات</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
         ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">
           <div style="font-size:1.3rem;">${ic}</div>
           <div style="font-size:0.7rem;color:var(--muted);margin:2px 0;">${label}</div>
-          <div style="font-size:0.98rem;font-weight:800;color:var(--gold);">${val}</div>
+          <div style="font-size:0.98rem;font-weight:800;color:var(--gold-light);">${val}</div>
           ${sub?`<div style="font-size:0.68rem;color:var(--muted);">${sub}</div>`:''}
         </div>`).join('')}
       </div>

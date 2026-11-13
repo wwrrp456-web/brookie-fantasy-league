@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>أيقونات بروكي — المكتبة الكاملة</title>
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <style>
+:root{--c-bg:#0B0D1F;--c-surface:#12142E;--c-text:#F4F5FF;--c-brand:#7B5CFF;--c-white:#FFFFFF;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-6:24px;--sp-8:32px;--r:12px;--font:Tajawal,system-ui,sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--c-bg);color:var(--c-text);font:16px/1.7 var(--font)}
+    main{width:min(100%,1120px);margin:auto;padding:var(--sp-6) var(--sp-4) var(--sp-8)}
+    h1{margin:0;font-size:24px}h2{margin:0;font-size:20px}p{margin:var(--sp-2) 0 var(--sp-6)}
+    .intro{max-width:720px}.status{border-inline-start:3px solid var(--c-brand);padding-inline-start:var(--sp-3)}
+    .theme{padding:var(--sp-6) var(--sp-4);margin-top:var(--sp-6);border:1px solid currentColor;border-radius:var(--r);background:var(--c-bg);color:var(--c-text)}
+    .theme.light{background:var(--c-white);color:var(--c-surface)}
+    .theme-note{font-size:14px;margin-bottom:var(--sp-4)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-4)}
+    article{min-width:0;border:1px solid currentColor;border-radius:var(--r);padding:var(--sp-4)}
+    h3{font-size:16px;margin:0}code{font-size:12px;direction:ltr;display:block;unicode-bidi:isolate}
+    .sizes{display:flex;align-items:start;justify-content:space-between;gap:var(--sp-2);margin-top:var(--sp-4)}
+    figure{margin:0;text-align:center;min-width:48px}.sample{height:56px;display:flex;align-items:center;justify-content:center}
+    .sample svg{display:block;flex:none}figcaption{font-size:12px;direction:ltr}
+    .error{padding:var(--sp-4);border:1px solid currentColor}
+    a{color:inherit;text-underline-offset:3px}
+    @media(max-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:480px){main{padding:var(--sp-4) var(--sp-3)}.theme{padding:var(--sp-4) var(--sp-3)}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="intro">
+    <h1>أيقونات بروكي — المكتبة الكاملة</h1>
+    <p>المكتبة الكاملة: 56 أيقونة بخط موحّد على شبكة 24×24، وبسماكة 1.75، وحواف مستديرة. كل رسم معروض بالحجم الفعلي عند 16 و24 و48px؛ لا يتغير وزن الخط بين الأيقونات.</p>
+    <p class="status">امتداد للأسلوب المعتمد في الدفعة التجريبية. الأيقونات ترث لون استخدامها، والخلفية الداكنة تتبع R-10. <a href="../../specs/reports/001-T05-full.md">تقرير المكتبة وسلوك الاتجاهات</a> · <a href="REPORT.md">مرجع أسلوب الدفعة المعتمدة</a></p>
+  </header>
+  <section class="theme dark" aria-labelledby="dark-title">
+    <h2 id="dark-title">الخلفية الداكنة</h2>
+    <p class="theme-note">خلفية #0B0D1F، ورسم #F4F5FF</p>
+    <div class="grid"></div>
+  </section>
+  <section class="theme light" aria-labelledby="light-title">
+    <h2 id="light-title">الخلفية الفاتحة</h2>
+    <p class="theme-note">خلفية #FFFFFF، ورسم #12142E</p>
+    <div class="grid"></div>
+  </section>
+  <noscript><p class="error">يتطلب عرض الملفات المتجهة تفعيل JavaScript وفتح الصفحة عبر خادم محلي.</p></noscript>
+</main>
+<script>
+  const icons=[["trophy","بطولة"],["crown","متصدر أو بطل"],["medal","ميدالية"],["flame","سلسلة انتصارات"],["snowflake","ثبات"],["skull-zero","الممة"],["swords","مواجهة"],["bolt","أعلى نقاط جولة"],["rocket","أكبر صعود"],["trend-up","اتجاه صاعد"],["trend-down","اتجاه هابط"],["arrow-up","صعود"],["arrow-down","هبوط"],["target","هدف"],["shield","دفاع"],["ball","كرة"],["chart-bar","إحصاءات"],["crystal-ball","توقع"],["poll","تصويت"],["mic","قصة الجولة"],["wall","الجدار"],["comment","تعليق"],["clipboard","ملف المشارك"],["calendar","تقويم"],["clock","عد تنازلي"],["bell","إشعارات"],["user","مشارك"],["users","مجموعة مشاركين"],["search","بحث"],["share","مشاركة"],["download","تنزيل"],["image","صورة"],["refresh","تحديث"],["live","مباشر"],["lock","قفل"],["unlock","فتح القفل"],["settings","إعدادات"],["info","معلومات"],["warning","تنبيه"],["check","تأكيد"],["close","إغلاق"],["plus","إضافة"],["trash","حذف"],["edit","تعديل"],["save","حفظ"],["link","رابط"],["sun","الوضع الفاتح"],["moon","الوضع الداكن"],["gift","ما الجديد"],["sparkles","احتفال"],["scale","كسر التعادل"],["certificate","شهادة"],["whatsapp-share","مشاركة للمحادثة"],["chevron-down","توسيع"],["chevron-left","اتجاه لليسار"],["more","المزيد"]];
+  async function render(){
+    for(const [name,label] of icons){
+      const response=await fetch(name+'.svg');
+      if(!response.ok)throw Error('تعذّر تحميل الأيقونة: '+name);
+      const doc=new DOMParser().parseFromString(await response.text(),'image/svg+xml');
+      if(doc.querySelector('parsererror')||doc.documentElement.localName!=='svg')throw Error('ملف متجه غير صالح: '+name);
+      for(const grid of document.querySelectorAll('.grid')){
+        const article=document.createElement('article');article.dataset.icon=name;
+        const title=document.createElement('h3');title.textContent=label;
+        const code=document.createElement('code');code.textContent=name;
+        const sizes=document.createElement('div');sizes.className='sizes';
+        for(const size of [16,24,48]){
+          const figure=document.createElement('figure');const sample=document.createElement('div');sample.className='sample';
+          const svg=document.importNode(doc.documentElement,true);svg.setAttribute('width',size);svg.setAttribute('height',size);svg.setAttribute('role','img');svg.setAttribute('aria-label',label);
+          const caption=document.createElement('figcaption');caption.textContent=size+'px';sample.append(svg);figure.append(sample,caption);sizes.append(figure);
+        }
+        article.append(title,code,sizes);grid.append(article);
+      }
+    }
+  }
+  render().catch(error=>{const message=document.createElement('p');message.className='error';message.setAttribute('role','alert');message.textContent='تعذّر عرض الأيقونات. افتح الصفحة عبر خادم محلي وتأكد من توفر ملفات SVG بجوارها.';document.querySelector('main').append(message);});
+</script>
+</body>
+</html>

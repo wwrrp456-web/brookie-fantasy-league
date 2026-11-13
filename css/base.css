@@ -12,6 +12,8 @@
     --gold-light:#9B7BF5;
     --sky:#00B4FF;
     --coral:#FF6F52;
+    --on-coral:#0B0D1F;   /* نص فوق خلفية --coral: حبر بالداكن (7:1) وأبيض بالفاتح (SC-09) */
+    --on-gold:#0B0D1F;    /* نص فوق خلفية --gold (البنفسجي): حبر بالداكن، وأبيض بالفاتح */
     --line:rgba(123,92,255,0.22);
     --muted:#9C9BC9;
     --text:#EDEBFF;
@@ -26,7 +28,9 @@
     --gold:#7B5CFF;
     --gold-light:#A78BFA;
     --sky:#00B4FF;
-    --coral:#C9552C;
+    --coral:#B3401A;     /* كان #C9552C (4.0:1 على الفاتح) ← 5.1:1 (SC-09) */
+    --on-coral:#FFFFFF;
+    --on-gold:#FFFFFF;
     --line:rgba(123,92,255,0.18);
     --muted:#6E6690;
     --text:#0B0D1F;

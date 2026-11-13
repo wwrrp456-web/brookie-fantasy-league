@@ -45,3 +45,8 @@
 @media (prefers-reduced-motion:reduce){
   .wall-reaction-btn{transition:none;}
 }
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .wall-reaction-btn{transition:none;}
+}
