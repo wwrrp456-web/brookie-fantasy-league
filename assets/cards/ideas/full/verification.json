@@ -1,0 +1,4597 @@
+{
+  "task": "001-T009e",
+  "decision": "R-15",
+  "source": "specs/001-ui-visual-overhaul/card-data.json",
+  "sourceSHA256": "4fb6f68a4fe7d7535271c4e468615977d4c0b654c9b9503add5f70b2656cf47a",
+  "comparison": [
+    {
+      "height": 1350,
+      "theme": "dark",
+      "row": 40,
+      "normalGap": 4,
+      "normalGapRatio": 0.1,
+      "groupGap": 12,
+      "groupGapRatio": 0.3,
+      "nameFont": 32,
+      "scoreFont": 36,
+      "motionFont": 24,
+      "phoneHeight": 487.5,
+      "phoneNameFont": 11.555555555555555,
+      "phoneScoreFont": 13.0,
+      "phoneMotionFont": 8.666666666666666
+    },
+    {
+      "height": 1350,
+      "theme": "light",
+      "row": 40,
+      "normalGap": 4,
+      "normalGapRatio": 0.1,
+      "groupGap": 12,
+      "groupGapRatio": 0.3,
+      "nameFont": 32,
+      "scoreFont": 36,
+      "motionFont": 24,
+      "phoneHeight": 487.5,
+      "phoneNameFont": 11.555555555555555,
+      "phoneScoreFont": 13.0,
+      "phoneMotionFont": 8.666666666666666
+    },
+    {
+      "height": 1620,
+      "theme": "dark",
+      "row": 48,
+      "normalGap": 8,
+      "normalGapRatio": 0.16666666666666666,
+      "groupGap": 16,
+      "groupGapRatio": 0.3333333333333333,
+      "nameFont": 36,
+      "scoreFont": 44,
+      "motionFont": 26,
+      "phoneHeight": 585.0,
+      "phoneNameFont": 13.0,
+      "phoneScoreFont": 15.88888888888889,
+      "phoneMotionFont": 9.38888888888889
+    },
+    {
+      "height": 1620,
+      "theme": "light",
+      "row": 48,
+      "normalGap": 8,
+      "normalGapRatio": 0.16666666666666666,
+      "groupGap": 16,
+      "groupGapRatio": 0.3333333333333333,
+      "nameFont": 36,
+      "scoreFont": 44,
+      "motionFont": 26,
+      "phoneHeight": 585.0,
+      "phoneNameFont": 13.0,
+      "phoneScoreFont": 15.88888888888889,
+      "phoneMotionFont": 9.38888888888889
+    },
+    {
+      "height": 1920,
+      "theme": "dark",
+      "row": 56,
+      "normalGap": 16,
+      "normalGapRatio": 0.2857142857142857,
+      "groupGap": 24,
+      "groupGapRatio": 0.42857142857142855,
+      "nameFont": 40,
+      "scoreFont": 48,
+      "motionFont": 28,
+      "phoneHeight": 693.3333333333334,
+      "phoneNameFont": 14.444444444444445,
+      "phoneScoreFont": 17.333333333333332,
+      "phoneMotionFont": 10.11111111111111
+    },
+    {
+      "height": 1920,
+      "theme": "light",
+      "row": 56,
+      "normalGap": 16,
+      "normalGapRatio": 0.2857142857142857,
+      "groupGap": 24,
+      "groupGapRatio": 0.42857142857142855,
+      "nameFont": 40,
+      "scoreFont": 48,
+      "motionFont": 28,
+      "phoneHeight": 693.3333333333334,
+      "phoneNameFont": 14.444444444444445,
+      "phoneScoreFont": 17.333333333333332,
+      "phoneMotionFont": 10.11111111111111
+    }
+  ],
+  "runs": [
+    {
+      "size": 1350,
+      "theme": "dark",
+      "errors": [],
+      "shot": "shots/1350-dark.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 248,
+            "bottom": 288,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 292,
+            "bottom": 332,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 336,
+            "bottom": 376,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 380,
+            "bottom": 420,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 424,
+            "bottom": 464,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 476,
+            "bottom": 516,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 520,
+            "bottom": 560,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 564,
+            "bottom": 604,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 608,
+            "bottom": 648,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 652,
+            "bottom": 692,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 704,
+            "bottom": 744,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 748,
+            "bottom": 788,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 792,
+            "bottom": 832,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 836,
+            "bottom": 876,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 880,
+            "bottom": 920,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 932,
+            "bottom": 972,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 976,
+            "bottom": 1016,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1020,
+            "bottom": 1060,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1064,
+            "bottom": 1104,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1108,
+            "bottom": 1148,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 564,
+          "bottom": 604,
+          "width": 952,
+          "height": 40
+        },
+        "nameSize": 32,
+        "scoreSize": 36,
+        "motionSize": 24,
+        "clipped": false
+      }
+    },
+    {
+      "size": 1350,
+      "theme": "light",
+      "errors": [],
+      "shot": "shots/1350-light.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1190,
+        "width": 952,
+        "height": 1126
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 248,
+            "bottom": 288,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 292,
+            "bottom": 332,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 336,
+            "bottom": 376,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 380,
+            "bottom": 420,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 424,
+            "bottom": 464,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 476,
+            "bottom": 516,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 520,
+            "bottom": 560,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 564,
+            "bottom": 604,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 608,
+            "bottom": 648,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 652,
+            "bottom": 692,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 704,
+            "bottom": 744,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 748,
+            "bottom": 788,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 792,
+            "bottom": 832,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 836,
+            "bottom": 876,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 880,
+            "bottom": 920,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 932,
+            "bottom": 972,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 976,
+            "bottom": 1016,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1020,
+            "bottom": 1060,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1064,
+            "bottom": 1104,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1108,
+            "bottom": 1148,
+            "width": 952,
+            "height": 40
+          },
+          "nameSize": 32,
+          "scoreSize": 36,
+          "motionSize": 24,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1254,
+        "bottom": 1350,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo-light.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 564,
+          "bottom": 604,
+          "width": 952,
+          "height": 40
+        },
+        "nameSize": 32,
+        "scoreSize": 36,
+        "motionSize": 24,
+        "clipped": false
+      }
+    },
+    {
+      "size": 1620,
+      "theme": "dark",
+      "errors": [],
+      "shot": "shots/1620-dark.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1460,
+        "width": 952,
+        "height": 1396
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 252,
+            "bottom": 300,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 308,
+            "bottom": 356,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 364,
+            "bottom": 412,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 420,
+            "bottom": 468,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 476,
+            "bottom": 524,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 540,
+            "bottom": 588,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 596,
+            "bottom": 644,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 652,
+            "bottom": 700,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 708,
+            "bottom": 756,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 764,
+            "bottom": 812,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 828,
+            "bottom": 876,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 884,
+            "bottom": 932,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 940,
+            "bottom": 988,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 996,
+            "bottom": 1044,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1052,
+            "bottom": 1100,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1116,
+            "bottom": 1164,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1172,
+            "bottom": 1220,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1228,
+            "bottom": 1276,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1284,
+            "bottom": 1332,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1340,
+            "bottom": 1388,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1524,
+        "bottom": 1620,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 652,
+          "bottom": 700,
+          "width": 952,
+          "height": 48
+        },
+        "nameSize": 36,
+        "scoreSize": 44,
+        "motionSize": 26,
+        "clipped": false
+      }
+    },
+    {
+      "size": 1620,
+      "theme": "light",
+      "errors": [],
+      "shot": "shots/1620-light.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1460,
+        "width": 952,
+        "height": 1396
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 252,
+            "bottom": 300,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 308,
+            "bottom": 356,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 364,
+            "bottom": 412,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 420,
+            "bottom": 468,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 476,
+            "bottom": 524,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 540,
+            "bottom": 588,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 596,
+            "bottom": 644,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 652,
+            "bottom": 700,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 708,
+            "bottom": 756,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 764,
+            "bottom": 812,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 828,
+            "bottom": 876,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 884,
+            "bottom": 932,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 940,
+            "bottom": 988,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 996,
+            "bottom": 1044,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1052,
+            "bottom": 1100,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1116,
+            "bottom": 1164,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1172,
+            "bottom": 1220,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1228,
+            "bottom": 1276,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1284,
+            "bottom": 1332,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1340,
+            "bottom": 1388,
+            "width": 952,
+            "height": 48
+          },
+          "nameSize": 36,
+          "scoreSize": 44,
+          "motionSize": 26,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8,
+        16,
+        8,
+        8,
+        8,
+        8
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1524,
+        "bottom": 1620,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo-light.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 652,
+          "bottom": 700,
+          "width": 952,
+          "height": 48
+        },
+        "nameSize": 36,
+        "scoreSize": 44,
+        "motionSize": 26,
+        "clipped": false
+      }
+    },
+    {
+      "size": 1920,
+      "theme": "dark",
+      "errors": [],
+      "shot": "shots/1920-dark.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 312,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 328,
+            "bottom": 384,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 400,
+            "bottom": 456,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 472,
+            "bottom": 528,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 544,
+            "bottom": 600,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 624,
+            "bottom": 680,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 696,
+            "bottom": 752,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 768,
+            "bottom": 824,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 840,
+            "bottom": 896,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 912,
+            "bottom": 968,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 992,
+            "bottom": 1048,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1064,
+            "bottom": 1120,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1136,
+            "bottom": 1192,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1208,
+            "bottom": 1264,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1280,
+            "bottom": 1336,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1360,
+            "bottom": 1416,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1432,
+            "bottom": 1488,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1504,
+            "bottom": 1560,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1576,
+            "bottom": 1632,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1648,
+            "bottom": 1704,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 768,
+          "bottom": 824,
+          "width": 952,
+          "height": 56
+        },
+        "nameSize": 40,
+        "scoreSize": 48,
+        "motionSize": 28,
+        "clipped": false
+      }
+    },
+    {
+      "size": 1920,
+      "theme": "light",
+      "errors": [],
+      "shot": "shots/1920-light.png",
+      "safe": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 1760,
+        "width": 952,
+        "height": 1696
+      },
+      "out": [],
+      "overlap": [],
+      "participants": [
+        {
+          "id": 20,
+          "rank": 1,
+          "name": "لطفي",
+          "total": 92,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 256,
+            "bottom": 312,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 17,
+          "rank": 2,
+          "name": "أيوب",
+          "total": 90,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 328,
+            "bottom": 384,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 16,
+          "rank": 3,
+          "name": "أبو أوس",
+          "total": 89,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 400,
+            "bottom": 456,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 4,
+          "rank": 4,
+          "name": "العندليب",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 472,
+            "bottom": 528,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 6,
+          "rank": 5,
+          "name": "أبو عزام",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 544,
+            "bottom": 600,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 11,
+          "rank": 6,
+          "name": "مصطفى عبده",
+          "total": 85,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 624,
+            "bottom": 680,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 14,
+          "rank": 7,
+          "name": "أبا عتاب",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 696,
+            "bottom": 752,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 1,
+          "rank": 8,
+          "name": "أبو تغريد (زيد)",
+          "total": 84,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 768,
+            "bottom": 824,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 9,
+          "rank": 9,
+          "name": "أبو رمزي",
+          "total": 83,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 840,
+            "bottom": 896,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 7,
+          "rank": 10,
+          "name": "أبو شيخة",
+          "total": 81,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 912,
+            "bottom": 968,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 13,
+          "rank": 11,
+          "name": "سعيد",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 992,
+            "bottom": 1048,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 3,
+          "rank": 12,
+          "name": "أبو يحيى",
+          "total": 79,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1064,
+            "bottom": 1120,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 15,
+          "rank": 13,
+          "name": "علي قوول",
+          "total": 78,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1136,
+            "bottom": 1192,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 2,
+          "rank": 14,
+          "name": "أبو مناف",
+          "total": 77,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1208,
+            "bottom": 1264,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 12,
+          "rank": 15,
+          "name": "ليمان",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1280,
+            "bottom": 1336,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 10,
+          "rank": 16,
+          "name": "أبو حمد",
+          "total": 75,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1360,
+            "bottom": 1416,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 5,
+          "rank": 17,
+          "name": "أبو عبيدة",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1432,
+            "bottom": 1488,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 8,
+          "rank": 18,
+          "name": "موسى (العجوز)",
+          "total": 71,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1504,
+            "bottom": 1560,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 19,
+          "rank": 19,
+          "name": "محمد عثمان",
+          "total": 69,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1576,
+            "bottom": 1632,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        },
+        {
+          "id": 18,
+          "rank": 20,
+          "name": "أبو صالح",
+          "total": 62,
+          "rect": {
+            "left": 64,
+            "right": 1016,
+            "top": 1648,
+            "bottom": 1704,
+            "width": 952,
+            "height": 56
+          },
+          "nameSize": 40,
+          "scoreSize": 48,
+          "motionSize": 28,
+          "clipped": false
+        }
+      ],
+      "gaps": [
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16,
+        24,
+        16,
+        16,
+        16,
+        16
+      ],
+      "header": {
+        "left": 64,
+        "right": 1016,
+        "top": 64,
+        "bottom": 192,
+        "width": 952,
+        "height": 128
+      },
+      "logo": {
+        "left": 916,
+        "right": 1004,
+        "top": 76.9375,
+        "bottom": 178.0625,
+        "width": 88,
+        "height": 101.125
+      },
+      "footer": {
+        "left": 64,
+        "right": 1016,
+        "top": 1824,
+        "bottom": 1920,
+        "width": 952,
+        "height": 96
+      },
+      "images": [
+        {
+          "src": "../../../brand/proki-logo-light.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/shakhtar.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/roma.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psv.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/galatasaray.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/benfica.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/celtic.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/rangers.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/barcelona.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/manchester-city.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-nassr.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/ajax.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dortmund.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/feyenoord.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/chelsea.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/porto.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/sporting-cp.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-hilal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/psg.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/bayern-munich.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/milan.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/arsenal.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-qadsiah.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/juventus.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/dinamo-zagreb.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ittihad.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/atletico-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/fenerbahce.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-ahli.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/marseille.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/al-shabab.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/real-madrid.svg",
+          "shadow": "none",
+          "filter": "none"
+        },
+        {
+          "src": "../../../crests/light/liverpool.svg",
+          "shadow": "none",
+          "filter": "none"
+        }
+      ],
+      "longName": {
+        "id": 1,
+        "rank": 8,
+        "name": "أبو تغريد (زيد)",
+        "total": 84,
+        "rect": {
+          "left": 64,
+          "right": 1016,
+          "top": 768,
+          "bottom": 824,
+          "width": 952,
+          "height": 56
+        },
+        "nameSize": 40,
+        "scoreSize": 48,
+        "motionSize": 28,
+        "clipped": false
+      }
+    }
+  ],
+  "unitTests": 237,
+  "lint": "passed",
+  "existingCardSnapshots": 18
+}
