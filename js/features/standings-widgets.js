@@ -168,13 +168,15 @@ function renderHonorBoard(){
   // أعلى نقاط إجمالية (متصدر الآن)
   const leader = st[0];
 
+  // البطاقة بلا بيانات (لا نقطة جولة، أو لا سلسلة، أو لا ثبات محسوب) تُحذف بدل ما تعرض "—" (U-07)
   const cards = [
     {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:`${leader.total} نقطة`},
-    {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name||'—', val:bestSingle.pts ? `${bestSingle.pts} ن. (ج${bestSingle.round})` : '—'},
-    {emoji:'💀', label:'أقل ممات', name:leastMumma.name||'—', val:`${leastMumma.mumma===Infinity?'—':leastMumma.mumma} ممة`},
-    {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.streak>0?longestStreak.name:'—', val:longestStreak.streak>0?`${longestStreak.streak} جولات متتالية`:'—'},
-    {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.std===Infinity?'—':mostStable.name, val:mostStable.std===Infinity?'—':`انحراف ±${mostStable.std}`},
-  ];
+    bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${bestSingle.pts} ن. (ج${bestSingle.round})`} : null,
+    leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:`${leastMumma.mumma} ممة`} : null,
+    longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:`${longestStreak.streak} جولات متتالية`} : null,
+    mostStable.std !== Infinity ? {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
+  ].filter(Boolean);
+
 
   box.innerHTML = `
     <div class="honor-board">
@@ -508,12 +510,12 @@ function renderRankLeaderboard(){
     for(let i=0; i<=rounds.length; i++){
       if(i===0 && rounds.length===0) continue;
       const rm = ranksByRound[i];
-      const rank = rm && rm[p.id] ? rm[p.id] : '-';
+      const rank = rm && rm[p.id] ? rm[p.id] : '';
       let cls = '';
       if(rank===1) cls='rl-cell-1';
       else if(rank===2) cls='rl-cell-2';
       else if(rank===3) cls='rl-cell-3';
-      html += `<td class="${cls}">${rank}</td>`;
+      html += `<td class="${cls}${rank === '' ? ' empty-cell' : ''}">${rank}</td>`;
     }
     html += '</tr>';
   });

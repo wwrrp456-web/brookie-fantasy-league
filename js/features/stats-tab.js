@@ -560,22 +560,24 @@ function renderClubEfficiency(){
   if(!list.length){ box.innerHTML=''; return; }
 
   const entries = list.slice().sort((a,b)=> b.avg - a.avg);
-  const maxAvg = Math.max(...entries.map(c=>c.avg), 1);
-
-  let html = '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
-  html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">مرتبة حسب متوسط النقاط لكل مباراة — نفس أرقام جدول "أداء الأندية" أعلاه بالضبط</div>';
-  html += '<div class="club-eff-grid">';
-  entries.slice(0,18).forEach(c=>{
-    const pct = Math.round((c.avg/maxAvg)*100);
-    html += `<div class="club-eff-card">
-      <div class="club-eff-name">${c.name}</div>
-      <div class="club-eff-bar-wrap"><div class="club-eff-bar" style="width:${pct}%;"></div></div>
-      <div class="club-eff-stats">
-        <span>معدل ${Math.round(c.avg*10)/10} ن/مباراة</span>
-        <span>${c.w}ف ${c.d}ت ${c.l}خ</span>
-      </div>
+  // أشرطة نسبية على مقياس ثابت (أقصى متوسط ممكن = 3 نقاط للمباراة) فتظهر الفروق الحقيقية بين الأندية (FR-18، U-09)
+  const SCALE = 3;
+  let html = '<div class="club-eff">';
+  html += '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
+  html += '<p class="club-eff-note">متوسط النقاط لكل مباراة، مرتبة من الأعلى. الأشرطة على مقياس ثابت من 3.</p>';
+  const row = c => {
+    const avg = Math.round(c.avg*10)/10;
+    return `<div class="efficiency-row">
+      <div class="efficiency-label">${crestHTML(c.name, 20)}<span class="efficiency-name">${c.name}</span><small class="efficiency-record">${c.w}ف ${c.d}ت ${c.l}خ</small><b>${avg}</b></div>
+      <progress max="${SCALE}" value="${Math.min(c.avg, SCALE)}" aria-label="${c.name}: متوسط ${avg} من ${SCALE}"></progress>
     </div>`;
-  });
+  };
+  // أعلى 10 ظاهرة، والباقي بطيّة خفيفة (الطول، FR-18) بدون حذف أي نادٍ
+  const TOP = 10;
+  html += entries.slice(0, TOP).map(row).join('');
+  if(entries.length > TOP){
+    html += `<details class="eff-more"><summary>باقي الأندية (${formatCount(entries.length - TOP, 'نادٍ')})</summary>${entries.slice(TOP).map(row).join('')}</details>`;
+  }
   html += '</div>';
   box.innerHTML = html;
 }
@@ -614,7 +616,7 @@ function renderDeathMap(){
     roundNums.forEach(n=>{
       const pts = histByRound[n];
       if(pts === undefined){
-        html += `<td class="dm-none">-</td>`;
+        html += `<td class="dm-none empty-cell" title="لا بيانات لهذه الجولة"></td>`;
       } else if(pts === 0){
         html += `<td class="dm-dead">☠️</td>`;
       } else {
@@ -634,7 +636,7 @@ function renderDeathMap(){
       const h = hist.find(x=>x.number===n);
       return h && h.points===0;
     }).length;
-    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count||'-'}</td>`;
+    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count}</td>`;
   });
   html += '<td></td></tr>';
   html += '</table></div>';

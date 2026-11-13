@@ -70,8 +70,8 @@ function renderParticipants(){
 
   sorted.forEach(p => {
     const s = rankMap[p.id] || {};
-    const rank = s.rank !== undefined ? s.rank : '—';
-    const total = s.total !== undefined ? s.total : '—';
+    const rank = s.rank !== undefined ? s.rank : 'غير مصنّف';
+    const total = s.total !== undefined ? s.total : 'غير مصنّف';
     const mumma = s.mummaCount || 0;
     const bestStreak = s.bestStreak || 0;
     const lastPts = s.lastPoints;

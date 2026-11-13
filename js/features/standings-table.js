@@ -1,7 +1,7 @@
 /* جدول الترتيب + قصة الجولة + ملخص واتساب + ملخص التحديث الذكي */
 
 function movementHTML(delta){
-  if(delta === undefined || delta === 0) return '<span class="mv mv-same">—</span>';
+  if(delta === undefined || delta === 0) return `<span class="mv mv-same" role="img" aria-label="لم يتغير" title="لم يتغير">${ICONS.snowflake}</span>`;
   if(delta > 0) return `<span class="mv mv-up">▲${delta}</span>`;
   return `<span class="mv mv-down">▼${Math.abs(delta)}</span>`;
 }
