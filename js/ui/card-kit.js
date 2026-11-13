@@ -233,6 +233,19 @@ function validateCardData(kind, data){
     });
     return out;
   }
+  if(kind === 'champion'){
+    if(!Number.isInteger(data.round) || data.round < 1) out.push('رقم الجولة غير محدد');
+    if(!data.name) out.push('اسم بطل الجولة ناقص');
+    if(!Number.isFinite(data.points)) out.push('نقاط بطل الجولة غير محددة');
+    if(!Number.isFinite(data.rank)) out.push('مركز البطل غير محدد');
+    if(!Number.isFinite(data.total)) out.push('رصيد البطل غير محدد');
+    if(!Array.isArray(data.clubs) || data.clubs.length !== 3 || data.clubs.some(c => !c || !c.club)) out.push('أندية البطل ناقصة (المطلوب ثلاثة)');
+    else data.clubs.forEach(c => {
+      if(c.result !== 'no_match' && !['win', 'draw', 'loss'].includes(c.result)) out.push(`نتيجة ${c.club} غير محددة`);
+      else if(c.result !== 'no_match' && !(Number.isFinite(c.gf) && Number.isFinite(c.ga))) out.push(`أهداف مباراة ${c.club} ناقصة`);
+    });
+    return out;
+  }
   out.push('نوع الكرت غير معروف: ' + kind);
   return out;
 }
