@@ -425,33 +425,53 @@
 ## الدفعة 11 (13 نوفمبر): إصلاح #47، دمج #46 و#47، ثم باقي الكروت
 > **نفّذ بالترتيب بدون ما تنتظر:** F7 ثم M40 ثم M41 ثم S34 ثم S35 ثم S36 ثم S37 (آخر شي ⏹️). الهدف: نخلّص الكروت اليوم عشان النشر.
 
-### ⬜ F7 · إصلاح واحد على PR #47 (001-T021) · على فرعك `feat/001-T021-card-kit`
+### ✅ F7 · إصلاح واحد على PR #47 (001-T021) · على فرعك `feat/001-T021-card-kit`
 - **الحكم:** `specs/reports/001-T021-review.md` (🔁 مشروط). `verify` أحمر لأن `snap-base` تشغّل `tools/snap.js` الجديد على كود الأساس القديم، وما فيه `buildStandingsCardCanvas`.
 - **المطلوب:** في `snapCards` من `tools/snap.js`: لو الدالة غير معرّفة (`typeof` ليس `function`) **واللقطة `--label base`** ← سجّلها `skippedCards` في `report.json` ولا تضفها لـ`cardErrors`. في `head` تبقى خطأً. وصحّح رقم الاختبارات في `001-T021.md` إلى الفعلي (285).
 - **الأدلة:** `verify` **أخضر** على الـPR بعد الدفع (انتظره، رابطه في تقرير الـPR). **لا تدمج في هالخطوة.**
 
-### ⬜ M40 · ادمج PR #46 (001-T009g نسخ الكروت النهارية، Codex) · **SHA:** `56b40a9ad3154fbea985b2938450e843ca0e9d7a` · الحكم: `001-T009g-review.md`
+### ✅ M40 · ادمج PR #46 (001-T009g نسخ الكروت النهارية، Codex) · **SHA:** `56b40a9ad3154fbea985b2938450e843ca0e9d7a` · الحكم: `001-T009g-review.md`
 - علّم 001-T009 (الجزء g) في `tasks.md`، وسجّل في `merge-log.md`. أصول فقط.
 
-### ⬜ M41 · ادمج PR #47 **بشرط** · بعد F7 و`verify` أخضر
+### ✅ M41 · ادمج PR #47 **بشرط** · بعد F7 و`verify` أخضر
 - **الحكم:** `001-T021-review.md`. الشروط: (1) الفرق بعد `bb09350795a9de614b3f54d47940b2885dcb5644` يلمس فقط `tools/snap.js` و`specs/reports/001-T021.md`، (2) `verify` أخضر على آخر SHA، (3) `node tests/run.js` و`node tools/lint.js` نظيفان بعد الدمج. وإلا لا تدمج واكتب السبب. علّم T021 و T022 (جزء الترتيب) `[x]`.
 
-### ⬜ S34 · 001-T022 (الباقي) · كرت بطل الجولة (الكانفس)، بالثيمين
+### ✅ S34 · 001-T022 (الباقي) · كرت بطل الجولة (الكانفس)، بالثيمين
 - **المرجع:** `assets/cards/cards.layout.md` (قسم `champion-post` + `champion-post-stress`)، والقالب `assets/cards/champion-post.html` ولقطاته `shots/champion-post{,-light,-stress,-stress-light}.png`، و`js/ui/card-kit.js` و`standings-card.js` (نفس النمط). **الفرع:** `feat/001-T022b-champion-card` من فرع التكامل **بعد M41** · **التقرير:** `specs/reports/001-T022b.md`
 - **المطلوب:** `buildChampionCardCanvas({theme})` في ملف جديد `js/ui/champion-card.js` حسب المواصفة بالحرف، تحل محل `buildChampionCard`. نافذة اختيار الوضع (الموجودة من S33) تنطبق على تحميل ومشاركة بطل الجولة. أسماء الملفات `brookie-champion-round-<N>-<dark|light>.png`. **ألوان من `card-themes.js` فقط**، صفر hex وصفر إيموجي.
 - **الأدلة:** مقارنة بكسلية (`tools/card-compare.js` ووسّعه لقبول اسم القالب) على الحالتين العادية والضغط بالوضعين، ولقطة بيانات الموقع الحقيقية، واختبار تنزيل، والكرت الناقص ما يُصدَّر.
 
-### ⬜ S35 · 001-T023 (دون الشهادة) · كرت ملخص الموسم + الملف الشخصي (الكانفس)
+### ✅ S35 · 001-T023 (دون الشهادة) · كرت ملخص الموسم + الملف الشخصي (الكانفس)
 - **المرجع:** `cards.layout.md` (قسما `season-wrap-post` و`profile-square`)، ولقطات `shots/`. **الفرع:** `feat/001-T023-wrap-profile` **بعد S34 (ادمجه أنت؟ لا: ابدأ من فرع S34 بعد ما يتدمج PR S34 بحكم)**. لو ما اندمج، ابدأ من فرع التكامل وأضف تعديلات `card-kit` اللي تحتاجها بحذر.
 - **المطلوب:** `buildSeasonWrapCardCanvas({theme})` و`buildParticipantProfileCardCanvas(id, {theme})` بنفس النمط، يحلان محل `buildSeasonWrapCard` و`buildParticipantProfileCard`. **الشهادة ما تُلمس** (تنتظر C16).
 - **الأدلة:** نفس S34 لكل كرت.
 
-### ⬜ S36 · 001-T024 [P] · كرت مواجهة الجولة 🆕 (الكانفس، بالثيمين)
+### ✅ S36 · 001-T024 [P] · كرت مواجهة الجولة 🆕 (الكانفس، بالثيمين)
 - **المرجع:** `cards.layout.md` (`duel-post` + `duel-post-stress`)، `assets/cards/duel-post.html`. **الفرع:** `feat/001-T024-duel-card`. **التقرير:** `specs/reports/001-T024.md`.
 - **المطلوب:** `buildDuelCardCanvas({theme})` + زر "مواجهة الجولة" في الواجهة المناسبة بحسب `tasks.md` (T024)، يستخدم نافذة الوضع.
 - **الأدلة:** مقارنة بكسلية للعادي والضغط بالوضعين، وتنزيل، وكرت ناقص ما يُصدَّر.
 
-### ⬜ S37 · 001-T025 [P] · كرت نتائج أنديتي 🆕 (الكانفس، بالثيمين) · ⏹️ توقف بعده
+### ✅ S37 · 001-T025 [P] · كرت نتائج أنديتي 🆕 (الكانفس، بالثيمين) · ⏹️ توقف بعده
 - **المرجع:** `cards.layout.md` (`my-clubs-post`)، `assets/cards/my-clubs-post.html`. **الفرع:** `feat/001-T025-my-clubs-card`. **التقرير:** `specs/reports/001-T025.md`.
 - **المطلوب:** `buildMyClubsCardCanvas({theme})`، وحالة فاضية (مكوّن `empty-state.js`) لين تتوفر بيانات ميزة 005، حسب `tasks.md`.
 - ⏹️ **بعد S37 توقف.** T026 (حذف `canvas-cards.js`) وT027 تنتظر شهادة C16، فلا تلمس `buildChampionCertificateCanvas`.
+
+---
+## الدفعة 12 (13 نوفمبر): دمج الكروت، ثم الإغلاق
+> **نفّذ بالترتيب بدون انتظار.** الحكم لكل واحد ✅ على SHA محدد. كلها فروع بقاعدة فرع التكامل. الأربعة **تتعارض** في `index.html` و`card-kit.js` و`canvas-cards.js` و`card-compare.js` و`snap.js` و`lint-baseline.json`: حلّها بالإبقاء على كل التغييرات. بعد **كل** دمج: `node tests/run.js` و`node tools/lint.js` والـe2e للكروت المدموجة، وسجّل في `merge-log.md`. **ما تدفع commit فارغًا لـCI**: `verify` أخضر على كل PR قبل.
+
+### ⬜ M42 · ادمج PR #49 (001-T022b بطل الجولة) · **SHA:** `b41885738ae135df63c0c0bfc4334ad8df2efbc8` · `001-T022b-review.md`
+### ⬜ M43 · ادمج PR #50 (001-T023 ملخص الموسم والملف) · **SHA:** `3fe9566c9fe060004352ee7ee837f50469b455cf` · `001-T023-review.md`
+### ⬜ M44 · ادمج PR #51 (001-T024 المواجهة، مبني فوق #50) · **SHA:** `3e45e01ab03de994e86f80a9d5824d8cfc8350eb` · `001-T024-review.md`
+### ⬜ M45 · ادمج PR #52 (001-T025 أنديتي، مبني فوق #51) · **SHA:** `836703c950282e3ffe1fd44bafdcdef9ff1e48b8` · `001-T025-review.md`
+### ⬜ M46 · ادمج PR #48 (001-T009h أفكار الشهادة، Codex، أصول فقط) · **SHA:** `5ccfe9c2eae4c3283eaee24851c8afadf16c4e9b` · `001-T009h-certificate-review.md`
+- بعد M42–M45 علّم T022 وT023 (دون الشهادة) وT024 وT025 `[x]`. **T026 تبقى** (الشهادة تنتظر C16). بعد M45 شغّل `node tools/snap.js` كاملًا وتأكد ما فيه `cardErrors`.
+
+### ⬜ S38 · 001-T027 · حذف `site-polish.css` والـ`!important`
+- **المرجع:** `tasks.md` (T027)، **القبول:** SC-01 = 0 و`importants` = 0 في `lint`. **الفرع:** `feat/001-T027-polish-removal` من فرع التكامل **بعد M46** · **التقرير:** `specs/reports/001-T027.md`.
+- **المطلوب:** انقل ما يلزم من `site-polish.css` إلى ملفات CSS المناسبة بدون `!important` ثم احذفه وسطر الربط. **لا تغيّر مظهرًا**: لقطات `snap` قبل وبعد على 390 و1366 بالوضعين، والفرق يُشرح.
+- **الأدلة:** `lint` (importants 0)، ولقطات قبل/بعد (`tools/snap-diff.js`)، و`verify` أخضر. ما تلمس `buildChampionCertificateCanvas`.
+
+### ⬜ S39 · 001-T028 · فحص الوصول (axe) + تكبير 200% · ⏹️ توقف بعده
+- **الفرع:** `feat/001-T028-a11y` **بعد دمج S38** · **التقرير:** `specs/reports/001-T028.md`. شغّل axe على التبويبات السبعة بالوضعين (مخالفات التباين 0) وفحص تكبير 200% على 390 و1366 بدون تجاوز أفقي أو قص نص، وأضف `axe-contrast` حارسًا لـ`verify.yml` (مذكور في حكم T020). الأدلة: أعداد قبل/بعد ولقطات.
+- ⏹️ **بعد S39 توقف.**
