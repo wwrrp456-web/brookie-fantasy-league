@@ -25,7 +25,7 @@ const FILES = [
   'js/core/standings-engine.js',
   'js/core/club-engine.js',
   'js/ui/card-layout.js',
-  'js/ui/canvas-cards.js',
+  'js/ui/certificate-card.js',
 ];
 
 const source = FILES.map(f => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n;\n');
@@ -73,18 +73,6 @@ check('لطفي (20) مستثنى فعليًا من الترتيب أثناء ا
 // توثَّق بملف التسليم: بند "أخطاء أُصلحت" رقم يخص محمد عثمان).
 const currentRoundPoints = context.getCurrentRoundPointsMap();
 check('محمد عثمان (19): نقاط الجولة الحالية = 0 أثناء الجسر (لم يشارك بعد)', currentRoundPoints[19], 0);
-
-// ---------- 000-T01: تخطيط ستوري الترتيب (computeStoryLayout) ----------
-// آخر صف لازم ينتهي قبل بداية التذييل (footerTop) بدون تداخل مع أي صف قبله.
-const STORY_FOOTER_TOP = 1920 - 170;
-[10, 18, 20, 24].forEach(n => {
-  const L = context.computeStoryLayout({n, H: 1920, contentTop: 520, footerTop: STORY_FOOTER_TOP});
-  const last = L.rows[L.rows.length - 1];
-  check(`ستوري n=${n}: آخر صف y+rowH ≤ footerTop`, last.y + L.rowH <= STORY_FOOTER_TOP, true);
-  check(`ستوري n=${n}: الصفوف بدون تداخل ورتبة الأخير = ${n}`,
-    L.rows.every((r, i) => i === 0 || r.y >= L.rows[i - 1].y + L.rowH) && last.rank === n, true);
-  check(`ستوري n=${n}: rowH ضمن [96,150]`, L.rowH >= 96 && L.rowH <= 150, true);
-});
 
 // ---------- 000-T02: التحقق من بيانات الشهادة ----------
 check('شهادة: بطل غير محدد (null) ← نقص واحد',
