@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* مقارنة بطاقة الترتيب (الكانفس) بالقالب المرجع بكسليًا (001-T021، الأدلة (أ)/(ب)).
  *
- *   node tools/card-compare.js [--out card-diff] [--kind standings|wrap|profile|duel|myclubs] [--only 20-dark,wrap-light] [--max-pct 1]
+ *   node tools/card-compare.js [--out card-diff] [--kind standings|champion|wrap|profile|duel|myclubs] [--only 20-dark,champion-stress-light,wrap-light] [--max-pct 1]
  *
  * يبني بطاقة الترتيب بـ`buildStandingsCardCanvas` على بيانات القالب نفسها (assets/cards/standings-card.data.json، مطابقة لـspecs/001-ui-visual-overhaul/card-data.json)
  * بالحالات: 20 (الحقيقي)، 18، 24 (نسخ هندسية)، وأطول اسم (stress) × ليلي/نهاري، ويقارنها بـassets/cards/shots/standings-card-<حالة>-<ثيم>.png بـpixelmatch.
@@ -15,6 +15,18 @@ const readJson = f => JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8'));
 
 const CASES = [];
 ['20', '18', '24', 'long-name'].forEach(c => ['dark', 'light'].forEach(t => CASES.push({ kind: 'standings', c, t, name: `${c}-${t}`, ref: `standings-card-${c}-${t}.png` })));
+// كرت بطل الجولة (001-T022b): العادي والضغط بالوضعين؛ أسماء لقطات القالب: champion-post{,-light,-stress,-stress-light}.png
+['', 'stress'].forEach(v => ['dark', 'light'].forEach(t => CASES.push({ kind: 'champion', c: v || 'normal', t, name: `champion-${v || 'normal'}-${t}`, ref: `champion-post${v ? '-stress' : ''}${t === 'light' ? '-light' : ''}.png` })));
+
+// بيانات كرت بطل الجولة من card-data.json (نفس عينة القالب)، وحالة الضغط: الاسم الطويل والنادي الأول باريس
+function championSample(card, stress) {
+  const st = card.standings.find(s => s.id === card.champion.id);
+  const data = { round: card.round, id: card.champion.id, name: card.champion.name, points: card.champion.points, clubs: card.champion.clubs.map(c => ({ club: c.club, result: c.result, opp: c.opp, gf: c.gf, ga: c.ga })),
+    rank: st.rank, total: st.total, move: st.move, tiebreak: { gf: card.champion.gf, ga: card.champion.ga }, date: '29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ' };
+  if (stress) { data.name = 'أبو تغريد (زيد) الثاني'; data.clubs[0].club = 'باريس سان جيرمان'; }
+  return data;
+}
+
 // ملخص الموسم والملف الشخصي (001-T023): لقطات القالب season-wrap-post{,-light}.png وprofile-square{,-light}.png
 ['dark', 'light'].forEach(t => {
   CASES.push({ kind: 'wrap', c: 'normal', t, name: `wrap-${t}`, ref: `season-wrap-post${t === 'light' ? '-light' : ''}.png` });
@@ -75,7 +87,13 @@ async function main(argv) {
       if (only ? !only.includes(cs.name) : (cs.kind !== (kind || 'standings'))) continue;
       const { page, context } = await snap.openPage(browser, ctx, { width: 1080, light: cs.t === 'light' });
       let res;
-      if (cs.kind === 'myclubs') {
+      if (cs.kind === 'champion') {
+        const data = championSample(readJson('specs/001-ui-visual-overhaul/card-data.json'), cs.c === 'stress');
+        res = await page.evaluate(async ([data, theme]) => {
+          const cv = await buildChampionCardCanvas({ theme, data });
+          return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
+        }, [data, cs.t]);
+      } else if (cs.kind === 'myclubs') {
         const data = myClubsSample(readJson('specs/001-ui-visual-overhaul/card-data.json'));
         res = await page.evaluate(async ([data, theme]) => {
           const cv = await buildMyClubsCardCanvas({ theme, data });
