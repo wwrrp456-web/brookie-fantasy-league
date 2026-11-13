@@ -351,7 +351,7 @@ const asyncCrestTests = (async () => {
   const sb = {console, Blob, URL};
   sb.window = sb;
   const cctx = vm.createContext(sb);
-  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js']
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
   const run = code => vm.runInContext(code, cctx);
   const blobText = async url => resolveObjectURL(url).text();
@@ -391,6 +391,14 @@ const asyncCrestTests = (async () => {
   (function walk(d) { fs.readdirSync(d, {withFileTypes: true}).forEach(e => { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(js|html)$/.test(e.name)) { const t = fs.readFileSync(p, 'utf8'); if (/clubCrestSVG|brand-assets|LOGO_BASE64|_ICON_PNG_BASE64/.test(t)) refs.push(path.relative(ROOT, p)); } }); })(path.join(ROOT, 'js'));
   ['index.html', 'report.html'].forEach(f => { if (/brand-assets|clubCrestSVG|LOGO_BASE64/.test(fs.readFileSync(path.join(ROOT, f), 'utf8'))) refs.push(f); });
   check('crests: js/data/brand-assets.js محذوف ولا بقيت أي إحالة (clubCrestSVG وLOGO_BASE64 والأيقونات PNG)', [fs.existsSync(path.join(ROOT, 'js/data/brand-assets.js')), refs], [false, []]);
+  // 001-T017: مكوّن الحالة الفاضية
+  const es = run("emptyState({icon: 'bell', title: 'لا إشعارات جديدة', text: 'أنت مطّلع على آخر الأخبار.'})");
+  check('empty-state: أيقونة (svg من ICONS) + عنوان + نص، وبلا أي شرطة كقيمة', [/<svg/.test(es), /<h3 class="empty-state-title">لا إشعارات جديدة<\/h3>/.test(es), /<p class="empty-state-text">/.test(es), /[—–]/.test(es)], [true, true, true, false]);
+  check('empty-state: أيقونة غير معروفة تُهمَل بدون خطأ', /<svg/.test(run("emptyState({icon: 'ما-في-أيقونة', title: 'ت'})")), false);
+  const esx = run("emptyState({title: '<img src=x onerror=1>', text: '\"x\"&', action: {label: '<b>', href: 'a\" onclick=\"1'}})");
+  check('empty-state: النصوص والرابط مهرَّبة (لا وسوم ولا كسر خاصية)', [/<img/.test(esx), /<b>/.test(esx), /onclick="1/.test(esx)], [false, false, false]);
+  check('empty-state: الزر الاختياري (رابط أو زر بمعرّف)', [/<a class="btn" href="x">ذهاب<\/a>/.test(run("emptyState({title:'t', action:{label:'ذهاب', href:'x'}})")), /<button type="button" class="btn" id="b1">ذهاب<\/button>/.test(run("emptyState({title:'t', action:{label:'ذهاب', id:'b1'}})"))], [true, true]);
+  check('empty-state: emptyInline نص خافت بدل شرطة، وافتراضيه "لا بيانات بعد"', [run("emptyInline('لا جولات')"), run("emptyInline()")], ['<span class="empty-inline">لا جولات</span>', '<span class="empty-inline">لا بيانات بعد</span>']);
 })();
 
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------

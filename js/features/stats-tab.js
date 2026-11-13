@@ -614,7 +614,7 @@ function renderDeathMap(){
     roundNums.forEach(n=>{
       const pts = histByRound[n];
       if(pts === undefined){
-        html += `<td class="dm-none">-</td>`;
+        html += `<td class="dm-none empty-cell" title="لا بيانات لهذه الجولة"></td>`;
       } else if(pts === 0){
         html += `<td class="dm-dead">☠️</td>`;
       } else {
@@ -634,7 +634,7 @@ function renderDeathMap(){
       const h = hist.find(x=>x.number===n);
       return h && h.points===0;
     }).length;
-    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count||'-'}</td>`;
+    html += `<td style="font-size:0.72rem;color:${count>0?'var(--coral)':'var(--muted)'}">${count}</td>`;
   });
   html += '<td></td></tr>';
   html += '</table></div>';
