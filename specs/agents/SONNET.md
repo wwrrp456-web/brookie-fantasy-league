@@ -412,11 +412,46 @@
 ### ✅ M39 · ادمج PR #45 (001-T020 الوضع الفاتح) · **SHA:** `42318a13b08be3d437c122311269048acd43f848` · `001-T020-review.md`
 - بعد كل واحد: علّم المهمة `[x]` في `001-ui-visual-overhaul/tasks.md` (T012 للـ#41 بسطر "الشعارات الفاتحة")، وبعد M39 اكتب في `merge-log.md` سطرًا "المرحلة E منجزة (T013–T020)".
 
-### ⬜ S33 · 001-T021 + T022 (جزء بطاقة الترتيب) · محرك الكروت: `card-kit.js` وبطاقة الترتيب الجديدة · ⏹️ توقف بعده
+### ✅ S33 (PR #47، حكم 🔁 مشروط: F7) · 001-T021 + T022 (جزء بطاقة الترتيب) · محرك الكروت: `card-kit.js` وبطاقة الترتيب الجديدة · ⏹️ توقف بعده
 - **المرجع:** `001-ui-visual-overhaul/tasks.md` (T021 وT022 والملاحظات تحتهما: R-14/R-15/R-16/R-17)، و**`assets/cards/standings-card.layout.md`** (المواصفة الرقمية)، و`assets/cards/standings-card.html` (القالب المرجع) ولقطاته `assets/cards/shots/standings-card-{20,18,24,long-name}-{dark,light}.png`. **الفرع:** `feat/001-T021-card-kit` · **التقرير:** `specs/reports/001-T021.md`
 - **المطلوب:**
   1. 🆕 `js/ui/card-kit.js`: لبنات مشتركة للكانفس: الرأس (الشعار بالنظام المعتمد)، والتذييل، والمنطقة الآمنة، ورسم صف شعارات الأندية (يستخدم `drawCrest` بالثيم)، ومقاييس النص (التفاف/انكماش لنص طويل بدون كلمة يتيمة)، و`validateCardData` (يرجع النواقص بالعربية، والكرت الناقص **ما يُصدَّر**). **معامل `theme` ('dark'|'light') في كل شي**، وألوان الثيمين من **مصدر واحد هو `css/tokens.css`** (مثلًا يولّدها `tools/build-assets.js` في `js/generated/card-themes.js`، بدون hex مكرر في JS).
   2. **`buildStandingsCardCanvas({theme})`** حسب `standings-card.layout.md` بالحرف (1080×1920، كل المشاركين، متكيّف مع 18–24 صف)، **تحل محل** `buildStandingsCanvas` و`buildStandingsStoryCanvas` (احذفهما وأزرارهما القديمة). التاريخ في التذييل من `formatDate` حسب الجولة (مو عيّنة).
   3. **واجهة المشاركة:** زرا "تحميل" و"مشاركة" لبطاقة الترتيب يفتحان خيار الوضع **(داكن / فاتح)**، الافتراضي يتبع ثيم الموقع، **واختيار المشارك يُحفظ** (try/catch حول التخزين)، وأسماء الملفات الإنجليزية `brookie-standings-round-<N>-dark.png` و`...-light.png`.
 - **الأدلة (إلزامية):** (أ) **مقارنة بكسلية** بين الكانفس والقالب المرجع (`assets/cards/shots/standings-card-20-{dark,light}.png`) على نفس بيانات `specs/001-ui-visual-overhaul/card-data.json`: أرفق صورة الفرق ونسبته (المطلوب فرق صغير جدًا بحواف النص فقط، وأي فرق أكبر تشرحه)، و(ب) n = 18 و24 وأطول اسم بالوضعين بدون تداخل، و(ج) اختبار تنزيل الملف بالوضعين، و(د) الكرت الناقص ما يُصدَّر (رسالة عربية)، و(هـ) صفر إيموجي، و`verify` أخضر.
-- ⏹️ **بعد S33 توقف.** باقي الكروت الستة تنتظر مواصفة Codex (C14).
+- ⏹️ **بعد S33 توقف.** (تم: PR #47. انظر الدفعة 11.)
+
+---
+## الدفعة 11 (13 نوفمبر): إصلاح #47، دمج #46 و#47، ثم باقي الكروت
+> **نفّذ بالترتيب بدون ما تنتظر:** F7 ثم M40 ثم M41 ثم S34 ثم S35 ثم S36 ثم S37 (آخر شي ⏹️). الهدف: نخلّص الكروت اليوم عشان النشر.
+
+### ⬜ F7 · إصلاح واحد على PR #47 (001-T021) · على فرعك `feat/001-T021-card-kit`
+- **الحكم:** `specs/reports/001-T021-review.md` (🔁 مشروط). `verify` أحمر لأن `snap-base` تشغّل `tools/snap.js` الجديد على كود الأساس القديم، وما فيه `buildStandingsCardCanvas`.
+- **المطلوب:** في `snapCards` من `tools/snap.js`: لو الدالة غير معرّفة (`typeof` ليس `function`) **واللقطة `--label base`** ← سجّلها `skippedCards` في `report.json` ولا تضفها لـ`cardErrors`. في `head` تبقى خطأً. وصحّح رقم الاختبارات في `001-T021.md` إلى الفعلي (285).
+- **الأدلة:** `verify` **أخضر** على الـPR بعد الدفع (انتظره، رابطه في تقرير الـPR). **لا تدمج في هالخطوة.**
+
+### ⬜ M40 · ادمج PR #46 (001-T009g نسخ الكروت النهارية، Codex) · **SHA:** `56b40a9ad3154fbea985b2938450e843ca0e9d7a` · الحكم: `001-T009g-review.md`
+- علّم 001-T009 (الجزء g) في `tasks.md`، وسجّل في `merge-log.md`. أصول فقط.
+
+### ⬜ M41 · ادمج PR #47 **بشرط** · بعد F7 و`verify` أخضر
+- **الحكم:** `001-T021-review.md`. الشروط: (1) الفرق بعد `bb09350795a9de614b3f54d47940b2885dcb5644` يلمس فقط `tools/snap.js` و`specs/reports/001-T021.md`، (2) `verify` أخضر على آخر SHA، (3) `node tests/run.js` و`node tools/lint.js` نظيفان بعد الدمج. وإلا لا تدمج واكتب السبب. علّم T021 و T022 (جزء الترتيب) `[x]`.
+
+### ⬜ S34 · 001-T022 (الباقي) · كرت بطل الجولة (الكانفس)، بالثيمين
+- **المرجع:** `assets/cards/cards.layout.md` (قسم `champion-post` + `champion-post-stress`)، والقالب `assets/cards/champion-post.html` ولقطاته `shots/champion-post{,-light,-stress,-stress-light}.png`، و`js/ui/card-kit.js` و`standings-card.js` (نفس النمط). **الفرع:** `feat/001-T022b-champion-card` من فرع التكامل **بعد M41** · **التقرير:** `specs/reports/001-T022b.md`
+- **المطلوب:** `buildChampionCardCanvas({theme})` في ملف جديد `js/ui/champion-card.js` حسب المواصفة بالحرف، تحل محل `buildChampionCard`. نافذة اختيار الوضع (الموجودة من S33) تنطبق على تحميل ومشاركة بطل الجولة. أسماء الملفات `brookie-champion-round-<N>-<dark|light>.png`. **ألوان من `card-themes.js` فقط**، صفر hex وصفر إيموجي.
+- **الأدلة:** مقارنة بكسلية (`tools/card-compare.js` ووسّعه لقبول اسم القالب) على الحالتين العادية والضغط بالوضعين، ولقطة بيانات الموقع الحقيقية، واختبار تنزيل، والكرت الناقص ما يُصدَّر.
+
+### ⬜ S35 · 001-T023 (دون الشهادة) · كرت ملخص الموسم + الملف الشخصي (الكانفس)
+- **المرجع:** `cards.layout.md` (قسما `season-wrap-post` و`profile-square`)، ولقطات `shots/`. **الفرع:** `feat/001-T023-wrap-profile` **بعد S34 (ادمجه أنت؟ لا: ابدأ من فرع S34 بعد ما يتدمج PR S34 بحكم)**. لو ما اندمج، ابدأ من فرع التكامل وأضف تعديلات `card-kit` اللي تحتاجها بحذر.
+- **المطلوب:** `buildSeasonWrapCardCanvas({theme})` و`buildParticipantProfileCardCanvas(id, {theme})` بنفس النمط، يحلان محل `buildSeasonWrapCard` و`buildParticipantProfileCard`. **الشهادة ما تُلمس** (تنتظر C16).
+- **الأدلة:** نفس S34 لكل كرت.
+
+### ⬜ S36 · 001-T024 [P] · كرت مواجهة الجولة 🆕 (الكانفس، بالثيمين)
+- **المرجع:** `cards.layout.md` (`duel-post` + `duel-post-stress`)، `assets/cards/duel-post.html`. **الفرع:** `feat/001-T024-duel-card`. **التقرير:** `specs/reports/001-T024.md`.
+- **المطلوب:** `buildDuelCardCanvas({theme})` + زر "مواجهة الجولة" في الواجهة المناسبة بحسب `tasks.md` (T024)، يستخدم نافذة الوضع.
+- **الأدلة:** مقارنة بكسلية للعادي والضغط بالوضعين، وتنزيل، وكرت ناقص ما يُصدَّر.
+
+### ⬜ S37 · 001-T025 [P] · كرت نتائج أنديتي 🆕 (الكانفس، بالثيمين) · ⏹️ توقف بعده
+- **المرجع:** `cards.layout.md` (`my-clubs-post`)، `assets/cards/my-clubs-post.html`. **الفرع:** `feat/001-T025-my-clubs-card`. **التقرير:** `specs/reports/001-T025.md`.
+- **المطلوب:** `buildMyClubsCardCanvas({theme})`، وحالة فاضية (مكوّن `empty-state.js`) لين تتوفر بيانات ميزة 005، حسب `tasks.md`.
+- ⏹️ **بعد S37 توقف.** T026 (حذف `canvas-cards.js`) وT027 تنتظر شهادة C16، فلا تلمس `buildChampionCertificateCanvas`.
