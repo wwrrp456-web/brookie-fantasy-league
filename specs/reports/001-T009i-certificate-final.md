@@ -1,5 +1,5 @@
 # تقرير 001-T009i-certificate-final
-**المنفّذ:** Codex · **الفرع:** `codex/001-T009i-final` · **PR:** قيد الفتح بدل مسودة التوقف #53 · **الحالة:** منجز
+**المنفّذ:** Codex · **الفرع:** `codex/001-T009i-final` · **PR:** [#56](https://github.com/wwrrp456-web/brookie-fantasy-league/pull/56) — بديل مسودة التوقف #53 · **الحالة:** منجز
 
 ## وش سويت
 
