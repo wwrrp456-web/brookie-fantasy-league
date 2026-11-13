@@ -209,7 +209,7 @@ function renderSmartProfile(){
         const pc=PARTICIPANT_COLORS[s.id]||'var(--gold)';
         return `<div style="background:var(--paper);border-radius:12px;padding:13px 14px;border-right:3px solid ${pc};">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span style="font-weight:800;color:${pc};">#${i+1}</span>
+            <span style="font-weight:800;color:${readableColor(pc)};">#${i+1}</span>
             <span style="font-weight:700;">${p?.name||''}</span>
             <span style="color:var(--muted);font-size:0.8rem;">${s.total} نقطة</span>
           </div>

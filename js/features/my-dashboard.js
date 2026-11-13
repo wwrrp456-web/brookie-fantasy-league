@@ -437,14 +437,14 @@ function renderMyAchievements(){
     <div style="background:var(--paper);border-radius:14px;padding:16px;border:2px solid ${pc}44;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
-        <strong style="color:${pc};">${p?.name||''}</strong>
+        <strong style="color:${readableColor(pc)};">${p?.name||''}</strong>
         <span style="color:var(--muted);font-size:0.82rem;">— ${getCurrentRoundNumber()} جولات</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
         ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">
           <div style="font-size:1.3rem;">${ic}</div>
           <div style="font-size:0.7rem;color:var(--muted);margin:2px 0;">${label}</div>
-          <div style="font-size:0.98rem;font-weight:800;color:var(--gold);">${val}</div>
+          <div style="font-size:0.98rem;font-weight:800;color:var(--gold-light);">${val}</div>
           ${sub?`<div style="font-size:0.68rem;color:var(--muted);">${sub}</div>`:''}
         </div>`).join('')}
       </div>

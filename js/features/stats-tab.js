@@ -535,7 +535,7 @@ function updateRaceBars(){
       <span class="race-name">${rankIcon}${s.name}</span>
       <div class="race-bar-wrap">
         <div class="race-bar" style="width:${pct}%;background:${color};">
-          <span class="race-pts">${s.total} ن</span>
+          <span class="race-pts" style="color:${contrastTextOn(color)};">${s.total} ن</span>
         </div>
       </div>
     </div>`;

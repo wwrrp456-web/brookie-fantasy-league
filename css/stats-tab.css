@@ -46,7 +46,7 @@
   .whatif-label{font-size:0.8rem;color:var(--muted);white-space:nowrap;}
   .whatif-select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;}
   .whatif-input{width:72px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.8rem;text-align:center;}
-  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:#000;font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
+  .whatif-btn{padding:6px 14px;border-radius:8px;background:var(--gold);color:var(--on-gold);font-weight:700;font-size:0.82rem;border:none;cursor:pointer;}
   .whatif-result{display:flex;flex-direction:column;gap:4px;}
   .whatif-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;font-size:0.82rem;transition:background 0.2s;}
   .whatif-row.changed{background:rgba(203,162,68,0.12);border:1px solid rgba(203,162,68,0.3);}
@@ -66,7 +66,7 @@
   .race-name{font-size:0.76rem;font-weight:700;color:var(--text);min-width:70px;text-align:right;}
   .race-bar-wrap{flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:20px;overflow:hidden;position:relative;}
   .race-bar{height:100%;border-radius:20px;transition:width 0.8s ease;display:flex;align-items:center;padding:0 6px;}
-  .race-pts{font-size:0.68rem;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.5);}
+  .race-pts{font-size:0.68rem;font-weight:700;color:white;white-space:nowrap;}
   .race-slider{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
   .race-slider label{font-size:0.8rem;color:var(--muted);}
   .race-slider input[type=range]{flex:1;min-width:120px;}
@@ -102,18 +102,20 @@
   .activity-log-time{color:var(--muted);font-size:0.72rem;white-space:nowrap;margin-inline-start:8px;}
 
   /* ===== الرسم البياني ===== */
-  .chart-wrap{background:#000;border-radius:10px;padding:12px 8px 8px;overflow-x:auto;}
+  .chart-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md,10px);padding:12px 8px 8px;overflow-x:auto;}
+  .chart-wrap svg text{fill:var(--muted);}
+  .chart-wrap svg line{stroke:var(--line);}
   .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:0.68rem;}
   .chart-legend span{display:flex;align-items:center;gap:4px;color:var(--muted);}
   .chart-legend i{width:12px;height:3px;border-radius:2px;display:inline-block;}
 
   /* ===== جدول إحصائيات الأندية ===== */
-  .club-stats-table{width:100%;border-collapse:collapse;background:#000;border-radius:10px;overflow:hidden;}
-  .club-stats-table th{background:#141414;color:#9A9A9A;font-size:0.68rem;padding:9px 5px;font-weight:700;}
-  .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:#E8E8E8;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .club-stats-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .club-stats-table th{background:var(--cream);color:var(--muted);font-size:0.68rem;padding:9px 5px;font-weight:700;}
+  .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:var(--text);border-bottom:1px solid var(--line);}
   .club-stats-table td.cs-name{text-align:start;}
   .cs-name-inner{display:flex;align-items:center;gap:7px;}
-  .cs-club-label{font-weight:700;font-size:0.78rem;color:#fff;}
+  .cs-club-label{font-weight:700;font-size:0.78rem;color:var(--text);}
 
 
   /* كفاءة الأندية: صفوف بأشرطة نسبية، وسلاسل الحظ مجمّعة (001-T019، FR-18) */
