@@ -31,16 +31,26 @@ function renderHotColdStreaks(){
   const streaks = computeCurrentStreaks();
   if(!streaks.length){ box.innerHTML=''; return; }
 
-  let html = `<h2 class="section-title" style="margin-top:22px;">🔥❄️ سلاسل الحظ</h2>
-    <div class="streaks-grid">`;
+  // تجميع حسب النوع وطول السلسلة: "17 مشاركًا على سلسلة جولتين" + أبرز 3 بالاسم (حسب مركزهم) (FR-18، U-09)
+  const rank = {}; computeStandings().forEach((s, i) => { rank[s.id] = i; });
+  const groups = {};
   streaks.forEach(s=>{
-    const isHot = s.type === 'hot';
-    html += `<div class="streak-card ${isHot?'streak-hot':'streak-cold'}">
-      <span class="streak-icon">${isHot?'🔥':'❄️'}</span>
-      <span class="streak-name">${s.name}</span>
-      <span class="streak-count">${s.count} ${isHot?'جولات ساخنة متتالية':'جولات باردة متتالية'}</span>
+    const k = s.type + '|' + s.count;
+    (groups[k] = groups[k] || {type: s.type, count: s.count, list: []}).list.push(s);
+  });
+  const ordered = Object.values(groups).sort((a,b)=> (a.type === b.type ? b.count - a.count : (a.type === 'hot' ? -1 : 1)));
+  let html = '<h2 class="section-title" style="margin-top:22px;">🔥❄️ سلاسل الحظ</h2><div class="streak-groups">';
+  ordered.forEach(g=>{
+    const isHot = g.type === 'hot';
+    const names = g.list.slice().sort((a,b)=> (rank[a.id] ?? 99) - (rank[b.id] ?? 99));
+    const top = names.slice(0, 3).map(n=>`<span class="pill">${n.name}</span>`).join('');
+    const more = names.length > 3 ? `<span class="pill pill-more">+${names.length - 3}</span>` : '';
+    html += `<div class="streak-group ${isHot?'streak-hot':'streak-cold'}">
+      <h3>${formatCount(g.list.length, 'مشارك')} على سلسلة ${formatCount(g.count, 'جولة', {case:'acc'})}</h3>
+      <p class="muted">${isHot ? 'جولات متتالية بالنقاط' : 'جولات متتالية بلا نقاط'}</p>
+      <div class="streak-names">${top}${more}</div>
     </div>`;
   });
-  html += `</div>`;
+  html += '</div>';
   box.innerHTML = html;
 }
