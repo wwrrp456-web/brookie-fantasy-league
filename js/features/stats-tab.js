@@ -77,9 +77,9 @@ function renderH2H(){
   let html = '<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>';
   html += `<div id="h2hCapture">
     <div class="h2h-picker">
-      <select id="h2hSelectA">${options}</select>
+      <select id="h2hSelectA" aria-label="المشارك الأول">${options}</select>
       <span class="h2h-vs">ضد</span>
-      <select id="h2hSelectB">${options}</select>
+      <select id="h2hSelectB" aria-label="المشارك الثاني">${options}</select>
     </div>
     <div id="h2hResult"></div>
   </div>`;
@@ -191,7 +191,7 @@ function renderChart(){
   series.forEach((s,si)=> legend += `<span><i style="background:${colors[si]}"></i>${s.name}</span>`);
   legend += '</div>';
 
-  box.innerHTML = `<div class="chart-wrap">${svg}</div>${legend}
+  box.innerHTML = `<div class="chart-wrap" tabindex="0" role="region" aria-label="مخطط تطوّر النقاط">${svg}</div>${legend}
     <p style="font-size:0.72rem;color:var(--muted);margin-top:8px;">الرسم يوضّح مركز أفضل 6 لاعبين عبر الجولات — كلما ارتفع الخط كان المركز أفضل.</p>`;
 }
 
@@ -211,10 +211,10 @@ function renderClubStats(){
       <td class="text-dim">${i+1}</td>
       <td class="cs-name"><div class="cs-name-inner">${crestHTML(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
       <td class="text-dim">${cst.played}</td>
-      <td style="color:#3DD47E;">${cst.w}</td>
-      <td style="color:#16A6EA;">${cst.d}</td>
-      <td style="color:#FF6B5E;">${cst.l}</td>
-      <td style="font-weight:800;color:#fff;">${cst.pts}</td>
+      <td class="cs-w">${cst.w}</td>
+      <td class="cs-d">${cst.d}</td>
+      <td class="cs-l">${cst.l}</td>
+      <td class="cs-pts">${cst.pts}</td>
       <td class="text-dim">${cst.ownersCount}</td>
     </tr>`;
   });
@@ -239,7 +239,7 @@ function renderWhatIf(){
       <div class="whatif-title">🧮 حاسبة "ماذا لو؟" — تخيّل الجولة القادمة</div>
       <div class="whatif-controls">
         <span class="whatif-label">لو حصل</span>
-        <select class="whatif-select" id="wiPid">${opts}</select>
+        <select class="whatif-select" id="wiPid" aria-label="المشارك">${opts}</select>
         <span class="whatif-label">على</span>
         <input type="number" class="whatif-input" id="wiPts" min="0" max="9" value="3" placeholder="نقاط">
         <span class="whatif-label">نقطة الجولة القادمة</span>
@@ -496,7 +496,7 @@ function renderRace(){
   if(!_raceInit){
     box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2>
       <div class="race-slider">
-        <label>الجولة:</label>
+        <label for="raceSlider">الجولة:</label>
         <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1">
         <span class="race-round-label" id="raceLabel">ج${DATA.rounds[n-1].number}</span>
       </div>
@@ -601,7 +601,7 @@ function renderDeathMap(){
   });
 
   let html = '<h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2>';
-  html += '<div class="death-map"><table>';
+  html += '<div class="death-map" tabindex="0" role="region" aria-label="خريطة الممّات"><table>';
   html += '<tr><th>المشارك</th>';
   roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
   html += '<th>المجموع</th></tr>';
