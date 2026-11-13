@@ -124,7 +124,7 @@ function setStandingsCardTheme(theme){
 function standingsCardFilename(round, theme){ return `brookie-standings-round-${round}-${theme}.png`; }
 
 // نافذة صغيرة بخيارين (داكن/فاتح) تُرجع الخيار المختار (أو null لو أُلغيت). الافتراضي: المحفوظ ثم ثيم الموقع.
-function askStandingsCardTheme(action){
+function askStandingsCardTheme(action, subject){
   return new Promise(resolve => {
     const prev = document.getElementById('cardThemeSheet');
     if(prev) prev.remove();
@@ -134,10 +134,10 @@ function askStandingsCardTheme(action){
     sheet.className = 'card-theme-sheet';
     sheet.setAttribute('role', 'dialog');
     sheet.setAttribute('aria-modal', 'true');
-    sheet.setAttribute('aria-label', 'وضع صورة الترتيب');
+    sheet.setAttribute('aria-label', 'وضع صورة ' + (subject || 'الترتيب'));
     const opt = (t, label, icon) => `<button type="button" class="card-theme-opt${cur === t ? ' selected' : ''}" data-theme="${t}" aria-pressed="${cur === t}">${ICONS[icon]}<span>${label}</span></button>`;
     sheet.innerHTML = `<div class="card-theme-box">
-      <h3 class="card-theme-title">${action === 'share' ? 'مشاركة' : 'تحميل'} الترتيب بوضع</h3>
+      <h3 class="card-theme-title">${action === 'share' ? 'مشاركة' : 'تحميل'} ${subject || 'الترتيب'} بوضع</h3>
       <div class="card-theme-opts">${opt('dark', 'داكن', 'moon')}${opt('light', 'فاتح', 'sun')}</div>
       <button type="button" class="btn ghost card-theme-cancel">إلغاء</button>
     </div>`;
