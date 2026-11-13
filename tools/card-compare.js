@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* مقارنة بطاقة الترتيب (الكانفس) بالقالب المرجع بكسليًا (001-T021، الأدلة (أ)/(ب)).
  *
- *   node tools/card-compare.js [--out card-diff] [--kind standings|champion] [--only 20-dark,champion-stress-light] [--max-pct 1]
+ *   node tools/card-compare.js [--out card-diff] [--kind standings|champion|wrap|profile] [--only 20-dark,champion-stress-light,wrap-light] [--max-pct 1]
  *
  * يبني بطاقة الترتيب بـ`buildStandingsCardCanvas` على بيانات القالب نفسها (assets/cards/standings-card.data.json، مطابقة لـspecs/001-ui-visual-overhaul/card-data.json)
  * بالحالات: 20 (الحقيقي)، 18، 24 (نسخ هندسية)، وأطول اسم (stress) × ليلي/نهاري، ويقارنها بـassets/cards/shots/standings-card-<حالة>-<ثيم>.png بـpixelmatch.
@@ -25,6 +25,20 @@ function championSample(card, stress) {
     rank: st.rank, total: st.total, move: st.move, tiebreak: { gf: card.champion.gf, ga: card.champion.ga }, date: '29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ' };
   if (stress) { data.name = 'أبو تغريد (زيد) الثاني'; data.clubs[0].club = 'باريس سان جيرمان'; }
   return data;
+}
+
+// ملخص الموسم والملف الشخصي (001-T023): لقطات القالب season-wrap-post{,-light}.png وprofile-square{,-light}.png
+['dark', 'light'].forEach(t => {
+  CASES.push({ kind: 'wrap', c: 'normal', t, name: `wrap-${t}`, ref: `season-wrap-post${t === 'light' ? '-light' : ''}.png` });
+  CASES.push({ kind: 'profile', c: 'normal', t, name: `profile-${t}`, ref: `profile-square${t === 'light' ? '-light' : ''}.png` });
+});
+const CARD_DATE = '29 أكتوبر 2026 · 18 جمادى الأولى 1448 هـ';
+function wrapSample(card) {
+  return { round: card.round, topTotal: { value: card.standings[0].total, name: card.standings[0].name }, bestRound: { points: card.champion.points, round: card.round }, mummas: card.mummas || [], date: CARD_DATE };
+}
+function profileSample(card) {
+  const st = card.standings.find(s => s.id === card.champion.id);
+  return { round: card.round, id: st.id, name: st.name, clubs: st.clubs.slice(), rank: st.rank, total: st.total, roundPoints: st.roundPoints, clubsCount: st.clubs.length, isChampion: true, date: CARD_DATE };
 }
 
 // نفس منطق عينات القالب (assets/cards/standings-card.js): n وstress
@@ -65,6 +79,13 @@ async function main(argv) {
           const cv = await buildChampionCardCanvas({ theme, data });
           return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
         }, [data, cs.t]);
+      } else if (cs.kind === 'wrap' || cs.kind === 'profile') {
+        const card = readJson('specs/001-ui-visual-overhaul/card-data.json');
+        const data = cs.kind === 'wrap' ? wrapSample(card) : profileSample(card);
+        res = await page.evaluate(async ([kind, data, theme]) => {
+          const cv = kind === 'wrap' ? await buildSeasonWrapCardCanvas({ theme, data }) : await buildParticipantProfileCardCanvas(data.id, { theme, data });
+          return { url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
+        }, [cs.kind, data, cs.t]);
       } else {
         const s = sampleFor(refData, cs.c);
         res = await page.evaluate(async ([data, note, theme, countLabel]) => {
