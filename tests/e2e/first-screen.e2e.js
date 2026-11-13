@@ -48,7 +48,7 @@ async function open(browser, width) {
       n: document.querySelectorAll('tr.standings-row').length
     }));
     check('عنوان الصفحة: "الموسم الثاني · الجولة N" و"كل نقطة تفرق."', [/^الموسم الثاني · الجولة \d+$/.test(head.eyebrow), head.title], [true, 'كل نقطة تفرق.']);
-    check('زر "مشاركة" بأيقونة، وأزرار المشاركة والتحميل القديمة باقية', [head.share, await p.evaluate(() => ['shareStandingsBtn', 'dlStandingsBtn', 'dlStandingsStoryBtn'].every(i => !!document.getElementById(i)))], [true, true]);
+    check('زر "مشاركة" بأيقونة، وزرا المشاركة والتحميل باقيان (زر الستوري حُذف مع بطاقتها، T021)', [head.share, await p.evaluate(() => ['shareStandingsBtn', 'dlStandingsBtn'].every(i => !!document.getElementById(i)))], [true, true]);
     check('عنوان بطاقة الجدول "الترتيب العام" + شارة العدد بـformatCount', [head.caption, head.pill], ['الترتيب العام', await p.evaluate(n => formatCount(n, 'مشارك'), head.n)]);
     await p.evaluate(() => { window.__shared = 0; window.shareStandingsImage = async () => { window.__shared++; }; });
     await p.click('#pageShareBtn');

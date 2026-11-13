@@ -1,0 +1,58 @@
+[
+ {
+  "name": "20-dark",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 3775,
+  "diffPct": 0.182
+ },
+ {
+  "name": "20-light",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 2629,
+  "diffPct": 0.127
+ },
+ {
+  "name": "18-dark",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 3513,
+  "diffPct": 0.169
+ },
+ {
+  "name": "18-light",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 2563,
+  "diffPct": 0.124
+ },
+ {
+  "name": "24-dark",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 2180,
+  "diffPct": 0.105
+ },
+ {
+  "name": "24-light",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 1735,
+  "diffPct": 0.084
+ },
+ {
+  "name": "long-name-dark",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 3782,
+  "diffPct": 0.182
+ },
+ {
+  "name": "long-name-light",
+  "size": "1080×1920",
+  "ref": "1080×1920",
+  "diffPixels": 2650,
+  "diffPct": 0.128
+ }
+]

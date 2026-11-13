@@ -24,7 +24,7 @@ const TABS = ['standings', 'participants', 'rounds', 'stats', 'rules', 'about', 
 const WIDTHS = [390, 1366];
 const THEMES = ['dark', 'light'];
 const STATES = ['full', 'incomplete', 'long'];
-const CARDS = ['championCard', 'standingsCard', 'standingsStory', 'seasonWrap', 'profileCard', 'certificate'];
+const CARDS = ['championCard', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'profileCard', 'certificate'];
 const LONGEST_NAME = 'أبو تغريد (زيد) الثاني';
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -163,7 +163,7 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors) {
     for (const card of CARDS) {
       const res = await page.evaluate(async ([c, p]) => {
         try {
-          const build = { championCard: () => buildChampionCard(), standingsCard: () => buildStandingsCard(), standingsStory: () => buildStandingsStoryCanvas(),
+          const build = { championCard: () => buildChampionCard(), standingsCard: () => buildStandingsCardCanvas({theme: 'dark'}), standingsCardLight: () => buildStandingsCardCanvas({theme: 'light'}),
             seasonWrap: () => buildSeasonWrapCard(), profileCard: id => buildParticipantProfileCard(id), certificate: () => buildChampionCertificateCanvas() }[c];
           const cv = await build(p);
           return { ok: true, url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
@@ -234,4 +234,4 @@ async function main(argv) {
 }
 
 if (require.main === module) main(process.argv.slice(2)).then(c => process.exit(c), e => { console.error(e); process.exit(2); });
-module.exports = { main, TABS, WIDTHS, THEMES, STATES, CARDS };
+module.exports = { main, serve, openPage, TABS, WIDTHS, THEMES, STATES, CARDS };
