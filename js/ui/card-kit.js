@@ -76,6 +76,18 @@ function cardText(ctx, text, x, lineCenterY, opts){
   ctx.fillText(String(text), x, lineCenterY + cardBaselineOffset(ctx, o.size, o.weight || 400));
   ctx.restore();
 }
+// نفس cardText لكن بخط أساس معطى مباشرة (القيمة "baseline" في جداول المواصفة)
+function cardTextBase(ctx, text, x, baselineY, opts){
+  const o = opts || {};
+  ctx.save();
+  ctx.font = cardFont(o.size, o.weight);
+  ctx.fillStyle = o.color;
+  ctx.direction = o.dir || 'rtl';
+  ctx.textAlign = o.align || 'right';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(String(text), x, baselineY);
+  ctx.restore();
+}
 function cardTextWidth(ctx, text, size, weight){
   ctx.save(); ctx.font = cardFont(size, weight); const w = ctx.measureText(String(text)).width; ctx.restore();
   return w;
@@ -160,6 +172,24 @@ async function cardDrawLogo(ctx, theme, x, y, w){
 
 // خط أفقي بسُمك 1 من x وعرض w بلون الحدود
 function cardHRule(ctx, theme, x, y, w){ ctx.fillStyle = cardColor(theme, 'border'); ctx.fillRect(x, y, w, 1); }
+
+// لوحة سطح (surface-1) بحدّ 1px وزوايا مدوّرة؛ حواف المربع تُقرَّب لأقرب بكسل مثل المتصفح. بالنهاري ظل ناعم (R-17)
+function cardDrawPanel(ctx, theme, x, y, w, h, o){
+  const th = cardResolveTheme(theme), r = (o && o.r) || 16;
+  const x0 = Math.round(x), y0 = Math.round(y), x1 = Math.round(x + w), y1 = Math.round(y + h);
+  ctx.save();
+  if(th === 'light'){
+    ctx.shadowColor = `rgba(${cardParseHex(cardColor(th, 'text')).join(',')},0.06)`;
+    ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
+  }
+  ctx.fillStyle = cardColor(th, (o && o.fill) || 'surface-1');
+  drawRoundedRect(ctx, x0, y0, x1 - x0, y1 - y0, r); ctx.fill();
+  ctx.restore();
+  ctx.save();
+  ctx.strokeStyle = cardColor(th, 'border'); ctx.lineWidth = 1;
+  drawRoundedRect(ctx, x0 + 0.5, y0 + 0.5, x1 - x0 - 1, y1 - y0 - 1, r - 0.5); ctx.stroke();
+  ctx.restore();
+}
 
 // تذييل: نص يمين (RTL) ونص يسار (LTR)، 20/32، مركز y، بلون text-2
 function cardDrawFooter(ctx, theme, o){
