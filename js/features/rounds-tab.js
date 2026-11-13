@@ -255,7 +255,7 @@ function renderScenario(){
     <div style="background:var(--paper);border-radius:14px;padding:16px;">
       <p style="color:var(--muted);margin:0 0 12px;font-size:0.87rem;">ماذا لو حصل المتصدر على نقاط أقل في الجولات الـ${remaining} القادمة؟</p>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
-        <label style="font-size:0.88rem;color:var(--text2);">نقاط المتصدر/جولة:</label>
+        <label for="scenarioSlider" style="font-size:0.88rem;color:var(--text2);">نقاط المتصدر/جولة:</label>
         <input type="range" id="scenarioSlider" min="0" max="12" value="6" style="flex:1;min-width:120px;accent-color:var(--gold);">
         <span id="scenarioSliderVal" style="font-weight:800;color:var(--gold);min-width:28px;text-align:center;">6</span>
       </div>

@@ -79,10 +79,10 @@ function renderClubSwapLab(){
     <div class="club-swap-card">
       <p class="rounds-subtitle" style="margin-top:0;">لو كان عند مشارك نادٍ غير ناديه الحالي طول الموسم، وين كان يكون ترتيبه؟</p>
       <div class="club-swap-controls">
-        <select id="clubSwapParticipantSelect">${pOpts}</select>
-        <select id="clubSwapOldClubSelect"></select>
+        <select id="clubSwapParticipantSelect" aria-label="المشارك">${pOpts}</select>
+        <select id="clubSwapOldClubSelect" aria-label="النادي الحالي"></select>
         <span class="club-swap-arrow">⇄</span>
-        <select id="clubSwapNewClubSelect">${CLUBS.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
+        <select id="clubSwapNewClubSelect" aria-label="النادي البديل">${CLUBS.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
         <button type="button" class="btn secondary" id="runClubSwapBtn">شغّل السيناريو 🔬</button>
       </div>
       <div id="clubSwapResultBox"></div>

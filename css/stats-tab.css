@@ -80,7 +80,7 @@
   .club-map-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:var(--paper);border:1px solid var(--line);font-size:0.78rem;}
   .club-map-chip.owned{border-color:var(--gold);background:rgba(203,162,68,0.08);}
   .club-map-owners{font-size:0.68rem;color:var(--muted);}
-  .club-map-chip.owned .club-map-owners{color:var(--gold);}
+  .club-map-chip.owned .club-map-owners{color:var(--gold-light);}
 
   /* تحدي التوقعات */
   .pred-challenge{margin:12px 0 22px;}
@@ -114,6 +114,12 @@
   .club-stats-table th{background:var(--cream);color:var(--muted);font-size:0.68rem;padding:9px 5px;font-weight:700;}
   .club-stats-table td{padding:9px 5px;text-align:center;font-size:0.8rem;color:var(--text);border-bottom:1px solid var(--line);}
   .club-stats-table td.cs-name{text-align:start;}
+  /* ألوان أعمدة جدول أندية الموسم بالرموز (تباين ≥ 4.5:1 بالوضعين، 001-T028) */
+  .club-stats-table td.cs-w{color:var(--c-up);}
+  .club-stats-table td.cs-d{color:var(--accent-2);}
+  .club-stats-table td.cs-l{color:var(--c-down);}
+  .club-stats-table td.cs-pts{font-weight:800;color:var(--text);}
+  html:not(.light-mode) .club-stats-table td.cs-d{color:var(--c-info);}
   .cs-name-inner{display:flex;align-items:center;gap:7px;}
   .cs-club-label{font-weight:700;font-size:0.78rem;color:var(--text);}
 

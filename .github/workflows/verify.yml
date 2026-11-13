@@ -86,6 +86,11 @@ jobs:
         run: node tests/run.js
       - name: المقاييس (أي زيادة تفشل)
         run: node tools/lint.js
+      - run: npx playwright install --with-deps chromium
+      - name: التباين ≥ 4.5:1 بالوضعين (SC-09، حارس axe-contrast)
+        run: node tools/axe-contrast.js --me
+      - name: الوصول (axe WCAG A/AA) والتكبير 200% بلا تمرير أفقي ولا قصّ نص
+        run: node tools/a11y-check.js --me
       - uses: actions/download-artifact@v4
         if: ${{ !cancelled() }}
         with:

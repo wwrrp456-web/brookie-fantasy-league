@@ -79,7 +79,7 @@ html:not(.light-mode) .stat-new.zero{color:#A9A8D6;}
 html:not(.light-mode) .stat-dim,html:not(.light-mode) .quick-hist-mini-label,
 html:not(.light-mode) .detail-clubs .club-mini .club-name{color:#B9B8E0;}
 html:not(.light-mode) .club-stats-table th{color:#C9C7EE;background:#1C1B4A;}
-html .text-dim{color:#8A8A8A;}
+html .text-dim{color:var(--muted);}
 html:not(.light-mode) .text-dim{color:#B9B8E0;}
 html:not(.light-mode) .chart-wrap svg text{fill:#B9B8E0;}
 html:not(.light-mode) .chart-wrap svg line{stroke:rgba(179,157,255,.22);}

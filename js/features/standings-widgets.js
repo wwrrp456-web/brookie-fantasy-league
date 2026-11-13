@@ -508,7 +508,7 @@ function renderRankLeaderboard(){
   const sorted = PARTICIPANTS.slice().sort((a,b)=>(finalRanks[a.id]||99)-(finalRanks[b.id]||99));
 
   let html = '<h2 class="section-title" style="margin-top:22px;">👑 لوحة قيادة الترتيب</h2>';
-  html += '<div class="rank-leaderboard"><table>';
+  html += '<div class="rank-leaderboard" tabindex="0" role="region" aria-label="لوحة أدق المتوقعين"><table>';
   html += '<tr><th>المشارك</th>';
   if(rounds.length > 0) html += '<th>قبل</th>';
   roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
