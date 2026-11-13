@@ -24,7 +24,7 @@ const TABS = ['standings', 'participants', 'rounds', 'stats', 'rules', 'about', 
 const WIDTHS = [390, 1366];
 const THEMES = ['dark', 'light'];
 const STATES = ['full', 'incomplete', 'long'];
-const CARDS = ['championCard', 'championCardLight', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'seasonWrapLight', 'profileCard', 'profileCardLight', 'certificate'];
+const CARDS = ['championCard', 'championCardLight', 'standingsCard', 'standingsCardLight', 'seasonWrap', 'seasonWrapLight', 'profileCard', 'profileCardLight', 'duelCard', 'duelCardLight', 'certificate'];
 const LONGEST_NAME = 'أبو تغريد (زيد) الثاني';
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -164,7 +164,7 @@ async function snapCards(browser, ctx, outDir, files, reports, cardErrors, skipp
       const res = await page.evaluate(async ([c, p]) => {
         try {
           const build = { championCard: () => buildChampionCardCanvas({theme: 'dark'}), championCardLight: () => buildChampionCardCanvas({theme: 'light'}), standingsCard: () => buildStandingsCardCanvas({theme: 'dark'}), standingsCardLight: () => buildStandingsCardCanvas({theme: 'light'}),
-            seasonWrap: () => buildSeasonWrapCardCanvas({theme: 'dark'}), seasonWrapLight: () => buildSeasonWrapCardCanvas({theme: 'light'}), profileCard: id => buildParticipantProfileCardCanvas(id, {theme: 'dark'}), profileCardLight: id => buildParticipantProfileCardCanvas(id, {theme: 'light'}), certificate: () => buildChampionCertificateCanvas() }[c];
+            seasonWrap: () => buildSeasonWrapCardCanvas({theme: 'dark'}), seasonWrapLight: () => buildSeasonWrapCardCanvas({theme: 'light'}), profileCard: id => buildParticipantProfileCardCanvas(id, {theme: 'dark'}), profileCardLight: id => buildParticipantProfileCardCanvas(id, {theme: 'light'}), duelCard: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'dark', data: getDuelCardData(d.a.id, d.b.id)}); }, duelCardLight: () => { const d = computeWeeklyDuels().find(x => !x.bye); return buildDuelCardCanvas({theme: 'light', data: getDuelCardData(d.a.id, d.b.id)}); }, certificate: () => buildChampionCertificateCanvas() }[c];
           if (typeof build !== 'function') return { ok: false, error: 'نوع الكرت غير معروف' };
           const cv = await build(p);
           return { ok: true, url: cv.toDataURL('image/png'), w: cv.width, h: cv.height };
