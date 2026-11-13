@@ -1,5 +1,5 @@
 /* هيدر مضغوط + شريط تبويبات بإشارات تمرير (001-T013، FR-02/FR-03، SC-06).
- * محمَّل بعد site-polish.css ليتغلّب بالتخصيص (header.app-header) لا بـ!important.
+ * محمَّل بعد surfaces.css ليتغلّب بالتخصيص (header.app-header) لا بـ!important.
  * الهيدر يتبع الثيم (F3): فاتح بالوضع الفاتح مع logoLight (نصه كحلي)، وداكن بالداكن مع الشعار الأبيض. */
 header.app-header{
   padding:0;text-align:start;
@@ -65,4 +65,9 @@ header.app-header .champion-crown{position:static;font-size:1.3rem;animation:non
   margin-left:0;padding-inline:0;-webkit-mask-image:none;mask-image:none;}
   .tab-shell nav.tabs button{flex:1;text-align:center;}
   .tab-more{display:none;}
+}
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .tab-shell nav.tabs{scroll-behavior:auto;}
 }

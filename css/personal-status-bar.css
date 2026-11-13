@@ -18,3 +18,8 @@ body.has-status-bar.status-bar-collapsed{padding-bottom:34px;}
 @media (max-width:480px){
   .status-bar-content{font-size:0.76rem;}
 }
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .status-bar-inner{transition:none;}
+}

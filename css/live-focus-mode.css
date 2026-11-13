@@ -22,3 +22,8 @@ body.live-focus-active{overflow:hidden;}
 @media (prefers-reduced-motion: reduce){
   .live-focus-dot{animation:none;}
 }
+
+/* تقليل الحركة (001-T027): نفس محدِّدات القواعد المتحركة أعلاه بلا !important، فتغلب بالترتيب */
+@media (prefers-reduced-motion:reduce){
+  .live-focus-dot{animation:none;}
+}

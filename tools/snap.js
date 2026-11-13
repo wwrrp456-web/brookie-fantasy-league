@@ -56,15 +56,16 @@ function initScript({ light }) {
   })();`;
 }
 
-async function openPage(browser, ctx, { width, light, url = '/index.html' }) {
-  const context = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: 1, locale: 'ar', timezoneId: 'Asia/Riyadh', reducedMotion: 'reduce' });
+// freeze=false: بدون حقن FREEZE_CSS وبحركة طبيعية (no-preference) لاختبارات الحركة نفسها (001-T027)
+async function openPage(browser, ctx, { width, light, url = '/index.html', freeze = true }) {
+  const context = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: 1, locale: 'ar', timezoneId: 'Asia/Riyadh', reducedMotion: freeze ? 'reduce' : 'no-preference' });
   const page = await context.newPage();
   await page.clock.setFixedTime(new Date(ctx.now));
   await page.addInitScript(initScript({ light }));
   const report = await fakeFirebase.install(page, { fixture: ctx.fixture, overrides: ctx.overrides, allowOrigin: ctx.origin });
   report.consoleErrors.length = 0;
   await page.goto(ctx.origin + url);
-  await page.addStyleTag({ content: FREEZE_CSS });
+  if (freeze) await page.addStyleTag({ content: FREEZE_CSS });
   await page.evaluate(async () => { try { await document.fonts.ready; } catch (e) {} });
   await page.waitForTimeout(700);
   return { page, context, report };

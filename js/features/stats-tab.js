@@ -208,14 +208,14 @@ function renderClubStats(){
     '</tr></thead><tbody>';
   list.forEach((cst,i)=>{
     html += `<tr>
-      <td style="color:#8A8A8A;">${i+1}</td>
+      <td class="text-dim">${i+1}</td>
       <td class="cs-name"><div class="cs-name-inner">${crestHTML(cst.name,20)}<span class="cs-club-label">${cst.name}</span></div></td>
-      <td style="color:#8A8A8A;">${cst.played}</td>
+      <td class="text-dim">${cst.played}</td>
       <td style="color:#3DD47E;">${cst.w}</td>
       <td style="color:#16A6EA;">${cst.d}</td>
       <td style="color:#FF6B5E;">${cst.l}</td>
       <td style="font-weight:800;color:#fff;">${cst.pts}</td>
-      <td style="color:#8A8A8A;">${cst.ownersCount}</td>
+      <td class="text-dim">${cst.ownersCount}</td>
     </tr>`;
   });
   html += '</tbody></table></div>';

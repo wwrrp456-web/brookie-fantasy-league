@@ -1,10 +1,10 @@
 {
-  "hexColors": 235,
-  "emoji": 478,
+  "hexColors": 200,
+  "emoji": 452,
   "inlineStyles": 28,
-  "numberNoun": 81,
+  "numberNoun": 79,
   "rawDates": 10,
   "forbiddenTerms": 12,
-  "importants": 18,
+  "importants": 0,
   "hardcodedCounts": 5
 }
