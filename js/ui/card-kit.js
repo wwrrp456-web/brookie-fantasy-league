@@ -76,6 +76,18 @@ function cardText(ctx, text, x, lineCenterY, opts){
   ctx.fillText(String(text), x, lineCenterY + cardBaselineOffset(ctx, o.size, o.weight || 400));
   ctx.restore();
 }
+// نفس cardText لكن بخط أساس معطى مباشرة (القيمة "baseline" في جداول المواصفة)
+function cardTextBase(ctx, text, x, baselineY, opts){
+  const o = opts || {};
+  ctx.save();
+  ctx.font = cardFont(o.size, o.weight);
+  ctx.fillStyle = o.color;
+  ctx.direction = o.dir || 'rtl';
+  ctx.textAlign = o.align || 'right';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(String(text), x, baselineY);
+  ctx.restore();
+}
 function cardTextWidth(ctx, text, size, weight){
   ctx.save(); ctx.font = cardFont(size, weight); const w = ctx.measureText(String(text)).width; ctx.restore();
   return w;
@@ -200,6 +212,19 @@ function validateCardData(kind, data){
       if(!p || !p.name) out.push(`اسم المشارك ناقص في الصف ${i + 1}`);
       if(!p || !Number.isFinite(p.total)) out.push(`رصيد ${who} غير محدد`);
       if(!p || !Array.isArray(p.clubs) || p.clubs.length !== 3 || p.clubs.some(c => !c)) out.push(`أندية ${who} ناقصة (المطلوب ثلاثة)`);
+    });
+    return out;
+  }
+  if(kind === 'champion'){
+    if(!Number.isInteger(data.round) || data.round < 1) out.push('رقم الجولة غير محدد');
+    if(!data.name) out.push('اسم بطل الجولة ناقص');
+    if(!Number.isFinite(data.points)) out.push('نقاط بطل الجولة غير محددة');
+    if(!Number.isFinite(data.rank)) out.push('مركز البطل غير محدد');
+    if(!Number.isFinite(data.total)) out.push('رصيد البطل غير محدد');
+    if(!Array.isArray(data.clubs) || data.clubs.length !== 3 || data.clubs.some(c => !c || !c.club)) out.push('أندية البطل ناقصة (المطلوب ثلاثة)');
+    else data.clubs.forEach(c => {
+      if(c.result !== 'no_match' && !['win', 'draw', 'loss'].includes(c.result)) out.push(`نتيجة ${c.club} غير محددة`);
+      else if(c.result !== 'no_match' && !(Number.isFinite(c.gf) && Number.isFinite(c.ga))) out.push(`أهداف مباراة ${c.club} ناقصة`);
     });
     return out;
   }
