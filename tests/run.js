@@ -351,7 +351,7 @@ const asyncCrestTests = (async () => {
   const sb = {console, Blob, URL};
   sb.window = sb;
   const cctx = vm.createContext(sb);
-  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js']
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
   const run = code => vm.runInContext(code, cctx);
   const blobText = async url => resolveObjectURL(url).text();
@@ -364,6 +364,19 @@ const asyncCrestTests = (async () => {
   check('crests: <img> الرسمي محتواه هو SVG الرسمي (مو المحسّن)', /official-test/.test(await blobText(offUrl)), true);
   run("delete CRESTS_OFFICIAL['al-hilal']; resetCrestCache();");
   check('crests: حذف الرسمي ← يرجع المحسّن', run("crestSource('الهلال').kind"), 'enhanced');
+  // 001-T012b: الشعارات الفاتحة: ثلاثة مصادر × ثيمين
+  check('crests-light: محسّن + ثيم فاتح ← النسخة الفاتحة (CRESTS_LIGHT)', run("(() => { const s = crestSource('الهلال', {theme: 'light'}); return [s.kind, s.variant, s.svg === CRESTS_LIGHT['al-hilal'], s.svg === CRESTS['al-hilal']]; })()"), ['enhanced', 'light', true, false]);
+  check('crests-light: محسّن + ثيم داكن ← العادية', run("(() => { const s = crestSource('الهلال', {theme: 'dark'}); return [s.kind, s.variant, s.svg === CRESTS['al-hilal']]; })()"), ['enhanced', 'dark', true]);
+  check('crests-light: لكل شعار محسّن نسخة فاتحة مختلفة (32)', run("Object.keys(CRESTS).every(k => CRESTS_LIGHT[k] && CRESTS_LIGHT[k] !== CRESTS[k])"), true);
+  check('crests-light: بلا صفحة ← داكن، وعنوان الفاتح ≠ الداكن', [run("crestSource('الهلال').variant"), run("crestURL('الهلال', {theme: 'light'}) !== crestURL('الهلال', {theme: 'dark'})")], ['dark', true]);
+  run("CRESTS_OFFICIAL['al-hilal'] = '<svg id=\"official-test\" viewBox=\"0 0 10 10\"/>'; resetCrestCache();");
+  check('crests-light: الرسمي يغلب بالثيمين (ما له نسخة فاتحة)', [run("crestSource('الهلال', {theme: 'light'}).kind"), run("crestSource('الهلال', {theme: 'dark'}).kind"), run("crestSource('الهلال', {theme: 'light'}).svg === crestSource('الهلال', {theme: 'dark'}).svg")], ['official', 'official', true]);
+  run("delete CRESTS_OFFICIAL['al-hilal']; resetCrestCache();");
+  check('crests-light: احتياطي بالثيمين نفسه (fallback)', [run("crestSource('نادي وهمي', {theme: 'light'}).kind"), run("crestSource('نادي وهمي', {theme: 'dark'}).kind"), run("crestSource('نادي وهمي', {theme: 'light'}).svg === crestSource('نادي وهمي', {theme: 'dark'}).svg")], ['fallback', 'fallback', true]);
+  run("globalThis.__tmpLight = CRESTS_LIGHT['al-hilal']; delete CRESTS_LIGHT['al-hilal']; resetCrestCache();");
+  check('crests-light: محسّن بلا نسخة فاتحة ← يرجع للعادية بالفاتح', run("(() => { const s = crestSource('الهلال', {theme: 'light'}); return [s.kind, s.variant, s.svg === CRESTS['al-hilal']]; })()"), ['enhanced', 'dark', true]);
+  run("CRESTS_LIGHT['al-hilal'] = globalThis.__tmpLight; resetCrestCache();");
+  check('crests-light: crestHTML بـopts.theme صريح بلا data-crest-club، وبدونه يحمله (تبديل بلا إعادة تحميل)', [/data-crest-club/.test(run("crestHTML('الهلال', 20, {theme: 'light'})")), /data-crest-club="الهلال"/.test(run("crestHTML('الهلال', 20)"))], [false, true]);
   // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
   check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
   const fb = run("crestSource('نادي وهمي').svg");
@@ -391,6 +404,14 @@ const asyncCrestTests = (async () => {
   (function walk(d) { fs.readdirSync(d, {withFileTypes: true}).forEach(e => { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(js|html)$/.test(e.name)) { const t = fs.readFileSync(p, 'utf8'); if (/clubCrestSVG|brand-assets|LOGO_BASE64|_ICON_PNG_BASE64/.test(t)) refs.push(path.relative(ROOT, p)); } }); })(path.join(ROOT, 'js'));
   ['index.html', 'report.html'].forEach(f => { if (/brand-assets|clubCrestSVG|LOGO_BASE64/.test(fs.readFileSync(path.join(ROOT, f), 'utf8'))) refs.push(f); });
   check('crests: js/data/brand-assets.js محذوف ولا بقيت أي إحالة (clubCrestSVG وLOGO_BASE64 والأيقونات PNG)', [fs.existsSync(path.join(ROOT, 'js/data/brand-assets.js')), refs], [false, []]);
+  // 001-T017: مكوّن الحالة الفاضية
+  const es = run("emptyState({icon: 'bell', title: 'لا إشعارات جديدة', text: 'أنت مطّلع على آخر الأخبار.'})");
+  check('empty-state: أيقونة (svg من ICONS) + عنوان + نص، وبلا أي شرطة كقيمة', [/<svg/.test(es), /<h3 class="empty-state-title">لا إشعارات جديدة<\/h3>/.test(es), /<p class="empty-state-text">/.test(es), /[—–]/.test(es)], [true, true, true, false]);
+  check('empty-state: أيقونة غير معروفة تُهمَل بدون خطأ', /<svg/.test(run("emptyState({icon: 'ما-في-أيقونة', title: 'ت'})")), false);
+  const esx = run("emptyState({title: '<img src=x onerror=1>', text: '\"x\"&', action: {label: '<b>', href: 'a\" onclick=\"1'}})");
+  check('empty-state: النصوص والرابط مهرَّبة (لا وسوم ولا كسر خاصية)', [/<img/.test(esx), /<b>/.test(esx), /onclick="1/.test(esx)], [false, false, false]);
+  check('empty-state: الزر الاختياري (رابط أو زر بمعرّف)', [/<a class="btn" href="x">ذهاب<\/a>/.test(run("emptyState({title:'t', action:{label:'ذهاب', href:'x'}})")), /<button type="button" class="btn" id="b1">ذهاب<\/button>/.test(run("emptyState({title:'t', action:{label:'ذهاب', id:'b1'}})"))], [true, true]);
+  check('empty-state: emptyInline نص خافت بدل شرطة، وافتراضيه "لا بيانات بعد"', [run("emptyInline('لا جولات')"), run("emptyInline()")], ['<span class="empty-inline">لا جولات</span>', '<span class="empty-inline">لا بيانات بعد</span>']);
 })();
 
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------

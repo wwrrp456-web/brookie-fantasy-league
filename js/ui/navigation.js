@@ -32,7 +32,7 @@ function renderUpdateDot(){
 // ---------- Rendering ----------
 // يخفي الأقسام المطوية الفاضية (لا بيانات لها حاليًا) بدل طيّة فاضية (001-T015)
 function syncFolds(){
-  document.querySelectorAll('#standingsFolds details.fold').forEach(f=>{
+  document.querySelectorAll('#standingsFolds details.fold, #statsFolds details.fold').forEach(f=>{
     const body = f.querySelector('.fold-body');
     const empty = !body || Array.from(body.children).every(c => !c.textContent.trim() && !c.querySelector('img,svg,canvas,input,select,button'));
     f.hidden = empty;

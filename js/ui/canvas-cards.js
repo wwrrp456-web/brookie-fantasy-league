@@ -1032,6 +1032,9 @@ async function downloadElementAsImage(elementId, filename, msgBoxId, btnId){
 
   try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
 
+  // الأقسام المطوية (<details>) تُفتح مؤقتًا ليشملها الكانفس، ثم تُرجَع كما كانت (في finally)
+  const closedFolds = Array.from(el.querySelectorAll('details:not([open])'));
+  closedFolds.forEach(d => { d.open = true; });
   try{
     const ready = await ensureHtml2Canvas();
     if(!ready) throw new Error('تعذّر تحميل مكتبة الصور (html2canvas) — تحقق من الاتصال بالإنترنت');
@@ -1043,6 +1046,7 @@ async function downloadElementAsImage(elementId, filename, msgBoxId, btnId){
     const detail = (e && e.message) ? ` (${e.message})` : '';
     if(box) box.innerHTML = `<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية${detail}.</div>`;
   } finally {
+    closedFolds.forEach(d => { d.open = false; });
     if(btn) btn.disabled = false;
   }
 }

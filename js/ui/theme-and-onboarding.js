@@ -11,6 +11,7 @@ function applyLightModePref(){
   // وليس نسخة "الألوان على الأبيض" (نص أسود، صفحة 3) لأن خلفية الهيدر داكنة
   // ثابتة بكل الأوضاع، فالنسخة المصمَّمة أصلًا لخلفية داكنة هي الأنسب تباينًا،
   // وهذا ما أكّده المستخدم برفع صورة توضّح الشعار الملوّن الصحيح المطلوب.
+  if(typeof refreshCrestsTheme === 'function') refreshCrestsTheme();
   const logoEl = document.getElementById('logoImg');
   if(logoEl) logoEl.src = logoURL(on);
   if(btn){

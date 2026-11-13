@@ -10,6 +10,7 @@
  *   assets/crests/motifs/*.svg    ← MOTIFS       { اسم: svg }
  *   assets/brand/proki-*.svg      ← LOGO_SVG     { mark, logo, logoLight }
  *   assets/crests/official/*.svg  ← CRESTS_OFFICIAL { slug: svg }  (لو المجلد غير موجود ← {})
+ *   assets/crests/light/*.svg     ← CRESTS_LIGHT { slug: svg }  نسخة الوضع الفاتح للشعار المحسّن (001-T012b؛ لو المجلد غير موجود ← {})
  *
  * التوليد **حتمي**: نفس المدخلات ← نفس الملف حرفيًا (مفاتيح مرتبة بترتيب نقاط الترميز، بلا تواريخ ولا مسارات مطلقة).
  * الـSVG يُحفظ كما هو بعد حذف سطر <?xml?> والمسافات الطرفية فقط. الملف المولَّد مرفوع في git (الموقع بدون بناء وقت التشغيل). */
@@ -51,6 +52,7 @@ function build(root) {
   const crests = readSvgDir(path.join(assets, 'crests'));
   const motifs = readSvgDir(path.join(assets, 'crests', 'motifs'));
   const official = readSvgDir(path.join(assets, 'crests', 'official'));
+  const light = readSvgDir(path.join(assets, 'crests', 'light'));
 
   let names = {};
   const namesFile = path.join(assets, 'crests.json');
@@ -77,6 +79,7 @@ function build(root) {
     renderObject('CREST_NAMES', names, 'slug ← اسم النادي (assets/crests.json)'),
     renderObject('MOTIFS', motifs, 'رموز الشعارات (assets/crests/motifs/*.svg)'),
     renderObject('LOGO_SVG', logos, 'شعار PROKI المتجهي (assets/brand/proki-*.svg): mark وlogo وlogoLight'),
+    renderObject('CRESTS_LIGHT', light, 'نسخ الشعارات المحسّنة للوضع الفاتح (assets/crests/light/*.svg)، المفتاح = slug'),
     renderObject('CRESTS_OFFICIAL', official, 'الشعارات الرسمية (assets/crests/official/*.svg) لو وضعها المنظّم، وإلا فاضي (D4، R-04)')
   ].join('\n');
 }
@@ -96,7 +99,7 @@ function main(argv) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, text);
   const count = n => (text.match(new RegExp(`\\nconst ${n} = \\{([\\s\\S]*?)\\n\\};`)) || [, ''])[1].split('\n  "').length - 1;
-  console.log(`✅ ${path.relative(root, out)} (${(Buffer.byteLength(text) / 1024).toFixed(1)}KB) · أيقونات: ${count('ICONS')} · شعارات: ${count('CRESTS')} · رموز: ${count('MOTIFS')} · شعار PROKI: ${count('LOGO_SVG')} · رسمية: ${count('CRESTS_OFFICIAL')}`);
+  console.log(`✅ ${path.relative(root, out)} (${(Buffer.byteLength(text) / 1024).toFixed(1)}KB) · أيقونات: ${count('ICONS')} · شعارات: ${count('CRESTS')} · رموز: ${count('MOTIFS')} · شعار PROKI: ${count('LOGO_SVG')} · فاتحة: ${count('CRESTS_LIGHT')} · رسمية: ${count('CRESTS_OFFICIAL')}`);
   return 0;
 }
 
