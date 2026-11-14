@@ -47,8 +47,7 @@ function composeWhatsAppSummary(d){
   t += `📅 تحديث بعد الجولة ${d.round}\n`;
   if(d.story) t += `\n📝 ${d.story}\n`;
   if(d.hero){
-    const pts = formatCount(d.hero.points, 'نقطة', {case: 'acc'});          // بنقطة واحدة · بنقطتين · بـ6 نقاط · بـ11 نقطة · بلا نقاط
-    const withPts = d.hero.points === 0 ? pts : (/^\d/.test(pts) ? 'بـ' : 'ب') + pts;
+    const withPts = arBaPrefix(formatCount(d.hero.points, 'نقطة', {case: 'acc'}));   // بنقطة واحدة · بنقطتين · بـ6 نقاط · بـ11 نقطة · بلا نقاط
     t += `\n👑 بطل الجولة: *${d.hero.name}* ${withPts}${d.hero.tieBreak ? ' بعد كسر التعادل' : ''}\n`;
   }
   t += `\nشدّوا الهمّة يا جماعة، فالجولة ${d.round + 1} ما تنتظر أحدًا!`;

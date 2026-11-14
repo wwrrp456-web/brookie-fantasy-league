@@ -78,7 +78,7 @@ const check = (name, got, want) => {
     await page.click('#myClubsCardBtn');
     await page.waitForSelector('#cardThemeSheet');
     await page.click('#cardThemeSheet .card-theme-opt[data-theme="dark"]');
-    await page.waitForFunction(() => /ما نقدر نجهّز/.test(document.getElementById('myClubsCardMsg').textContent), null, { timeout: 15000 });
+    await page.waitForFunction(() => /تعذّر تجهيز/.test(document.getElementById('myClubsCardMsg').textContent), null, { timeout: 15000 });
     const msg = await page.evaluate(() => document.getElementById('myClubsCardMsg').textContent);
     await page.waitForTimeout(500);
     check('الكرت الناقص: رسالة عربية بالنواقص وبلا تنزيل', [/أندية .* ناقصة/.test(msg), downloaded], [true, false]);

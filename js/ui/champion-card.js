@@ -30,6 +30,17 @@ function getChampionCardData(){
   };
 }
 
+// «هدف واحد مسجل» · «هدفان مسجلان» · «7 أهداف مسجلة» · «11 هدفًا مسجلًا» · «بلا أهداف مسجلة» (الصفة تطابق المعدود؛ الإملاء كما بالقالب المعتمد)
+function _chGoals(n, adj){
+  const c = formatCount(n, 'هدف');
+  if(n === 0) return c + ' ' + adj + 'ة';
+  if(n === 1) return c + ' ' + adj;
+  if(n === 2) return c + ' ' + adj + 'ان';
+  const r = n >= 100 ? n % 100 : n;
+  if(n >= 100 && r <= 2) return c + ' ' + adj;                 // 100 وما يليها بباقي 0 و1 و2: التمييز مجرور مفرد
+  return c + ' ' + adj + (r <= 10 ? 'ة' : 'ًا');
+}
+
 // حواف مربعات CSS تُقرَّب لأقرب بكسل (مثل المتصفح)
 function _chRect(ctx, x, y, w, h, r){
   const x0 = Math.round(x), y0 = Math.round(y), x1 = Math.round(x + w), y1 = Math.round(y + h);
@@ -135,7 +146,7 @@ async function buildChampionCardCanvas(opts){
 
   // ---- كسر التعادل (إن وُجد): أيقونة الميزان 24 يمينًا ثم النص، متمركز
   if(data.tiebreak){
-    const t = `كسر التعادل: ${formatCount(data.tiebreak.gf, 'هدف')} مسجلة، و${formatCount(data.tiebreak.ga, 'هدف')} مستقبلة.`;
+    const t = `كسر التعادل: ${_chGoals(data.tiebreak.gf, 'مسجل')}، و${_chGoals(data.tiebreak.ga, 'مستقبل')}.`;
     const tw = cardTextWidth(ctx, t, 24, 400), tg = 24 + 8 + tw, tx = 540 - tg / 2;
     cardDrawImage(ctx, await cardIconImage('scale', text2, 24), tx + tg - 24, 1098.75, 24, 24);
     cardTextBase(ctx, t, tx + tw, 1116.203125, {size: 24, weight: 400, color: text2, align: 'right'});
@@ -161,18 +172,18 @@ async function exportChampionCard(action, forcedTheme, box){
     const cv = await buildChampionCardCanvas({theme, data});
     const filename = championCardFilename(data.round, theme);
     if(action === 'share'){
-      const shared = await tryShareCanvas(cv, filename, 'بطل الجولة', `بطل الجولة ${data.round}: ${data.name} بـ ${data.points} نقطة`);
+      const shared = await tryShareCanvas(cv, filename, 'بطل الجولة', `بطل الجولة ${data.round}: ${data.name} ${arBaPrefix(formatCount(data.points, 'نقطة', {case: 'acc'}))}`);
       if(shared){ say('<div class="status-msg ok">تم فتح المشاركة</div>'); return true; }
       downloadCanvasPNG(cv, filename);
-      say('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في الجروب.</div>');
+      say('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في المجموعة.</div>');
       return true;
     }
     downloadCanvasPNG(cv, filename);
-    say('<div class="status-msg ok">تم تحميل صورة بطل الجولة. أرسلها في الجروب.</div>');
+    say('<div class="status-msg ok">تم تحميل صورة بطل الجولة. أرسلها في المجموعة.</div>');
     return true;
   }catch(e){
-    if(e && e.name === 'CardDataError') say(`<div class="status-msg err">ما نقدر نجهّز كرت بطل الجولة: ${e.problems.join('، ')}.</div>`);
-    else say('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>');
+    if(e && e.name === 'CardDataError') say(`<div class="status-msg err">تعذّر تجهيز كرت بطل الجولة: ${e.problems.join('، ')}.</div>`);
+    else say('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة أخرى.</div>');
     return false;
   }
 }
@@ -181,7 +192,7 @@ async function exportChampionCard(action, forcedTheme, box){
 async function showChampionCard(){
   const box = document.getElementById('copyBox');
   if(!getRoundHeroes()){
-    box.innerHTML = '<div class="status-msg err">لا توجد جولات مسجّلة بعد — كرت البطل يظهر بعد أول جولة.</div>';
+    box.innerHTML = '<div class="status-msg err">لا توجد جولات مسجّلة بعد. يظهر كرت البطل بعد أول جولة.</div>';
     return;
   }
   box.innerHTML = '<p class="status-msg">جارٍ تجهيز الكرت…</p>';
@@ -203,7 +214,7 @@ async function showChampionCard(){
     document.getElementById('shareCardBtn').onclick = () => exportChampionCard('share', null, box);
     document.getElementById('closeCardBtn').onclick = () => { box.innerHTML = ''; };
   }catch(e){
-    if(e && e.name === 'CardDataError') box.innerHTML = `<div class="status-msg err">ما نقدر نجهّز كرت بطل الجولة: ${e.problems.join('، ')}.</div>`;
-    else box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الكرت، حاول مرة ثانية.</div>';
+    if(e && e.name === 'CardDataError') box.innerHTML = `<div class="status-msg err">تعذّر تجهيز كرت بطل الجولة: ${e.problems.join('، ')}.</div>`;
+    else box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الكرت، حاول مرة أخرى.</div>';
   }
 }

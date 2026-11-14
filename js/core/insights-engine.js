@@ -48,7 +48,7 @@ function computeRoundTitles(cur, prev){
   ids.forEach(id=>{ if(cur[id].gf !== null && cur[id].gf !== undefined && cur[id].gf > bestGf) bestGf = cur[id].gf; });
   if(bestGf > 0){
     const gfIds = ids.filter(id=> cur[id].gf === bestGf);
-    titles.push({icon:'🥅', label:'الأكثر هجومية', names: gfIds.map(nameOf), extra:`${bestGf} هدف`});
+    titles.push({icon:'🥅', label:'الأكثر هجومية', names: gfIds.map(nameOf), extra:formatCount(bestGf,'هدف')});
   }
 
   // 🧱 الأصلب دفاعًا: أقل أهداف استقبلها هذي الجولة (يحتاج بيانات أهداف حقيقية)
@@ -116,22 +116,22 @@ function computeBadges(){
     else if(v === topClimberVal && v > 0){ topClimberNames.push(p.name); }
   });
 
-  const fmtNames = (arr)=> arr.length<=3 ? arr.join('، ') : `${arr.length} مشاركين`;
+  const fmtNames = (arr)=> arr.length<=3 ? formatList(arr) : formatCount(arr.length,'مشارك');
 
   if(steadiest.length){
     badges.push({icon:'🧊', title:'الأكثر ثباتًا', names: fmtNames(steadiest), detail:'صفر ممات منذ بداية الموسم'});
   }
   if(bestStreakVal >= 2){
-    badges.push({icon:'🔥', title:'أطول سلسلة نقاط', names: fmtNames(bestStreakNames), detail:`${bestStreakVal} جولات متتالية بنقاط`});
+    badges.push({icon:'🔥', title:'أطول سلسلة نقاط', names: fmtNames(bestStreakNames), detail:`${arRoundsRun(bestStreakVal)} بنقاط`});
   }
   if(bestRoundVal > 0){
-    badges.push({icon:'💥', title:'أعلى حصاد في جولة واحدة', names: fmtNames(bestRoundNames), detail:`${bestRoundVal} نقطة`});
+    badges.push({icon:'💥', title:'أعلى نقاط في جولة واحدة', names: fmtNames(bestRoundNames), detail:formatCount(bestRoundVal,'نقطة')});
   }
   if(mostMumVal > 0){
-    badges.push({icon:'💀', title:'الأكثر ممات', names: fmtNames(mostMumNames), detail:`${mostMumVal} ممة`});
+    badges.push({icon:'💀', title:'الأكثر ممّات', names: fmtNames(mostMumNames), detail:formatCount(mostMumVal,'ممة')});
   }
   if(topClimberNames.length){
-    badges.push({icon:'🚀', title:'أكبر صعود هذه الجولة', names: fmtNames(topClimberNames), detail:`+${topClimberVal} مركز`});
+    badges.push({icon:'🚀', title:'أكبر صعود هذه الجولة', names: fmtNames(topClimberNames), detail:formatCount(topClimberVal,'مركز')});
   }
 
   return badges;
@@ -254,7 +254,7 @@ function computeExtendedBadges(){
     else if(best===bestRisingVal && best>0){ bestRisingNames.push(p.name); }
   });
   if(bestRisingVal >= 2){
-    extra.push({icon:'⬆️', title:'أطول صعود متواصل', names: bestRisingNames.join('، '), detail:`${bestRisingVal} جولات متتالية`});
+    extra.push({icon:'⬆️', title:'أطول صعود متواصل', names: bestRisingNames.join('، '), detail:arRoundsRun(bestRisingVal)});
   }
 
   // أكبر انتعاشة (أعلى نقطة بعد ممة مباشرة)
@@ -270,7 +270,7 @@ function computeExtendedBadges(){
     }
   });
   if(bestBouncePts > 0){
-    extra.push({icon:'💪', title:'أقوى انتعاشة بعد الممة', names: bestBounceNames.join('، '), detail:`${bestBouncePts} نقطة بعد ممة`});
+    extra.push({icon:'💪', title:'أقوى انتعاشة بعد الممة', names: bestBounceNames.join('، '), detail:`${formatCount(bestBouncePts,'نقطة')} بعد ممة`});
   }
 
   // المنتج الأكثر استمرارية: أعلى حد أدنى للنقاط في أي جولة (min across rounds)
@@ -283,7 +283,7 @@ function computeExtendedBadges(){
     else if(floor===bestFloorVal && floor>=0){ bestFloorNames.push(p.name); }
   });
   if(bestFloorVal > 0){
-    extra.push({icon:'🛡️', title:'الأكثر استمرارية', names: bestFloorNames.join('، '), detail:`لم ينزل عن ${bestFloorVal} نقطة`});
+    extra.push({icon:'🛡️', title:'الأكثر استمرارية', names: bestFloorNames.join('، '), detail:`لم ينزل عن ${formatCount(bestFloorVal,'نقطة',{case:'acc'})}`});
   }
 
   return extra;

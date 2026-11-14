@@ -56,7 +56,7 @@
   - القبول: خط الأساس الأولي مسجّل: hex ≈ 196، وإيموجي ≈ 580، و`style=""` = 166، و`numberNoun` ≈ 83، و`rawDates` = 9 (بعد T002 ينقص 1)، و`!important` = 21؛ وSC-04 إضافة `#123456` لأي ملف CSS تفشل الفحص
 - [x] T011 [US1] [Sonnet] `verify.yml` (يعتمد على T008، T009، T010)
   - القبول: PR تجريبي يُظهر فحص `verify` أخضر، مع artifact اللقطات والملخص في صفحة الفحص
-- [ ] T012 [US1] [المنظّم] إعدادات GitHub، مرة واحدة (يعتمد على T011)
+- [x] T012 [US1] [المنظّم] إعدادات GitHub، مرة واحدة (يعتمد على T011) — **منجز:** Allow auto-merge وقاعدة `protect-main` (PR + `verify`) مفعّلة، والدليل في `agents/SONNET.md` أمر M51 (تحقق 14 نوفمبر، `coverage.md`)
   1. Settings ← General ← Pull Requests ← فعّل **Allow auto-merge**
   2. Settings ← Branches ← Add rule لفرع `main`: ✔ Require a pull request before merging، و✔ Require status checks to pass ← **verify**
   - بعدها: كل PR يعدّي `verify` وعليه حكم ✅ يندمج تلقائيًا
@@ -65,7 +65,7 @@
 
 ## المرحلة 4: الإغلاق
 
-- [ ] T013 [US2] [Opus] تأكيد مشاكل ⚪ ببيانات حقيقية (يعتمد على T008) — إعادة لقطات `001-ui-visual-overhaul/baseline/` بالبيانات الحقيقية، وتحديث جدول المشاكل في مواصفة 001 (تأكيد أو إلغاء كل ⚪)، وتحديث `evaluation.md`
+- [x] T013 [US2] [Opus] ~~تأكيد مشاكل ⚪ ببيانات حقيقية~~ **أُغلقت، تجاوزتها 001** (14 نوفمبر، `coverage.md` القرار 1: الواجهة انبنت من جديد على الـfixture الحقيقي ولقطات `snap` تغطيها في كل PR) (يعتمد على T008) — إعادة لقطات `001-ui-visual-overhaul/baseline/` بالبيانات الحقيقية، وتحديث جدول المشاكل في مواصفة 001 (تأكيد أو إلغاء كل ⚪)، وتحديث `evaluation.md`
 
 ---
 

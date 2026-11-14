@@ -20,18 +20,18 @@ function renderHeroes(){
   html += `<div class="hero-card gold">
     <div class="hero-label">👑 بطل الجولة ${h.roundNumber}</div>
     <div class="hero-name">${h.top.name}</div>
-    <div class="hero-sub">${h.top.points} نقطة${h.top.tieBreak ? ' <span title="حُسم بكسر تعادل: الأكثر أهدافًا ثم الأقل استقبالًا">(بعد كسر تعادل)</span>' : ''}</div>
+    <div class="hero-sub">${formatCount(h.top.points,'نقطة')}${h.top.tieBreak ? ' <span title="حُسم بكسر التعادل: الأكثر أهدافًا ثم الأقل استقبالًا">(بعد كسر التعادل)</span>' : ''}</div>
   </div>`;
   html += `<div class="hero-card">
-    <div class="hero-label">💀 ممات الجولة</div>
-    <div class="hero-name">${h.mummat.length ? h.mummat.length + ' لاعب' : 'لا أحد'}</div>
-    <div class="hero-sub">${h.mummat.length ? h.mummat.slice(0,3).join('، ') + (h.mummat.length>3?'…':'') : 'الجميع سجّل نقاطاً'}</div>
+    <div class="hero-label">💀 ممّات الجولة</div>
+    <div class="hero-name">${h.mummat.length ? formatCount(h.mummat.length,'مشارك') : 'لا أحد'}</div>
+    <div class="hero-sub">${h.mummat.length ? h.mummat.slice(0,3).join('، ') + (h.mummat.length>3?'…':'') : 'الجميع سجّل نقاطًا'}</div>
   </div>`;
   if(h.bestStreak && h.bestStreak.streak > 0){
     html += `<div class="hero-card">
       <div class="hero-label">🔥 أطول سلسلة بلا ممة</div>
       <div class="hero-name">${h.bestStreak.name}</div>
-      <div class="hero-sub">${h.bestStreak.streak} جولة متتالية</div>
+      <div class="hero-sub">${arRoundsRun(h.bestStreak.streak)}</div>
     </div>`;
   }
   html += '</div>';
