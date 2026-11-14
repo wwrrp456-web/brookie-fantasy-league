@@ -844,6 +844,53 @@ const asyncDiffTests = (async () => {
   check('منتقٍ: تنويع ≥ 5 صيغ خلال 12 جولة', new Set(picks).size >= 5, true);
 }
 
+
+// ---------- 002-R21a / S49: مُختار «منافس الجولة» js/voice/spotlight.js ----------
+{
+  const ssb = {console}; ssb.window = ssb;
+  const sctx = vm.createContext(ssb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/data/season-2/rounds-seed.js', 'js/core/config.js', 'js/core/dom-utils.js',
+    'js/core/ar-format.js', 'js/core/storage.js', 'js/core/standings-engine.js', 'js/core/club-engine.js', 'js/core/insights-engine.js',
+    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/spotlight-angles.js', 'js/voice/voice-engine.js', 'js/voice/registry.js', 'js/voice/spotlight.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), sctx, {filename: f}));
+  sctx.__r = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8')).data.rounds;
+  vm.runInContext('DATA.rounds = __r; this.SP = {spotlightSeries, computeSpotlightCandidates, pickSpotlight, spotlightPlainText, pickVariant, SPOTLIGHT_ANGLES};', sctx);
+  const SP = sctx.SP, h = {formatCount: sctx.formatCount, pickForm: sctx.pickForm, formatList: sctx.formatList};
+
+  const ser = SP.spotlightSeries();
+  const picks = ser.map(x => x.pick);
+  check('منافس الجولة: منافس لكل جولة بالـfixture', picks.every(Boolean) && ser.length === sctx.__r.length, true);
+  check('منافس الجولة: حتمي (نفس النتيجة عند الإعادة)', SP.spotlightSeries().map(x => x.pick.sp.id + x.pick.angle.id), ser.map(x => x.pick.sp.id + x.pick.angle.id));
+  const rep3 = [];
+  picks.forEach((p, i) => { for(let j = Math.max(0, i - 3); j < i; j++) if(picks[j].sp.id === p.sp.id && !p.urgent) rep3.push(p.sp.round); });
+  check('منافس الجولة: لا تكرار للمشارك بآخر 3 جولات', rep3, []);
+  check('منافس الجولة: لا تكرار للزاوية جولتين متتاليتين', picks.filter((p, i) => i && picks[i - 1].angle.id === p.angle.id).length, 0);
+  check('منافس الجولة: زاوية شرطها متحقق (when) دائمًا', picks.every(p => p.angle.when(p.sp)), true);
+  check('منافس الجولة: زاويتا الدويل والتوقع ما تُختاران (مصدرهما غير مربوط)', picks.some(p => ['duel', 'predictor'].includes(p.angle.id)), false);
+  const txt = picks.map(p => SP.spotlightPlainText(p, h));
+  check('منافس الجولة: النص المؤقت سليم (بلا undefined/NaN)', txt.filter(t => /undefined|NaN|null/.test(t)), []);
+
+  // حالات حافة على المنتقي
+  check('حافة: بلا مرشحين ← null', SP.pickSpotlight([], []), null);
+  const mk = (id, name, score, angle, urgent) => ({sp: {id, name, rank: id + 1}, angle: {id: angle}, score, urgent: !!urgent});
+  const c2 = [mk(0, 'أ', 9, 'x'), mk(1, 'ب', 5, 'y')];
+  check('حافة: المتصدر بالدرجة لكنه ظهر قبل جولة ← الثاني', SP.pickSpotlight(c2, [{id: 0, angle: 'z', round: 1}]).sp.id, 1);
+  check('حافة: مرشح واحد فقط وظهر قبل 3 جولات ← يُخفَّف ولا ينهار', SP.pickSpotlight([mk(0, 'أ', 9, 'x')], [{id: 5, angle: 'q', round: 1}, {id: 0, angle: 'z', round: 2}, {id: 6, angle: 'q', round: 3}]).sp.id, 0);
+  check('حافة: الحدث العاجل يتجاوز نافذة الـ3 لكن ليس الجولة السابقة',
+    [SP.pickSpotlight([mk(0, 'أ', 9, 'x', true), mk(1, 'ب', 5, 'y')], [{id: 0, angle: 'z', round: 1}, {id: 7, angle: 'q', round: 2}]).sp.id,
+     SP.pickSpotlight([mk(0, 'أ', 9, 'x', true), mk(1, 'ب', 5, 'y')], [{id: 7, angle: 'q', round: 1}, {id: 0, angle: 'z', round: 2}]).sp.id], [0, 1]);
+  const hv = {}, vars = [{id: 'a', needs: [], text: () => 'أ'}, {id: 'b', needs: [], text: () => 'ب'}, {id: 'c', needs: [], text: () => 'ج'}, {id: 'd', needs: [], text: () => 'د'}, {id: 'e', needs: [], text: () => 'هـ'}];
+  const seq = []; for(let r = 1; r <= 10; r++) seq.push(SP.pickVariant('k', r, {}, vars, hv, h).id);
+  check('pickVariant: حتمي ولا يكرر صيغة بآخر 3 جولات', seq.filter((v, i) => seq.slice(Math.max(0, i - 3), i).includes(v)), []);
+  check('pickVariant: بلا صيغ منطبقة ← null', SP.pickVariant('k2', 1, {}, [{id: 'z', needs: [], when: () => false, text: () => 'x'}], {}, h), null);
+
+  // محاكاة 30 جولة × 20 مشاركًا
+  const sim = require('../tools/spotlight-sim.js').simulate(30);
+  check('محاكاة 30 جولة: منافس بكل جولة', sim.rows.every(r => r.id !== null), true);
+  check('محاكاة 30 جولة: لا تكرار بآخر 3 جولات (غير العاجل)', sim.rows.filter((r, i) => !r.urgent && sim.rows.slice(Math.max(0, i - 3), i).some(p => p.id === r.id)).length, 0);
+  check('محاكاة 30 جولة: توزيع عادل (الكل ظهر، والأعلى ≤ 4)', [Math.min(...sim.counts) >= 1, Math.max(...sim.counts) <= 4], [true, true]);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);

@@ -53,7 +53,16 @@ function voiceSnapshot(upto){
     PARTICIPANTS.forEach(p => { const all = getAllRoundsHistory(p.id); played[p.id] = all.length; hist[p.id] = all.filter(r => r.round >= 3).map(r => r.points); });
     const heroIds = DATA.rounds.map(r => getRoundChampion(r.number));
     const last = DATA.rounds[DATA.rounds.length - 1];
-    return {round: last ? last.number : 0, st: st.map(x => ({id: x.id, name: x.name, total: x.total})),
+    // أندية كل مشارك في آخر جولة (لمنافس الجولة): عدد الفوز واللعب وأفضل فوز
+    const clubs = {};
+    PARTICIPANTS.forEach(p => {
+      const en = (last && last.entries && last.entries[p.id]) || [];
+      const wins = en.map((e, i) => ({e, club: p.teams[e && e.ti !== undefined ? e.ti : i]})).filter(x => x.e && x.e.result === 'win');
+      wins.sort((a, b) => (b.e.gf - b.e.ga) - (a.e.gf - a.e.ga) || b.e.gf - a.e.gf);
+      clubs[p.id] = {won: wins.length, played: en.filter(e => e && e.result !== 'no_match').length,
+        best: wins[0] ? {club: wins[0].club, opp: wins[0].e.opp, gf: wins[0].e.gf, ga: wins[0].e.ga} : null};
+    });
+    return {clubs, round: last ? last.number : 0, st: st.map(x => ({id: x.id, name: x.name, total: x.total})),
       hero: heroes && heroes.top ? {id: heroes.top.id, name: heroes.top.name, pts: heroes.top.points, tieBreak: !!heroes.top.tieBreak} : null,
       mummat: heroes ? heroes.mummat : [], badges, hist, played, heroIds, total: SEASON_TOTAL_ROUNDS};
   } finally { DATA.rounds = saved; }
