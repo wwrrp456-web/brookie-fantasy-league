@@ -607,6 +607,119 @@ const asyncDiffTests = (async () => {
   fs.rmSync(tmp, {recursive: true, force: true});
 }
 
+// ---------- 002-T010: مكتبة الصوت js/voice/* (قوالب الواتساب والمنافس والتنوّع) ----------
+{
+  const vsb = {console}; vsb.window = vsb;
+  const vctx = vm.createContext(vsb);
+  ['js/core/ar-format.js', 'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/spotlight-angles.js', 'js/voice/banter.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), vctx, {filename: f}));
+  vm.runInContext('this.L = {WA_REPORT, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, VOICE_ROUND_STORY, VOICE_STREAKS, VOICE_NOTIFY, VOICE_REGISTRY, voiceApply};', vctx);
+  const L = vctx.L, h = {formatCount: vctx.formatCount, pickForm: vctx.pickForm, formatList: vctx.formatList};
+  const apply = (t, st) => L.voiceApply(t, st, h);
+
+  // 1) الحجم: ≥ 5 صيغ لكل مقطع، و8 لكل موقف قصة (FR-08)، و13 زاوية
+  const short = [];
+  Object.entries(L.WA_REPORT).forEach(([k, v]) => { if(v.length < 5) short.push('wa.' + k); });
+  L.SPOTLIGHT_ANGLES.forEach(a => ['title', 'story', 'joke'].forEach(k => { if(a[k].length < 5) short.push(a.id + '.' + k); }));
+  [['facts', L.SPOTLIGHT_FACTS], ['motiv.up', L.SPOTLIGHT_MOTIVATION.up], ['motiv.down', L.SPOTLIGHT_MOTIVATION.down], ['close.up', L.SPOTLIGHT_CLOSING.up], ['close.down', L.SPOTLIGHT_CLOSING.down],
+    ['streak.hot', L.VOICE_STREAKS.hot], ['streak.cold', L.VOICE_STREAKS.cold], ['notify.newRound', L.VOICE_NOTIFY.newRound], ['notify.badge', L.VOICE_NOTIFY.badge], ['notify.hero', L.VOICE_NOTIFY.hero]]
+    .forEach(([k, v]) => { if(v.length < 5) short.push(k); });
+  Object.entries(L.VOICE_ROUND_STORY).forEach(([k, v]) => { if(v.length < 8) short.push('rs.' + k); });
+  check('صوت: ≥ 5 صيغ لكل مقطع، و≥ 8 لكل موقف قصة، و13 زاوية للمنافس', [short, L.SPOTLIGHT_ANGLES.length], [[], 13]);
+
+  const all = [].concat(...Object.values(L.WA_REPORT), ...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke]), L.SPOTLIGHT_FACTS,
+    L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down, ...Object.values(L.VOICE_ROUND_STORY),
+    L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY));
+  const ids = all.map(t => t.id);
+  check('صوت: معرّفات القوالب فريدة', ids.filter((x, i) => ids.indexOf(x) !== i), []);
+  const conflictIds = [].concat(...Object.entries(L.SPOTLIGHT_CONFLICTS).map(([k, v]) => [k, ...v]));
+  check('صوت: جدول التعارض يشير لقوالب موجودة', conflictIds.filter(x => !ids.includes(x)), []);
+
+  // 2) الرفض: حالة فاضية ما تطلع منها جملة ناقصة ولا خطأ
+  const bad = all.filter(t => { const out = apply(t, {}); return out !== null && /undefined|NaN|null/.test(out); });
+  check('صوت: الحالة الفاضية ما تنتج undefined/NaN (القالب يُرفض)', bad.map(t => t.id), []);
+
+  // 3) بطارية حالات حدّية (0، 1، 2، 3، 11 في كل عدّاد) وفحص لغوي لكل نص ناتج
+  const N = ['العندليب', 'أبو عزام', 'مصطفى عبده', 'أبا عتاب', 'أبو شيخة'];
+  const counts = [1, 2, 3, 11], names = k => N.slice(0, Math.min(k, 5)), mv = (k, v) => ({names: names(k), val: v});
+  const waStates = [], spStates = [], rsStates = [];
+  for(let i = 0; i < 40; i++){
+    const c = counts[i % 4], g = [0, 1, 2, 3, 11][i % 5], tie = [[], [], ['لطفي', 'أيوب'], ['لطفي', 'أيوب', 'سعيد']][i % 4];
+    waStates.push({round: 10, nextRound: i % 7 ? 11 : null, firstRound: false, playersCount: 20,
+      hero: {name: 'أبو أوس', pts: [1, 2, 6, 11][i % 4], tieBreak: i % 2 === 0, repeat: i % 3 === 0, prevRank: [2, 15][i % 2]},
+      leader: {name: 'لطفي', total: [1, 2, 92, 111][i % 4]}, chaser: {name: 'أيوب', total: 90}, gap: tie.length ? 0 : g, topTied: tie,
+      leaderChanged: i % 3 === 1, prevLeader: 'أيوب', climbers: i % 6 ? mv(c, [2, 3, 11][i % 3]) : null, droppers: i % 5 ? mv([1, 2, 3, 5][i % 4], [2, 4, 11][i % 3]) : null,
+      mummat: names([0, 1, 2, 3, 5][i % 5]), mummaRepeat: i % 4 === 0 ? {name: 'سعيد', count: [2, 3][i % 2]} : null, hotStreak: i % 3 ? {name: 'أيوب', count: [3, 11][i % 2]} : null});
+    spStates.push({round: 10, nextRound: i % 7 ? 11 : null, name: 'العندليب', rank: [1, 2, 4, 5, 12][i % 5], prevRank: [7, 12, 15, 3][i % 4], move: [3, 5, 11, -2, 0][i % 5],
+      total: [85, 101, 111][i % 3], pts: [0, 1, 2, 6, 9][i % 5], played: true, playersCount: 20,
+      above: {name: 'لطفي', gap: [1, 2, 3][i % 3]}, below: {name: 'سعيد', gap: [1, 2, 11][i % 3]}, isHero: i % 2 === 0, heroTieBreak: false, heroPts: 9,
+      isLeader: i % 5 === 0, leaderChanged: i % 2 === 0, second: {name: 'أيوب', gap: [0, 1, 2, 3, 11][i % 5]}, prevPts: [0, 1, 3, 6][i % 4],
+      last5: [[5, 5, 5, 5, 5], [4, 5, 6, 5, 4], [1, 9, 0, 6, 3]][i % 3], hotRun: [3, 4, 11, 0][i % 4], coldEnded: [2, 3, 11, 0][i % 4],
+      clubs: {won: [1, 2, 3][i % 3], played: 3, best: {club: 'الهلال', opp: 'النصر', gf: [1, 3, 11][i % 3], ga: 0}},
+      duel: i % 2 ? {opp: 'أيوب', myPts: [6, 3, 6][i % 3], oppPts: [3, 6, 6][i % 3], totalGap: [0, 1, 2, 3][i % 4]} : null,
+      badge: i % 3 ? {title: 'أطول سلسلة نقاط'} : null, predictor: i % 2 ? {hits: [2, 3, 11][i % 3]} : null,
+      seasonMumma: [0, 1, 2, 11][i % 4], heroCount: [0, 1, 2, 11][i % 4], bestPts: [1, 2, 12][i % 3]});
+    rsStates.push({round: 10, hero: waStates[i].hero, mummat: waStates[i].mummat, climber: waStates[i].climbers, dropper: waStates[i].droppers,
+      names: names(c), count: [2, 3, 11][i % 3], title: 'أطول سلسلة نقاط', name: 'أبو أوس'});
+  }
+  const texts = [];
+  const run = (list, states) => list.forEach(t => states.forEach(st => { const o = apply(t, st); if(o !== null) texts.push([t.id, o]); }));
+  run([].concat(...Object.values(L.WA_REPORT)), waStates);
+  run([].concat(...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke]), L.SPOTLIGHT_FACTS, L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down), spStates);
+  run([].concat(...Object.values(L.VOICE_ROUND_STORY), L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY)), rsStates);
+  const RULES = [
+    ['عدد ومعدود', /(^|[^\d])([3-9]|10) (نقطة|مركز|جولة|ممة)(?![ء-ي])|(^|[^\d])[12] (نقاط|نقطة|مراكز|مركز|جولات|جولة)(?![ء-ي])|(^|[^\d])(1[1-9]|[2-9]\d) (نقاط|مراكز|جولات|ممّات)(?![ء-ي])/],
+    ['شرطة طويلة', /[—–]/], ['ترقيم مكرر', /!!|؟؟|\.\./], ['مسافة قبل الترقيم أو مزدوجة', / [،.؟!:]|  /],
+    ['لهجة غير سعودية', /(^|[^ء-ي])(لسه|مش|كمان|ولا يهمك|ليه|كده|هيك|وايد|إيش|عايز|كويس|بيفلت)(?![ء-ي])/],
+    ['معجم', /المتسابق|اللاعب|رصيد الجولة|صفر نقاط|نجم الجولة|صاحب الصدارة|فك التعادل|الجوله/],
+    ['بقايا', /undefined|NaN|\$\{|بـ(بلا|نقط)|ببلا/],
+    ['مطابقة الصفة للمثنى', /(جولتان|جولتين|ممّتان|ممّتين|نقطتان|نقطتين|مركزان|مركزين) متتالية/],
+    ['لام الجر مع أل', /لـال/],
+    ['مبالغة: تهويل لبطل بنقاط قليلة', /(خطف الأضواء|ما ترك للباقين إلا التصفيق|بدون ما يعرق|ما رحم أحد) ب(نقطة|نقطتين)/],
+  ];
+  const fails = [];
+  texts.forEach(([id, o]) => RULES.forEach(([name, re]) => { if(re.test(o)) fails.push(`${name}: ${id}: ${o}`); }));
+  check(`صوت: ${texts.length} نصًا من الحالات الحدّية بلا أخطاء عدد أو ترقيم أو لهجة أو معجم`, [...new Set(fails.map(f => f.split(': ').slice(0, 2).join(': ')))].concat(fails.slice(0, 3)), []);
+
+  // 4) كل زاوية تنطبق على حالة واحدة على الأقل، وتطلع عنوان وقصة ونكتة
+  const dead = L.SPOTLIGHT_ANGLES.filter(a => !spStates.some(st => { try{ return a.when(st) && ['title', 'story', 'joke'].every(k => a[k].some(t => apply(t, st) !== null)); }catch(e){ return false; } }));
+  check('صوت: كل زاوية من الـ13 قابلة للتحقق (عنوان وقصة ونكتة)', dead.map(a => a.id), []);
+  // 5) الشروط تُحترم: زاوية الممة ما تنطبق على من جمع نقاطًا، والصاروخ ما ينطبق على صعود مركزين
+  const A = id => L.SPOTLIGHT_ANGLES.find(a => a.id === id);
+  check('صوت: شروط الزوايا (الممة بلا نقاط فقط، والصاروخ ≥ 3 مراكز)', [!!A('mummaHonor').when({played: true, pts: 2}), !!A('rocket').when({move: 2}), !!A('rocket').when({move: 3})], [false, false, true]);
+  // 6) أمثلة حرفية
+  const W = L.WA_REPORT;
+  check('صوت: أمثلة حرفية (المثنى والفعل والمعطوف)', [
+    apply(W.lead.find(t => t.id === 'wa.lead.2'), {leader: {name: 'لطفي', total: 92}, chaser: {name: 'أيوب', total: 90}, gap: 2, topTied: [], leaderChanged: false}),
+    apply(W.drop.find(t => t.id === 'wa.drop.1'), {droppers: {names: ['أبو تغريد (زيد)', 'أبو رمزي'], val: 4}}),
+    apply(W.lead.find(t => t.id === 'wa.lead.14'), {leader: {name: 'لطفي', total: 92}, topTied: ['لطفي', 'أيوب']}),
+  ], [
+    'لطفي على القمة برصيد 92 نقطة، لكن أيوب يتنفّس في رقبته بفارق نقطتين بس.',
+    'بالمقابل، أبو تغريد (زيد) وأبو رمزي تراجعا 4 مراكز، والموسم طويل والعودة ممكنة.',
+    'لطفي وأيوب يتقاسمان الصدارة برصيد 92 نقطة.',
+  ]);
+  check('صوت: السجلّ يصنّف كل مولّد', L.VOICE_REGISTRY.filter(r => !['متنوّع', 'ثابت بقصد', 'ينتظر ترحيل'].includes(r.status)).map(r => r.id), []);
+
+  // 7) أداة العينات: حتمية وتطلع الجولة 10 بأرقامها الصحيحة
+  const os = require('os');
+  const tmp1 = path.join(os.tmpdir(), 'voice-a.md'), tmp2 = path.join(os.tmpdir(), 'voice-b.md');
+  const log = console.log; console.log = () => {};
+  const vs = require(path.join(ROOT, 'tools/voice-samples.js'));
+  vs.main(['--rounds', '10', '--out', tmp1]); vs.main(['--rounds', '10', '--out', tmp2]);
+  console.log = log;
+  const s1 = fs.readFileSync(tmp1, 'utf8');
+  check('عينات الصوت: حتمية، والجولة 10 فيها المتصدر والمثنى وبلا شرطة طويلة', [s1 === fs.readFileSync(tmp2, 'utf8'), /لطفي/.test(s1), /نقطتين/.test(s1), /[—–]/.test(s1.split('## الجولة')[1])], [true, true, true, false]);
+
+  // 8) مصنّف الجرد (002-T005)
+  const {classify} = require(path.join(ROOT, 'tools/text-classify.js'));
+  check('تصنيف الجرد: لهجة في رسمي، وعدد ومعدود، وبيانات مستثناة، وسليم', [
+    classify('index.html', 'الخصم لازم يختلف عن النادي.').includes('لهجة في نص رسمي'),
+    classify('js/features/x.js', '${n} نقطة').includes('عدد ومعدود'),
+    classify('js/data/season-2/clubs.js', 'الهلال').startsWith('مستثنى'),
+    classify('index.html', 'اختر اسمك أولًا'),
+  ], [true, true, true, 'رسمي · ✅ سليم']);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
