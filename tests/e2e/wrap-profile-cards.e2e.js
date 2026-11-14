@@ -90,7 +90,7 @@ const check = (name, got, want) => {
     await page.click(`#dlProfileBtn-${info.pid}`);
     await page.waitForSelector('#cardThemeSheet');
     await page.click('#cardThemeSheet .card-theme-opt[data-theme="dark"]');
-    await page.waitForFunction(pid => /ما نقدر نجهّز/.test(document.getElementById(`profileMsg-${pid}`).textContent), info.pid, { timeout: 15000 });
+    await page.waitForFunction(pid => /تعذّر تجهيز/.test(document.getElementById(`profileMsg-${pid}`).textContent), info.pid, { timeout: 15000 });
     const msg = await page.evaluate(pid => document.getElementById(`profileMsg-${pid}`).textContent, info.pid);
     await page.waitForTimeout(500);
     check('الملف الناقص: رسالة عربية بالنواقص وبلا تنزيل', [/أندية .* ناقصة/.test(msg), downloaded], [true, false]);

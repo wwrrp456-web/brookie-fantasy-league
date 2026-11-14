@@ -120,7 +120,7 @@ async function buildSeasonWrapCardCanvas(opts){
 
   const mum = data.mummas;
   const mumValue = mum.length ? String(mum.length) : '0';
-  const mumSub = !mum.length ? 'لا أحد' : (mum.length <= 3 ? mum.join('، ') : formatCount(mum.length, 'لاعب'));
+  const mumSub = !mum.length ? 'لا أحد' : (mum.length <= 3 ? formatList(mum) : formatCount(mum.length, 'مشارك'));
   const tiles = [
     {x: 552, y: 339.25, icon: 'calendar', b: String(data.round), p: 'الجولات المنجزة', s: `حتى الجولة ${data.round}`},
     {x: 64, y: 339.25, icon: 'crown', b: String(data.topTotal.value), p: 'أعلى رصيد', s: data.topTotal.name},
@@ -141,7 +141,7 @@ async function buildSeasonWrapCardCanvas(opts){
   cardDrawPanel(ctx, theme, 64, 919.625, 952, 121);
   cardDrawImage(ctx, await cardIconImage('skull-zero', brand, 48), 943, 956.125, 48, 48);
   const bar = mum.length
-    ? {b: mum.length <= 3 ? mum.join('، ') : formatCount(mum.length, 'لاعب'), s: `لم يسجّلوا نقاطًا في الجولة ${data.round}.`}
+    ? {b: mum.length <= 3 ? formatList(mum) : formatCount(mum.length, 'مشارك'), s: `${pickForm(mum.length, {one: 'لم يسجّل', two: 'لم يسجّلا', many: 'لم يسجّلوا'})} نقاطًا في الجولة ${data.round}.`}
     : {b: 'لا أحد', s: `الجميع سجّل نقاطًا في الجولة ${data.round}.`};
   const barFit = cardFitText(ctx, bar.b, 860, {size: 32, weight: 700, maxLines: 1, minSize: 18});
   cardTextBase(ctx, barFit.lines[0], 927, 968.625, {size: barFit.size, weight: 700, color: text, align: 'right'});
@@ -223,15 +223,15 @@ async function exportThemedCard(action, forcedTheme, spec){
       const shared = await tryShareCanvas(r.cv, r.filename, r.shareTitle, r.shareText);
       if(shared){ spec.say('<div class="status-msg ok">تم فتح المشاركة</div>'); return true; }
       downloadCanvasPNG(r.cv, r.filename);
-      spec.say('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في الجروب.</div>');
+      spec.say('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في المجموعة.</div>');
       return true;
     }
     downloadCanvasPNG(r.cv, r.filename);
-    spec.say(`<div class="status-msg ok">تم تحميل صورة ${spec.subject}. أرسلها في الجروب.</div>`);
+    spec.say(`<div class="status-msg ok">تم تحميل صورة ${spec.subject}. أرسلها في المجموعة.</div>`);
     return true;
   }catch(e){
-    if(e && e.name === 'CardDataError') spec.say(`<div class="status-msg err">ما نقدر نجهّز صورة ${spec.subject}: ${e.problems.join('، ')}.</div>`);
-    else spec.say('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>');
+    if(e && e.name === 'CardDataError') spec.say(`<div class="status-msg err">تعذّر تجهيز صورة ${spec.subject}: ${e.problems.join('، ')}.</div>`);
+    else spec.say('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة أخرى.</div>');
     return false;
   }
 }
@@ -266,8 +266,8 @@ async function showSeasonWrapCard(){
     document.getElementById('shareWrapBtn').onclick = () => exportThemedCard('share', null, spec);
     document.getElementById('closeWrapBtn').onclick = () => { box.innerHTML = ''; };
   }catch(e){
-    if(e && e.name === 'CardDataError') box.innerHTML = `<div class="status-msg err">ما نقدر نجهّز ملخص الموسم: ${e.problems.join('، ')}.</div>`;
-    else box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الملخص، حاول مرة ثانية.</div>';
+    if(e && e.name === 'CardDataError') box.innerHTML = `<div class="status-msg err">تعذّر تجهيز ملخص الموسم: ${e.problems.join('، ')}.</div>`;
+    else box.innerHTML = '<div class="status-msg err">تعذّر تجهيز الملخص، حاول مرة أخرى.</div>';
   }
 }
 
