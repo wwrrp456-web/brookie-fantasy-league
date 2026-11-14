@@ -260,13 +260,13 @@
       <h2 class="section-title">لائحة المسابقة</h2>
       <div class="rules-list">
         <h4>1. الممة</h4>
-        <p>أن يخرج المتسابق خالي النقاط خلال الأسبوع الرياضي، بغض النظر عن عدد المباريات.</p>
+        <p>أن يخرج المشارك خالي النقاط خلال الأسبوع الرياضي، بغض النظر عن عدد المباريات.</p>
         <h4>2. حالات يجب أن تُوضع في الحسبان</h4>
-        <p>تُحسب الممة على حسب مباريات المتسابق الأسبوعية، حتى لو كانت مباراة واحدة.</p>
+        <p>تُحسب الممة على حسب مباريات المشارك الأسبوعية، حتى لو كانت مباراة واحدة.</p>
         <h4>3. المباريات المؤجلة</h4>
         <p>إذا كان لأحد الفرق الثلاثة مباراة مؤجلة وتُلعب في نفس الأسبوع قبل بداية الجولة التالية، تُحسب لصالح المباريات السابقة، وننتظر نتائجها ضمن مباريات ذلك الأسبوع.</p>
         <h4>4. كسر التعادل في جدول الترتيب</h4>
-        <p>عند تعادل المتسابقين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة.</p>
+        <p>عند تعادل المشاركين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة.</p>
         <h4>5. عدم تكرار الدوري الواحد</h4>
         <p>لا يمكن للمتسابق الجمع بين فريقين من نفس الدوري. إذا حدث ذلك في القرعة، يتم التبديل.</p>
         <h4>6. توثيق النقاط</h4>
@@ -400,9 +400,9 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🗳️ تحدي الجولة (تصويت البطل القادم)</div>
+            <div class="admin-subsection-title">🗳️ تصويت الجولة (البطل القادم)</div>
             <div class="row u-mb-10px u-ai-center">
-              <label class="field-label u-cur-pointer" for="roundChallengeEnabledToggle">إظهار قسم تحدي الجولة للزوار:</label>
+              <label class="field-label u-cur-pointer" for="roundChallengeEnabledToggle">إظهار قسم تصويت الجولة للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="roundChallengeEnabledToggle">
             </div>
             <div id="roundChallengeEnabledMsg"></div>
@@ -659,8 +659,8 @@
             <div class="admin-subsection-title">🚨 قفل الموسم الحالي وابدأ موسمًا جديدًا</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">
               إجراء نهائي حساس (مثل تغيير رمز الدخول) — يتطلب الكود الخاص أولاً. يقوم بالترتيب:
-              (١) تنزيل نسخة احتياطية كاملة تلقائيًا، (٢) إضافة بطل الموسم الحالي لسجل أبطال المواسم
-              (مع اقتراح تلقائي قابل للتعديل)، (٣) بعد تأكيد ثانٍ، تصفير جولات الموسم الحالي بالكامل
+              (1) تنزيل نسخة احتياطية كاملة تلقائيًا، (2) إضافة بطل الموسم الحالي لسجل أبطال المواسم
+              (مع اقتراح تلقائي قابل للتعديل)، (3) بعد تأكيد ثانٍ، تصفير جولات الموسم الحالي بالكامل
               استعدادًا لموسم جديد. لا يمسّ هذا أي من ملفات <code>js/data/season-2/*</code> — تبقى
               كسجل تاريخي دائم.
             </p>
@@ -765,7 +765,7 @@
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_dynamic_badge" data-key="dynamic_badge" data-label="شارة ذكية"> 🔄 شارة ذكية تتحول تلقائيًا لـ"يحاول استعادة العرش" عند تفوّق أحد بالمجموع</label>
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_proximity_alert" data-key="proximity_alert" data-label="تنبيه الاقتراب"> ⚠️ تنبيه بسجل النشاط عند اقتراب أحدهم من رقم البطل</label>
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_smart_summary_highlight" data-key="smart_summary_highlight" data-label="تمييز بالملخص الذكي"> 📖 فقرة خاصة بالبطل ضمن "قصة الموسم" التلقائية</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_weekly_challenge_notice" data-key="weekly_challenge_notice" data-label="تحدي الجولة"> 🔥 تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_weekly_challenge_notice" data-key="weekly_challenge_notice" data-label="تصويت الجولة"> 🔥 تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه</label>
           </div>
         </div>
       </details>

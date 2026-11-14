@@ -901,6 +901,7 @@ const asyncDiffTests = (async () => {
   const md = fs.existsSync(tmpOut) ? fs.readFileSync(tmpOut, 'utf8') : '';
   check('text-samples: تغطي ≥ 12 مولّدًا و≥ 80 عينة وتسرد غير المغطّى', [/مولّدات مغطّاة: \*\*(\d+)\*\*/.test(md) && Number(md.match(/مولّدات مغطّاة: \*\*(\d+)\*\*/)[1]) >= 12,
     Number((md.match(/عينات: \*\*(\d+)\*\*/) || [0, 0])[1]) >= 80, md.includes('مولّدات غير مغطّاة')], [true, true, true]);
+  check('text-samples: صفر ملاحظات أعداد على مصفوفة العدّادات (0 و1 و2 و3–10 و11+) للقصة والملخص والأوسمة', (md.match(/ملاحظات أعداد: \*\*(\d+)\*\*/) || [0, '?'])[1], '0');
   check('text-samples: بلا undefined/NaN في الناتج', /undefined|NaN/.test(md.replace(/undefined\/NaN/g, '')), false);
   try{ fs.unlinkSync(tmpOut); }catch(e){}
 }

@@ -4,7 +4,7 @@
 > **عمود التصنيف فاضي عمدًا:** Opus يصنّف كل نص: طبقة رسمية أو شعبية، وسليم أو يحتاج تعديل.
 > النطاق: `js/**` (عدا `generated/`) و`index.html` و`report.html`. بدون التعليقات.
 
-**الإجمالي: 2654 نصًا في 60 ملفًا** · HTML: 540 · قالب فيه ${}: 652 · نص ثابت: 1462
+**الإجمالي: 2660 نصًا في 60 ملفًا** · HTML: 540 · قالب فيه ${}: 650 · نص ثابت: 1470
 
 ## ملخص التصنيف (002-T005، Opus)
 
@@ -13,7 +13,7 @@
 
 | | ✅ سليم | ✏️ يحتاج تعديل | ⏸️ نبرة |
 |---|---|---|---|
-| **رسمي** | 873 | 492 | 0 |
+| **رسمي** | 888 | 483 | 0 |
 | **شعبي** | 836 | 18 | 0 |
 
 مستثنى: 435
@@ -24,11 +24,10 @@
 | علامات تنصيص «» | 125 |
 | شرطة طويلة | 116 |
 | لهجة في نص رسمي | 40 |
-| عدد ومعدود (formatCount) | 34 |
+| عدد ومعدود (formatCount) | 26 |
 | التنوين (ًا) | 15 |
-| معجم | 9 |
-| أرقام هندية | 3 |
 | لهجة غير سعودية | 3 |
+| معجم | 2 |
 | اختصار | 2 |
 | فاصلة لاتينية | 1 |
 | حكم يدوي (inventory-overrides.json) | 1 |
@@ -41,7 +40,7 @@
 | `js/core/ar-format.js` | 124 |
 | `js/core/club-engine.js` | 3 |
 | `js/core/config.js` | 1 |
-| `js/core/dom-utils.js` | 15 |
+| `js/core/dom-utils.js` | 16 |
 | `js/core/insights-engine.js` | 34 |
 | `js/core/standings-engine.js` | 4 |
 | `js/core/storage.js` | 24 |
@@ -50,10 +49,10 @@
 | `js/data/season-2/participants.js` | 80 |
 | `js/data/season-2/rounds-seed.js` | 61 |
 | `js/features/admin-auth-settings.js` | 130 |
-| `js/features/admin-champion-admin.js` | 14 |
-| `js/features/admin-community-reports.js` | 27 |
-| `js/features/admin-round-form.js` | 32 |
-| `js/features/admin-season-lock.js` | 30 |
+| `js/features/admin-champion-admin.js` | 15 |
+| `js/features/admin-community-reports.js` | 26 |
+| `js/features/admin-round-form.js` | 36 |
+| `js/features/admin-season-lock.js` | 32 |
 | `js/features/badge-toast.js` | 3 |
 | `js/features/champion-honor.js` | 19 |
 | `js/features/club-swap-lab.js` | 11 |
@@ -77,7 +76,7 @@
 | `js/features/sub-groups.js` | 7 |
 | `js/features/whats-new-card.js` | 13 |
 | `js/main.js` | 1 |
-| `js/report/report-main.js` | 28 |
+| `js/report/report-main.js` | 27 |
 | `js/ui/card-kit.js` | 22 |
 | `js/ui/certificate-card.js` | 23 |
 | `js/ui/champion-card.js` | 38 |
@@ -171,13 +170,13 @@
 | 256 | ⬇️ تحميل اللائحة كصورة | HTML | رسمي · ✅ سليم |
 | 260 | لائحة المسابقة | HTML | رسمي · ✅ سليم |
 | 262 | 1. الممة | HTML | رسمي · ✅ سليم |
-| 263 | أن يخرج المتسابق خالي النقاط خلال الأسبوع الرياضي، بغض النظر عن عدد المباريات. | HTML | رسمي · ✏️ معجم |
+| 263 | أن يخرج المشارك خالي النقاط خلال الأسبوع الرياضي، بغض النظر عن عدد المباريات. | HTML | رسمي · ✏️ معجم |
 | 264 | 2. حالات يجب أن تُوضع في الحسبان | HTML | رسمي · ✅ سليم |
-| 265 | تُحسب الممة على حسب مباريات المتسابق الأسبوعية، حتى لو كانت مباراة واحدة. | HTML | رسمي · ✏️ معجم |
+| 265 | تُحسب الممة على حسب مباريات المشارك الأسبوعية، حتى لو كانت مباراة واحدة. | HTML | رسمي · ✅ سليم |
 | 266 | 3. المباريات المؤجلة | HTML | رسمي · ✅ سليم |
 | 267 | إذا كان لأحد الفرق الثلاثة مباراة مؤجلة وتُلعب في نفس الأسبوع قبل بداية الجولة التالية، تُحسب لصالح المباريات السابقة، وننتظر نتائجها ضمن مباريات ذلك الأسبوع. | HTML | رسمي · ✅ سليم |
 | 268 | 4. كسر التعادل في جدول الترتيب | HTML | رسمي · ✅ سليم |
-| 269 | عند تعادل المتسابقين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة. | HTML | رسمي · ✏️ معجم |
+| 269 | عند تعادل المشاركين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة. | HTML | رسمي · ✅ سليم |
 | 270 | 5. عدم تكرار الدوري الواحد | HTML | رسمي · ✅ سليم |
 | 271 | لا يمكن للمتسابق الجمع بين فريقين من نفس الدوري. إذا حدث ذلك في القرعة، يتم التبديل. | HTML | رسمي · ✅ سليم |
 | 272 | 6. توثيق النقاط | HTML | رسمي · ✅ سليم |
@@ -217,8 +216,8 @@
 | 387 | إظهار خانة التوقعات للزوار: | HTML | رسمي · ✅ سليم |
 | 394 | ⚔️ تحدي مواجهة الجولة | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 396 | إظهار قسم مواجهات الجولة للزوار: | HTML | رسمي · ✅ سليم |
-| 403 | 🗳️ تحدي الجولة (تصويت البطل القادم) | HTML | رسمي · ✏️ معجم، إيموجي بالواجهة |
-| 405 | إظهار قسم تحدي الجولة للزوار: | HTML | رسمي · ✏️ معجم |
+| 403 | 🗳️ تصويت الجولة (البطل القادم) | HTML | رسمي · ✏️ إيموجي بالواجهة |
+| 405 | إظهار قسم تصويت الجولة للزوار: | HTML | رسمي · ✅ سليم |
 | 412 | 🧱 جدار الجولة | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 414 | إظهار جدار الجولة (تعليقات + ردود فعل) للزوار: | HTML | رسمي · ✅ سليم |
 | 421 | 👏 ردود فعل الأسماء بالترتيب | HTML | رسمي · ✏️ إيموجي بالواجهة |
@@ -288,7 +287,7 @@
 | 643 | ⬇️ تنزيل الصورة | HTML | رسمي · ✅ سليم |
 | 656 | 🔒 قفل الموسم وبدء موسم جديد | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 659 | 🚨 قفل الموسم الحالي وابدأ موسمًا جديدًا | HTML | رسمي · ✏️ إيموجي بالواجهة |
-| 661 | إجراء نهائي حساس (مثل تغيير رمز الدخول) — يتطلب الكود الخاص أولاً. يقوم بالترتيب: (١) تنزيل نسخة احتياطية كاملة تلقائيًا، (٢) إضافة بطل الموسم الحالي لسجل أبطال المواسم (مع اقتراح تلقائي قابل للتعديل)، (٣) بعد تأكيد ثانٍ، تصفير جولات الموسم الحالي بالكامل استعدادًا لموسم جديد. لا يمسّ هذا أي من ملفات | HTML | رسمي · ✏️ شرطة طويلة، التنوين (ًا)، أرقام هندية |
+| 661 | إجراء نهائي حساس (مثل تغيير رمز الدخول) — يتطلب الكود الخاص أولاً. يقوم بالترتيب: (1) تنزيل نسخة احتياطية كاملة تلقائيًا، (2) إضافة بطل الموسم الحالي لسجل أبطال المواسم (مع اقتراح تلقائي قابل للتعديل)، (3) بعد تأكيد ثانٍ، تصفير جولات الموسم الحالي بالكامل استعدادًا لموسم جديد. لا يمسّ هذا أي من ملفات | HTML | رسمي · ✏️ شرطة طويلة، التنوين (ًا) |
 | 664 | — تبقى كسجل تاريخي دائم. | HTML | رسمي · ✏️ شرطة طويلة |
 | 669 | placeholder="الكود الخاص" | HTML | رسمي · ✅ سليم |
 | 670 | 🔓 فتح | HTML | رسمي · ✏️ إيموجي بالواجهة |
@@ -355,7 +354,7 @@
 | 766 | ⚠️ تنبيه بسجل النشاط عند اقتراب أحدهم من رقم البطل | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 767 | data-label="تمييز بالملخص الذكي" | HTML | رسمي · ✅ سليم |
 | 767 | 📖 فقرة خاصة بالبطل ضمن "قصة الموسم" التلقائية | HTML | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
-| 768 | data-label="تحدي الجولة" | HTML | رسمي · ✏️ معجم |
+| 768 | data-label="تصويت الجولة" | HTML | رسمي · ✅ سليم |
 | 768 | 🔥 تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه | HTML | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 774 | 📅 سجل نشاط المنظم | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 781 | 👁️ إحصائيات الزوار | HTML | رسمي · ✏️ إيموجي بالواجهة |
@@ -503,25 +502,26 @@
 |---|---|---|---|
 | 8 | بروكي2 | نص ثابت | رسمي · ✅ سليم |
 
-## `js/core/dom-utils.js` (15)
+## `js/core/dom-utils.js` (16)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
-| 24 | غير معروف | نص ثابت | رسمي · ✅ سليم |
-| 26 | قبل لحظات | نص ثابت | رسمي · ✅ سليم |
-| 27 | قبل ${Math.floor(diff/60)} دقيقة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 28 | قبل ${Math.floor(diff/3600)} ساعة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 30 | أمس | نص ثابت | رسمي · ✅ سليم |
-| 30 | قبل ${d} يوم | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 49 | <div class="custom-confirm-box"> <div class="custom-confirm-msg">${message.replace(/\n/g,'<br>')}</div> <div class="custom-confirm-actions"> <button type="button" class="btn ghost cc-cancel">إلغاء</button> <button type="button" class="btn cc-confirm" style="background:var(--coral);border-color:var(--coral);color:#fff;">${opts.confirmText \|\| 'تأكيد'}</button> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
-| 54 | تأكيد | نص ثابت | رسمي · ✅ سليم |
-| 83 | الآن | نص ثابت | رسمي · ✅ سليم |
-| 85 | قبل لحظات | نص ثابت | رسمي · ✅ سليم |
-| 86 | قبل ${min} دقيقة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 88 | قبل ${hr} ساعة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 90 | قبل ${day} يوم | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 116 | ✅ تم النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
-| 116 | ⚠️ تعذّر النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
+| 16 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 30 | غير معروف | نص ثابت | رسمي · ✅ سليم |
+| 32 | قبل لحظات | نص ثابت | رسمي · ✅ سليم |
+| 33 | قبل ${Math.floor(diff/60)} دقيقة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 34 | قبل ${Math.floor(diff/3600)} ساعة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 36 | أمس | نص ثابت | رسمي · ✅ سليم |
+| 36 | قبل ${d} يوم | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 55 | <div class="custom-confirm-box"> <div class="custom-confirm-msg">${message.replace(/\n/g,'<br>')}</div> <div class="custom-confirm-actions"> <button type="button" class="btn ghost cc-cancel">إلغاء</button> <button type="button" class="btn cc-confirm" style="background:var(--coral);border-color:var(--coral);color:#fff;">${opts.confirmText \|\| 'تأكيد'}</button> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 60 | تأكيد | نص ثابت | رسمي · ✅ سليم |
+| 89 | الآن | نص ثابت | رسمي · ✅ سليم |
+| 91 | قبل لحظات | نص ثابت | رسمي · ✅ سليم |
+| 92 | قبل ${min} دقيقة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 94 | قبل ${hr} ساعة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 96 | قبل ${day} يوم | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 122 | ✅ تم النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
+| 122 | ⚠️ تعذّر النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 
 ## `js/core/insights-engine.js` (34)
 
@@ -1005,8 +1005,8 @@
 | 356 | <div class="status-msg ok">تم إظهار قسم مواجهة الجولة للجميع ✅</div> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 357 | <div class="status-msg ok">تم إخفاء قسم مواجهة الجولة عن الجميع.</div> | HTML | رسمي · ✅ سليم |
 | 361 | <div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div> | HTML | رسمي · ✅ سليم |
-| 381 | <div class="status-msg ok">تم إظهار قسم تحدي الجولة للجميع ✅</div> | HTML | رسمي · ✏️ معجم، إيموجي بالواجهة |
-| 382 | <div class="status-msg ok">تم إخفاء قسم تحدي الجولة عن الجميع.</div> | HTML | رسمي · ✏️ معجم |
+| 381 | <div class="status-msg ok">تم إظهار قسم تصويت الجولة للجميع ✅</div> | HTML | رسمي · ✏️ إيموجي بالواجهة |
+| 382 | <div class="status-msg ok">تم إخفاء قسم تصويت الجولة عن الجميع.</div> | HTML | رسمي · ✅ سليم |
 | 386 | <div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div> | HTML | رسمي · ✅ سليم |
 | 408 | <div class="status-msg ok">تم إظهار جدار الجولة للجميع ✅</div> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 409 | <div class="status-msg ok">تم إخفاء جدار الجولة عن الجميع.</div> | HTML | رسمي · ✅ سليم |
@@ -1080,13 +1080,14 @@
 | 937 | يساعدنا نطلع الترتيب أسرع وأدق 🙏 | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 941 | 🏆 حامل اللقب: ${champ.name} | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 
-## `js/features/admin-champion-admin.js` (14)
+## `js/features/admin-champion-admin.js` (15)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 7 | <option value="">بدون بطل حاليًا</option> | HTML | رسمي · ✅ سليم |
 | 13 | <div style="color:var(--muted);font-size:0.8rem;">لا يوجد أي موسم مسجّل بعد.</div> | HTML | رسمي · ✅ سليم |
-| 14 | <div class="hof-row"> <span><b>${row.season}</b> — ${row.name} (${row.points} نقطة)</span> <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">🗑️ حذف</button> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 14 | <div class="hof-row"> <span><b>${row.season}</b> — ${row.name} (${formatCount(row.points, 'نقطة')})</span> <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">🗑️ حذف</button> </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 16 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 35 | تعيين ${(PARTICIPANTS.find(p=>p.id===CHAMPION_ID)\|\|{}).name\|\|''} بطلًا للموسم الحالي | قالب فيه ${} | رسمي · ✅ سليم |
 | 35 | إلغاء تعيين بطل الموسم الحالي | نص ثابت | رسمي · ✅ سليم |
 | 52 | <div class="status-msg err">عبّي اسم الموسم واسم البطل والنقاط أولاً.</div> | HTML | رسمي · ✏️ التنوين (ًا) |
@@ -1099,7 +1100,7 @@
 | 88 | تفعيل | نص ثابت | رسمي · ✅ سليم |
 | 88 | تعطيل | نص ثابت | رسمي · ✅ سليم |
 
-## `js/features/admin-community-reports.js` (27)
+## `js/features/admin-community-reports.js` (26)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1119,7 +1120,6 @@
 | 150 | <div class="community-report-row" data-id="${escapeHtml(r.id)}" data-round="${targetRound}"> <div class="community-report-view"> <span>${escapeHtml(RESULT_LABEL_COMMUNITY[r.result]\|\|r.result)} (${escapeHtml(r.gf)}-${escapeHtml(r.ga)}) ${r.reporter ? '— أرسلها: '+escapeHtml(r.reporter) : ''}</span> <span class="actions"> <button type="button" class="btn ghost edit-report-btn">✏️ تعديل</button> <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف</button> </span> </div> ${officialNotes[ri] \|\| ''} <div class="community-report-edit"> <input type="text" class="edit-opp-input" placeholder="الخصم" value="${escapeHtml(r.opponent\|\|'')}"> <select class="edit-res-select"> <option value="win" ${r.result==='win'?'selected':''}>فوز</option> <option value="draw" ${r.result==='draw'?'selected':''}>تعادل</option> <option value="loss" ${r.result==='loss'?'selected':''}>خسارة</option> </select> <input type="number" class="edit-gf-input" min="0" placeholder="له" value="${escapeHtml(r.gf)}"> <input type="number" class="edit-ga-input" min="0" placeholder="عليه" value="${escapeHtml(r.ga)}"> <button type="button" class="btn save-report-btn">💾 حفظ</button> <button type="button" class="btn ghost cancel-report-btn">إلغاء</button> </div> </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 152 | — أرسلها: | نص ثابت | رسمي · ✏️ شرطة طويلة |
 | 181 | <div style="color:var(--muted);">لا يوجد أحد أرسل نقاطه بعد لهذه الجولة.</div> | HTML | رسمي · ✅ سليم |
-| 189 | <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);"> <span>${p.name}</span><span style="font-weight:800;">${escapeHtml(entries[p.id].points)} نقطة</span></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
 | 196 | <div style="margin-top:10px;font-size:0.78rem;color:var(--muted);">لم يُرسل بعد: ${missing.join('، ')}</div> | قالب فيه ${} | رسمي · ✅ سليم |
 | 196 | ، | نص ثابت | رسمي · ✅ سليم |
 | 201 | <div class="status-msg ok">تم التحديث — بيانات الجولة ${targetRound} ✅</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
@@ -1131,7 +1131,7 @@
 | 271 | 🗑️ حذف | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 280 | <div class="status-msg err">تعذّر الحذف، تحقق من الاتصال وحاول ثانية.</div> | HTML | رسمي · ✅ سليم |
 
-## `js/features/admin-round-form.js` (32)
+## `js/features/admin-round-form.js` (36)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1141,16 +1141,19 @@
 | 139 | تعذّر حفظ المسودة المشتركة: | نص ثابت | رسمي · ✅ سليم |
 | 257 | ✅ مكتمل | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 257 | ⚠️ ${missing} ناقصة | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
-| 262 | ${completeCount} من ${cards.length} مشارك مكتمل | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 262 | اكتمل ${completeCount} من ${formatCount(cards.length, 'مشارك')} | قالب فيه ${} | رسمي · ✅ سليم |
+| 262 | مشارك | نص ثابت | رسمي · ✅ سليم |
 | 341 | <div class="team-input-row"> <div class="opp-field"> <select class="opp-select" ${isNoMatch?'disabled':''}> <option value="" ${!opp?'selected':''}>اختر الخصم (اختياري)</option> ${oppOptions} <option value="__other__" ${isCustomOpp?'selected':''}>غير ذلك (فريق خارج القائمة)</option> </select> <input type="text" class="opp-custom-input" placeholder="اكتب اسم الفريق" value="${isCustomOpp ? opp.replace(/"/g,'&quot;') : ''}" style="${isCustomOpp ? '' : 'display:none;'}"> </div> <select class="res-select"> <option value="" ${selResult===''?'selected':''} disabled>اختر النتيجة</option> <option value="win" ${selResult==='win'?'selected':''}>فوز</option> <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option> <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option> <option value="no_match" ${isNoMatch?'selected':''}>⏸️ لا توجد مباراة هذه الجولة</option> </select> <input type="number" class="gf-input" placeholder="له" min="0" value="${isNoMatch?0:gf}" ${isNoMatch?'disabled':''}> <input type="number" class="ga-input" placeholder="عليه" min="0" value="${isNoMatch?0:ga}" ${isNoMatch?'disabled':''}> <button type="button" class="remove-match-btn" title="حذف هذه المباراة">✕</button> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
-| 496 | <div class="status-msg ok">تم تعبئة ${applied.length} نادٍ تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 496 | <div class="status-msg ok">تمت تعبئة ${formatCount(applied.length, 'نادٍ')} تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 496 | نادٍ | نص ثابت | رسمي · ✅ سليم |
 | 496 | ، | نص ثابت | رسمي · ✅ سليم |
 | 497 | <div class="status-msg err">لم يتعرّف التحليل على أي نادٍ بالنص الملصق.</div> | HTML | رسمي · ✅ سليم |
 | 499 | <div style="color:var(--muted);margin-top:6px;">⚠️ أسطر لم يُتعرَّف عليها تلقائيًا (أكملها يدويًا):<br>${parsed.unrecognized.map(l=>\`— ${l}\`).join('<br>')}</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
 | 569 | <div class="draft-banner"> 🕒 فيه مسودة محفوظة تلقائيًا لهذه الجولة (${timeAgoLabel(draft.savedAt)}) لم تُحفظ نهائيًا بعد. <div class="row" style="margin-top:8px;"> <button type="button" class="btn secondary" id="applyDraftBtn">استخدام المسودة</button> <button type="button" class="btn ghost" id="discardDraftBtn">تجاهل والبدء من المحفوظ</button> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 577 | <div class="round-form-toolbar"> <label><input type="checkbox" id="showIncompleteOnlyToggle"> عرض الناقص فقط</label> <button type="button" class="btn ghost" id="expandAllParticipantsBtn">⬇️ فتح كل المشاركين</button> <button type="button" class="btn ghost" id="collapseAllParticipantsBtn">⬆️ طيّ كل المشاركين</button> </div> | HTML | رسمي · ✏️ علامات تنصيص «» |
 | 585 | <div class="paste-import-box"> <button type="button" class="btn ghost" id="togglePasteImportBtn">📋 لصق نتائج وتحليل تلقائي</button> <div id="pasteImportPanel" style="display:none;"> <div style="font-size:0.78rem;color:var(--muted);margin:8px 0;"> الصق نتائج الأندية هنا، سطر واحد لكل مباراة: اسم النادي، ثم النتيجة أرقامًا (مثال 3-0)، ثم اسم الخصم اختياريًا. أي نادٍ لعب أكثر من مباراة بنفس الجولة يُكتب بسطر مستقل لكل مباراة. </div> <textarea id="pasteImportInput" rows="6" style="width:100%;font-family:inherit;" placeholder="الهلال 3-0 الخليج برشلونة 2-0 ريال مدريد 4-1 ريال سوسيادد"></textarea> <div class="row" style="margin-top:8px;"> <button type="button" class="btn secondary" id="applyPasteImportBtn">تحليل وتعبئة الحقول</button> </div> <div id="pasteImportResult" style="margin-top:8px;font-size:0.8rem;"></div> </div> </div> | HTML | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
-| 614 | <span class="shared-club-badge" title="هذا النادي مشترك بين ${sharedCount} مشاركين — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 614 | <span class="shared-club-badge" title="هذا النادي مشترك بين ${formatCount(sharedCount, 'مشارك', {case: 'acc'})} — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 614 | مشارك | نص ثابت | رسمي · ✅ سليم |
 | 616 | <div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}"> <div class="team-block-head">${crestHTML(team, 22)}<span>${team}</span>${sharedBadge}</div> <div class="match-rows">${rowsData.map(prev=>matchRowHTML(prev, team)).join('')}</div> <button type="button" class="btn ghost add-match-btn">+ إضافة مباراة أخرى لهذا النادي</button> </div> | قالب فيه ${} | رسمي · ✅ سليم |
 | 624 | <div class="round-sticky-bar"> <span id="roundStickyCounter"></span> <span style="display:flex;gap:8px;flex-wrap:wrap;"> <button class="btn ghost" id="savePartialRoundBtn" title="يحفظ تقدّمك الحالي (حتى لو ناقصًا) على قاعدة البيانات المشتركة فقط، دون نشره للزوار — تقدر تكمله لاحقًا من أي جهاز">☁️ حفظ التقدّم كمسودة مشتركة</button> <button class="btn" id="saveRoundBtn">حفظ الجولة</button> ${existing ? \`<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>\` : ''} </span> </div> <div id="saveRoundMsg"></div></div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 629 | <button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button> | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
@@ -1162,25 +1165,28 @@
 | 704 | <div class="status-msg err">تعذّر الحذف، حاول مرة ثانية.</div> | HTML | رسمي · ✅ سليم |
 | 730 | <div class="status-msg ok">تم حفظ تقدّمك الحالي سحابيًا ✅ — تقدر تكمل لاحقًا من أي جهاز (لن يظهر للزوار حتى تضغط "حفظ الجولة" لاحقًا).</div> | HTML | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 731 | <div class="status-msg err">تعذّر الحفظ السحابي، حاول مرة ثانية.</div> | HTML | رسمي · ✅ سليم |
-| 748 | <div class="status-msg err">فيه ${missing} مباراة بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة |
+| 748 | <div class="status-msg err">فيه ${formatCount(missing, 'مباراة')} بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 748 | مباراة | نص ثابت | رسمي · ✅ سليم |
 | 778 | 💾 حفظ الجولة ${num} | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 | 781 | <div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 782 | <div class="status-msg err">تعذّر الحفظ المشترك. النتائج ظاهرة عندك الآن لكنها لن تصل للآخرين — أعد المحاولة.</div> | HTML | رسمي · ✏️ شرطة طويلة |
 | 802 | رقم الجولة لازم يكون رقمًا صحيحًا أكبر من ${CURRENT_BASE_ROUND} (الجولة القادمة هي رقم ${CURRENT_BASE_ROUND+1} فأعلى). | قالب فيه ${} | رسمي · ✏️ لهجة في نص رسمي |
 
-## `js/features/admin-season-lock.js` (30)
+## `js/features/admin-season-lock.js` (32)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 45 | <div class="status-msg err">كود خاص غير صحيح.</div> | HTML | رسمي · ✅ سليم |
 | 57 | لا يوجد ترتيب محسوب بعد — عبّي اسم البطل ونقاطه يدويًا. | نص ثابت | رسمي · ✏️ شرطة طويلة |
-| 61 | 🥇 المقترح تلقائيًا من الترتيب الحالي: ${top.name} — ${top.total} نقطة (عدّله يدويًا لو مختلف). | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، إيموجي بالواجهة |
+| 61 | 🥇 المقترح تلقائيًا من الترتيب الحالي: ${top.name} — ${formatCount(top.total, 'نقطة')} (عدّله يدويًا لو مختلف). | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
+| 61 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 70 | <div class="status-msg err">لازم تدخل الكود الخاص أولاً.</div> | HTML | رسمي · ✏️ لهجة في نص رسمي، التنوين (ًا) |
 | 77 | <div class="status-msg err">عبّي اسم الموسم المنتهي أولاً (مثال: الموسم الثاني).</div> | HTML | رسمي · ✏️ التنوين (ًا) |
 | 81 | <div class="status-msg err">عبّي اسم البطل ونقاطه أولاً.</div> | HTML | رسمي · ✏️ التنوين (ًا) |
 | 87 | سيتم الآن: | نص ثابت | رسمي · ✅ سليم |
-| 88 | ١) تنزيل نسخة احتياطية كاملة من بيانات "${seasonName}" تلقائيًا. | قالب فيه ${} | رسمي · ✏️ أرقام هندية |
-| 89 | ٢) إضافة "${champName} — ${champPoints} نقطة" لسجل أبطال المواسم باسم "${seasonName}". | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، أرقام هندية |
+| 88 | 1) تنزيل نسخة احتياطية كاملة من بيانات "${seasonName}" تلقائيًا. | قالب فيه ${} | رسمي · ✅ سليم |
+| 89 | 2) إضافة "${champName} — ${formatCount(champPoints, 'نقطة')}" لسجل أبطال المواسم باسم "${seasonName}". | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «» |
+| 89 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 90 | هل تبي تكمل؟ | نص ثابت | رسمي · ✏️ لهجة في نص رسمي |
 | 91 | متابعة | نص ثابت | رسمي · ✅ سليم |
 | 121 | 🏆 إضافة ${champName} لسجل أبطال المواسم (${seasonName}) — ضمن قفل الموسم | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
@@ -1854,7 +1860,7 @@
 |---|---|---|---|
 | 39 | تعذّر تسجيل service worker (لا يمس عمل الصفحة): | نص ثابت | رسمي · ✅ سليم |
 
-## `js/report/report-main.js` (28)
+## `js/report/report-main.js` (27)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1885,7 +1891,6 @@
 | 274 | ضد ${escapeHtml(r.opponent)} | قالب فيه ${} | رسمي · ✅ سليم |
 | 274 | <span class="match-tag">⚔️ داخلية</span> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 282 | <div class="empty-hint">ما أحد سجّل نقاطه بعد</div> | HTML | رسمي · ✅ سليم |
-| 284 | <div class="live-row"><span>${escapeHtml(r.name)}</span><span style="font-weight:800;">${escapeHtml(r.points)} نقطة</span></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
 
 ## `js/ui/card-kit.js` (22)
 

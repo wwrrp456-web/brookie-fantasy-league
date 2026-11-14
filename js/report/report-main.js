@@ -282,7 +282,7 @@ function startLiveListeners(){
     if(!snap.exists()){ box.innerHTML = '<div class="empty-hint">ما أحد سجّل نقاطه بعد</div>'; return; }
     const rows = Object.values(snap.val()).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
     box.innerHTML = rows.map(r=>`
-      <div class="live-row"><span>${escapeHtml(r.name)}</span><span style="font-weight:800;">${escapeHtml(r.points)} نقطة</span></div>`).join('');
+      <div class="live-row"><span>${escapeHtml(r.name)}</span><span style="font-weight:800;">${pointsLabelSafe(r.points)}</span></div>`).join('');
   });
 }
 

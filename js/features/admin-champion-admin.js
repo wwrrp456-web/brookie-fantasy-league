@@ -13,7 +13,7 @@ function renderChampionArchiveAdmin(){
   if(!SEASON_CHAMPIONS_ARCHIVE.length){ box.innerHTML = '<div style="color:var(--muted);font-size:0.8rem;">لا يوجد أي موسم مسجّل بعد.</div>'; return; }
   box.innerHTML = SEASON_CHAMPIONS_ARCHIVE.map((row,i)=>`
     <div class="hof-row">
-      <span><b>${row.season}</b> — ${row.name} (${row.points} نقطة)</span>
+      <span><b>${row.season}</b> — ${row.name} (${formatCount(row.points, 'نقطة')})</span>
       <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">🗑️ حذف</button>
     </div>`).join('');
 }
