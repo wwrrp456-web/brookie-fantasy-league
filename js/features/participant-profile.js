@@ -60,7 +60,7 @@ function renderParticipantProfileInto(box, pid){
     ? history.map(h=>{
         const cls = h.points===0 ? 'profile-row-mumma' : h.points>=10 ? 'profile-row-great' : '';
         return `<tr class="${cls}">
-          <td>ج${h.number}</td>
+          <td>الجولة ${h.number}</td>
           <td>${h.points}</td>
           <td>${h.cumulative}</td>
         </tr>`;

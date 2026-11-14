@@ -58,7 +58,7 @@ function prefillSeasonLockChampionSuggestion(){
     return;
   }
   const top = st[0];
-  if(preview) preview.textContent = `🥇 المقترح تلقائيًا من الترتيب الحالي: ${top.name} — ${top.total} نقطة (عدّله يدويًا لو مختلف).`;
+  if(preview) preview.textContent = `🥇 المقترح تلقائيًا من الترتيب الحالي: ${top.name} — ${formatCount(top.total, 'نقطة')} (عدّله يدويًا لو مختلف).`;
   if(nameInput && !nameInput.value) nameInput.value = top.name;
   if(pointsInput && !pointsInput.value) pointsInput.value = top.total;
 }
@@ -85,8 +85,8 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
   // تأكيد أول: شرح عام للتسلسل قبل البدء
   const sure1 = await customConfirm(
     `سيتم الآن:\n` +
-    `١) تنزيل نسخة احتياطية كاملة من بيانات "${seasonName}" تلقائيًا.\n` +
-    `٢) إضافة "${champName} — ${champPoints} نقطة" لسجل أبطال المواسم باسم "${seasonName}".\n\n` +
+    `1) تنزيل نسخة احتياطية كاملة من بيانات "${seasonName}" تلقائيًا.\n` +
+    `2) إضافة "${champName} — ${formatCount(champPoints, 'نقطة')}" لسجل أبطال المواسم باسم "${seasonName}".\n\n` +
     `هل تبي تكمل؟`,
     {confirmText: 'متابعة'}
   );

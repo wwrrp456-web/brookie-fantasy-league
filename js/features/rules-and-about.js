@@ -25,7 +25,7 @@ function renderSeasonStory(){
   // ---- فصل 1: الافتتاحية ----
   const totalPts = st.reduce((a,s)=>a+s.total,0);
   const totalMum = st.reduce((a,s)=>a+s.mummaCount,0);
-  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(PARTICIPANTS.length+' مشاركاً')} يتنافسون بـ${hl(CLUBS.length+' نادياً')} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(totalRoundsSoFar+' جولات')} أُنتجت فيها ${hl(totalPts+' نقطة')} إجمالية، وشهدت ${hl(totalMum+' ممة')} مؤلمة.`;
+  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(formatCount(PARTICIPANTS.length, 'مشارك', {case: 'acc'}))} يتنافسون بـ${hl(formatCount(CLUBS.length, 'نادٍ', {case: 'acc'}))} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(formatCount(totalRoundsSoFar, 'جولة'))} أُنتجت فيها ${hl(formatCount(totalPts, 'نقطة'))} إجمالية، ${totalMum > 0 ? 'وشهدت ' + hl(formatCount(totalMum, 'ممة')) + ' مؤلمة' : 'ولم تشهد أي ممة'}.`;
 
   // ---- فصل 2: الصدارة وتاريخها ----
   const leaderRounds = {};
@@ -59,15 +59,15 @@ function renderSeasonStory(){
     if(entry.id !== prevLeaderId){ changes.push({round:entry.round, name:entry.name}); prevLeaderId=entry.id; }
   }
   const gap = st.length>=2 ? leader.total - st[1].total : 0;
-  let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${totalRoundsSoFar}. `;
+  let chap2 = `${hl(topLeader.name)} هيمن على الصدارة في ${hl(formatCount(leaderRounds[topLeader.id], 'جولة'))} من أصل ${totalRoundsSoFar}. `;
   if(changes.length > 1){
-    chap2 += `شهد الموسم ${hl(changes.length+' تغييرات')} في قيادة الترتيب — `;
-    chap2 += changes.map(c=>`${c.name} (ج${c.round})`).join(' ← ');
+    chap2 += `شهد الموسم ${hl(formatCount(changes.length, 'تغيير', {case: 'acc'}))} في قيادة الترتيب — `;
+    chap2 += changes.map(c=>`${c.name} (الجولة ${c.round})`).join(' ← ');
     chap2 += '. ';
   } else {
     chap2 += `القيادة لم تتغير — ${hl(changes[0]?.name||leaderTimeline[0]?.name||leader.name)} يقود منذ البداية. `;
   }
-  chap2 += `المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب بـ${hl(gap+' نقطة')}.`;
+  chap2 += gap > 0 ? `المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب ${hl(arBaPrefix(formatCount(gap, 'نقطة', {case: 'acc'})))}.` : `المتصدر الحالي ${hl(leader.name)} يتعادل مع منافسه الأقرب بالنقاط.`;
 
   // ---- فصل 3: المعارك الحامية ----
   // أقرب فارق بين مشاركَين بآخر جولة
@@ -97,8 +97,8 @@ function renderSeasonStory(){
     const g=Math.max(...pts)-Math.min(...pts.filter(v=>v>0||true));
     if(g>biggestRoundGap){biggestRoundGap=g;biggestRound=r.number;}
   });
-  let chap3 = `أشرس المعارك كانت بين ${hl(tightPair[0])} و${hl(tightPair[1])} — الفارق بينهما ${hl(tightestGap+' نقطة')} فقط. `;
-  chap3 += `الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(biggestRoundGap+' نقطة')} بين الأعلى والأدنى.`;
+  let chap3 = `أشرس المعارك كانت بين ${hl(tightPair[0])} و${hl(tightPair[1])} — ${tightestGap > 0 ? 'الفارق بينهما ' + hl(formatCount(tightestGap, 'نقطة')) + ' فقط' : 'وهما متعادلان بالنقاط'}. `;
+  chap3 += `الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(formatCount(biggestRoundGap, 'نقطة', {case: 'acc'}))} بين الأعلى والأدنى.`;
 
   // ---- فصل 4: نجوم ومفاجآت ----
   // أعلى نقطة جولة واحدة — histMap (عبر getAllParticipantsRoundsHistory)
@@ -122,9 +122,9 @@ function renderSeasonStory(){
     const d=(startRanks[p.id]||0)-(nowRanks[p.id]||0);
     if(d>bigClimb){bigClimb=d;bigClimber=p.id;}
   });
-  let chap4=`أعلى حصاد في جولة واحدة طوال الموسم سجّله ${hl(name(bestPid))} بـ${hl(bestPts+' نقطة')} في الجولة ${bestRoundN}. `;
+  let chap4=`أعلى حصاد في جولة واحدة طوال الموسم سجّله ${hl(name(bestPid))} ${hl(arBaPrefix(formatCount(bestPts, 'نقطة', {case: 'acc'})))} في الجولة ${bestRoundN}. `;
   if(bigClimber && bigClimb>0){
-    chap4 += `أبرز تحسّن في الترتيب عبر الموسم حقّقه ${hl(name(bigClimber))} الذي صعد ${hl(bigClimb+' مراكز')}.`;
+    chap4 += `أبرز تحسّن في الترتيب عبر الموسم حقّقه ${hl(name(bigClimber))} الذي صعد ${hl(formatCount(bigClimb, 'مركز', {case: 'acc'}))}.`;
   }
 
   // ---- فصل 5: الممات والثبات ----
@@ -139,7 +139,7 @@ function renderSeasonStory(){
     chap5 += `${hl(zeroMum.map(p=>p.name).join(' و'))} ${zeroMum.length>1?'يحافظون':'يحافظ'} على سجل نظيف — بلا ممات حتى الآن 🧊. `;
   }
   if(mostMumPid && mostMumVal>0){
-    chap5 += `في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(mostMumVal+' ممات')} — الأكثر في الموسم.`;
+    chap5 += `في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(formatCount(mostMumVal, 'ممة', {case: 'acc'}))} — الأكثر في الموسم.`;
   }
 
   // ---- فصل 6: نهاية الموسم المتوقعة ----
@@ -156,8 +156,8 @@ function renderSeasonStory(){
   const projLeader = projected[0];
   const projSecond = projected[1];
   const projGap = projLeader.projected - projSecond.projected;
-  let chap6=`إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(roundsLeft+' جولة')}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا بـ${hl(projLeader.projected+' نقطة')} `;
-  chap6 += `متقدمًا على ${hl(projSecond.name)} بـ${hl(projGap+' نقطة')}.`;
+  let chap6=`إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(formatCount(roundsLeft, 'جولة'))}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا ${hl(arBaPrefix(formatCount(projLeader.projected, 'نقطة', {case: 'acc'})))} `;
+  chap6 += `متقدمًا على ${hl(projSecond.name)} ${hl(arBaPrefix(formatCount(projGap, 'نقطة', {case: 'acc'})))}.`;
   if(projLeader.id !== leader.id){
     chap6 += ` ⚠️ المتصدر الحالي ${hl(leader.name)} في خطر!`;
   }
@@ -178,7 +178,7 @@ function renderSeasonStory(){
           ? others.reduce((a,s)=>{ const h=(histMap[s.id]||[]); return a+(h[h.length-1]?.points||0); },0)/others.length
           : 0;
         if(lastEntry.points >= avgOthersLast*1.5 && lastEntry.points > 0){
-          chapChamp = `حامل اللقب ${hl(champName)} أكّد جدارته بآخر جولة بحصاد ${hl(lastEntry.points+' نقطة')} — دفاع مقنع عن العرش حتى الآن.`;
+          chapChamp = `حامل اللقب ${hl(champName)} أكّد جدارته بآخر جولة بحصاد ${hl(formatCount(lastEntry.points, 'نقطة'))} — دفاع مقنع عن العرش حتى الآن.`;
         }
       }
     }
@@ -186,13 +186,13 @@ function renderSeasonStory(){
 
   // ---- تجميع الفصول ----
   const chapters = [
-    {num:'١', icon:'🏁', title:'الافتتاحية', body:chap1},
-    {num:'٢', icon:'👑', title:'معركة الصدارة', body:chap2},
-    {num:'٣', icon:'⚔️', title:'المعارك الحامية', body:chap3},
-    {num:'٤', icon:'🌟', title:'نجوم ومفاجآت', body:chap4},
-    {num:'٥', icon:'💀', title:'الممات والثبات', body:chap5},
-    {num:'٦', icon:'🔮', title:'ماذا يُخبئ الموسم؟', body:chap6},
-    {num:'٧', icon:'🛡️', title:'دفاع البطل', body:chapChamp},
+    {num:'1', icon:'🏁', title:'الافتتاحية', body:chap1},
+    {num:'2', icon:'👑', title:'معركة الصدارة', body:chap2},
+    {num:'3', icon:'⚔️', title:'المعارك الحامية', body:chap3},
+    {num:'4', icon:'🌟', title:'نجوم ومفاجآت', body:chap4},
+    {num:'5', icon:'💀', title:'الممات والثبات', body:chap5},
+    {num:'6', icon:'🔮', title:'ماذا يُخبئ الموسم؟', body:chap6},
+    {num:'7', icon:'🛡️', title:'دفاع البطل', body:chapChamp},
   ].filter(c=>c.body);
 
   let html = '<div class="story-wrap">';

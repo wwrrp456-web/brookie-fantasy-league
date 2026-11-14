@@ -88,7 +88,7 @@ function printSeasonReport(){
     @media print{body{padding:10px;} @page{margin:15mm;}}
   </style></head><body>
   <h1>🏆 دوري بروكي الفانتازي — الموسم الثاني</h1>
-  <div class="sub">تقرير الموسم حتى الجولة ${n} · ${new Date().toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <div class="sub">تقرير الموسم حتى الجولة ${n} · ${formatDate(new Date(), {style: 'full'})}</div>
 
   <h2>📊 الترتيب العام</h2>
   <table>
@@ -126,7 +126,7 @@ function printSeasonReport(){
   // جدول تاريخ الجولات
   body += `<h2>📅 تاريخ الجولات</h2>
   <table><tr><th style="text-align:right;">المشارك</th>`;
-  DATA.rounds.slice().sort((a,b)=>a.number-b.number).forEach(r=> body+=`<th>ج${r.number}</th>`);
+  DATA.rounds.slice().sort((a,b)=>a.number-b.number).forEach(r=> body+=`<th title="الجولة ${r.number}">${r.number}</th>`);
   body += '<th>المجموع</th></tr>';
   st.forEach(s=>{
     const hist = histMap[s.id]||[];

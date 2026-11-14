@@ -187,7 +187,7 @@ async function loadCommunityReports(){
       PARTICIPANTS.forEach(p=>{
         if(entries[p.id]){
           html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--line);">
-            <span>${p.name}</span><span style="font-weight:800;">${escapeHtml(entries[p.id].points)} نقطة</span></div>`;
+            <span>${p.name}</span><span style="font-weight:800;">${pointsLabelSafe(entries[p.id].points)}</span></div>`;
         }
       });
       html += '</div>';

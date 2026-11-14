@@ -785,6 +785,158 @@ const asyncDiffTests = (async () => {
   ], [true, true, true, 'رسمي · ✅ سليم']);
 }
 
+
+// ---------- 002-T011 / S48b: محرك تقرير الواتساب js/voice/voice-engine.js ----------
+{
+  const esb = {console}; esb.window = esb;
+  const ectx = vm.createContext(esb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/data/season-2/rounds-seed.js', 'js/core/config.js', 'js/core/dom-utils.js',
+    'js/core/ar-format.js', 'js/core/storage.js', 'js/core/standings-engine.js', 'js/core/club-engine.js', 'js/core/insights-engine.js',
+    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/registry.js', 'js/voice/voice-engine.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ectx, {filename: f}));
+  ectx.__r = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8')).data.rounds;
+  vm.runInContext('DATA.rounds = __r; this.E = {voicePickTemplate, voiceComposeReport, voiceBuildReportState, voiceReportSeries, WA_REPORT, voiceEligible};', ectx);
+  const E = ectx.E, h = {formatCount: ectx.formatCount, pickForm: ectx.pickForm, formatList: ectx.formatList};
+
+  const series = E.voiceReportSeries();
+  check('محرك التقرير: تقرير لكل جولة بالـfixture', series.length, ectx.__r.length);
+  check('محرك التقرير: حتمي (نفس البيانات ← نفس النص)', E.voiceReportSeries().map(x => x.text), series.map(x => x.text));
+  const bad = series.filter(x => /undefined|NaN|null|\[object|[━═─]{3}|الإجمالي|▲|▼|فوز=3/.test(x.text));
+  check('محرك التقرير: بلا undefined ولا جدول ولا مفتاح ولا فواصل', bad.map(x => x.round), []);
+  // لا قالب يتكرر بنفس المقطع خلال آخر 3 جولات (كل مقطع فيه 5 قوالب صالحة فأكثر بالحالة الشائعة)
+  const rep = [];
+  series.forEach((x, i) => x.ids.forEach(id => { const sec = id.replace(/\.\d+$|\.last$/, ''); for(let j = Math.max(0, i - 3); j < i; j++) if(series[j].ids.includes(id) && !/streak|close\.last|climb|drop|quiet/.test(sec)) rep.push(`${x.round}:${id}`); }));
+  check('محرك التقرير: لا تكرار قالب بآخر 3 جولات (الافتتاحية والبطل والصدارة والممّات والخاتمة)', rep, []);
+  const wc = t => t.replace(/\*/g, '').split(/\s+/).filter(Boolean).length;
+  check('محرك التقرير: الطول 60-170 كلمة', series.filter(x => wc(x.text) < 60 || wc(x.text) > 170).map(x => x.round), []);
+
+  // حالات حافة: كل واحدة تنتج تقريرًا سليمًا وتحذف المقطع الذي لا قالب صالح له
+  const base = {round: 10, nextRound: 11, firstRound: false, playersCount: 20, hero: {name: 'أبو أوس', pts: 6, tieBreak: false, repeat: false, prevRank: 3},
+    leader: {name: 'لطفي', total: 92}, chaser: {name: 'أيوب', total: 90}, gap: 2, topTied: [], leaderChanged: false, prevLeader: 'لطفي',
+    climbers: {names: ['العندليب'], val: 3}, droppers: {names: ['أبو رمزي', 'مصطفى عبده'], val: 2}, mummat: [], mummaRepeat: null, hotStreak: null};
+  const comp = st => E.voiceComposeReport({...base, ...st}, {});
+  const ok = r => r.text.includes('بعد الجولة') && !/undefined|NaN|null/.test(r.text);
+  const tie = comp({topTied: ['لطفي', 'أيوب'], gap: 0, chaser: {name: 'أيوب', total: 92}});
+  check('حافة: تعادل على الصدارة', [ok(tie), tie.ids.some(i => /^wa\.lead\.(12|13|14|15|16)$/.test(i))], [true, true]);
+  const chg = comp({leaderChanged: true, prevLeader: 'أيوب'});
+  check('حافة: تبديل الصدارة', [ok(chg), chg.ids.some(i => /^wa\.lead\.(9|10|11)$/.test(i))], [true, true]);
+  const quiet = comp({climbers: null, droppers: null});
+  check('حافة: لا صاعدين ولا هابطين ← مقطع الهدوء', [ok(quiet), quiet.ids.some(i => i.startsWith('wa.quiet'))], [true, true]);
+  const mums = comp({mummat: ['أ', 'ب', 'ج', 'د', 'هـ']});
+  check('حافة: ممّات متعددة (5 ← «5 مشاركين») بلا خطأ', [ok(mums), mums.ids.some(i => i.startsWith('wa.mumma.')), mums.text.includes('5 مشاركين')], [true, true, true]);
+  const mrep = comp({mummat: ['أبو رمزي'], mummaRepeat: {name: 'أبو رمزي', count: 2}});
+  check('حافة: ممة ثانية على التوالي', ok(mrep), true);
+  const last = comp({round: 30, nextRound: null});
+  check('حافة: آخر جولة ← خاتمة الموسم بلا «الجولة 31»', [ok(last), last.ids.includes('wa.close.last'), last.text.includes('الجولة 31')], [true, true, false]);
+  const first = comp({round: 1, firstRound: true, leaderChanged: false, prevLeader: null, climbers: null, droppers: null});
+  check('حافة: أول جولة', ok(first), true);
+  const nohero = E.voiceComposeReport({...base, hero: null}, {});
+  check('حافة: بيانات ناقصة (بلا بطل) ← يحذف المقطع ولا ينهار', [ok(nohero), nohero.ids.some(i => i.startsWith('wa.hero'))], [true, false]);
+  const tb = comp({hero: {...base.hero, tieBreak: true}});
+  check('حافة: بطل بتعادل مكسور', [ok(tb), tb.text.includes('كسر')], [true, true]);
+
+  // المنتقي: يرفض غير المنطبق، ويتجنّب آخر 3، ويكرر فقط لو ما بقي بديل
+  const only = [E.WA_REPORT.mummat[0]];
+  check('منتقٍ: لا قالب منطبق ← null', E.voicePickTemplate('k', only, {...base, mummat: []}, h, {}), null);
+  const hist = {}, picks = [];
+  for(let r = 1; r <= 12; r++) picks.push(E.voicePickTemplate('t', E.WA_REPORT.opener, {...base, round: r}, h, hist).id);
+  check('منتقٍ: لا تكرار ضمن نافذة 3 جولات للافتتاحية', picks.filter((id, i) => picks.slice(Math.max(0, i - 3), i).includes(id)), []);
+  check('منتقٍ: تنويع ≥ 5 صيغ خلال 12 جولة', new Set(picks).size >= 5, true);
+}
+
+
+// ---------- 002-R21a / S49: مُختار «منافس الجولة» js/voice/spotlight.js ----------
+{
+  const ssb = {console}; ssb.window = ssb;
+  const sctx = vm.createContext(ssb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/data/season-2/rounds-seed.js', 'js/core/config.js', 'js/core/dom-utils.js',
+    'js/core/ar-format.js', 'js/core/storage.js', 'js/core/standings-engine.js', 'js/core/club-engine.js', 'js/core/insights-engine.js',
+    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/spotlight-angles.js', 'js/voice/voice-engine.js', 'js/voice/registry.js', 'js/voice/spotlight.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), sctx, {filename: f}));
+  sctx.__r = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8')).data.rounds;
+  vm.runInContext('DATA.rounds = __r; this.SP = {spotlightSeries, computeSpotlightCandidates, pickSpotlight, spotlightPlainText, pickVariant, SPOTLIGHT_ANGLES};', sctx);
+  const SP = sctx.SP, h = {formatCount: sctx.formatCount, pickForm: sctx.pickForm, formatList: sctx.formatList};
+
+  const ser = SP.spotlightSeries();
+  const picks = ser.map(x => x.pick);
+  check('منافس الجولة: منافس لكل جولة بالـfixture', picks.every(Boolean) && ser.length === sctx.__r.length, true);
+  check('منافس الجولة: حتمي (نفس النتيجة عند الإعادة)', SP.spotlightSeries().map(x => x.pick.sp.id + x.pick.angle.id), ser.map(x => x.pick.sp.id + x.pick.angle.id));
+  const rep3 = [];
+  picks.forEach((p, i) => { for(let j = Math.max(0, i - 3); j < i; j++) if(picks[j].sp.id === p.sp.id && !p.urgent) rep3.push(p.sp.round); });
+  check('منافس الجولة: لا تكرار للمشارك بآخر 3 جولات', rep3, []);
+  check('منافس الجولة: لا تكرار للزاوية جولتين متتاليتين', picks.filter((p, i) => i && picks[i - 1].angle.id === p.angle.id).length, 0);
+  check('منافس الجولة: زاوية شرطها متحقق (when) دائمًا', picks.every(p => p.angle.when(p.sp)), true);
+  check('منافس الجولة: زاويتا الدويل والتوقع ما تُختاران (مصدرهما غير مربوط)', picks.some(p => ['duel', 'predictor'].includes(p.angle.id)), false);
+  const txt = picks.map(p => SP.spotlightPlainText(p, h));
+  check('منافس الجولة: النص المؤقت سليم (بلا undefined/NaN)', txt.filter(t => /undefined|NaN|null/.test(t)), []);
+
+  // حالات حافة على المنتقي
+  check('حافة: بلا مرشحين ← null', SP.pickSpotlight([], []), null);
+  const mk = (id, name, score, angle, urgent) => ({sp: {id, name, rank: id + 1}, angle: {id: angle}, score, urgent: !!urgent});
+  const c2 = [mk(0, 'أ', 9, 'x'), mk(1, 'ب', 5, 'y')];
+  check('حافة: المتصدر بالدرجة لكنه ظهر قبل جولة ← الثاني', SP.pickSpotlight(c2, [{id: 0, angle: 'z', round: 1}]).sp.id, 1);
+  check('حافة: مرشح واحد فقط وظهر قبل 3 جولات ← يُخفَّف ولا ينهار', SP.pickSpotlight([mk(0, 'أ', 9, 'x')], [{id: 5, angle: 'q', round: 1}, {id: 0, angle: 'z', round: 2}, {id: 6, angle: 'q', round: 3}]).sp.id, 0);
+  check('حافة: الحدث العاجل يتجاوز نافذة الـ3 لكن ليس الجولة السابقة',
+    [SP.pickSpotlight([mk(0, 'أ', 9, 'x', true), mk(1, 'ب', 5, 'y')], [{id: 0, angle: 'z', round: 1}, {id: 7, angle: 'q', round: 2}]).sp.id,
+     SP.pickSpotlight([mk(0, 'أ', 9, 'x', true), mk(1, 'ب', 5, 'y')], [{id: 7, angle: 'q', round: 1}, {id: 0, angle: 'z', round: 2}]).sp.id], [0, 1]);
+  const hv = {}, vars = [{id: 'a', needs: [], text: () => 'أ'}, {id: 'b', needs: [], text: () => 'ب'}, {id: 'c', needs: [], text: () => 'ج'}, {id: 'd', needs: [], text: () => 'د'}, {id: 'e', needs: [], text: () => 'هـ'}];
+  const seq = []; for(let r = 1; r <= 10; r++) seq.push(SP.pickVariant('k', r, {}, vars, hv, h).id);
+  check('pickVariant: حتمي ولا يكرر صيغة بآخر 3 جولات', seq.filter((v, i) => seq.slice(Math.max(0, i - 3), i).includes(v)), []);
+  check('pickVariant: بلا صيغ منطبقة ← null', SP.pickVariant('k2', 1, {}, [{id: 'z', needs: [], when: () => false, text: () => 'x'}], {}, h), null);
+
+  // محاكاة 30 جولة × 20 مشاركًا
+  const sim = require('../tools/spotlight-sim.js').simulate(30);
+  check('محاكاة 30 جولة: منافس بكل جولة', sim.rows.every(r => r.id !== null), true);
+  check('محاكاة 30 جولة: لا تكرار بآخر 3 جولات (غير العاجل)', sim.rows.filter((r, i) => !r.urgent && sim.rows.slice(Math.max(0, i - 3), i).some(p => p.id === r.id)).length, 0);
+  check('محاكاة 30 جولة: توزيع عادل (الكل ظهر، والأعلى ≤ 4)', [Math.min(...sim.counts) >= 1, Math.max(...sim.counts) <= 4], [true, true]);
+}
+
+
+// ---------- 002-T012 / S44: أداة عينات النصوص tools/text-samples.js ----------
+{
+  const cp = require('child_process');
+  const tmpOut = path.join(require('os').tmpdir(), `texts-${process.pid}.md`);
+  const r = cp.spawnSync(process.execPath, [path.join(ROOT, 'tools/text-samples.js'), '--check', '--out', tmpOut], {encoding: 'utf8'});
+  check('text-samples: تعمل بلا خطأ (--check)', r.status, 0);
+  const md = fs.existsSync(tmpOut) ? fs.readFileSync(tmpOut, 'utf8') : '';
+  check('text-samples: تغطي ≥ 12 مولّدًا و≥ 80 عينة وتسرد غير المغطّى', [/مولّدات مغطّاة: \*\*(\d+)\*\*/.test(md) && Number(md.match(/مولّدات مغطّاة: \*\*(\d+)\*\*/)[1]) >= 12,
+    Number((md.match(/عينات: \*\*(\d+)\*\*/) || [0, 0])[1]) >= 80, md.includes('مولّدات غير مغطّاة')], [true, true, true]);
+  check('text-samples: صفر ملاحظات أعداد على مصفوفة العدّادات (0 و1 و2 و3–10 و11+) للقصة والملخص والأوسمة', (md.match(/ملاحظات أعداد: \*\*(\d+)\*\*/) || [0, '?'])[1], '0');
+  check('text-samples: بلا undefined/NaN في الناتج', /undefined|NaN/.test(md.replace(/undefined\/NaN/g, '')), false);
+  try{ fs.unlinkSync(tmpOut); }catch(e){}
+}
+
+
+// ---------- 002-VAR / S44b: سجلّ المولّدات وتقرير التنوّع (js/voice/registry.js) ----------
+{
+  const rsb = {console}; rsb.window = rsb;
+  const rctx = vm.createContext(rsb);
+  ['js/core/ar-format.js', 'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/banter.js', 'js/voice/registry.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), rctx, {filename: f}));
+  vm.runInContext('this.RG = {voiceGeneratorRegistry, voiceVarietyReport, voiceGeneratorVariants, vt};', rctx);
+  const RG = rctx.RG;
+  const rep = RG.voiceVarietyReport(RG.voiceGeneratorRegistry(), 30);
+  const diverse = rep.filter(v => v.status === 'متنوّع');
+  check('تنوّع: كل مولّد «متنوّع» ✅ (≥ 4 صيغ وبلا تكرار متتالٍ مع بديل)', diverse.filter(v => v.verdict !== 'ok').map(v => v.id), []);
+  check('تنوّع: 11 مولّدًا متنوّعًا على الأقل بالسجل', diverse.length >= 11, true);
+  check('تنوّع: كل مولّد متنوّع يعطي ≥ 4 نصوص مختلفة خلال 30 جولة', diverse.filter(v => v.distinct < 4).map(v => v.id), []);
+  const sv = rep.find(v => v.id === 'badges.titles');
+  check('تنوّع: الثابت بقصد يُصنَّف fixed ولا يفشل', sv ? sv.verdict : null, 'fixed');
+  // مولّد مزيّف يعلن «متنوّع» بصيغتين فقط ← فشل؛ وآخر يكرر لأن بديله ما ينطبق ← لا يُعدّ تكرارًا مرفوضًا
+  const mkv = (n, when) => Array.from({length: n}, (_, i) => RG.vt('f.' + i, when ? when(i) : null, () => 'نص ' + 'أبجد'[i]));
+  const fake = [
+    {id: 'bad.few', label: 'صيغتان', status: 'متنوّع', slots: [{key: 'k1', list: mkv(2), state: r => ({round: r})}]},
+    {id: 'ok.one', label: 'صيغة منطبقة واحدة', status: 'ثابت بقصد', variants: 1, fixed: () => 'ثابت'}
+  ];
+  const frep = RG.voiceVarietyReport(fake, 12);
+  check('تنوّع: مولّد «متنوّع» بصيغتين فقط ← fail', frep[0].verdict, 'fail');
+  check('تنوّع: يقيس النصوص المختلفة والتكرار المتتالي', [frep[0].distinct, frep[0].consecRepeatPct], [2, 0]);
+  check('تنوّع: المولّد الثابت = تكرار 100% وأطول سلسلة = عدد الجولات', [frep[1].consecRepeatPct, frep[1].maxRun], [100, 12]);
+  // مولّد يكرر القالب نفسه مع توفّر بديل ← يُكتشف (محاكاة منتقٍ سيّئ عبر fixed)
+  const rep2 = RG.voiceVarietyReport([{id: 'dup', label: 'يكرر', status: 'يحتاج صيغ', variants: 3, fixed: () => 'نفس النص دائمًا'}], 10);
+  check('تنوّع: المولّد قليل الصيغ يُصنَّف waiting مع ما ينقص', [rep2[0].verdict, rep2[0].missing], ['waiting', 1]);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);

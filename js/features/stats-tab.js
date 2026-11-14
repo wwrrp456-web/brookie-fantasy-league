@@ -30,16 +30,16 @@ function renderRecords(){
   html += '<div class="badges-grid">';
 
   if(rec.topRound){
-    html += `<div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${rec.topRound.points} نقطة — الجولة ${rec.topRound.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${formatCount(rec.topRound.points, 'نقطة')} — الجولة ${rec.topRound.round}</div></div>`;
   }
   if(rec.closest){
-    html += `<div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">يفصل بينهما ${rec.closest.gap} نقطة فقط</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">${rec.closest.gap > 0 ? 'يفصل بينهما ' + formatCount(rec.closest.gap, 'نقطة') + ' فقط' : 'متعادلان بالنقاط'}</div></div>`;
   }
   if(rec.maxUp && rec.maxUp.delta > 0){
-    html += `<div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">+${rec.maxUp.delta} مركز — الجولة ${rec.maxUp.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">صعد ${formatCount(rec.maxUp.delta, 'مركز', {case: 'acc'})} — الجولة ${rec.maxUp.round}</div></div>`;
   }
   if(rec.maxDown && rec.maxDown.delta < 0){
-    html += `<div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">${rec.maxDown.delta} مركز — الجولة ${rec.maxDown.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">هبط ${formatCount(Math.abs(rec.maxDown.delta), 'مركز', {case: 'acc'})} — الجولة ${rec.maxDown.round}</div></div>`;
   }
   html += '</div>';
   box.innerHTML = html;
@@ -293,7 +293,7 @@ function renderClubMap(){
     if(!byLeague[league]) return;
     const flag = leagueFlags[league]||'🌍';
     html += `<div class="club-map-league">
-      <div class="club-map-league-name">${flag} ${league} (${byLeague[league].length} أندية)</div>
+      <div class="club-map-league-name">${flag} ${league} (${formatCount(byLeague[league].length, 'نادٍ')})</div>
       <div class="club-map-clubs">`;
     byLeague[league].sort().forEach(club=>{
       const owners = clubOwners[club]||[];
@@ -350,7 +350,7 @@ function renderPredChallenge(){
   let html = '<h2 class="section-title" style="margin-top:22px;">🎲 تحدي التوقعات — السجل الكامل</h2>';
   html += '<div style="overflow-x:auto;"><table class="pred-challenge-table">';
   html += '<tr><th>المشارك</th>';
-  roundsWithPred.forEach(r=> html+=`<th>ج${r.number}</th>`);
+  roundsWithPred.forEach(r=> html+=`<th title="الجولة ${r.number}">${r.number}</th>`);
   html += '<th>صح</th><th>إجمالي</th><th>نسبة</th></tr>';
 
   PARTICIPANTS.forEach(p=>{
@@ -498,7 +498,7 @@ function renderRace(){
       <div class="race-slider">
         <label for="raceSlider">الجولة:</label>
         <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1">
-        <span class="race-round-label" id="raceLabel">ج${DATA.rounds[n-1].number}</span>
+        <span class="race-round-label" id="raceLabel">الجولة ${DATA.rounds[n-1].number}</span>
       </div>
       <div id="raceBars"></div>`;
     document.getElementById('raceSlider').addEventListener('input', updateRaceBars);
@@ -523,7 +523,7 @@ function updateRaceBars(){
 
   if(label){
     if(idx===0) label.textContent='البداية';
-    else{ const r=DATA.rounds[idx-1]; label.textContent = r ? `ج${r.number}` : `${idx}`; }
+    else{ const r=DATA.rounds[idx-1]; label.textContent = r ? `الجولة ${r.number}` : `${idx}`; }
   }
 
   let html = '';
@@ -535,7 +535,7 @@ function updateRaceBars(){
       <span class="race-name">${rankIcon}${s.name}</span>
       <div class="race-bar-wrap">
         <div class="race-bar" style="width:${pct}%;background:${color};">
-          <span class="race-pts" style="color:${contrastTextOn(color)};">${s.total} ن</span>
+          <span class="race-pts" style="color:${contrastTextOn(color)};">${formatCount(s.total, 'نقطة')}</span>
         </div>
       </div>
     </div>`;
@@ -603,7 +603,7 @@ function renderDeathMap(){
   let html = '<h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2>';
   html += '<div class="death-map" tabindex="0" role="region" aria-label="خريطة الممّات"><table>';
   html += '<tr><th>المشارك</th>';
-  roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
+  roundNums.forEach(n=> html+=`<th title="الجولة ${n}">${n}</th>`);
   html += '<th>المجموع</th></tr>';
 
   sorted.forEach(p=>{

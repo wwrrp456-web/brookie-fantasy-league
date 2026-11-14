@@ -110,7 +110,7 @@ function renderSeasonProgress(){
     <div class="season-progress-bar">
       <div class="season-progress-label">
         <span>تقدّم الموسم</span>
-        <span>${done} / ${SEASON_TOTAL_ROUNDS} جولة (${pct}%)</span>
+        <span>${done} / ${formatCount(SEASON_TOTAL_ROUNDS, 'جولة')} (${pct}%)</span>
       </div>
       <div class="season-progress-track">
         <div class="season-progress-fill" style="width:${pct}%;"></div>
@@ -142,13 +142,13 @@ function renderRoundsInsights(){
         <span class="rounds-insight-icon">⚔️</span>
         <span class="rounds-insight-label">الجولة الأكثر تنافسية</span>
         <span class="rounds-insight-val">جولة ${mostCompetitive.round||'—'}</span>
-        <span class="rounds-insight-sub">فارق ${mostCompetitive.spread} نقطة فقط</span>
+        <span class="rounds-insight-sub">${mostCompetitive.spread > 0 ? 'فارق ' + formatCount(mostCompetitive.spread, 'نقطة') + ' فقط' : 'تعادل بالنقاط'}</span>
       </div>
       <div class="rounds-insight-card worst">
         <span class="rounds-insight-icon">📊</span>
         <span class="rounds-insight-label">الجولة الأكثر تفاوتاً</span>
         <span class="rounds-insight-val">جولة ${mostDivergent.round||'—'}</span>
-        <span class="rounds-insight-sub">فارق ${mostDivergent.spread} نقطة</span>
+        <span class="rounds-insight-sub">فارق ${formatCount(mostDivergent.spread, 'نقطة')}</span>
       </div>
     </div>`;
 }
@@ -195,7 +195,7 @@ function renderRoundComments(){
   // "Cannot read properties of null (reading 'time')" عند كل تحميل صفحة).
   let commentsHTML = '';
   Object.values(comments).filter(Boolean).sort((a,b)=>new Date(a.time)-new Date(b.time)).forEach(c=>{
-    const t = new Date(c.time).toLocaleDateString('ar',{month:'short',day:'numeric'});
+    const t = formatDate(c.time, {style: 'short'});
     commentsHTML += `<div class="round-comment-item">
       <span class="rc-author">${c.name}</span>
       <span class="rc-text">${c.text}</span>
@@ -323,7 +323,7 @@ function renderRoundChallenge(){
   const totalVotes=Object.values(voteCounts).reduce((a,b)=>a+b,0);
   const canVote=pid&&!myVote;
   const myVotedName=myVote?PARTICIPANTS.find(x=>x.id==myVote.vote)?.name:'';
-  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🗳️ تحدي الجولة ${nextNum}</h2>
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🗳️ تصويت الجولة ${nextNum}</h2>
     <div style="background:var(--paper);border-radius:14px;padding:16px;">
       <p style="color:var(--text2);margin:0 0 12px;font-size:0.9rem;">
         <strong>من سيتصدر الجولة ${nextNum}؟</strong>
@@ -437,7 +437,7 @@ function renderRound2Section(){
     html += `<div class="r2-card${isChamp?' is-champion':''}">
       <div class="r2-head">
         <div class="r2-name">${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-        <div class="r2-pts">${r2.points} نقطة <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${r2.gf}-${r2.ga})</span></div>
+        <div class="r2-pts">${formatCount(r2.points, 'نقطة')} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${r2.gf}-${r2.ga})</span></div>
       </div>
       <div class="r2-clubs">
         ${r2.clubs.map(c=>`
@@ -477,7 +477,7 @@ function renderRound1Section(){
     html += `<div class="r1-simple-row">
       <div class="r1-rank">${i+1}</div>
       <div class="r1-name">${row.p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-      <div class="r1-pts">${row.joined ? row.pts + ' نقطة' : '<span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
+      <div class="r1-pts">${row.joined ? formatCount(row.pts, 'نقطة') : '<span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span>'}</div>
     </div>`;
   });
   html += `</div>`;
@@ -497,7 +497,7 @@ function renderChampionsArchive(){
         <span style="font-weight:800;font-size:0.8rem;color:var(--gold);min-width:60px;">الجولة ${row.round}</span>
         <span style="font-weight:700;font-size:0.85rem;">${names} <span class="round-champion-badge">بطل الجولة</span></span>
       </div>
-      <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${row.points} نقطة</span>
+      <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${formatCount(row.points, 'نقطة')}</span>
     </div>`;
   });
   html += '</div>';
@@ -533,7 +533,7 @@ function renderRounds(){
         html += `<div class="r2-card${isChamp?' is-champion':''}">
           <div class="r2-head">
             <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-            <div class="r2-pts">${s.points} نقطة${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
+            <div class="r2-pts">${formatCount(s.points, 'نقطة')}${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
           </div>
           <div class="r2-clubs">
             ${p.teams.map((t,ti)=>{
