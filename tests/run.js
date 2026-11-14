@@ -884,6 +884,18 @@ const asyncDiffTests = (async () => {
   check('pickVariant: حتمي ولا يكرر صيغة بآخر 3 جولات', seq.filter((v, i) => seq.slice(Math.max(0, i - 3), i).includes(v)), []);
   check('pickVariant: بلا صيغ منطبقة ← null', SP.pickVariant('k2', 1, {}, [{id: 'z', needs: [], when: () => false, text: () => 'x'}], {}, h), null);
 
+  // تركيب التقرير بقوالب Opus (S50)
+  vm.runInContext('this.SP2 = {spotlightReportSeries, spotlightCompose, SPOTLIGHT_ANGLES};', sctx);
+  const rser = sctx.SP2.spotlightReportSeries();
+  const reps = rser.map(x => x.report);
+  const EMO = /\p{Extended_Pictographic}/u;
+  check('تقرير المنافس: لكل جولة تقرير (عنوان وفقرات)', reps.every(r => r && r.title && r.paragraphs.length >= 3), true);
+  check('تقرير المنافس: حتمي (نفس النص عند الإعادة)', sctx.SP2.spotlightReportSeries().map(x => x.report.text), reps.map(r => r.text));
+  check('تقرير المنافس: نص الواتساب بعنوان بنجمتين، بلا إيموجي ولا undefined/NaN', reps.filter(r => !/^\*[^*]+\*\n\n/.test(r.text) || EMO.test(r.text) || /undefined|NaN|null/.test(r.text)).map(r => r.round), []);
+  check('تقرير المنافس: الطول يتنوّع (قصيرة وطويلة) والقصيرة 55–100 كلمة والطويلة 95–190', [new Set(reps.map(r => r.len)).size, reps.filter(r => r.len === 'short' && (r.words < 55 || r.words > 100)).length, reps.filter(r => r.len === 'long' && (r.words < 95 || r.words > 190)).length], [2, 0, 0]);
+  const tpl = []; reps.forEach((r, i) => { const keyOf = id => id.replace(/\.\d+$/, ''); r.ids.forEach(id => { if(/\.(t|s|j)\d+$/.test(id)){ for(let j = Math.max(0, i - 3); j < i; j++) if(reps[j].angle === r.angle && reps[j].ids.includes(id)) tpl.push(r.round + ':' + id); } }); });
+  check('تقرير المنافس: لا يتكرر قالب العنوان/القصة/النكتة لنفس الزاوية بآخر 3 جولات', tpl, []);
+
   // محاكاة 30 جولة × 20 مشاركًا
   const sim = require('../tools/spotlight-sim.js').simulate(30);
   check('محاكاة 30 جولة: منافس بكل جولة', sim.rows.every(r => r.id !== null), true);
