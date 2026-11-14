@@ -1,0 +1,4 @@
+/* الميداليات الصور (R-23): بحجم الخط افتراضيًا (مثل الإيموجي)، وتُكبَّر بالسياق (أيقونة لوحة الميداليات) */
+.medal{display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;object-fit:contain;}
+.medal-icon .medal{width:1.6em;height:1.6em;vertical-align:middle;}
+.section-title .medal{width:1.2em;height:1.2em;vertical-align:-0.25em;}

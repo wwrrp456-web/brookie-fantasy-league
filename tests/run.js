@@ -292,6 +292,11 @@ check('كسر التعادل بالقالب المعتمد: «7 أهداف مس�
   check('قاعدة forbiddenTerms: "المشارك" سليم، والممنوع داخل تعليق لا يُحسب', [
     lintCase({'js/features/a.js': "const t = 'المشارك';\n"}).counts.forbiddenTerms,
     lintCase({'js/features/a.js': "// المتسابق سابقًا\nconst t = 1;\n"}).counts.forbiddenTerms], [0, 0]);
+  // 5) emoji: الميداليات 🥇🥈🥉 مستثناة (R-23)، وغيرها يُعدّ
+  check('قاعدة emoji: 🥇🥈🥉 نصًا مسموحًا لا تُحسب', lintCase({'js/core/whatsapp-text.js': "const t = '🥇 الأول 🥈 الثاني 🥉 الثالث';\n"}).counts.emoji, 0);
+  check('قاعدة emoji: غير الميداليات يُحسب، وسطر فيه ميدالية + غيرها يُحسب', [
+    lintCase({'js/features/a.js': "const t = '💀 ممة';\n"}).counts.emoji,
+    lintCase({'js/features/a.js': "const t = '🥇 و💀';\n"}).counts.emoji], [1, 1]);
   // 4) hardcodedCounts
   r = lintCase({'js/features/a.js': "const t = 'يشارك فيه 13 دوريًا';\n"});
   check('قاعدة hardcodedCounts: "13 دوريًا" مكتوب يدويًا في ملف ميزة ← يفشل', [r.status, r.counts.hardcodedCounts, /hardcodedCounts/.test(r.out)], [1, 1, true]);

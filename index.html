@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/medals.css">
 <link rel="stylesheet" href="css/standings-tab.css">
 <link rel="stylesheet" href="css/rounds-tab.css">
 <link rel="stylesheet" href="css/round-wall.css">
@@ -746,7 +747,7 @@
             <div class="admin-subsection-title">🟢 أساسية</div>
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_badge_standings" data-key="badge_standings" data-label="شارة البطل بالترتيب"> 🛡️ شارة "حامل اللقب" بجدول الترتيب</label>
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_top_banner" data-key="top_banner" data-label="بانر البطل العلوي"> 📣 بانر تذكير بالبطل أعلى الصفحة</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_golden_card" data-key="golden_card" data-label="الكرت الذهبي"> 🥇 كرت ذهبي مميّز للبطل بتبويب المشاركين</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_golden_card" data-key="golden_card" data-label="الكرت الذهبي"> <span class="medal-slot" data-medal="1"></span> كرت ذهبي مميّز للبطل بتبويب المشاركين</label>
           </div>
 
           <div class="admin-subsection">
@@ -802,6 +803,7 @@
 <script src="js/generated/assets.js"></script>
 <script src="js/ui/crests.js"></script>
 <script src="js/ui/empty-state.js"></script>
+<script src="js/ui/medals.js"></script>
 <script src="js/core/config.js"></script>
 <script src="js/core/ar-format.js"></script>
 <script src="js/core/whatsapp-text.js"></script>

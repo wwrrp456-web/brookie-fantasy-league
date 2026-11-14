@@ -28,7 +28,7 @@ function renderPredictionAccuracy(){
   html += `<p class="rounds-subtitle" style="margin-top:0;">مين يتوقّع بطل الجولة صح أكثر عبر الموسم؟</p>`;
   html += '<div class="pred-leaderboard">';
   list.forEach((r,i)=>{
-    const medal = i===0 ? '🥇' : i===1 ? '🥈' : i===2 ? '🥉' : `${i+1}.`;
+    const medal = i < 3 ? medalHTML(i+1) : `${i+1}.`;
     html += `<div class="pred-lb-row">
       <span class="pred-lb-rank">${medal}</span>
       <span class="pred-lb-name">${r.name}</span>

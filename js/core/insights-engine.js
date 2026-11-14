@@ -209,7 +209,7 @@ function calcWhatIf(){
     else if(delta<0) deltaHTML=`<span class="whatif-delta" style="color:var(--coral);">▼${Math.abs(delta)}</span>`;
     else deltaHTML=`<span class="whatif-delta" style="color:var(--muted);">—</span>`;
 
-    const rankIcon = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':`${rank}.`;
+    const rankIcon = rank<=3 ? medalHTML(rank) : `${rank}.`;
     html += `<div class="whatif-row${isChanged?' changed':''}">
       <span class="whatif-rank">${rankIcon}</span>
       <span class="whatif-name">${s.name}</span>
