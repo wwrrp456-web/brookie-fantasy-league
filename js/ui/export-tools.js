@@ -99,7 +99,7 @@ function printSeasonReport(){
     const best = hist.length?Math.max(...hist.map(h=>h.points)):0;
     const avg = hist.length?Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10:0;
     const rank = i+1;
-    const medal = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'';
+    const medal = medalHTML(rank, {size: 18});
     body += `<tr>
       <td>${medal||rank}</td>
       <td style="text-align:right;">${s.name}</td>

@@ -1,0 +1,17 @@
+/* بطاقة «منافس الجولة» (002-R21b): بالرموز فقط (tokens.css)، ثيمان بلا ألوان ثابتة */
+.spotlight-card{
+  background:var(--c-surface-1);
+  border:1px solid var(--c-border-strong);
+  border-radius:var(--r-lg);
+  padding:var(--sp-4);
+  margin-top:var(--sp-3);
+}
+.spotlight-head{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2);flex-wrap:wrap;margin-bottom:var(--sp-2);}
+.spotlight-kicker{font-size:var(--fs-sm);font-weight:800;color:var(--c-brand);}
+.spotlight-angle{font-size:var(--fs-xs);color:var(--c-text-2);background:var(--c-surface-2);border-radius:var(--r-pill);padding:2px var(--sp-3);}
+.spotlight-who{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-2);}
+.spotlight-name{font-size:var(--fs-lg);color:var(--c-text);}
+.spotlight-crests{display:inline-flex;gap:var(--sp-1);align-items:center;}
+.spotlight-title{font-size:var(--fs-md);font-weight:800;line-height:1.7;color:var(--c-text);margin:0 0 var(--sp-2);}
+.spotlight-p{font-size:var(--fs-sm);line-height:1.8;color:var(--c-text-2);margin:0 0 var(--sp-2);}
+.spotlight-actions{margin-top:var(--sp-3);}

@@ -361,17 +361,17 @@ function renderMedals(){
   const withMedals = sorted.filter(p=> medals[p.id].gold+medals[p.id].silver+medals[p.id].bronze > 0);
   if(!withMedals.length){ box.innerHTML=''; return; }
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">🥇 لوحة الميداليات</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + medalHTML(1) + ' لوحة الميداليات</h2>';
   html += '<div class="medals-grid">';
   withMedals.forEach((p,i)=>{
     const m = medals[p.id];
     const total = m.gold + m.silver + m.bronze;
     let cls = i===0 ? 'medal-gold' : i===1 ? 'medal-silver' : i===2 ? 'medal-bronze' : '';
-    const icon = m.gold>0 ? '🥇' : m.silver>0 ? '🥈' : '🥉';
+    const icon = medalHTML(m.gold>0 ? 1 : m.silver>0 ? 2 : 3);
     const medal_text = [
-      m.gold > 0 ? `${m.gold}🥇` : '',
-      m.silver > 0 ? `${m.silver}🥈` : '',
-      m.bronze > 0 ? `${m.bronze}🥉` : ''
+      m.gold > 0 ? `${m.gold}${medalHTML(1)}` : '',
+      m.silver > 0 ? `${m.silver}${medalHTML(2)}` : '',
+      m.bronze > 0 ? `${m.bronze}${medalHTML(3)}` : ''
     ].filter(Boolean).join(' ');
     html += `<div class="medal-card ${cls}">
       <div class="medal-icon">${icon}</div>

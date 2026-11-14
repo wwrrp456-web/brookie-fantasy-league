@@ -282,25 +282,11 @@ function recomputeRoundCompletion(){
 // خصم اختياري. لا يحفظ شيئًا مباشرة — فقط يعبّئ حقول النموذج الحالية بنفس
 // شكلها العادي (matchRowHTML)، والمنظم يراجع ويضغط "حفظ الجولة" كالمعتاد.
 function parsePastedResults(text){
-  const scoreRe = /(\d+)\s*[-–—:]\s*(\d+)/;
-  // الأطول أولًا لتفادي تطابق جزئي بين أسماء أندية متشابهة
-  const sortedClubs = CLUBS.slice().sort((a,b)=>b.length-a.length);
-  const byClub = new Map();
-  const unrecognized = [];
-  text.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
-    const club = sortedClubs.find(c => line.includes(c));
-    const scoreMatch = line.match(scoreRe);
-    if(!club || !scoreMatch){ unrecognized.push(line); return; }
-    const gf = Number(scoreMatch[1]), ga = Number(scoreMatch[2]);
-    const afterScoreIdx = line.indexOf(scoreMatch[0]) + scoreMatch[0].length;
-    const opp = line.slice(afterScoreIdx).trim();
-    const result = gf > ga ? 'win' : (gf < ga ? 'loss' : 'draw');
-    if(!byClub.has(club)) byClub.set(club, []);
-    byClub.get(club).push({gf, ga, opp, result});
-  });
-  const recognized = [];
-  byClub.forEach((matches, club)=> recognized.push({club, matches}));
-  return {recognized, unrecognized};
+  // محلّل أقوى بـjs/core/results-import.js (يقبل الصيغة القديمة سطرًا لكل مباراة، وجداول |، ونص 365 الأصلي). الاسم محفوظ للتوافق.
+  const r = parseResults(text);
+  const p = draftToParsed(r.rows);
+  p.unrecognized = r.unknown;
+  return p;
 }
 
 // يعبّئ صناديق الأندية المتعرَّف عليها بنتائج parsePastedResults، عبر نفس
@@ -479,29 +465,6 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     }
     return;
   }
-  const togglePasteImportBtn = e.target.closest('#togglePasteImportBtn');
-  if(togglePasteImportBtn){
-    const panel = document.getElementById('pasteImportPanel');
-    if(panel) panel.style.display = panel.style.display === 'none' ? '' : 'none';
-    return;
-  }
-  const applyPasteImportBtn = e.target.closest('#applyPasteImportBtn');
-  if(applyPasteImportBtn){
-    const input = document.getElementById('pasteImportInput');
-    const resultBox = document.getElementById('pasteImportResult');
-    const parsed = parsePastedResults(input ? input.value : '');
-    const applied = applyParsedResultsToForm(parsed);
-    if(resultBox){
-      const okLine = applied.length
-        ? `<div class="status-msg ok">تمت تعبئة ${formatCount(applied.length, 'نادٍ')} تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div>`
-        : '<div class="status-msg err">لم يتعرّف التحليل على أي نادٍ بالنص الملصق.</div>';
-      const unrecLine = parsed.unrecognized.length
-        ? `<div style="color:var(--muted);margin-top:6px;">⚠️ أسطر لم يُتعرَّف عليها تلقائيًا (أكملها يدويًا):<br>${parsed.unrecognized.map(l=>`— ${l}`).join('<br>')}</div>`
-        : '';
-      resultBox.innerHTML = okLine + unrecLine;
-    }
-    return;
-  }
 });
 
 // مزامنة حيّة أثناء الكتابة/الاختيار: أي تغيير بحقل خصم (اختيار من القائمة أو
@@ -582,21 +545,7 @@ function prepareRoundForm(num, opts={}){
   // لصق وتحليل نتائج تلقائي — بديل أسرع للكتابة اليدوية لكل نادٍ على حدة
   // (طلب المستخدم: تسريع إدخال الجولة بدل بحث/كتابة يدوية لـ27+ ناديًا).
   // لا يحفظ شيئًا مباشرة، فقط يعبّئ حقول النموذج الحالية ليراجعها المنظم.
-  html += `<div class="paste-import-box">
-    <button type="button" class="btn ghost" id="togglePasteImportBtn">📋 لصق نتائج وتحليل تلقائي</button>
-    <div id="pasteImportPanel" style="display:none;">
-      <div style="font-size:0.78rem;color:var(--muted);margin:8px 0;">
-        الصق نتائج الأندية هنا، سطر واحد لكل مباراة: اسم النادي، ثم النتيجة أرقامًا (مثال 3-0)، ثم اسم الخصم اختياريًا. أي نادٍ لعب أكثر من مباراة بنفس الجولة يُكتب بسطر مستقل لكل مباراة.
-      </div>
-      <textarea id="pasteImportInput" rows="6" style="width:100%;font-family:inherit;" placeholder="الهلال 3-0 الخليج
-برشلونة 2-0
-ريال مدريد 4-1 ريال سوسيادد"></textarea>
-      <div class="row" style="margin-top:8px;">
-        <button type="button" class="btn secondary" id="applyPasteImportBtn">تحليل وتعبئة الحقول</button>
-      </div>
-      <div id="pasteImportResult" style="margin-top:8px;font-size:0.8rem;"></div>
-    </div>
-  </div>`;
+  html += resultsImportPanelHTML();   // js/features/results-import-ui.js (002-R22)
   PARTICIPANTS.forEach(p=>{
     html += `<details class="round-entry-card"><summary>${p.name}<span class="completion-badge" data-pid="${p.id}"></span></summary>`;
     p.teams.forEach((team, ti)=>{

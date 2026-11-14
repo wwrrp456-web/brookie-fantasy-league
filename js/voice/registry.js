@@ -45,6 +45,16 @@ function voiceGeneratorRegistry(){
     hotStreak: {name: 'أيوب', count: 4}});
   if(g('WA_REPORT')) reg.push({id: 'whatsapp.report', label: 'تقرير الواتساب (الطبقة الثانية)', status: 'متنوّع', note: 'R-20، 7 مقاطع',
     slots: Object.entries(g('WA_REPORT')).map(([k, list]) => ({key: 'wa.' + k, list, state: waBase}))});
+  // منافس الجولة (R-21): كل زاوية × (عنوان، قصة، نكتة) بحالة منافس نموذجية تتغيّر برقم الجولة
+  if(typeof SPOTLIGHT_ANGLES !== 'undefined'){
+    const spBase = r => ({round: r, nextRound: r + 1, name: _VR_NAMES[1], id: 4, rank: 4, prevRank: 8, move: 4, total: 80 + r, pts: 6, played: true, playersCount: 20,
+      above: {name: 'أيوب', gap: 2}, below: {name: 'سعيد', gap: 3}, isHero: false, heroTieBreak: false, heroPts: 8, isLeader: false, leaderChanged: false, second: null,
+      prevPts: 1, last5: [3, 5, 1, 6, 6], hotRun: 3, coldEnded: 2, clubs: {won: 2, played: 3, best: {club: 'الهلال', opp: 'النصر', gf: 3, ga: 0}}, duel: null, badge: {title: 'الأكثر ثباتًا'},
+      predictor: null, seasonMumma: 1, heroCount: 1, bestPts: 9, leaderName: 'لطفي', leaderGap: 6, roundsPlayed: r, seasonTotal: 30, rank3: 7});
+    const slots = [];
+    SPOTLIGHT_ANGLES.forEach(a => ['title', 'story', 'joke'].forEach(k => slots.push({key: 'sp.' + a.id + '.' + k, list: a[k], state: spBase})));
+    reg.push({id: 'spotlight.report', label: 'تقرير منافس الجولة (13 زاوية)', status: 'متنوّع', note: 'R-21، العنوان والقصة والنكتة لكل زاوية', slots});
+  }
   if(g('VOICE_ROUND_STORY')){
     const rs = r => ({round: r, hero: {name: 'أبو أوس', pts: 4 + (r % 3), tieBreak: false}, mummat: [_VR_NAMES[0]], climber: {names: [_VR_NAMES[3]], val: 3}, dropper: {names: [_VR_NAMES[1]], val: 2}});
     reg.push({id: 'banter.roundStory', label: 'قصة الجولة (قوالب Opus)', status: 'متنوّع', slots: Object.entries(g('VOICE_ROUND_STORY')).map(([k, list]) => ({key: 'rs.' + k, list, state: rs}))});

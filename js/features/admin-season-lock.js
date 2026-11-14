@@ -58,7 +58,7 @@ function prefillSeasonLockChampionSuggestion(){
     return;
   }
   const top = st[0];
-  if(preview) preview.textContent = `🥇 المقترح تلقائيًا من الترتيب الحالي: ${top.name} — ${formatCount(top.total, 'نقطة')} (عدّله يدويًا لو مختلف).`;
+  if(preview) preview.innerHTML = `${medalHTML(1)} المقترح تلقائيًا من الترتيب الحالي: ${escapeHtml(top.name)} — ${formatCount(top.total, 'نقطة')} (عدّله يدويًا لو مختلف).`;
   if(nameInput && !nameInput.value) nameInput.value = top.name;
   if(pointsInput && !pointsInput.value) pointsInput.value = top.total;
 }

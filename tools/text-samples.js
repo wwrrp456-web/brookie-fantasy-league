@@ -97,6 +97,8 @@ function main(argv){
 
   // 5) منافس الجولة (مؤقت S49): آخر 3 جولات
   const sp = ev('spotlightSeries()');
+  const spr = ev('spotlightReportSeries()');
+  last3.forEach(r => { const x = spr.find(y => y.round === r); if(x && x.report) add('spotlight.report', 'spotlight.js · spotlightCompose', `الجولة ${r}: ${x.report.name} · زاوية «${x.report.angleLabel}» · نسخة ${x.report.len === 'long' ? 'طويلة' : 'قصيرة'} (${x.report.words} كلمة)`, () => x.report.text); });
   last3.forEach(r => { const x = sp.find(y => y.round === r); if(x && x.pick){ ctx.__p = x.pick; add('spotlight.plain', 'spotlight.js · spotlightPlainText', `الجولة ${r}: ${x.pick.sp.name}`, () => ev('spotlightPlainText(__p, __h)')); } });
 
   // 6) الأوسمة والأرقام والألقاب (insights-engine.js) على بيانات الموسم الحالية وآخر 3 جولات (ألقاب الجولة)
@@ -164,8 +166,7 @@ function main(argv){
     ['stats-tab.js وparticipants-tab.js وrounds-tab.js وstandings-widgets.js', 'توليد HTML مختلط بالنص؛ يُرحَّل ويُغطّى بالعينات في S45/S46'],
     ['admin-*.js وreport-main.js (رسائل المنظّم والتقارير)', 'تحتاج DOM وصلاحيات؛ تُغطّى بعد فصل النصوص (S47)'],
     ['رسائل الأخطاء والنجاح العامة (storage.js، card-io.js، export-tools.js)', 'نصوص ثابتة داخل معالجات أحداث؛ تُجرد وتُراجع في S45 إلى S47 بجرد inventory.md'],
-    ['نصوص الكروت المرسومة بالكانفس (champion/wrap/profile/duel/my-clubs/certificate/standings)', 'تُرسم على canvas؛ تُغطّى بلقطات tools/snap.js وtools/card-compare.js، وهنا رسائل التحقق فقط'],
-    ['spotlight (قوالب Opus الكاملة)', 'عيناتها في `samples/voice-samples.md` (أداة Opus)']
+    ['نصوص الكروت المرسومة بالكانفس (champion/wrap/profile/duel/my-clubs/certificate/standings)', 'تُرسم على canvas؛ تُغطّى بلقطات tools/snap.js وtools/card-compare.js، وهنا رسائل التحقق فقط']
   ];
   // 9) تقرير التنوّع (S44b): كل مولّد على الجولات 1..30
   const VMAP = {ok: '✅ متنوّع', fixed: '✅ ثابت بقصد', fail: '❌ فشل'};

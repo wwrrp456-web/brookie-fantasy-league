@@ -469,7 +469,7 @@ function renderRound1Section(){
     return a.p.name.localeCompare(b.p.name, 'ar');
   });
 
-  let html = `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">🥇 الجولة 1 — ملخص النقاط (حتى 25 أغسطس 2026)</h4>`;
+  let html = `<h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">${medalHTML(1)} الجولة 1 — ملخص النقاط (حتى 25 أغسطس 2026)</h4>`;
   html += `<p class="rounds-subtitle" style="margin-top:0;">ملخّص نقاط فقط من كشف الترتيب المعتمد بتاريخ 25 أغسطس 2026 — بلا تفاصيل مباريات لكل نادٍ. بطل الجولة الأولى تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه — حُسم باختيار المنظم عند تعادل ثلاثي تام بالنقاط (لا بيانات أهداف للجولة الأولى لكسر التعادل رقميًا).</p>`;
   html += `<div class="r1-simple-card">`;
   rows.forEach((row, i)=>{

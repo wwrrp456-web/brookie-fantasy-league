@@ -10,6 +10,7 @@
  *   assets/crests/motifs/*.svg    ← MOTIFS       { اسم: svg }
  *   assets/brand/proki-*.svg      ← LOGO_SVG     { mark, logo, logoLight }
  *   assets/crests/official/*.svg  ← CRESTS_OFFICIAL { slug: svg }  (لو المجلد غير موجود ← {})
+ *   assets/medals/*.svg           ← MEDAL_SVGS  { medal-gold|silver|bronze: svg }  (R-23)
  *   assets/crests/light/*.svg     ← CRESTS_LIGHT { slug: svg }  نسخة الوضع الفاتح للشعار المحسّن (001-T012b؛ لو المجلد غير موجود ← {})
  *
  * التوليد **حتمي**: نفس المدخلات ← نفس الملف حرفيًا (مفاتيح مرتبة بترتيب نقاط الترميز، بلا تواريخ ولا مسارات مطلقة).
@@ -20,17 +21,20 @@ const path = require('path');
 const ROOT_DEFAULT = path.join(__dirname, '..');
 
 const byCodepoint = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+// ميداليات Noto (R-23): تنظيف إضافي للتضمين: حذف التعليقات والميتاداتا (id وx/y وenable-background وxml:space وversion) وطيّ المسافات، بلا مساس بالمسارات والألوان.
+const cleanMedalSvg = s => cleanSvg(s).replace(/<!--[\s\S]*?-->\s*/g, '').replace(/\s+(id|version|x|y|xml:space)="[^"]*"/g, '').replace(/\s+xmlns:xlink="[^"]*"/g, '')
+  .replace(/\s+style="enable-background:[^"]*"/, '').replace(/>\s+</g, '><').replace(/\s+/g, ' ').replace(/ \/>/g, '/>').replace(/ >/g, '>').replace('<svg ', '<svg width="128" height="128" ');   // حجم أصلي صريح 128 (الكانفس والصور)
 const cleanSvg = s => s.replace(/^﻿/, '').replace(/^\s*<\?xml[^>]*\?>\s*/, '').replace(/\r\n/g, '\n').trim();
 
 // كل ملفات .svg مباشرة داخل مجلد → {اسم-الملف-بدون-الامتداد: svg}. مجلد غير موجود ← {}
-function readSvgDir(dir) {
+function readSvgDir(dir, clean) {
   const out = {};
   if (!fs.existsSync(dir)) return out;
   fs.readdirSync(dir, { withFileTypes: true })
     .filter(e => e.isFile() && e.name.endsWith('.svg') && !e.name.startsWith('_'))
     .map(e => e.name).sort(byCodepoint)
     .forEach(f => {
-      const svg = cleanSvg(fs.readFileSync(path.join(dir, f), 'utf8'));
+      const svg = (clean || cleanSvg)(fs.readFileSync(path.join(dir, f), 'utf8'));
       if (!/^<svg[\s>/]/.test(svg)) throw new Error(`${path.join(dir, f)}: الملف ما يبدأ بوسم <svg>`);
       out[f.slice(0, -4)] = svg;
     });
@@ -64,6 +68,8 @@ function build(root) {
     throw new Error('crests.json لا يطابق ملفات assets/crests: ' + [orphanFiles.length ? 'ملفات بلا اسم: ' + orphanFiles.join('،') : '', orphanNames.length ? 'أسماء بلا ملف: ' + orphanNames.join('،') : ''].filter(Boolean).join(' · '));
   }
 
+  const medals = {};
+  Object.assign(medals, readSvgDir(path.join(assets, 'medals'), cleanMedalSvg));
   const logos = {};
   [['mark', 'proki-mark'], ['logo', 'proki-logo'], ['logoLight', 'proki-logo-light']].forEach(([k, f]) => {
     const p = path.join(assets, 'brand', f + '.svg');
@@ -80,6 +86,7 @@ function build(root) {
     renderObject('MOTIFS', motifs, 'رموز الشعارات (assets/crests/motifs/*.svg)'),
     renderObject('LOGO_SVG', logos, 'شعار PROKI المتجهي (assets/brand/proki-*.svg): mark وlogo وlogoLight'),
     renderObject('CRESTS_LIGHT', light, 'نسخ الشعارات المحسّنة للوضع الفاتح (assets/crests/light/*.svg)، المفتاح = slug'),
+    renderObject('MEDAL_SVGS', medals, 'ميداليات Noto المتجهية (assets/medals/*.svg، Apache 2.0): medal-gold وmedal-silver وmedal-bronze. R-23'),
     renderObject('CRESTS_OFFICIAL', official, 'الشعارات الرسمية (assets/crests/official/*.svg) لو وضعها المنظّم، وإلا فاضي (D4، R-04)')
   ].join('\n');
 }

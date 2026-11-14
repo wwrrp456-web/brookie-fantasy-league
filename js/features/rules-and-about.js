@@ -25,7 +25,9 @@ function renderSeasonStory(){
   // ---- فصل 1: الافتتاحية ----
   const totalPts = st.reduce((a,s)=>a+s.total,0);
   const totalMum = st.reduce((a,s)=>a+s.mummaCount,0);
-  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(formatCount(PARTICIPANTS.length, 'مشارك', {case: 'acc'}))} يتنافسون بـ${hl(formatCount(CLUBS.length, 'نادٍ', {case: 'acc'}))} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(formatCount(totalRoundsSoFar, 'جولة'))} أُنتجت فيها ${hl(formatCount(totalPts, 'نقطة'))} إجمالية، ${totalMum > 0 ? 'وشهدت ' + hl(formatCount(totalMum, 'ممة')) + ' مؤلمة' : 'ولم تشهد أي ممة'}.`;
+  // عدد الدوريات من البيانات (R-24): الدوريات المختلفة لأندية الموسم حسب CLUB_LEAGUE_MAP
+  const leaguesCount = new Set(CLUBS.map(c => CLUB_LEAGUE_MAP[c] || 'أخرى')).size;
+  const chap1 = `انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(formatCount(PARTICIPANTS.length, 'مشارك', {case: 'acc'}))} يتنافسون بـ${hl(formatCount(CLUBS.length, 'نادٍ', {case: 'acc'}))} من ${hl(formatCount(leaguesCount, 'دوري', {case: 'acc'}))} حول العالم. حتى الآن أُكملت ${hl(formatCount(totalRoundsSoFar, 'جولة'))} أُنتجت فيها ${hl(formatCount(totalPts, 'نقطة'))} إجمالية، ${totalMum > 0 ? 'وشهدت ' + hl(formatCount(totalMum, 'ممة')) + ' مؤلمة' : 'ولم تشهد أي ممة'}.`;
 
   // ---- فصل 2: الصدارة وتاريخها ----
   const leaderRounds = {};

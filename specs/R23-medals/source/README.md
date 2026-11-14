@@ -1,0 +1,2 @@
+# ملفات الميداليات الرسمية (Noto، لـS52)
+جلبها المراجع من `googlefonts/noto-emoji` (`2D/svg/emoji_u1f947.svg` و`1f948` و`1f949`، آخر commit `99701e07d3d1fe1bdbcdb14964547f0fd592966f`)، وهي **نفس شكل الميداليات على أندرويد** اللي اعتمده المنظّم. حجم كل ملف نحو **2.8KB** (أقل من هدف 4KB). رخصتها بالملف `LICENSE-noto-svg.txt` (من `2D/svg/LICENSE` بالمستودع). **انسخها كما هي إلى `assets/medals/` ولا تغيّر شكلها**، وأدرج الرخصة والإسناد (Google/Noto) بـ`assets/medals/NOTICE.md`.
