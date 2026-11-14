@@ -10,6 +10,12 @@ function hashStr(s){
 // كل نص يكتبه زائر (جدار، تقارير، نزالات، ردود فعل…) يمر عليها قبل أي innerHTML.
 // تهرب & < > " ' فتصلح للنص داخل وسم وللقيمة داخل خاصية ("…" أو '…').
 // تقبل أي نوع (رقم، null، undefined) وترجع نصًا.
+// نقاط قادمة من بيانات غير موثوقة (تقارير المجتمع): عدد صحيح ← «6 نقاط»، وغيره يُعرض كما هو مهرَّبًا
+function pointsLabelSafe(v){
+  const n = Number(v);
+  return (v !== '' && v != null && Number.isInteger(n) && n >= 0) ? formatCount(n, 'نقطة') : escapeHtml(v);
+}
+
 function escapeHtml(v){
   return String(v == null ? '' : v)
     .replace(/&/g,'&amp;')

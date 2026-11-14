@@ -259,7 +259,7 @@ function recomputeRoundCompletion(){
     }
     card.style.display = (hideComplete && isComplete) ? 'none' : '';
   });
-  const summaryText = cards.length ? `${completeCount} من ${cards.length} مشارك مكتمل` : '';
+  const summaryText = cards.length ? `اكتمل ${completeCount} من ${formatCount(cards.length, 'مشارك')}` : '';
   const summaryEl = document.getElementById('roundCompletionSummary');
   if(summaryEl) summaryEl.textContent = summaryText;
   // نسخة من نفس العداد داخل الشريط السفلي الثابت (طلب المستخدم 7 سبتمبر 2026)
@@ -493,7 +493,7 @@ document.getElementById('roundFormBox').addEventListener('click', (e)=>{
     const applied = applyParsedResultsToForm(parsed);
     if(resultBox){
       const okLine = applied.length
-        ? `<div class="status-msg ok">تم تعبئة ${applied.length} نادٍ تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div>`
+        ? `<div class="status-msg ok">تمت تعبئة ${formatCount(applied.length, 'نادٍ')} تلقائيًا: ${applied.join('، ')} — راجعها قبل الحفظ.</div>`
         : '<div class="status-msg err">لم يتعرّف التحليل على أي نادٍ بالنص الملصق.</div>';
       const unrecLine = parsed.unrecognized.length
         ? `<div style="color:var(--muted);margin-top:6px;">⚠️ أسطر لم يُتعرَّف عليها تلقائيًا (أكملها يدويًا):<br>${parsed.unrecognized.map(l=>`— ${l}`).join('<br>')}</div>`
@@ -611,7 +611,7 @@ function prepareRoundForm(num, opts={}){
       // عبر كل المشاركين بغض النظر عن ترتيبه بقائمة أندية كل واحد منهم.
       const sharedCount = clubParticipantCount(team);
       const sharedBadge = sharedCount > 1
-        ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${sharedCount} مشاركين — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span>`
+        ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${formatCount(sharedCount, 'مشارك', {case: 'acc'})} — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span>`
         : '';
       html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}">
         <div class="team-block-head">${crestHTML(team, 22)}<span>${team}</span>${sharedBadge}</div>
@@ -745,7 +745,7 @@ function prepareRoundForm(num, opts={}){
       - Array.from(document.querySelectorAll('#roundForm .res-select')).filter(s=>s.value).length;
     if(missing > 0){
       document.getElementById('saveRoundMsg').innerHTML =
-        `<div class="status-msg err">فيه ${missing} مباراة بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div>`;
+        `<div class="status-msg err">فيه ${formatCount(missing, 'مباراة')} بدون نتيجة محددة — اختر فوز/تعادل/خسارة لكل مباراة قبل الحفظ.</div>`;
       // القفز التلقائي لأول مشارك ناقص — بدل ترك المنظم يمرّر يدويًا على الـ18
       // مشاركًا بحثًا عن الناقص وسط عدد كبير من العدّاد النصّي فقط (طلب
       // المستخدم 7 سبتمبر 2026).

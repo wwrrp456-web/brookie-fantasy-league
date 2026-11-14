@@ -38,7 +38,7 @@ function renderAdminActivityLog(){
   }
   box.innerHTML = log.map((entry, idx)=>{
     const d = new Date(entry.time);
-    const timeStr = d.toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const timeStr = formatDate(d, {style: 'datetime'});
     const undoBtn = entry.snapshot
       ? `<button type="button" class="btn ghost activity-undo-btn" data-idx="${idx}">↩️ تراجع</button>`
       : '';
@@ -55,7 +55,7 @@ document.getElementById('adminActivityLog').addEventListener('click', async (e)=
   const entry = (DATA.activityLog || [])[idx];
   if(!entry || !entry.snapshot) return;
   const d = new Date(entry.time);
-  const timeStr = d.toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  const timeStr = formatDate(d, {style: 'datetime'});
   const sure = await customConfirm(
     `سيتم استبدال كل بيانات الموسم الحيّة بلقطة محفوظة من قبل الحدث التالي:\n"${entry.action}" (${timeStr})\n\n` +
     `هذا استبدال كامل (الجولات، الأولوية اليدوية، سجل النشاط) بحالتها وقتها بالضبط — وليس دمجًا جزئيًا — وينعكس فورًا على كل الزوار.\n\n` +
@@ -190,7 +190,7 @@ function updateLastBackupLabel(){
   try{
     const ts = localStorage.getItem('brookie_last_backup_at');
     el.textContent = ts
-      ? 'آخر نسخة نزّلتها من هذا الجهاز: ' + new Date(Number(ts)).toLocaleString('ar')
+      ? 'آخر نسخة نزّلتها من هذا الجهاز: ' + formatDate(Number(ts), {style: 'datetime'})
       : 'لم تُنزَّل أي نسخة بعد من هذا الجهاز.';
   }catch(e){
     el.textContent = '';
@@ -378,8 +378,8 @@ document.getElementById('roundChallengeEnabledToggle').addEventListener('change'
   renderRoundChallenge();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار قسم تحدي الجولة للجميع ✅</div>'
-      : '<div class="status-msg ok">تم إخفاء قسم تحدي الجولة عن الجميع.</div>';
+      ? '<div class="status-msg ok">تم إظهار قسم تصويت الجولة للجميع ✅</div>'
+      : '<div class="status-msg ok">تم إخفاء قسم تصويت الجولة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
     DATA.roundChallengeEnabled = prevVal;
@@ -789,7 +789,7 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
       return;
     }
     const roundsCount = Array.isArray(parsed.data.rounds) ? parsed.data.rounds.length : 0;
-    const exportedLabel = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ar') : 'غير معروف';
+    const exportedLabel = parsed.exportedAt ? formatDate(parsed.exportedAt, {style: 'datetime'}) : 'غير معروف';
     const hasExtra = parsed.extra && typeof parsed.extra === 'object';
     const extraNote = hasExtra
       ? '\nيشمل الملف أيضًا: جدار الجولة وردود فعل الأسماء ونزال الموسم — سيُستبدل محتواها الحالي أيضًا.'
