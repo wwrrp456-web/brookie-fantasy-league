@@ -1,0 +1,58 @@
+/* أدوات مكتبة الصوت (002-T010، Opus): دوال صافية بلا DOM تستخدمها قوالب js/voice/*.
+ *
+ * شكل القالب:  { id, needs: ['hero', ...], when: (s, h) => bool, text: (s, h) => string }
+ *   s: حالة الجولة (حقائق من البيانات فقط، يبنيها المحرك S48b/S49)، و h: {formatCount, pickForm, formatList}
+ *   voiceApply(t, s, h) ← النص، أو null لو متغير ناقص، أو شرط ما انطبق، أو نتج نص فيه undefined/null/NaN.
+ * القاعدة (style-guide.md §10): القالب ما يلصق رقمًا بمعدود أبدًا، وكل رقم يمر بـformatCount
+ * وكل فعل بـpickForm وكل قائمة بـformatList. */
+
+function vt(id, when, text, needs){
+  return {id, when: when || null, text, needs: needs || []};
+}
+
+function voiceApply(t, s, h){
+  if(!t || !s) return null;
+  for(const k of t.needs){ if(s[k] === undefined || s[k] === null) return null; }
+  try{
+    if(t.when && !t.when(s, h)) return null;
+    const out = t.text(s, h);
+    if(typeof out !== 'string' || !out.trim() || /undefined|null|NaN|\[object/.test(out)) return null;
+    return out;
+  }catch(e){ return null; }
+}
+
+// القوالب الصالحة لهذه الحالة (بترتيبها في المكتبة)
+function voiceEligible(list, s, h){
+  return (list || []).filter(t => voiceApply(t, s, h) !== null);
+}
+
+// «بـ6 نقاط» · «بنقطتين» · «بنقطة واحدة» (n ≥ 1)
+function vkBi(h, n, noun){
+  if(!(n >= 1)) throw new RangeError('vkBi: العدد لازم ≥ 1');   // voiceApply يرفض القالب
+  const t = h.formatCount(n, noun || 'نقطة', {case: 'acc'});
+  return (/^\d/.test(t) ? 'بـ' : 'ب') + t;
+}
+
+// لام الجر مع الاسم: «للعندليب» (اسم بأل) · «لـأبو أوس» · «لـ5 مشاركين»
+function vkLi(name){
+  const t = String(name);
+  return t.startsWith('ال') ? 'ل' + t.slice(1) : 'لـ' + t;
+}
+// الأسماء: حتى 3 بالعطف «أ، وب، وج»، وأكثر «5 مشاركين»
+function vkWho(h, names){
+  return names.length <= 3 ? h.formatList(names) : h.formatCount(names.length, 'مشارك');
+}
+// « (أولهم فلان)» لما يكثر العدد
+function vkFirst(names){
+  return names.length > 3 ? ` (أولهم ${names[0]})` : '';
+}
+// الفعل حسب عدد الفاعلين
+function vkV(h, n, one, two, many){
+  return h.pickForm(n, {one, two, many});
+}
+// ترتيبي مؤنث للممّات والجولات المتتالية (2 ← ثانية …) أو null
+function vkOrdinalF(n){
+  return ({2: 'ثانية', 3: 'ثالثة', 4: 'رابعة', 5: 'خامسة', 6: 'سادسة'})[n] || null;
+}
+
+if(typeof module !== 'undefined') module.exports = {vt, voiceApply, voiceEligible, vkBi, vkLi, vkWho, vkFirst, vkV, vkOrdinalF};
