@@ -22,7 +22,7 @@
 
 ## المرحلة 2: الجرد والترحيل (والنصوص الجديدة في 001 تلتزم من البداية)
 
-- [ ] T005 [Sonnet ثم Opus] جرد النصوص — 🆕 `tools/text-inventory.js` ← 🆕 `specs/002-language-voice/inventory.md`. Sonnet يولّد الجرد (ملف، وسطر، ونص)، وOpus يصنّف كل نص: طبقة رسمية أو شعبية، وسليم أو يحتاج تعديل — **جزء Sonnet منجز (PR #31)، التصنيف: ينتظر Opus**
+- [x] T005 [Sonnet ثم Opus] جرد النصوص — 🆕 `tools/text-inventory.js` ← 🆕 `specs/002-language-voice/inventory.md`. Sonnet يولّد الجرد (ملف، وسطر، ونص)، وOpus يصنّف كل نص: طبقة رسمية أو شعبية، وسليم أو يحتاج تعديل — **جزء Sonnet منجز (PR #31)، والتصنيف منجز (Opus، 14 نوفمبر: `tools/text-classify.js` + `inventory-overrides.json`)**
   - القبول: كل نص عربي في `js/` و`index.html` مذكور في الجرد
 - [ ] T006 [Sonnet] ترحيل الأولوية 1: الواتساب والكروت (يعتمد على T001، T002) — `js/features/standings-table.js`، و`js/ui/canvas-cards.js`
   - القبول: `numberNoun` و`rawDates` = 0 في هذين الملفين؛ وملخص الواتساب بطبقتين منفصلتين (R-03)؛ وعينة الملخص لآخر جولة مرفقة بالـPR
