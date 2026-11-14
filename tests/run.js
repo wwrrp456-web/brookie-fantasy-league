@@ -21,6 +21,7 @@ const FILES = [
   'js/core/dom-utils.js',
 
   'js/core/ar-format.js',
+  'js/core/whatsapp-text.js',
   'js/core/storage.js',
   'js/core/standings-engine.js',
   'js/core/club-engine.js',
@@ -82,6 +83,44 @@ check('شهادة: بطل غير موجود بين المشاركين ← نقص
   context.validateCertificateData(9999, context.PARTICIPANTS).length, 1);
 check('شهادة: اسم فارغ ← نقص', context.validateCertificateData(1, [{id:1, name:'  '}]).length, 1);
 check('شهادة: بطل صالح ← لا نواقص', context.validateCertificateData(16, context.PARTICIPANTS), []);
+
+// ---------- 002-R20a / S43-1: قصة الجولة ورسالة الواتساب (js/core/whatsapp-text.js) ----------
+{
+  const L = {name: 'لطفي', total: 92};
+  const story = (o) => context.composeRoundStory(Object.assign({round: 10, leader: L, chaser: {name: 'أيوب', total: 90}, climbers: {names: [], val: 0}, droppers: {names: [], val: 0}}, o));
+  // الفارق: نقطة واحدة · نقطتين · 3 نقاط · 11 نقطة
+  [[91, 'بفارق نقطة واحدة عن أيوب'], [90, 'بفارق نقطتين عن أيوب'], [89, 'بفارق 3 نقاط عن أيوب'], [81, 'بفارق 11 نقطة عن أيوب']].forEach(([ct, want]) =>
+    check(`قصة: الفارق ← ${want}`, story({chaser: {name: 'أيوب', total: ct}}).includes(want), true));
+  check('قصة: الرصيد 92 «92 نقطة»', story({}).includes('برصيد 92 نقطة'), true);
+  check('قصة: تعادل الصدارة', story({chaser: {name: 'أيوب', total: 92}}).includes('بتعادل النقاط مع أيوب'), true);
+  check('قصة: بلا ملاحق (مشارك واحد) لا فارق ولا خطأ', story({chaser: null}).startsWith('بعد الجولة 10، *لطفي* يتصدّر جدول الترتيب العام برصيد 92 نقطة.'), true);
+  // الصاعدون: واحد/اثنان/ثلاثة/خمسة، وقفزة 2 و3 و11
+  check('قصة: صاعد واحد بقفزة مركزين', story({climbers: {names: ['العندليب'], val: 2}}).includes('العندليب كان الأكثر صعودًا في جدول الترتيب بقفزة مركزين دفعة واحدة.'), true);
+  check('قصة: صاعدان ← صعدا', story({climbers: {names: ['أ', 'ب'], val: 3}}).includes('أ وب صعدا 3 مراكز دفعة واحدة في جدول الترتيب.'), true);
+  check('قصة: ثلاثة صاعدون ← صعدوا', story({climbers: {names: ['أ', 'ب', 'ج'], val: 2}}).includes('أ، وب، وج صعدوا مركزين دفعة واحدة في جدول الترتيب.'), true);
+  check('قصة: خمسة صاعدين ← عدد + أولهم', story({climbers: {names: ['أ', 'ب', 'ج', 'د', 'هـ'], val: 2}}).includes('5 مشاركين صعدوا مركزين دفعة واحدة في جدول الترتيب (أولهم أ).'), true);
+  check('قصة: قفزة 11 «11 مركزًا»', story({climbers: {names: ['أ'], val: 11}}).includes('بقفزة 11 مركزًا'), true);
+  // المتراجعون: واحد/اثنان/ثلاثة، ومقدار 4
+  check('قصة: متراجع واحد', story({droppers: {names: ['أبو رمزي'], val: 4}}).includes('بالمقابل، أبو رمزي تراجع 4 مراكز في الجدول نفسه.'), true);
+  check('قصة: متراجعان ← تراجعا، وبواو العطف', story({droppers: {names: ['أبو تغريد (زيد)', 'أبو رمزي'], val: 4}}).includes('بالمقابل، أبو تغريد (زيد) وأبو رمزي تراجعا 4 مراكز في الجدول نفسه.'), true);
+  check('قصة: ثلاثة متراجعين ← تراجعوا', story({droppers: {names: ['أ', 'ب', 'ج'], val: 3}}).includes('أ، وب، وج تراجعوا 3 مراكز'), true);
+  check('قصة: أربعة متراجعين ← عدد + أولهم', story({droppers: {names: ['أ', 'ب', 'ج', 'د'], val: 2}}).includes('4 مشاركين تراجعوا مركزين في الجدول نفسه (أولهم أ).'), true);
+  check('قصة: بلا صاعدين ولا متراجعين', story({}).includes('لم يشهد أي تغيّر كبير في المراكز'), true);
+  check('قصة: حركة مركز واحد لا تُذكر (الحد 2)', story({climbers: {names: ['أ'], val: 1}}).includes('أ كان'), false);
+  check('قصة: بلا أخطاء قديمة (2 مراكز · 2 نقطة · بجدول · الشرطة)', [/(^|\s)2 مراكز/, /(^|\s)2 نقطة/, /بجدول/, /[–—]/].some(re => re.test(story({climbers: {names: ['أ'], val: 2}, droppers: {names: ['ب'], val: 2}}))), false);
+
+  // رسالة الواتساب: التقرير السردي فقط
+  const wa = (o) => context.composeWhatsAppSummary(Object.assign({round: 10, story: story({climbers: {names: ['أ', 'ب', 'ج', 'د', 'هـ'], val: 2}, droppers: {names: ['أبو تغريد (زيد)', 'أبو رمزي'], val: 4}}), hero: {name: 'أبو أوس', points: 6, tieBreak: true}}, o));
+  const m = wa({});
+  check('واتساب: بلا الإجمالي ولا ▲ ولا فوز=3 ولا فواصل ولا ممة 💀', ['الإجمالي', '▲', '▼', 'فوز=3', '━', 'ممة 💀', '(+'].some(w => m.includes(w)), false);
+  check('واتساب: بلا أسماء خارج السرد (من خارج القصة والبطل)', ['أبو عزام', 'مصطفى عبده'].some(w => m.includes(w)), false);
+  check('واتساب: الطول < 700 حرف', m.length < 700, true);
+  check('واتساب: يحوي العنوان وتحديث الجولة وبطل الجولة بنقاطه الصحيحة وكسر التعادل والخاتمة',
+    [m.includes('دوري بروكي الفانتازي · الموسم الثاني'), m.includes('📅 تحديث بعد الجولة 10'), m.includes('👑 بطل الجولة: *أبو أوس* بـ6 نقاط بعد كسر التعادل'), m.includes('فالجولة 11 ما تنتظر أحدًا')], [true, true, true, true]);
+  check('واتساب: بطل بنقطة وبنقطتين وبلا نقاط و11', [wa({hero: {name: 'س', points: 1}}).includes('*س* بنقطة واحدة'), wa({hero: {name: 'س', points: 2}}).includes('*س* بنقطتين'), wa({hero: {name: 'س', points: 0}}).includes('*س* بلا نقاط'), wa({hero: {name: 'س', points: 11}}).includes('*س* بـ11 نقطة')], [true, true, true, true]);
+  check('واتساب: بلا بطل (أول جولة) لا سطر بطل', wa({round: 1, hero: null}).includes('بطل الجولة'), false);
+  check('واتساب: بلا قصة لا سطر قصة ولا خطأ', wa({story: ''}).includes('📝'), false);
+}
 
 // ---------- 003-T001: escapeHtml (S-07) ----------
 {
