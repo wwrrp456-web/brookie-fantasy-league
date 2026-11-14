@@ -2,7 +2,16 @@
   /* ════════════ قسم تكريم البطل — أنماط 16 الميزات (كلها معطّلة افتراضيًا) ════════════ */
   .champion-badge{display:inline-flex;align-items:center;gap:3px;font-size:0.66rem;font-weight:800;padding:2px 8px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--sky));color:#fff;margin-inline-start:6px;vertical-align:middle;white-space:nowrap;}
   .champion-badge.reclaim{background:linear-gradient(135deg,var(--coral),#FF9A6E);}
-  .champion-banner{background:linear-gradient(90deg,var(--gold),var(--sky));color:#fff;text-align:center;font-weight:800;font-size:0.85rem;padding:10px 14px;margin:0 0 14px;}
+  /* شريط «حامل اللقب» (001-P1): سطر واحد نحيف (≤ 36px) بسطح هادئ من الرموز وحدّ ذهبي رفيع وأيقونة درع بدل الإيموجي؛ ينكمش خطه، ويُقصّ بنقاط لو طال الاسم. */
+  .champion-banner{
+    display:flex;align-items:center;justify-content:center;gap:var(--sp-2);
+    max-width:calc(100% - 2*var(--sp-4));margin:var(--sp-2) auto;padding:0 var(--sp-3);height:36px;
+    background:var(--c-surface-1);color:var(--c-text);
+    border:1px solid var(--c-border);border-block-start-color:var(--c-gold);border-radius:var(--r-md);
+    font-size:clamp(11px,3.1vw,var(--fs-sm));font-weight:700;line-height:1;white-space:nowrap;
+  }
+  .champion-banner svg{width:16px;height:16px;flex:none;color:var(--c-gold);}
+  .champion-banner span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
   /* التاج بعيد عن شعار الهيدر تمامًا — بالحافة القصوى اليسرى للهيدر (9 سبتمبر
      2026 كان ملاصقًا للشعار ويسبب ازدحامًا بصريًا؛ أُعيد وضعه هنا 10 سبتمبر
      2026 كعنصر position:absolute مستقل تمامًا عن تدفق الشعار/النص بالمنتصف). */

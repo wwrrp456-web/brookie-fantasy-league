@@ -195,3 +195,9 @@
   .faq-item summary::before{transition:none;}
   .admin-accordion summary::before{transition:none;}
 }
+
+/* تباعد كتل لوحة المنظّم (001-P2): حالة الدخول ← صف الطيّ/الفتح ← بطاقات الأقسام بفراغ متّسق --sp-3، وزرّا الطيّ/الفتح بعرض متساوٍ */
+#adminPanel .admin-login-status{margin:0 0 var(--sp-3);padding:var(--sp-3) var(--sp-4);}
+#adminPanel .admin-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin:0 0 var(--sp-3);}
+#adminPanel .admin-toolbar .btn{width:100%;justify-content:center;text-align:center;}
+#adminPanel > .admin-accordion{margin:0 0 var(--sp-3);}

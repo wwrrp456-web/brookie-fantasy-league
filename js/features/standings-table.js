@@ -17,79 +17,24 @@ function buildRoundStory(){
   const st = computeStandings();
   if(!st.length) return '';
   const mv = getMovements();
-  const rn = getCurrentRoundNumber();
-
-  const leader = st[0];
-  const chaser = st[1];
-  const gap = chaser ? (leader.total - chaser.total) : null;
-
-  const parts = [];
-  let opener = `بعد الجولة ${rn}، *${leader.name}* يتصدّر جدول الترتيب العام برصيد ${leader.total} نقطة`;
-  if(gap !== null){
-    opener += gap > 0 ? ` بفارق ${gap} نقطة عن ${chaser.name}` : ` بتعادل النقاط مع ${chaser.name}`;
-  }
-  parts.push(opener + '.');
-
   // يجمع كل الأسماء المتعادلة على نفس القفزة/التراجع (نفس إصلاح computeBadges
   // أعلاه) بدل الاحتفاظ باسم واحد فقط عند تعادل حقيقي.
-  let topClimberNames = [], topClimberVal = 0;
-  let topDropperNames = [], topDropperVal = 0;
+  const climbers = {names: [], val: 0}, droppers = {names: [], val: 0};
   PARTICIPANTS.forEach(p=>{
     const v = mv[p.id]||0;
-    if(v > topClimberVal){ topClimberVal = v; topClimberNames = [p.name]; }
-    else if(v === topClimberVal && v > 0){ topClimberNames.push(p.name); }
-    if(v < topDropperVal){ topDropperVal = v; topDropperNames = [p.name]; }
-    else if(v === topDropperVal && v < 0){ topDropperNames.push(p.name); }
+    if(v > climbers.val){ climbers.val = v; climbers.names = [p.name]; }
+    else if(v === climbers.val && v > 0){ climbers.names.push(p.name); }
+    if(v < droppers.val){ droppers.val = v; droppers.names = [p.name]; }
+    else if(v === droppers.val && v < 0){ droppers.names.push(p.name); }
   });
-
-  if(topClimberNames.length && topClimberVal >= 2){
-    const climberLabel = topClimberNames.length<=3 ? topClimberNames.join('، ') : `${topClimberNames.length} مشاركين`;
-    parts.push(`${climberLabel} كان الأكثر صعودًا بجدول الترتيب بقفزة ${topClimberVal} مراكز دفعة واحدة.`);
-  }
-
-  if(topDropperNames.length && Math.abs(topDropperVal) >= 2){
-    const dropperLabel = topDropperNames.length<=3 ? topDropperNames.join('، ') : `${topDropperNames.length} مشاركين`;
-    parts.push(`بالمقابل، ${dropperLabel} تراجع ${Math.abs(topDropperVal)} مراكز بنفس الجدول.`);
-  }
-
-  if(!topClimberNames.length && !topDropperNames.length){
-    parts.push('جدول الترتيب العام لم يشهد أي تغيّر كبير بالمراكز هذه الجولة.');
-  }
-
-  return parts.join(' ');
+  droppers.val = Math.abs(droppers.val);
+  return composeRoundStory({round: getCurrentRoundNumber(), leader: st[0], chaser: st[1] || null, climbers, droppers});
 }
 
+// رسالة الواتساب: تقرير سردي قصير بلا جدول ولا مفتاح (R-20)؛ صورة الترتيب تُرسل منفصلة. التركيب بدالة صافية بـjs/core/whatsapp-text.js
 function buildWhatsAppSummary(){
-  const st = computeStandings();
-  const mv = getMovements();
-  const rn = getCurrentRoundNumber();
-  const roundPoints = getCurrentRoundPointsMap();
-  const medals = ['🥇','🥈','🥉'];
-  let t = `🏆 *دوري بروكي الفانتازي — الموسم الثاني*\n`;
-  t += `📅 تحديث بعد الجولة ${rn}\n`;
-  const story = buildRoundStory();
-  if(story){
-    t += `━━━━━━━━━━━━━━\n`;
-    t += `📝 ${story}\n`;
-  }
-  t += `━━━━━━━━━━━━━━\n`;
-  t += `📊 *الإجمالي* = مجموع النقاط التراكمي منذ بداية الموسم\n`;
-  t += `➕ (بين قوسين) = نقاط هذه الجولة بس\n`;
-  t += `▲▼ = حركة المركز عن الجولة السابقة\n`;
-  t += `━━━━━━━━━━━━━━\n`;
-  st.forEach((s,i)=>{
-    const m = medals[i] || `${i+1}.`;
-    const d = mv[s.id];
-    const arrow = (d===undefined||d===0) ? '' : (d>0 ? ` ▲${d}` : ` ▼${Math.abs(d)}`);
-    const rp = roundPoints[s.id];
-    const gained = rp>0 ? ` (+${rp})` : ' (ممة 💀)';
-    t += `${m} ${s.name} — *${s.total}*${gained}${arrow}\n`;
-  });
-  t += `━━━━━━━━━━━━━━\n`;
   const h = getRoundHeroes();
-  if(h) t += `👑 بطل الجولة: *${h.top.name}* بـ ${h.top.points} نقطة${h.top.tieBreak ? ' (بعد كسر تعادل)' : ''}\n`;
-  t += `⚽ فوز=3 · تعادل=1 · خسارة=0`;
-  return t;
+  return composeWhatsAppSummary({round: getCurrentRoundNumber(), story: buildRoundStory(), hero: h ? h.top : null});
 }
 
 function renderCopyBox(){
