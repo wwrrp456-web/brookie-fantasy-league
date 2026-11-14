@@ -213,7 +213,7 @@ function calcWhatIf(){
     html += `<div class="whatif-row${isChanged?' changed':''}">
       <span class="whatif-rank">${rankIcon}</span>
       <span class="whatif-name">${s.name}</span>
-      <span class="whatif-pts">${s.total} ن</span>
+      <span class="whatif-pts">${formatCount(s.total, 'نقطة')}</span>
       ${deltaHTML}
     </div>`;
   });
@@ -237,7 +237,7 @@ function computeExtendedBadges(){
     else if(Math.abs(avg-bestAvgVal)<0.01 && bestAvgVal>0){ bestAvgNames.push(p.name); }
   });
   if(bestAvgVal > 0){
-    extra.push({icon:'📈', title:'أعلى متوسط في الموسم', names: bestAvgNames.join('، '), detail:`${Math.round(bestAvgVal*10)/10} نقطة كمعدل`});
+    extra.push({icon:'📈', title:'أعلى متوسط في الموسم', names: bestAvgNames.join('، '), detail:'المعدل ' + (Number.isInteger(Math.round(bestAvgVal*10)/10) ? formatCount(Math.round(bestAvgVal*10)/10, 'نقطة') : (Math.round(bestAvgVal*10)/10) + ' نقطة') + ' في الجولة'});
   }
 
   // أطول سلسلة صعود (نقاط أعلى من الجولة السابقة)

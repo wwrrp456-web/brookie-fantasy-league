@@ -26,6 +26,7 @@ const AR_NOUNS = {
   'آخر':   {g: 'm', one: 'آخر',   dual: ['آخران', 'آخرين'],     plural: 'آخرون', acc: 'آخرين', jar: 'آخر'},
   'دقيقة': {g: 'f', one: 'دقيقة', dual: ['دقيقتان', 'دقيقتين'], plural: 'دقائق', acc: 'دقيقة', jar: 'دقيقة'},
   'ساعة':  {g: 'f', one: 'ساعة',  dual: ['ساعتان', 'ساعتين'],   plural: 'ساعات', acc: 'ساعة',  jar: 'ساعة'},
+  'تغيير': {g: 'm', one: 'تغيير', dual: ['تغييران', 'تغييرين'], plural: 'تغييرات', acc: 'تغييرًا', jar: 'تغيير'},
   'يوم':   {g: 'm', one: 'يوم',   dual: ['يومان', 'يومين'],     plural: 'أيام',  acc: 'يومًا', jar: 'يوم'}
 };
 
@@ -39,6 +40,9 @@ function _arCheckCount(n, fn) {
 function _arNum(n) {
   return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+// رقم خام بلا معدود (لاتيني + فاصل آلاف)، للإحصاءات مثل عدد الزيارات
+function formatNumber(n) { return _arNum(n); }
 
 /* formatCount(n, noun, opts)
  *   opts.zero    نص بديل لـ0 ('صفر' أو '0 نقطة'…)، الافتراضي "بلا + الجمع"
@@ -152,5 +156,5 @@ function formatDate(d, opts) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {formatCount, pickForm, formatList, formatDate, AR_NOUNS, arBaPrefix, arRoundsRun};
+  module.exports = {formatCount, pickForm, formatList, formatDate, formatNumber, AR_NOUNS, arBaPrefix, arRoundsRun};
 }

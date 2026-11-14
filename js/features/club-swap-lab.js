@@ -109,11 +109,11 @@ function renderClubSwapLab(){
     const r = simulateClubSwap(pid, oldClub, newClub);
     if(!r){ resBox.innerHTML = '<div class="status-msg err">تعذّر حساب السيناريو.</div>'; return; }
     const pName = PARTICIPANTS.find(x=>x.id===pid).name;
-    const rankArrow = r.rankDelta > 0 ? `📈 يتقدّم ${r.rankDelta} مركز` : r.rankDelta < 0 ? `📉 يتراجع ${Math.abs(r.rankDelta)} مركز` : '📊 نفس المركز';
+    const rankArrow = r.rankDelta > 0 ? `📈 يتقدّم ${formatCount(r.rankDelta, 'مركز', {case: 'acc'})}` : r.rankDelta < 0 ? `📉 يتراجع ${formatCount(Math.abs(r.rankDelta), 'مركز', {case: 'acc'})}` : '📊 نفس المركز';
     const ptsArrow = r.totalDelta > 0 ? `+${r.totalDelta}` : `${r.totalDelta}`;
     resBox.innerHTML = `<div class="club-swap-result">
-      <div class="club-swap-result-row"><span>ترتيبه الحقيقي:</span><strong>#${r.realRank} — ${r.realTotal} نقطة</strong></div>
-      <div class="club-swap-result-row"><span>ترتيبه لو كان عنده ${newClub} بدل ${oldClub}:</span><strong>#${r.simRank} — ${r.simTotal} نقطة (${ptsArrow})</strong></div>
+      <div class="club-swap-result-row"><span>ترتيبه الحقيقي:</span><strong>#${r.realRank} — ${formatCount(r.realTotal, 'نقطة')}</strong></div>
+      <div class="club-swap-result-row"><span>ترتيبه لو كان عنده ${newClub} بدل ${oldClub}:</span><strong>#${r.simRank} — ${formatCount(r.simTotal, 'نقطة')} (${ptsArrow})</strong></div>
       <div class="club-swap-result-summary">${pName}: ${rankArrow}</div>
     </div>`;
   });

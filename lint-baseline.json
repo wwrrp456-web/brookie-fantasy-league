@@ -2,9 +2,9 @@
   "hexColors": 177,
   "emoji": 442,
   "inlineStyles": 28,
-  "numberNoun": 33,
-  "rawDates": 9,
-  "forbiddenTerms": 9,
+  "numberNoun": 9,
+  "rawDates": 4,
+  "forbiddenTerms": 8,
   "importants": 0,
   "hardcodedCounts": 5
 }

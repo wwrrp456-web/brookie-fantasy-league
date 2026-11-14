@@ -91,16 +91,16 @@ function renderParticipants(){
       const barBg = h.points === 0 ? 'var(--coral)' :
                     pct >= 0.8 ? 'var(--gold)' :
                     pct >= 0.5 ? 'var(--sky)' : 'var(--muted)';
-      return `<span title="ج${h.number}: ${h.points} نقطة"
+      return `<span title="الجولة ${h.number}: ${formatCount(h.points, 'نقطة')}"
         style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:default;">
         <span style="display:block;width:20px;background:${barBg};border-radius:3px 3px 2px 2px;height:${barH}px;opacity:0.85;"></span>
-        <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">ج${h.number}</span>
+        <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">${h.number}</span>
       </span>`;
     }).join('');
 
     // إحصائيات سريعة
     const quickStats = [];
-    if(mumma > 0) quickStats.push(`💀 ${mumma} ممة`);
+    if(mumma > 0) quickStats.push(`💀 ${formatCount(mumma, 'ممة')}`);
     if(bestStreak >= 2) quickStats.push(`🔥 سلسلة ${bestStreak}`);
     if(mumma === 0 && history.length > 0) quickStats.push(`✅ بلا ممات`);
     // قسم تكريم البطل — ميزة 16: تنبيه لمن سجّل نقاط جولة أعلى من حامل اللقب
@@ -129,7 +129,7 @@ function renderParticipants(){
             <span style="display:flex;align-items:center;gap:5px;font-size:0.98rem;font-weight:800;color:var(--text);">
               <span class="p-color-dot" style="background:${pColor};"></span>${p.name}
             </span>
-            <span style="font-size:1rem;font-weight:900;color:var(--gold);">${total} نقطة ${lastBadge}</span>
+            <span style="font-size:1rem;font-weight:900;color:var(--gold);">${formatCount(total, 'نقطة')} ${lastBadge}</span>
           </div>
           <div class="teams-row" style="margin-bottom:${history.length?'10px':'6px'};">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div>
           ${history.length ? `<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>` : ''}

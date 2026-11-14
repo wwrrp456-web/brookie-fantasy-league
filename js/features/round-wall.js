@@ -120,7 +120,7 @@ function renderRoundWallList(roundNum){
   }
 
   list.innerHTML = entries.map(([key, msg])=>{
-    const t = msg.time ? new Date(msg.time).toLocaleString('ar',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const t = msg.time ? formatDate(msg.time, {style: 'datetime'}) : '';
     const reactionsHTML = WALL_REACTIONS.map(emoji=>{
       const reactors = (msg.reactions && msg.reactions[emoji]) || {};
       const count = Object.keys(reactors).length;
