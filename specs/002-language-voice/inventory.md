@@ -4,7 +4,7 @@
 > **عمود التصنيف فاضي عمدًا:** Opus يصنّف كل نص: طبقة رسمية أو شعبية، وسليم أو يحتاج تعديل.
 > النطاق: `js/**` (عدا `generated/`) و`index.html` و`report.html`. بدون التعليقات.
 
-**الإجمالي: 2614 نصًا في 60 ملفًا** · HTML: 540 · قالب فيه ${}: 658 · نص ثابت: 1416
+**الإجمالي: 2654 نصًا في 60 ملفًا** · HTML: 540 · قالب فيه ${}: 652 · نص ثابت: 1462
 
 ## ملخص التصنيف (002-T005، Opus)
 
@@ -13,23 +13,23 @@
 
 | | ✅ سليم | ✏️ يحتاج تعديل | ⏸️ نبرة |
 |---|---|---|---|
-| **رسمي** | 822 | 510 | 0 |
+| **رسمي** | 873 | 492 | 0 |
 | **شعبي** | 836 | 18 | 0 |
 
-مستثنى: 428
+مستثنى: 435
 
 | سبب التعديل | عدد النصوص |
 |---|---|
-| إيموجي بالواجهة | 328 |
-| علامات تنصيص «» | 122 |
-| شرطة طويلة | 117 |
-| عدد ومعدود (formatCount) | 56 |
+| إيموجي بالواجهة | 326 |
+| علامات تنصيص «» | 125 |
+| شرطة طويلة | 116 |
 | لهجة في نص رسمي | 40 |
-| التنوين (ًا) | 18 |
-| أرقام هندية | 17 |
+| عدد ومعدود (formatCount) | 34 |
+| التنوين (ًا) | 15 |
 | معجم | 9 |
+| أرقام هندية | 3 |
 | لهجة غير سعودية | 3 |
-| اختصار | 3 |
+| اختصار | 2 |
 | فاصلة لاتينية | 1 |
 | حكم يدوي (inventory-overrides.json) | 1 |
 
@@ -38,11 +38,11 @@
 | الملف | العدد |
 |---|---|
 | `index.html` | 257 |
-| `js/core/ar-format.js` | 117 |
-| `js/core/club-engine.js` | 2 |
+| `js/core/ar-format.js` | 124 |
+| `js/core/club-engine.js` | 3 |
 | `js/core/config.js` | 1 |
 | `js/core/dom-utils.js` | 15 |
-| `js/core/insights-engine.js` | 31 |
+| `js/core/insights-engine.js` | 34 |
 | `js/core/standings-engine.js` | 4 |
 | `js/core/storage.js` | 24 |
 | `js/core/whatsapp-text.js` | 24 |
@@ -55,25 +55,25 @@
 | `js/features/admin-round-form.js` | 32 |
 | `js/features/admin-season-lock.js` | 30 |
 | `js/features/badge-toast.js` | 3 |
-| `js/features/champion-honor.js` | 17 |
-| `js/features/club-swap-lab.js` | 7 |
+| `js/features/champion-honor.js` | 19 |
+| `js/features/club-swap-lab.js` | 11 |
 | `js/features/hot-cold-streaks.js` | 6 |
-| `js/features/live-focus-mode.js` | 2 |
+| `js/features/live-focus-mode.js` | 3 |
 | `js/features/my-dashboard.js` | 65 |
 | `js/features/name-reactions.js` | 2 |
 | `js/features/notification-center.js` | 13 |
 | `js/features/participant-profile.js` | 7 |
-| `js/features/participants-tab.js` | 13 |
+| `js/features/participants-tab.js` | 15 |
 | `js/features/personal-status-bar.js` | 3 |
 | `js/features/round-poll.js` | 9 |
 | `js/features/round-story-card.js` | 26 |
 | `js/features/round-wall.js` | 12 |
-| `js/features/rounds-tab.js` | 56 |
+| `js/features/rounds-tab.js` | 65 |
 | `js/features/rules-and-about.js` | 59 |
 | `js/features/season-duel.js` | 22 |
 | `js/features/standings-table.js` | 42 |
-| `js/features/standings-widgets.js` | 46 |
-| `js/features/stats-tab.js` | 76 |
+| `js/features/standings-widgets.js` | 50 |
+| `js/features/stats-tab.js` | 83 |
 | `js/features/sub-groups.js` | 7 |
 | `js/features/whats-new-card.js` | 13 |
 | `js/main.js` | 1 |
@@ -170,20 +170,20 @@
 | 247 | 🔴 وضع مباشر | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 256 | ⬇️ تحميل اللائحة كصورة | HTML | رسمي · ✅ سليم |
 | 260 | لائحة المسابقة | HTML | رسمي · ✅ سليم |
-| 262 | ١. الممة | HTML | رسمي · ✏️ أرقام هندية |
+| 262 | 1. الممة | HTML | رسمي · ✅ سليم |
 | 263 | أن يخرج المتسابق خالي النقاط خلال الأسبوع الرياضي، بغض النظر عن عدد المباريات. | HTML | رسمي · ✏️ معجم |
-| 264 | ٢. حالات يجب أن تُوضع في الحسبان | HTML | رسمي · ✏️ أرقام هندية |
+| 264 | 2. حالات يجب أن تُوضع في الحسبان | HTML | رسمي · ✅ سليم |
 | 265 | تُحسب الممة على حسب مباريات المتسابق الأسبوعية، حتى لو كانت مباراة واحدة. | HTML | رسمي · ✏️ معجم |
-| 266 | ٣. المباريات المؤجلة | HTML | رسمي · ✏️ أرقام هندية |
+| 266 | 3. المباريات المؤجلة | HTML | رسمي · ✅ سليم |
 | 267 | إذا كان لأحد الفرق الثلاثة مباراة مؤجلة وتُلعب في نفس الأسبوع قبل بداية الجولة التالية، تُحسب لصالح المباريات السابقة، وننتظر نتائجها ضمن مباريات ذلك الأسبوع. | HTML | رسمي · ✅ سليم |
-| 268 | ٤. كسر التعادل في جدول الترتيب | HTML | رسمي · ✏️ أرقام هندية |
+| 268 | 4. كسر التعادل في جدول الترتيب | HTML | رسمي · ✅ سليم |
 | 269 | عند تعادل المتسابقين بالنقاط، يُنظر إلى: (أ) الأكثر حصادًا للنقاط في الجولة، ثم (ب) من وصل إلى النقاط أولًا، ثم (ج) الأكثر أهدافًا في الجولة، ثم (د) الأقل استقبالًا للأهداف في الجولة. | HTML | رسمي · ✏️ معجم |
-| 270 | ٥. عدم تكرار الدوري الواحد | HTML | رسمي · ✏️ أرقام هندية |
+| 270 | 5. عدم تكرار الدوري الواحد | HTML | رسمي · ✅ سليم |
 | 271 | لا يمكن للمتسابق الجمع بين فريقين من نفس الدوري. إذا حدث ذلك في القرعة، يتم التبديل. | HTML | رسمي · ✅ سليم |
-| 272 | ٦. توثيق النقاط | HTML | رسمي · ✏️ أرقام هندية |
+| 272 | 6. توثيق النقاط | HTML | رسمي · ✅ سليم |
 | 273 | يلزم كتابة النقاط كل أسبوع بعد نهاية المباريات في كشف المطابقة، حفظًا للحقوق ومطابقة النقاط مع المحصّل. | HTML | رسمي · ✅ سليم |
 | 274 | نظام احتساب النقاط | HTML | رسمي · ✅ سليم |
-| 275 | فوز = ٣ نقاط · تعادل = ١ نقطة · خسارة = صفر | HTML | رسمي · ✏️ أرقام هندية |
+| 275 | فوز = 3 نقاط · تعادل = نقطة واحدة · خسارة = صفر | HTML | رسمي · ✏️ عدد ومعدود (formatCount) |
 | 278 | ❓ الأسئلة الشائعة | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 281 | كيف أشوف وضعي أنا بالتحديد؟ | HTML | رسمي · ✅ سليم |
 | 282 | اختر اسمك من قائمة "مين أنت؟" فوق تبويب الترتيب العام — تظهر لك لوحة شخصية فيها مركزك ونقاطك وأقرب منافس فوقك وتحتك. | HTML | رسمي · ✏️ لهجة في نص رسمي، شرطة طويلة، علامات تنصيص «» |
@@ -360,7 +360,7 @@
 | 774 | 📅 سجل نشاط المنظم | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 781 | 👁️ إحصائيات الزوار | HTML | رسمي · ✏️ إيموجي بالواجهة |
 
-## `js/core/ar-format.js` (117)
+## `js/core/ar-format.js` (124)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -448,46 +448,54 @@
 | 28 | ساعات | نص ثابت | مستثنى (مرجع الصياغة) |
 | 28 | ساعة | نص ثابت | مستثنى (مرجع الصياغة) |
 | 28 | ساعة | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يومان | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يومين | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | أيام | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يومًا | نص ثابت | مستثنى (مرجع الصياغة) |
-| 29 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
-| 34 | : العدد لازم يكون عددًا صحيحًا غير سالب، والمعطى: | نص ثابت | مستثنى (مرجع الصياغة) |
-| 51 | formatCount: معدود غير معروف: | نص ثابت | مستثنى (مرجع الصياغة) |
-| 51 | (أضفه لـAR_NOUNS ولمعجم glossary.md أولًا) | نص ثابت | مستثنى (مرجع الصياغة) |
-| 53 | بلا | نص ثابت | مستثنى (مرجع الصياغة) |
-| 54 | واحدة | نص ثابت | مستثنى (مرجع الصياغة) |
-| 54 | واحد | نص ثابت | مستثنى (مرجع الصياغة) |
-| 71 | pickForm: لازم forms = {one, two, many} كلها نصوص | نص ثابت | مستثنى (مرجع الصياغة) |
-| 80 | formatList: المدخل لازم يكون مصفوفة أسماء | نص ثابت | مستثنى (مرجع الصياغة) |
-| 82 | formatList: max لازم يكون عددًا صحيحًا ≥ 1 | نص ثابت | مستثنى (مرجع الصياغة) |
-| 87 | آخر | نص ثابت | مستثنى (مرجع الصياغة) |
-| 89 | و | نص ثابت | مستثنى (مرجع الصياغة) |
-| 90 | ، | نص ثابت | مستثنى (مرجع الصياغة) |
-| 97 | بـ | نص ثابت | مستثنى (مرجع الصياغة) |
-| 97 | ب | نص ثابت | مستثنى (مرجع الصياغة) |
-| 102 | جولة | نص ثابت | مستثنى (مرجع الصياغة) |
-| 104 | متتاليتان | نص ثابت | مستثنى (مرجع الصياغة) |
-| 104 | متتالية | نص ثابت | مستثنى (مرجع الصياغة) |
-| 127 | formatDate: تاريخ غير صالح: | نص ثابت | مستثنى (مرجع الصياغة) |
-| 142 | الآن | نص ثابت | مستثنى (مرجع الصياغة) |
-| 144 | قبل | نص ثابت | مستثنى (مرجع الصياغة) |
-| 144 | دقيقة | نص ثابت | مستثنى (مرجع الصياغة) |
-| 146 | قبل | نص ثابت | مستثنى (مرجع الصياغة) |
-| 146 | ساعة | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغيير | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغيير | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغييران | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغييرين | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغييرات | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغييرًا | نص ثابت | مستثنى (مرجع الصياغة) |
+| 29 | تغيير | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يومان | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يومين | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | أيام | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يومًا | نص ثابت | مستثنى (مرجع الصياغة) |
+| 30 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
+| 35 | : العدد لازم يكون عددًا صحيحًا غير سالب، والمعطى: | نص ثابت | مستثنى (مرجع الصياغة) |
+| 55 | formatCount: معدود غير معروف: | نص ثابت | مستثنى (مرجع الصياغة) |
+| 55 | (أضفه لـAR_NOUNS ولمعجم glossary.md أولًا) | نص ثابت | مستثنى (مرجع الصياغة) |
+| 57 | بلا | نص ثابت | مستثنى (مرجع الصياغة) |
+| 58 | واحدة | نص ثابت | مستثنى (مرجع الصياغة) |
+| 58 | واحد | نص ثابت | مستثنى (مرجع الصياغة) |
+| 75 | pickForm: لازم forms = {one, two, many} كلها نصوص | نص ثابت | مستثنى (مرجع الصياغة) |
+| 84 | formatList: المدخل لازم يكون مصفوفة أسماء | نص ثابت | مستثنى (مرجع الصياغة) |
+| 86 | formatList: max لازم يكون عددًا صحيحًا ≥ 1 | نص ثابت | مستثنى (مرجع الصياغة) |
+| 91 | آخر | نص ثابت | مستثنى (مرجع الصياغة) |
+| 93 | و | نص ثابت | مستثنى (مرجع الصياغة) |
+| 94 | ، | نص ثابت | مستثنى (مرجع الصياغة) |
+| 101 | بـ | نص ثابت | مستثنى (مرجع الصياغة) |
+| 101 | ب | نص ثابت | مستثنى (مرجع الصياغة) |
+| 106 | جولة | نص ثابت | مستثنى (مرجع الصياغة) |
+| 108 | متتاليتان | نص ثابت | مستثنى (مرجع الصياغة) |
+| 108 | متتالية | نص ثابت | مستثنى (مرجع الصياغة) |
+| 131 | formatDate: تاريخ غير صالح: | نص ثابت | مستثنى (مرجع الصياغة) |
+| 146 | الآن | نص ثابت | مستثنى (مرجع الصياغة) |
 | 148 | قبل | نص ثابت | مستثنى (مرجع الصياغة) |
-| 148 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
-| 151 | formatDate: style غير معروف: | نص ثابت | مستثنى (مرجع الصياغة) |
+| 148 | دقيقة | نص ثابت | مستثنى (مرجع الصياغة) |
+| 150 | قبل | نص ثابت | مستثنى (مرجع الصياغة) |
+| 150 | ساعة | نص ثابت | مستثنى (مرجع الصياغة) |
+| 152 | قبل | نص ثابت | مستثنى (مرجع الصياغة) |
+| 152 | يوم | نص ثابت | مستثنى (مرجع الصياغة) |
+| 155 | formatDate: style غير معروف: | نص ثابت | مستثنى (مرجع الصياغة) |
 
-## `js/core/club-engine.js` (2)
+## `js/core/club-engine.js` (3)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 140 | لم تبدأ مبارياته بعد | نص ثابت | رسمي · ✅ سليم |
-| 141 | لعب ${played} · فاز ${w} · تعادل ${d} · خسر ${l} · ${pts} نقطة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 141 | لعب ${played} · فاز ${w} · تعادل ${d} · خسر ${l} · ${formatCount(pts, 'نقطة')} | قالب فيه ${} | رسمي · ✅ سليم |
+| 141 | نقطة | نص ثابت | رسمي · ✅ سليم |
 
 ## `js/core/config.js` (1)
 
@@ -515,7 +523,7 @@
 | 116 | ✅ تم النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 116 | ⚠️ تعذّر النسخ | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 
-## `js/core/insights-engine.js` (31)
+## `js/core/insights-engine.js` (34)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -536,10 +544,13 @@
 | 134 | أكبر صعود هذه الجولة | نص ثابت | رسمي · ✅ سليم |
 | 134 | مركز | نص ثابت | رسمي · ✅ سليم |
 | 197 | <div class="whatif-result"> <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;"> الترتيب المتوقع لو <b style="color:var(--gold);">${changedName}</b> حصل على <b style="color:var(--gold);">${addPts}</b> نقطة الجولة القادمة: </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
-| 213 | <div class="whatif-row${isChanged?' changed':''}"> <span class="whatif-rank">${rankIcon}</span> <span class="whatif-name">${s.name}</span> <span class="whatif-pts">${s.total} ن</span> ${deltaHTML} </div> | قالب فيه ${} | رسمي · ✅ سليم |
+| 216 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 240 | أعلى متوسط في الموسم | نص ثابت | رسمي · ✅ سليم |
 | 240 | ، | نص ثابت | رسمي · ✅ سليم |
-| 240 | ${Math.round(bestAvgVal*10)/10} نقطة كمعدل | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 240 | المعدل | نص ثابت | رسمي · ✅ سليم |
+| 240 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 240 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 240 | في الجولة | نص ثابت | رسمي · ✅ سليم |
 | 257 | أطول صعود متواصل | نص ثابت | رسمي · ✅ سليم |
 | 257 | ، | نص ثابت | رسمي · ✅ سليم |
 | 273 | أقوى انتعاشة بعد الممة | نص ثابت | رسمي · ✅ سليم |
@@ -1200,21 +1211,23 @@
 | 44 | <div class="badge-toast-wrap"> ${newOnes.map(b=>\`<div class="badge-toast"> <span class="badge-toast-icon">${b.icon}</span> <div class="badge-toast-text"> <div class="badge-toast-title">🎉 وسام جديد: ${b.title}!</div> <div class="badge-toast-detail">${b.detail}</div> </div> </div>\`).join('')} <button type="button" class="btn ghost" id="badgeToastDismissBtn">تمام 🎉</button> </div> | قالب فيه ${} | شعبي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 45 | <div class="badge-toast"> <span class="badge-toast-icon">${b.icon}</span> <div class="badge-toast-text"> <div class="badge-toast-title">🎉 وسام جديد: ${b.title}!</div> <div class="badge-toast-detail">${b.detail}</div> </div> </div> | قالب فيه ${} | شعبي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 
-## `js/features/champion-honor.js` (17)
+## `js/features/champion-honor.js` (19)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 63 | حامل اللقب | نص ثابت | رسمي · ✅ سليم |
 | 69 | يحاول استعادة العرش | نص ثابت | رسمي · ✅ سليم |
-| 79 | <div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${entry.points} نقطة</div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، إيموجي بالواجهة |
+| 79 | <div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${formatCount(entry.points, 'نقطة')}</div> | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
+| 79 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 89 | <div class="champion-banner">${ICONS.shield}<span>${champ.name} — حامل لقب الموسم الماضي، والكل يطارده!</span></div> | قالب فيه ${} | شعبي · ✏️ شرطة طويلة |
-| 105 | <h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2> <div>${sorted.map(r=>\`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${r.points} نقطة</span></div>\`).join('')}</div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
-| 106 | <div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${r.points} نقطة</span></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، إيموجي بالواجهة |
+| 105 | <h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2> <div>${sorted.map(r=>\`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${formatCount(r.points, 'نقطة')}</span></div>\`).join('')}</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 106 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 118 | <h2 class="section-title" style="margin-top:22px;">🗄️ أرشيف المواسم</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
-| 120 | <div class="season-archive-row"> <span class="season-archive-rank">${i+1}</span> <span class="season-archive-name">${row.name}</span> <span class="season-archive-pts">${row.total} نقطة</span> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount) |
+| 124 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 128 | <span class="season-archive-date">— قُفل ${lockedLabel}</span> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
 | 129 | <div style="color:var(--muted);font-size:0.8rem;padding:8px;">لا يوجد ترتيب محفوظ.</div> | HTML | رسمي · ✅ سليم |
-| 149 | <div style="margin-top:12px;"> <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:4px;"> <span>رحلة الدفاع عن اللقب</span><span>${row.total} / ${entry.points} نقطة (${entry.season})</span> </div> <div style="background:var(--line);border-radius:20px;height:10px;overflow:hidden;"> <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));"></div> </div> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «» |
+| 149 | <div style="margin-top:12px;"> <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:4px;"> <span>رحلة الدفاع عن اللقب</span><span>${row.total} / ${formatCount(entry.points, 'نقطة')} (${entry.season})</span> </div> <div style="background:var(--line);border-radius:20px;height:10px;overflow:hidden;"> <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));"></div> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 151 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 158 | <button class="btn secondary" id="championCertBtn" style="margin-top:10px;">🎖️ شهادة تكريم البطل</button> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 159 | <div class="champion-hero-card"> <div style="font-size:0.75rem;color:var(--muted);font-weight:700;">🛡️ المدافع عن اللقب</div> <div style="font-size:1.2rem;font-weight:900;margin:4px 0;">${champ.name}</div> <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:0.85rem;color:var(--text2);"> <span>المركز الحالي: <b>${rank}</b></span> <span>مجموع النقاط: <b>${row.total}</b></span> <span>الممات: <b>${row.mummaCount}</b></span> </div> ${journeyHTML} <div id="championCertBox"></div> ${certBtn} </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 192 | 👑 أهلًا ${champ?champ.name:''}! بصفتك حامل لقب الموسم الماضي، الكل يترقّب دفاعك عن العرش هالموسم 🛡️ | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
@@ -1222,17 +1235,21 @@
 | 232 | 🔥 ${beaters.map(b=>b.name).join('، ')} تفوّق على حامل اللقب هالجولة (الجولة ${roundNum}) | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 | 232 | ، | نص ثابت | رسمي · ✅ سليم |
 
-## `js/features/club-swap-lab.js` (7)
+## `js/features/club-swap-lab.js` (11)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 78 | <h2 class="section-title" style="margin-top:22px;">🔬 مختبر سيناريوهات تبديل الأندية</h2> <div class="club-swap-card"> <p class="rounds-subtitle" style="margin-top:0;">لو كان عند مشارك نادٍ غير ناديه الحالي طول الموسم، وين كان يكون ترتيبه؟</p> <div class="club-swap-controls"> <select id="clubSwapParticipantSelect" aria-label="المشارك">${pOpts}</select> <select id="clubSwapOldClubSelect" aria-label="النادي الحالي"></select> <span class="club-swap-arrow">⇄</span> <select id="clubSwapNewClubSelect" aria-label="النادي البديل">${CLUBS.map(c=>\`<option value="${c}">${c}</option>\`).join('')}</select> <button type="button" class="btn secondary" id="runClubSwapBtn">شغّل السيناريو 🔬</button> </div> <div id="clubSwapResultBox"></div> </div> | قالب فيه ${} | شعبي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 106 | <div class="status-msg err">اختر ناديًا مختلفًا عن الحالي.</div> | HTML | رسمي · ✅ سليم |
 | 110 | <div class="status-msg err">تعذّر حساب السيناريو.</div> | HTML | رسمي · ✅ سليم |
-| 112 | 📈 يتقدّم ${r.rankDelta} مركز | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، إيموجي بالواجهة |
-| 112 | 📉 يتراجع ${Math.abs(r.rankDelta)} مركز | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، إيموجي بالواجهة |
+| 112 | 📈 يتقدّم ${formatCount(r.rankDelta, 'مركز', {case: 'acc'})} | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
+| 112 | مركز | نص ثابت | رسمي · ✅ سليم |
+| 112 | 📉 يتراجع ${formatCount(Math.abs(r.rankDelta), 'مركز', {case: 'acc'})} | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
+| 112 | مركز | نص ثابت | رسمي · ✅ سليم |
 | 112 | 📊 نفس المركز | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
-| 114 | <div class="club-swap-result"> <div class="club-swap-result-row"><span>ترتيبه الحقيقي:</span><strong>#${r.realRank} — ${r.realTotal} نقطة</strong></div> <div class="club-swap-result-row"><span>ترتيبه لو كان عنده ${newClub} بدل ${oldClub}:</span><strong>#${r.simRank} — ${r.simTotal} نقطة (${ptsArrow})</strong></div> <div class="club-swap-result-summary">${pName}: ${rankArrow}</div> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «» |
+| 114 | <div class="club-swap-result"> <div class="club-swap-result-row"><span>ترتيبه الحقيقي:</span><strong>#${r.realRank} — ${formatCount(r.realTotal, 'نقطة')}</strong></div> <div class="club-swap-result-row"><span>ترتيبه لو كان عنده ${newClub} بدل ${oldClub}:</span><strong>#${r.simRank} — ${formatCount(r.simTotal, 'نقطة')} (${ptsArrow})</strong></div> <div class="club-swap-result-summary">${pName}: ${rankArrow}</div> </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «» |
+| 115 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 116 | نقطة | نص ثابت | رسمي · ✅ سليم |
 
 ## `js/features/hot-cold-streaks.js` (6)
 
@@ -1245,12 +1262,13 @@
 | 50 | جولات متتالية بالنقاط | نص ثابت | شعبي · ✅ سليم |
 | 50 | جولات متتالية بلا نقاط | نص ثابت | شعبي · ✅ سليم |
 
-## `js/features/live-focus-mode.js` (2)
+## `js/features/live-focus-mode.js` (3)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
-| 37 | <div class="live-focus-inner"> <button type="button" class="live-focus-close" id="liveFocusCloseBtn" aria-label="إغلاق الوضع المباشر">✖</button> <div class="live-focus-badge"><span class="live-focus-dot"></span> مباشر · الجولة ${rn}</div> ${heroes && heroes.top ? \`<div class="live-focus-hero">👑 ${heroes.top.name} — ${heroes.top.points} نقطة هذي الجولة</div>\` : ''} <div class="live-focus-list"> ${top5.map((s,i)=>{ const d = mv[s.id]; const arrow = (d===undefined\|\|d===0) ? '' : (d>0 ? \`<span class="live-focus-arrow up">▲${d}</span>\` : \`<span class="live-focus-arrow down">▼${Math.abs(d)}</span>\`); return \`<div class="live-focus-row ${i===0?'first':''}"> <span class="live-focus-rank">${i+1}</span> <span class="live-focus-name">${s.name}</span> ${arrow} <span class="live-focus-total">${s.total}</span> </div>\`; }).join('')} </div> </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
-| 41 | <div class="live-focus-hero">👑 ${heroes.top.name} — ${heroes.top.points} نقطة هذي الجولة</div> | قالب فيه ${} | شعبي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، إيموجي بالواجهة |
+| 37 | <div class="live-focus-inner"> <button type="button" class="live-focus-close" id="liveFocusCloseBtn" aria-label="إغلاق الوضع المباشر">✖</button> <div class="live-focus-badge"><span class="live-focus-dot"></span> مباشر · الجولة ${rn}</div> ${heroes && heroes.top ? \`<div class="live-focus-hero">👑 ${heroes.top.name} — ${formatCount(heroes.top.points, 'نقطة')} هذي الجولة</div>\` : ''} <div class="live-focus-list"> ${top5.map((s,i)=>{ const d = mv[s.id]; const arrow = (d===undefined\|\|d===0) ? '' : (d>0 ? \`<span class="live-focus-arrow up">▲${d}</span>\` : \`<span class="live-focus-arrow down">▼${Math.abs(d)}</span>\`); return \`<div class="live-focus-row ${i===0?'first':''}"> <span class="live-focus-rank">${i+1}</span> <span class="live-focus-name">${s.name}</span> ${arrow} <span class="live-focus-total">${s.total}</span> </div>\`; }).join('')} </div> </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
+| 41 | <div class="live-focus-hero">👑 ${heroes.top.name} — ${formatCount(heroes.top.points, 'نقطة')} هذي الجولة</div> | قالب فيه ${} | شعبي · ✏️ شرطة طويلة، إيموجي بالواجهة |
+| 41 | نقطة | نص ثابت | رسمي · ✅ سليم |
 
 ## `js/features/my-dashboard.js` (65)
 
@@ -1351,7 +1369,7 @@
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
-| 62 | <tr class="${cls}"> <td>ج${h.number}</td> <td>${h.points}</td> <td>${h.cumulative}</td> </tr> | قالب فيه ${} | رسمي · ✅ سليم |
+| 62 | <tr class="${cls}"> <td>الجولة ${h.number}</td> <td>${h.points}</td> <td>${h.cumulative}</td> </tr> | قالب فيه ${} | رسمي · ✅ سليم |
 | 68 | <tr><td colspan="3" style="text-align:center;color:var(--muted);">لا جولات بعد</td></tr> | HTML | رسمي · ✅ سليم |
 | 71 | ، | نص ثابت | رسمي · ✅ سليم |
 | 75 | <div class="profile-detail-inner" id="profileCapture-${pid}"> <div class="profile-detail-title">📋 ملف ${p.name} الكامل</div> <div class="profile-detail-grid"> <div class="profile-detail-col"> <div class="profile-col-title">تاريخ الجولات</div> <table class="profile-history-table"> <thead><tr><th>الجولة</th><th>النقاط</th><th>التراكمي</th></tr></thead> <tbody>${rowsHTML}</tbody> </table> </div> <div class="profile-detail-col"> <div class="profile-col-title">🏅 أوسمته الشخصية</div> ${myBadges.length ? \`<div class="profile-badges-list">${myBadges.map(b=>\`<div class="profile-badge-row"><span class="profile-badge-icon">${b.icon}</span><span>${b.title} — ${b.detail}</span></div>\`).join('')}</div>\` : \`<div class="wall-empty">لا أوسمة شخصية بعد.</div>\`} ${duelRecord ? \` <div class="profile-col-title" style="margin-top:12px;">🥊 سجل نزال الموسم</div> <div class="profile-duel-record">${duelRecord.wins} فوز · ${duelRecord.losses} خسارة · ${duelRecord.ties} تعادل${duelRecord.active?\` · ${duelRecord.active} جارٍ\`:''}</div> \` : ''} </div> </div> <button type="button" class="btn ghost" id="dlProfileBtn-${pid}" style="margin-top:10px;">⬇️ تحميل الملف كصورة</button> <div id="profileMsg-${pid}"></div> </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
@@ -1359,7 +1377,7 @@
 | 90 | <div class="profile-col-title" style="margin-top:12px;">🥊 سجل نزال الموسم</div> <div class="profile-duel-record">${duelRecord.wins} فوز · ${duelRecord.losses} خسارة · ${duelRecord.ties} تعادل${duelRecord.active?\` · ${duelRecord.active} جارٍ\`:''}</div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 92 | · ${duelRecord.active} جارٍ | قالب فيه ${} | رسمي · ✅ سليم |
 
-## `js/features/participants-tab.js` (13)
+## `js/features/participants-tab.js` (15)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1368,13 +1386,15 @@
 | 60 | ⚡ آخر جولة | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 73 | غير مصنّف | نص ثابت | رسمي · ✅ سليم |
 | 74 | غير مصنّف | نص ثابت | رسمي · ✅ سليم |
-| 94 | <span title="ج${h.number}: ${h.points} نقطة" style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:default;"> <span style="display:block;width:20px;background:${barBg};border-radius:3px 3px 2px 2px;height:${barH}px;opacity:0.85;"></span> <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">ج${h.number}</span> </span> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «» |
-| 103 | 💀 ${mumma} ممة | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، إيموجي بالواجهة |
+| 94 | <span title="الجولة ${h.number}: ${formatCount(h.points, 'نقطة')}" style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:default;"> <span style="display:block;width:20px;background:${barBg};border-radius:3px 3px 2px 2px;height:${barH}px;opacity:0.85;"></span> <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">${h.number}</span> </span> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 94 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 103 | ممة | نص ثابت | رسمي · ✅ سليم |
 | 104 | 🔥 سلسلة ${bestStreak} | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 | 105 | ✅ بلا ممات | نص ثابت | رسمي · ✏️ إيموجي بالواجهة |
 | 110 | <span class="weekly-beat-badge">🔥 تفوقت على حامل اللقب هالجولة</span> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 116 | <span style="font-size:0.72rem;color:var(--sky);font-weight:700;white-space:nowrap;">${lastPts>0?'+':''}${lastPts} آخر جولة</span> | قالب فيه ${} | رسمي · ✅ سليم |
-| 123 | <div class="participant-card${isGoldenChamp ? ' champion-golden' : ''}" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};"> <div style="display:flex;align-items:flex-start;gap:10px;"> <div style="min-width:36px;height:36px;border-radius:9px;background:${rankBg};color:${rankClr}; font-size:0.95rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div> <div style="flex:1;min-width:0;"> <div style="display:flex;align-items:baseline;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;"> <span style="display:flex;align-items:center;gap:5px;font-size:0.98rem;font-weight:800;color:var(--text);"> <span class="p-color-dot" style="background:${pColor};"></span>${p.name} </span> <span style="font-size:1rem;font-weight:900;color:var(--gold);">${total} نقطة ${lastBadge}</span> </div> <div class="teams-row" style="margin-bottom:${history.length?'10px':'6px'};">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div> ${history.length ? \`<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>\` : ''} ${quickStats.length ? \`<div style="display:flex;gap:10px;font-size:0.78rem;color:var(--muted);">${quickStats.map(x=>\`<span>${x}</span>\`).join('')}</div>\` : ''} ${fingerprintHTML} ${DATA.participantProfileEnabled !== false ? \` <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">📋 الملف الكامل</button> <div class="participant-profile-detail" id="profile-detail-${p.id}" style="display:none;"></div> \` : ''} </div> </div> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «»، إيموجي بالواجهة |
+| 123 | <div class="participant-card${isGoldenChamp ? ' champion-golden' : ''}" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};"> <div style="display:flex;align-items:flex-start;gap:10px;"> <div style="min-width:36px;height:36px;border-radius:9px;background:${rankBg};color:${rankClr}; font-size:0.95rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div> <div style="flex:1;min-width:0;"> <div style="display:flex;align-items:baseline;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;"> <span style="display:flex;align-items:center;gap:5px;font-size:0.98rem;font-weight:800;color:var(--text);"> <span class="p-color-dot" style="background:${pColor};"></span>${p.name} </span> <span style="font-size:1rem;font-weight:900;color:var(--gold);">${formatCount(total, 'نقطة')} ${lastBadge}</span> </div> <div class="teams-row" style="margin-bottom:${history.length?'10px':'6px'};">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div> ${history.length ? \`<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>\` : ''} ${quickStats.length ? \`<div style="display:flex;gap:10px;font-size:0.78rem;color:var(--muted);">${quickStats.map(x=>\`<span>${x}</span>\`).join('')}</div>\` : ''} ${fingerprintHTML} ${DATA.participantProfileEnabled !== false ? \` <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">📋 الملف الكامل</button> <div class="participant-profile-detail" id="profile-detail-${p.id}" style="display:none;"></div> \` : ''} </div> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
+| 132 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 138 | <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">📋 الملف الكامل</button> <div class="participant-profile-detail" id="profile-detail-${p.id}" style="display:none;"></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 
 ## `js/features/personal-status-bar.js` (3)
@@ -1447,7 +1467,7 @@
 | 193 | حذف هذي الرسالة من جدار الجولة نهائيًا؟ | نص ثابت | شعبي · ✅ سليم |
 | 193 | حذف | نص ثابت | شعبي · ✅ سليم |
 
-## `js/features/rounds-tab.js` (56)
+## `js/features/rounds-tab.js` (65)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1466,8 +1486,14 @@
 | 60 | <div class="countdown-card"><div class="countdown-label">⏰ الجولة ${nextRoundNum}</div><div class="countdown-timer">بدأت الجولة! 🔥</div></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 69 | ${days}ي | قالب فيه ${} | رسمي · ✅ سليم |
 | 70 | <div class="countdown-card"><div class="countdown-label">⏰ العد التنازلي لبداية الجولة ${nextRoundNum}</div><div class="countdown-timer">${dayPart}${pad(hours)}:${pad(mins)}:${pad(secs)}</div></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
-| 109 | <div class="season-progress-bar"> <div class="season-progress-label"> <span>تقدّم الموسم</span> <span>${done} / ${SEASON_TOTAL_ROUNDS} جولة (${pct}%)</span> </div> <div class="season-progress-track"> <div class="season-progress-fill" style="width:${pct}%;"></div> </div> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «» |
-| 139 | <div class="rounds-insights"> <div class="rounds-insight-card best"> <span class="rounds-insight-icon">⚔️</span> <span class="rounds-insight-label">الجولة الأكثر تنافسية</span> <span class="rounds-insight-val">جولة ${mostCompetitive.round\|\|'—'}</span> <span class="rounds-insight-sub">فارق ${mostCompetitive.spread} نقطة فقط</span> </div> <div class="rounds-insight-card worst"> <span class="rounds-insight-icon">📊</span> <span class="rounds-insight-label">الجولة الأكثر تفاوتاً</span> <span class="rounds-insight-val">جولة ${mostDivergent.round\|\|'—'}</span> <span class="rounds-insight-sub">فارق ${mostDivergent.spread} نقطة</span> </div> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، التنوين (ًا)، إيموجي بالواجهة |
+| 109 | <div class="season-progress-bar"> <div class="season-progress-label"> <span>تقدّم الموسم</span> <span>${done} / ${formatCount(SEASON_TOTAL_ROUNDS, 'جولة')} (${pct}%)</span> </div> <div class="season-progress-track"> <div class="season-progress-fill" style="width:${pct}%;"></div> </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 113 | جولة | نص ثابت | رسمي · ✅ سليم |
+| 139 | <div class="rounds-insights"> <div class="rounds-insight-card best"> <span class="rounds-insight-icon">⚔️</span> <span class="rounds-insight-label">الجولة الأكثر تنافسية</span> <span class="rounds-insight-val">جولة ${mostCompetitive.round\|\|'—'}</span> <span class="rounds-insight-sub">${mostCompetitive.spread > 0 ? 'فارق ' + formatCount(mostCompetitive.spread, 'نقطة') + ' فقط' : 'تعادل بالنقاط'}</span> </div> <div class="rounds-insight-card worst"> <span class="rounds-insight-icon">📊</span> <span class="rounds-insight-label">الجولة الأكثر تفاوتاً</span> <span class="rounds-insight-val">جولة ${mostDivergent.round\|\|'—'}</span> <span class="rounds-insight-sub">فارق ${formatCount(mostDivergent.spread, 'نقطة')}</span> </div> </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، التنوين (ًا)، إيموجي بالواجهة |
+| 145 | فارق | نص ثابت | رسمي · ✅ سليم |
+| 145 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 145 | فقط | نص ثابت | رسمي · ✅ سليم |
+| 145 | تعادل بالنقاط | نص ثابت | رسمي · ✅ سليم |
+| 151 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 165 | الجمعة | نص ثابت | رسمي · ✅ سليم |
 | 165 | السبت | نص ثابت | رسمي · ✅ سليم |
 | 165 | الأحد | نص ثابت | رسمي · ✅ سليم |
@@ -1481,7 +1507,7 @@
 | 271 | <div style="overflow-x:auto;margin-top:12px;"> <table style="width:100%;border-collapse:collapse;font-size:0.84rem;"> <thead><tr style="background:var(--ink);color:white;"> <th style="padding:6px;text-align:center;">#</th> <th style="padding:6px;text-align:right;">المشارك</th> <th style="padding:6px;text-align:center;">الحالي</th> <th style="padding:6px;text-align:center;">المتوقع</th> </tr></thead> <tbody>${rows.slice(0,6).map((s,i)=>{ const pp=PARTICIPANTS.find(x=>x.id===s.id); const pc2=PARTICIPANT_COLORS[s.id]\|\|'var(--gold)'; const hl=s.id===newLead.id?\`background:${pc2}22;\`:''; return \`<tr style="border-bottom:1px solid var(--line);${hl}"> <td style="padding:6px;text-align:center;font-weight:800;color:${readableColor(pc2, 5.4)};">${i+1}</td> <td style="padding:6px;">${pp?.name\|\|''}</td> <td style="padding:6px;text-align:center;color:var(--muted);">${s.total}</td> <td style="padding:6px;text-align:center;font-weight:700;color:${readableColor(pc2, 5.4)};">${s.proj}</td> </tr>\`; }).join('')}</tbody> </table> ${newLead.id!==lid ?\`<div style="margin-top:10px;padding:8px;background:var(--gold)22;border-radius:8px;color:var(--gold);font-size:0.87rem;text-align:center;">⚡ في هذا السيناريو، <strong>${nl?.name}</strong> يتصدر بدلاً من <strong>${ol?.name}</strong>!</div>\` :\`<div style="margin-top:10px;padding:8px;background:var(--cream);border-radius:8px;color:var(--muted);font-size:0.85rem;text-align:center;">${ol?.name} يظل في الصدارة حتى في هذا السيناريو.</div>\`} </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
 | 292 | <div style="margin-top:10px;padding:8px;background:var(--gold)22;border-radius:8px;color:var(--gold);font-size:0.87rem;text-align:center;">⚡ في هذا السيناريو، <strong>${nl?.name}</strong> يتصدر بدلاً من <strong>${ol?.name}</strong>!</div> | قالب فيه ${} | رسمي · ✏️ التنوين (ًا)، إيموجي بالواجهة |
 | 293 | <div style="margin-top:10px;padding:8px;background:var(--cream);border-radius:8px;color:var(--muted);font-size:0.85rem;text-align:center;">${ol?.name} يظل في الصدارة حتى في هذا السيناريو.</div> | قالب فيه ${} | رسمي · ✅ سليم |
-| 326 | <h2 class="section-title" style="margin-top:22px;">🗳️ تحدي الجولة ${nextNum}</h2> <div style="background:var(--paper);border-radius:14px;padding:16px;"> <p style="color:var(--text2);margin:0 0 12px;font-size:0.9rem;"> <strong>من سيتصدر الجولة ${nextNum}؟</strong> ${!pid?'<br><span style="color:var(--muted);font-size:0.8rem;">سجّل دخولك للتصويت</span>':''} ${myVote?\`<br><span style="color:var(--gold);font-size:0.82rem;">✅ صوّتت لـ: ${myVotedName}</span>\`:''} </p> ${canVote?\`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px;"> ${stands.slice(0,6).map((s,i)=>{ const pp=PARTICIPANTS.find(x=>x.id===s.id); const pc=PARTICIPANT_COLORS[s.id]\|\|'var(--gold)'; return \`<button onclick="castChallengeVote(${s.id})" style="padding:8px 6px;background:var(--cream);border:1.5px solid ${pc}55;border-radius:9px;color:var(--text);font-family:inherit;cursor:pointer;font-size:0.84rem;font-weight:700;transition:background .15s;"> <span style="color:${pc};">#${i+1}</span> ${pp?.name\|\|''} </button>\`; }).join('')} </div>\`:''} ${totalVotes>0 ?\`<div> <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">${totalVotes} تصويت حتى الآن:</div> ${Object.entries(voteCounts).sort((a,b)=>b[1]-a[1]).map(([vpid,cnt])=>{ const pp=PARTICIPANTS.find(x=>x.id==vpid); const pc=PARTICIPANT_COLORS[parseInt(vpid)]\|\|'var(--gold)'; const pct=Math.round(cnt/totalVotes*100); return \`<div style="margin-bottom:7px;"> <div style="display:flex;justify-content:space-between;font-size:0.84rem;"> <span style="color:${pc};">${pp?.name\|\|''}</span><span>${cnt} (${pct}%)</span> </div> <div style="height:6px;background:var(--cream);border-radius:3px;margin-top:3px;"> <div style="height:100%;width:${pct}%;background:${pc};border-radius:3px;"></div> </div> </div>\`; }).join('')} </div>\` :\`<div style="color:var(--muted);font-size:0.85rem;">لا تصويتات بعد — كن أول من يصوّت!</div>\`} </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
+| 326 | <h2 class="section-title" style="margin-top:22px;">🗳️ تصويت الجولة ${nextNum}</h2> <div style="background:var(--paper);border-radius:14px;padding:16px;"> <p style="color:var(--text2);margin:0 0 12px;font-size:0.9rem;"> <strong>من سيتصدر الجولة ${nextNum}؟</strong> ${!pid?'<br><span style="color:var(--muted);font-size:0.8rem;">سجّل دخولك للتصويت</span>':''} ${myVote?\`<br><span style="color:var(--gold);font-size:0.82rem;">✅ صوّتت لـ: ${myVotedName}</span>\`:''} </p> ${canVote?\`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px;"> ${stands.slice(0,6).map((s,i)=>{ const pp=PARTICIPANTS.find(x=>x.id===s.id); const pc=PARTICIPANT_COLORS[s.id]\|\|'var(--gold)'; return \`<button onclick="castChallengeVote(${s.id})" style="padding:8px 6px;background:var(--cream);border:1.5px solid ${pc}55;border-radius:9px;color:var(--text);font-family:inherit;cursor:pointer;font-size:0.84rem;font-weight:700;transition:background .15s;"> <span style="color:${pc};">#${i+1}</span> ${pp?.name\|\|''} </button>\`; }).join('')} </div>\`:''} ${totalVotes>0 ?\`<div> <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">${totalVotes} تصويت حتى الآن:</div> ${Object.entries(voteCounts).sort((a,b)=>b[1]-a[1]).map(([vpid,cnt])=>{ const pp=PARTICIPANTS.find(x=>x.id==vpid); const pc=PARTICIPANT_COLORS[parseInt(vpid)]\|\|'var(--gold)'; const pct=Math.round(cnt/totalVotes*100); return \`<div style="margin-bottom:7px;"> <div style="display:flex;justify-content:space-between;font-size:0.84rem;"> <span style="color:${pc};">${pp?.name\|\|''}</span><span>${cnt} (${pct}%)</span> </div> <div style="height:6px;background:var(--cream);border-radius:3px;margin-top:3px;"> <div style="height:100%;width:${pct}%;background:${pc};border-radius:3px;"></div> </div> </div>\`; }).join('')} </div>\` :\`<div style="color:var(--muted);font-size:0.85rem;">لا تصويتات بعد — كن أول من يصوّت!</div>\`} </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
 | 330 | <br><span style="color:var(--muted);font-size:0.8rem;">سجّل دخولك للتصويت</span> | HTML | رسمي · ✅ سليم |
 | 331 | <br><span style="color:var(--gold);font-size:0.82rem;">✅ صوّتت لـ: ${myVotedName}</span> | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 | 343 | <div> <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">${totalVotes} تصويت حتى الآن:</div> ${Object.entries(voteCounts).sort((a,b)=>b[1]-a[1]).map(([vpid,cnt])=>{ const pp=PARTICIPANTS.find(x=>x.id==vpid); const pc=PARTICIPANT_COLORS[parseInt(vpid)]\|\|'var(--gold)'; const pct=Math.round(cnt/totalVotes*100); return \`<div style="margin-bottom:7px;"> <div style="display:flex;justify-content:space-between;font-size:0.84rem;"> <span style="color:${pc};">${pp?.name\|\|''}</span><span>${cnt} (${pct}%)</span> </div> <div style="height:6px;background:var(--cream);border-radius:3px;margin-top:3px;"> <div style="height:100%;width:${pct}%;background:${pc};border-radius:3px;"></div> </div> </div>\`; }).join('')} </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
@@ -1489,8 +1515,9 @@
 | 422 | <h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4> | HTML | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
 | 423 | <p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "🏆 أرشيف أبطال الجولات" أعلاه.</p> | HTML | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 428 | <div class="r2-card"> <div class="r2-head"> <div class="r2-name">${p.name}</div> <div class="r2-pts"><span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span></div> </div> </div> | قالب فيه ${} | رسمي · ✅ سليم |
-| 437 | <div class="r2-card${isChamp?' is-champion':''}"> <div class="r2-head"> <div class="r2-name">${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div> <div class="r2-pts">${r2.points} نقطة <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${r2.gf}-${r2.ga})</span></div> </div> <div class="r2-clubs"> ${r2.clubs.map(c=>\` <div class="r2-club-row"> ${crestHTML(c.name, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${c.name}</div> ${c.matches.length ? c.matches.map(m=>\` <div class="r2-match-line">${m.date} · ${m.opp} · ${r2ResBadge(m.res)} <b>${m.gf}-${m.ga}</b></div> \`).join('') : \`<div class="r2-match-line">لا توجد مباراة ضمن هذه النافذة</div>\`} </div> </div> \`).join('')} </div> ${p.id===18 ? \`<div class="r2-note">⚠️ أبو صالح التحق بالمسابقة بعد الجولة الأولى، فرصيده المعروض في الترتيب العام (${p.carry}) محسوب من كامل موسم أنديته حتى الآن — أما الرقم أعلاه (${r2.points}) فهو حصاد أنديته الفعلي ضمن نافذة الجولة 2 تحديدًا فقط، وهو أقل طبيعيًا لأنه لا يشمل مبارياتها الأقدم.</div>\` : ''} </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 437 | <div class="r2-card${isChamp?' is-champion':''}"> <div class="r2-head"> <div class="r2-name">${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div> <div class="r2-pts">${formatCount(r2.points, 'نقطة')} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${r2.gf}-${r2.ga})</span></div> </div> <div class="r2-clubs"> ${r2.clubs.map(c=>\` <div class="r2-club-row"> ${crestHTML(c.name, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${c.name}</div> ${c.matches.length ? c.matches.map(m=>\` <div class="r2-match-line">${m.date} · ${m.opp} · ${r2ResBadge(m.res)} <b>${m.gf}-${m.ga}</b></div> \`).join('') : \`<div class="r2-match-line">لا توجد مباراة ضمن هذه النافذة</div>\`} </div> </div> \`).join('')} </div> ${p.id===18 ? \`<div class="r2-note">⚠️ أبو صالح التحق بالمسابقة بعد الجولة الأولى، فرصيده المعروض في الترتيب العام (${p.carry}) محسوب من كامل موسم أنديته حتى الآن — أما الرقم أعلاه (${r2.points}) فهو حصاد أنديته الفعلي ضمن نافذة الجولة 2 تحديدًا فقط، وهو أقل طبيعيًا لأنه لا يشمل مبارياتها الأقدم.</div>\` : ''} </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 439 | <span class="round-champion-badge">بطل الجولة</span> | HTML | رسمي · ✅ سليم |
+| 440 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 443 | <div class="r2-club-row"> ${crestHTML(c.name, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${c.name}</div> ${c.matches.length ? c.matches.map(m=>\` <div class="r2-match-line">${m.date} · ${m.opp} · ${r2ResBadge(m.res)} <b>${m.gf}-${m.ga}</b></div> \`).join('') : \`<div class="r2-match-line">لا توجد مباراة ضمن هذه النافذة</div>\`} </div> </div> | قالب فيه ${} | رسمي · ✅ سليم |
 | 450 | <div class="r2-match-line">لا توجد مباراة ضمن هذه النافذة</div> | HTML | رسمي · ✅ سليم |
 | 455 | <div class="r2-note">⚠️ أبو صالح التحق بالمسابقة بعد الجولة الأولى، فرصيده المعروض في الترتيب العام (${p.carry}) محسوب من كامل موسم أنديته حتى الآن — أما الرقم أعلاه (${r2.points}) فهو حصاد أنديته الفعلي ضمن نافذة الجولة 2 تحديدًا فقط، وهو أقل طبيعيًا لأنه لا يشمل مبارياتها الأقدم.</div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
@@ -1500,10 +1527,12 @@
 | 480 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 480 | <span class="text-dim" style="font-weight:600;font-size:0.76rem;">لم يلتحق بعد بالمسابقة</span> | HTML | رسمي · ✅ سليم |
 | 494 | و | نص ثابت | رسمي · ✅ سليم |
-| 495 | <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);"> <div style="display:flex;align-items:center;gap:8px;"> <span style="font-weight:800;font-size:0.8rem;color:var(--gold);min-width:60px;">الجولة ${row.round}</span> <span style="font-weight:700;font-size:0.85rem;">${names} <span class="round-champion-badge">بطل الجولة</span></span> </div> <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${row.points} نقطة</span> </div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «» |
+| 495 | <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);"> <div style="display:flex;align-items:center;gap:8px;"> <span style="font-weight:800;font-size:0.8rem;color:var(--gold);min-width:60px;">الجولة ${row.round}</span> <span style="font-weight:700;font-size:0.85rem;">${names} <span class="round-champion-badge">بطل الجولة</span></span> </div> <span style="font-weight:800;font-size:0.85rem;color:var(--coral);">${formatCount(row.points, 'نقطة')}</span> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 500 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 529 | <h4 style="margin:18px 0 8px;font-size:0.95rem;color:var(--text);">الجولة ${r.number}</h4> | قالب فيه ${} | رسمي · ✅ سليم |
-| 533 | <div class="r2-card${isChamp?' is-champion':''}"> <div class="r2-head"> <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div> <div class="r2-pts">${s.points} نقطة${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div> </div> <div class="r2-clubs"> ${p.teams.map((t,ti)=>{ // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) — // تُعرض كل مباراة بسطر مستقل، بنفس أسلوب r2-match-line بالجولة 2. const es = getTeamRoundEntries(entries, ti); return \`<div class="r2-club-row"> ${crestHTML(t, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${t}</div> ${es.length ? es.map(e=> e.result==='no_match' ? \` <div class="r2-match-line">${r2ResBadge(e.result)}</div> \` : \` <div class="r2-match-line">${e.opp?e.opp+' · ':''}${r2ResBadge(e.result)} <b>${Number(e.gf)\|\|0}-${Number(e.ga)\|\|0}</b></div> \`).join('') : \`<div class="r2-match-line">لا يوجد تسجيل لهذه الجولة بعد</div>\`} </div> </div>\`; }).join('')} </div> </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
+| 533 | <div class="r2-card${isChamp?' is-champion':''}"> <div class="r2-head"> <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div> <div class="r2-pts">${formatCount(s.points, 'نقطة')}${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div> </div> <div class="r2-clubs"> ${p.teams.map((t,ti)=>{ // نادٍ قد يلعب أكثر من مباراة بنفس الجولة (منذ 5 سبتمبر 2026) — // تُعرض كل مباراة بسطر مستقل، بنفس أسلوب r2-match-line بالجولة 2. const es = getTeamRoundEntries(entries, ti); return \`<div class="r2-club-row"> ${crestHTML(t, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${t}</div> ${es.length ? es.map(e=> e.result==='no_match' ? \` <div class="r2-match-line">${r2ResBadge(e.result)}</div> \` : \` <div class="r2-match-line">${e.opp?e.opp+' · ':''}${r2ResBadge(e.result)} <b>${Number(e.gf)\|\|0}-${Number(e.ga)\|\|0}</b></div> \`).join('') : \`<div class="r2-match-line">لا يوجد تسجيل لهذه الجولة بعد</div>\`} </div> </div>\`; }).join('')} </div> </div> | قالب فيه ${} | مستثنى (كود مولَّد) |
 | 535 | <span class="round-champion-badge">بطل الجولة</span> | HTML | رسمي · ✅ سليم |
+| 536 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 536 | <span class="mumma">ممة</span> | HTML | رسمي · ✅ سليم |
 | 543 | <div class="r2-club-row"> ${crestHTML(t, 26)} <div class="r2-club-matches"> <div class="r2-club-name">${t}</div> ${es.length ? es.map(e=> e.result==='no_match' ? \` <div class="r2-match-line">${r2ResBadge(e.result)}</div> \` : \` <div class="r2-match-line">${e.opp?e.opp+' · ':''}${r2ResBadge(e.result)} <b>${Number(e.gf)\|\|0}-${Number(e.ga)\|\|0}</b></div> \`).join('') : \`<div class="r2-match-line">لا يوجد تسجيل لهذه الجولة بعد</div>\`} </div> </div> | قالب فيه ${} | رسمي · ✅ سليم |
 | 551 | <div class="r2-match-line">لا يوجد تسجيل لهذه الجولة بعد</div> | HTML | رسمي · ✅ سليم |
@@ -1512,58 +1541,58 @@
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
-| 28 | انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(PARTICIPANTS.length+' مشاركاً')} يتنافسون بـ${hl(CLUBS.length+' نادياً')} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(totalRoundsSoFar+' جولات')} أُنتجت فيها ${hl(totalPts+' نقطة')} إجمالية، وشهدت ${hl(totalMum+' ممة')} مؤلمة. | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، التنوين (ًا) |
-| 28 | مشاركاً | نص ثابت | رسمي · ✏️ التنوين (ًا) |
-| 28 | نادياً | نص ثابت | رسمي · ✏️ التنوين (ًا) |
+| 28 | انطلق <b>دوري بروكي الفانتازي — الموسم الثاني</b> بـ${hl(formatCount(PARTICIPANTS.length, 'مشارك', {case: 'acc'}))} يتنافسون بـ${hl(formatCount(CLUBS.length, 'نادٍ', {case: 'acc'}))} من ${hl('13 دوريًا')} حول العالم. حتى الآن أُكملت ${hl(formatCount(totalRoundsSoFar, 'جولة'))} أُنتجت فيها ${hl(formatCount(totalPts, 'نقطة'))} إجمالية، ${totalMum > 0 ? 'وشهدت ' + hl(formatCount(totalMum, 'ممة')) + ' مؤلمة' : 'ولم تشهد أي ممة'}. | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة |
+| 28 | مشارك | نص ثابت | رسمي · ✅ سليم |
+| 28 | نادٍ | نص ثابت | رسمي · ✅ سليم |
 | 28 | 13 دوريًا | نص ثابت | رسمي · ✏️ عدد ومعدود (formatCount) |
-| 28 | جولات | نص ثابت | رسمي · ✅ سليم |
+| 28 | جولة | نص ثابت | رسمي · ✅ سليم |
 | 28 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 28 | وشهدت | نص ثابت | رسمي · ✅ سليم |
 | 28 | ممة | نص ثابت | رسمي · ✅ سليم |
-| 62 | ${hl(topLeader.name)} هيمن على الصدارة في ${hl(leaderRounds[topLeader.id]+' جولات')} من أصل ${totalRoundsSoFar}. | قالب فيه ${} | رسمي · ✅ سليم |
-| 62 | جولات | نص ثابت | رسمي · ✅ سليم |
-| 64 | شهد الموسم ${hl(changes.length+' تغييرات')} في قيادة الترتيب — | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
-| 64 | تغييرات | نص ثابت | رسمي · ✅ سليم |
-| 65 | ${c.name} (ج${c.round}) | قالب فيه ${} | رسمي · ✅ سليم |
+| 28 | مؤلمة | نص ثابت | رسمي · ✅ سليم |
+| 28 | ولم تشهد أي ممة | نص ثابت | رسمي · ✅ سليم |
+| 62 | ${hl(topLeader.name)} هيمن على الصدارة في ${hl(formatCount(leaderRounds[topLeader.id], 'جولة'))} من أصل ${totalRoundsSoFar}. | قالب فيه ${} | رسمي · ✅ سليم |
+| 62 | جولة | نص ثابت | رسمي · ✅ سليم |
+| 64 | شهد الموسم ${hl(formatCount(changes.length, 'تغيير', {case: 'acc'}))} في قيادة الترتيب — | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 64 | تغيير | نص ثابت | رسمي · ✅ سليم |
+| 65 | ${c.name} (الجولة ${c.round}) | قالب فيه ${} | رسمي · ✅ سليم |
 | 68 | القيادة لم تتغير — ${hl(changes[0]?.name\|\|leaderTimeline[0]?.name\|\|leader.name)} يقود منذ البداية. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
-| 70 | المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب بـ${hl(gap+' نقطة')}. | قالب فيه ${} | رسمي · ✅ سليم |
+| 70 | المتصدر الحالي ${hl(leader.name)} يتقدم على منافسه الأقرب ${hl(arBaPrefix(formatCount(gap, 'نقطة', {case: 'acc'})))}. | قالب فيه ${} | رسمي · ✅ سليم |
 | 70 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 100 | أشرس المعارك كانت بين ${hl(tightPair[0])} و${hl(tightPair[1])} — الفارق بينهما ${hl(tightestGap+' نقطة')} فقط. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 70 | المتصدر الحالي ${hl(leader.name)} يتعادل مع منافسه الأقرب بالنقاط. | قالب فيه ${} | رسمي · ✅ سليم |
+| 100 | أشرس المعارك كانت بين ${hl(tightPair[0])} و${hl(tightPair[1])} — ${tightestGap > 0 ? 'الفارق بينهما ' + hl(formatCount(tightestGap, 'نقطة')) + ' فقط' : 'وهما متعادلان بالنقاط'}. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 100 | الفارق بينهما | نص ثابت | رسمي · ✅ سليم |
 | 100 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 101 | الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(biggestRoundGap+' نقطة')} بين الأعلى والأدنى. | قالب فيه ${} | رسمي · ✅ سليم |
+| 100 | فقط | نص ثابت | رسمي · ✅ سليم |
+| 100 | وهما متعادلان بالنقاط | نص ثابت | رسمي · ✅ سليم |
+| 101 | الجولة الأكثر تنافسًا كانت ${hl('الجولة '+biggestRound)} بفارق ${hl(formatCount(biggestRoundGap, 'نقطة', {case: 'acc'}))} بين الأعلى والأدنى. | قالب فيه ${} | رسمي · ✅ سليم |
 | 101 | الجولة | نص ثابت | رسمي · ✅ سليم |
 | 101 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 125 | أعلى حصاد في جولة واحدة طوال الموسم سجّله ${hl(name(bestPid))} بـ${hl(bestPts+' نقطة')} في الجولة ${bestRoundN}. | قالب فيه ${} | رسمي · ✅ سليم |
+| 125 | أعلى حصاد في جولة واحدة طوال الموسم سجّله ${hl(name(bestPid))} ${hl(arBaPrefix(formatCount(bestPts, 'نقطة', {case: 'acc'})))} في الجولة ${bestRoundN}. | قالب فيه ${} | رسمي · ✅ سليم |
 | 125 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 127 | أبرز تحسّن في الترتيب عبر الموسم حقّقه ${hl(name(bigClimber))} الذي صعد ${hl(bigClimb+' مراكز')}. | قالب فيه ${} | رسمي · ✅ سليم |
-| 127 | مراكز | نص ثابت | رسمي · ✅ سليم |
+| 127 | أبرز تحسّن في الترتيب عبر الموسم حقّقه ${hl(name(bigClimber))} الذي صعد ${hl(formatCount(bigClimb, 'مركز', {case: 'acc'}))}. | قالب فيه ${} | رسمي · ✅ سليم |
+| 127 | مركز | نص ثابت | رسمي · ✅ سليم |
 | 139 | ${hl(zeroMum.map(p=>p.name).join(' و'))} ${zeroMum.length>1?'يحافظون':'يحافظ'} على سجل نظيف — بلا ممات حتى الآن 🧊. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
 | 139 | و | نص ثابت | رسمي · ✅ سليم |
 | 139 | يحافظون | نص ثابت | رسمي · ✅ سليم |
 | 139 | يحافظ | نص ثابت | رسمي · ✅ سليم |
-| 142 | في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(mostMumVal+' ممات')} — الأكثر في الموسم. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
-| 142 | ممات | نص ثابت | رسمي · ✅ سليم |
-| 159 | إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(roundsLeft+' جولة')}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا بـ${hl(projLeader.projected+' نقطة')} | قالب فيه ${} | رسمي · ✅ سليم |
+| 142 | في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(formatCount(mostMumVal, 'ممة', {case: 'acc'}))} — الأكثر في الموسم. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 142 | ممة | نص ثابت | رسمي · ✅ سليم |
+| 159 | إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(formatCount(roundsLeft, 'جولة'))}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا ${hl(arBaPrefix(formatCount(projLeader.projected, 'نقطة', {case: 'acc'})))} | قالب فيه ${} | رسمي · ✅ سليم |
 | 159 | جولة | نص ثابت | رسمي · ✅ سليم |
 | 159 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 160 | متقدمًا على ${hl(projSecond.name)} بـ${hl(projGap+' نقطة')}. | قالب فيه ${} | رسمي · ✅ سليم |
+| 160 | متقدمًا على ${hl(projSecond.name)} ${hl(arBaPrefix(formatCount(projGap, 'نقطة', {case: 'acc'})))}. | قالب فيه ${} | رسمي · ✅ سليم |
 | 160 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 162 | ⚠️ المتصدر الحالي ${hl(leader.name)} في خطر! | قالب فيه ${} | رسمي · ✏️ إيموجي بالواجهة |
 | 174 | حتى حامل اللقب ${hl(champName)} لم يسلم من الممة في آخر جولة — تذكير أن العرش لا يُحمى بالماضي وحده. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
-| 181 | حامل اللقب ${hl(champName)} أكّد جدارته بآخر جولة بحصاد ${hl(lastEntry.points+' نقطة')} — دفاع مقنع عن العرش حتى الآن. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
+| 181 | حامل اللقب ${hl(champName)} أكّد جدارته بآخر جولة بحصاد ${hl(formatCount(lastEntry.points, 'نقطة'))} — دفاع مقنع عن العرش حتى الآن. | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
 | 181 | نقطة | نص ثابت | رسمي · ✅ سليم |
-| 189 | ١ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 189 | الافتتاحية | نص ثابت | رسمي · ✅ سليم |
-| 190 | ٢ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 190 | معركة الصدارة | نص ثابت | رسمي · ✅ سليم |
-| 191 | ٣ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 191 | المعارك الحامية | نص ثابت | رسمي · ✅ سليم |
-| 192 | ٤ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 192 | نجوم ومفاجآت | نص ثابت | رسمي · ✅ سليم |
-| 193 | ٥ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 193 | الممات والثبات | نص ثابت | رسمي · ✅ سليم |
-| 194 | ٦ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 194 | ماذا يُخبئ الموسم؟ | نص ثابت | رسمي · ✅ سليم |
-| 195 | ٧ | نص ثابت | رسمي · ✏️ أرقام هندية |
 | 195 | دفاع البطل | نص ثابت | رسمي · ✅ سليم |
 | 199 | <h2 class="section-title" style="margin-top:22px;">📖 قصة الموسم</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 200 | <p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;">سرد تلقائي مُولَّد من البيانات — يتحدّث نفسه مع كل جولة جديدة</p> | HTML | رسمي · ✏️ شرطة طويلة |
@@ -1646,7 +1675,7 @@
 | 340 | <div class="status-msg err">حدث خطأ أثناء التحديث، حاول مجددًا.</div> | HTML | رسمي · ✅ سليم |
 | 343 | 🔄 تحديث | نص ثابت | رسمي · ✅ سليم |
 
-## `js/features/standings-widgets.js` (46)
+## `js/features/standings-widgets.js` (50)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
@@ -1665,14 +1694,16 @@
 | 182 | متصدر الترتيب | نص ثابت | رسمي · ✅ سليم |
 | 182 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 183 | أعلى نقطة جولة واحدة | نص ثابت | رسمي · ✅ سليم |
-| 183 | ${bestSingle.pts} ن. (ج${bestSingle.round}) | قالب فيه ${} | رسمي · ✏️ اختصار |
+| 183 | ${formatCount(bestSingle.pts, 'نقطة')} (الجولة ${bestSingle.round}) | قالب فيه ${} | رسمي · ✅ سليم |
+| 183 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 184 | أقل ممات | نص ثابت | رسمي · ✅ سليم |
 | 184 | ممة | نص ثابت | رسمي · ✅ سليم |
 | 185 | أطول سلسلة | نص ثابت | رسمي · ✅ سليم |
 | 186 | الأكثر ثباتاً | نص ثابت | رسمي · ✏️ التنوين (ًا) |
 | 186 | انحراف ±${mostStable.std} | قالب فيه ${} | رسمي · ✅ سليم |
 | 190 | <div class="honor-board"> <div class="honor-board-title">🎖️ لوحة الشرف</div> <div class="honor-cards"> ${cards.map(c=>\` <div class="honor-card"> <span class="honor-card-emoji">${c.emoji}</span> <span class="honor-card-label">${c.label}</span> <span class="honor-card-name">${c.name}</span> <span class="honor-card-val">${c.val}</span> </div>\`).join('')} </div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
-| 217 | <div class="fingerprint-bar" style="height:${h2}px;background:${clr};opacity:0.85;" title="ج${h.number}: ${h.points} ن"></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 217 | <div class="fingerprint-bar" style="height:${h2}px;background:${clr};opacity:0.85;" title="الجولة ${h.number}: ${formatCount(h.points, 'نقطة')}"></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
+| 217 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 250 | تجاوز المتوقع | نص ثابت | رسمي · ✅ سليم |
 | 250 | +${Math.round(top.diff*10)/10} عن متوسطه | قالب فيه ${} | رسمي · ✅ سليم |
 | 257 | تحت المتوقع | نص ثابت | رسمي · ✅ سليم |
@@ -1680,7 +1711,8 @@
 | 268 | انقلاب الصدارة | نص ثابت | رسمي · ✅ سليم |
 | 268 | صعد من المركز ${prevRank} | قالب فيه ${} | رسمي · ✅ سليم |
 | 278 | الأكثر ثباتًا هذا الأسبوع | نص ثابت | رسمي · ✅ سليم |
-| 278 | ${mc.last} ن (متوسطه ${Math.round(mc.avg*10)/10}) | قالب فيه ${} | رسمي · ✅ سليم |
+| 278 | ${formatCount(mc.last, 'نقطة')} (متوسطه ${Math.round(mc.avg*10)/10}) | قالب فيه ${} | رسمي · ✅ سليم |
+| 278 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 287 | انتعاش بعد الممة | نص ثابت | رسمي · ✅ سليم |
 | 287 | ${formatCount(bouncebacks[0].last,'نقطة')} هذا الأسبوع | قالب فيه ${} | رسمي · ✅ سليم |
 | 287 | نقطة | نص ثابت | رسمي · ✅ سليم |
@@ -1690,22 +1722,30 @@
 | 454 | <div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:0.8rem;"> <b>${p.name}</b> — <span style="color:var(--gold);">${formatCount(rounds,'جولة')}</span> في الصدارة (${pct}%) </div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة |
 | 455 | جولة | نص ثابت | رسمي · ✅ سليم |
 | 463 | <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">تاريخ تغييرات الصدارة:</div> | HTML | رسمي · ✅ سليم |
-| 467 | <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--paper);border-radius:8px;border:1px solid var(--line);"> <span style="font-size:0.75rem;color:var(--muted);min-width:50px;">ج${c.round}</span> ${prev} <span style="font-weight:700;color:var(--gold);">👑 ${c.name}</span> <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${c.total} ن</span> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
+| 467 | <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--paper);border-radius:8px;border:1px solid var(--line);"> <span style="font-size:0.75rem;color:var(--muted);min-width:72px;">الجولة ${c.round}</span> ${prev} <span style="font-weight:700;color:var(--gold);">👑 ${c.name}</span> <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${formatCount(c.total, 'نقطة')}</span> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
+| 471 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 510 | <h2 class="section-title" style="margin-top:22px;">👑 لوحة قيادة الترتيب</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 511 | <div class="rank-leaderboard" tabindex="0" role="region" aria-label="لوحة أدق المتوقعين"><table> | HTML | رسمي · ✏️ علامات تنصيص «» |
 | 512 | <tr><th>المشارك</th> | HTML | رسمي · ✅ سليم |
 | 513 | <th>قبل</th> | HTML | رسمي · ✅ سليم |
-| 514 | <th>ج${n}</th> | قالب فيه ${} | رسمي · ✅ سليم |
+| 514 | <th title="الجولة ${n}">${n}</th> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
 
-## `js/features/stats-tab.js` (76)
+## `js/features/stats-tab.js` (83)
 
 | السطر | النص | النوع | التصنيف |
 |---|---|---|---|
 | 29 | <h2 class="section-title" style="margin-top:22px;">📊 أرقام الموسم القياسية</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
-| 33 | <div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${rec.topRound.points} نقطة — الجولة ${rec.topRound.round}</div></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
-| 36 | <div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">يفصل بينهما ${rec.closest.gap} نقطة فقط</div></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «»، إيموجي بالواجهة |
-| 39 | <div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">+${rec.maxUp.delta} مركز — الجولة ${rec.maxUp.round}</div></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
-| 42 | <div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">${rec.maxDown.delta} مركز — الجولة ${rec.maxDown.round}</div></div> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 33 | <div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${formatCount(rec.topRound.points, 'نقطة')} — الجولة ${rec.topRound.round}</div></div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 33 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 36 | <div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">${rec.closest.gap > 0 ? 'يفصل بينهما ' + formatCount(rec.closest.gap, 'نقطة') + ' فقط' : 'متعادلان بالنقاط'}</div></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
+| 36 | يفصل بينهما | نص ثابت | رسمي · ✅ سليم |
+| 36 | نقطة | نص ثابت | رسمي · ✅ سليم |
+| 36 | فقط | نص ثابت | رسمي · ✅ سليم |
+| 36 | متعادلان بالنقاط | نص ثابت | رسمي · ✅ سليم |
+| 39 | <div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">صعد ${formatCount(rec.maxUp.delta, 'مركز', {case: 'acc'})} — الجولة ${rec.maxUp.round}</div></div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 39 | مركز | نص ثابت | رسمي · ✅ سليم |
+| 42 | <div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">هبط ${formatCount(Math.abs(rec.maxDown.delta), 'مركز', {case: 'acc'})} — الجولة ${rec.maxDown.round}</div></div> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 42 | مركز | نص ثابت | رسمي · ✅ سليم |
 | 63 | <h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2> <span class="rc-locked">🔒 اختر اسمك وأدخل رمزك لفتح المواجهة المباشرة مع أي خصم</span> | HTML | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 77 | <h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 78 | <div id="h2hCapture"> <div class="h2h-picker"> <select id="h2hSelectA" aria-label="المشارك الأول">${options}</select> <span class="h2h-vs">ضد</span> <select id="h2hSelectB" aria-label="المشارك الثاني">${options}</select> </div> <div id="h2hResult"></div> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
@@ -1748,11 +1788,11 @@
 | 285 | أخرى | نص ثابت | رسمي · ✅ سليم |
 | 287 | أخرى | نص ثابت | رسمي · ✅ سليم |
 | 289 | <h2 class="section-title" style="margin-top:22px;">🗺️ خريطة الأندية بالدوريات</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
-| 295 | <div class="club-map-league"> <div class="club-map-league-name">${flag} ${league} (${byLeague[league].length} أندية)</div> <div class="club-map-clubs"> | قالب فيه ${} | رسمي · ✏️ عدد ومعدود (formatCount)، علامات تنصيص «» |
+| 296 | نادٍ | نص ثابت | رسمي · ✅ سليم |
 | 301 | ، | نص ثابت | رسمي · ✅ سليم |
 | 350 | <h2 class="section-title" style="margin-top:22px;">🎲 تحدي التوقعات — السجل الكامل</h2> | HTML | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
 | 352 | <tr><th>المشارك</th> | HTML | رسمي · ✅ سليم |
-| 353 | <th>ج${r.number}</th> | قالب فيه ${} | رسمي · ✅ سليم |
+| 353 | <th title="الجولة ${r.number}">${r.number}</th> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
 | 354 | <th>صح</th><th>إجمالي</th><th>نسبة</th></tr> | HTML | رسمي · ✅ سليم |
 | 419 | نقاط | نص ثابت | رسمي · ✅ سليم |
 | 419 | معدل | نص ثابت | رسمي · ✅ سليم |
@@ -1761,10 +1801,10 @@
 | 419 | سلسلة | نص ثابت | رسمي · ✅ سليم |
 | 470 | <h2 class="section-title" style="margin-top:22px;">🕸️ رادار الموسم الكامل</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 471 | <div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">5 أبعاد: نقاط الموسم · معدل الجولة · أعلى جولة · الثبات · أطول سلسلة</div> | HTML | رسمي · ✅ سليم |
-| 497 | <h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2> <div class="race-slider"> <label for="raceSlider">الجولة:</label> <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1"> <span class="race-round-label" id="raceLabel">ج${DATA.rounds[n-1].number}</span> </div> <div id="raceBars"></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
+| 497 | <h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2> <div class="race-slider"> <label for="raceSlider">الجولة:</label> <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1"> <span class="race-round-label" id="raceLabel">الجولة ${DATA.rounds[n-1].number}</span> </div> <div id="raceBars"></div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «»، إيموجي بالواجهة |
 | 525 | البداية | نص ثابت | رسمي · ✅ سليم |
-| 526 | ج${r.number} | قالب فيه ${} | رسمي · ✅ سليم |
-| 534 | <div class="race-row"> <span class="race-name">${rankIcon}${s.name}</span> <div class="race-bar-wrap"> <div class="race-bar" style="width:${pct}%;background:${color};"> <span class="race-pts" style="color:${contrastTextOn(color)};">${s.total} ن</span> </div> </div> </div> | قالب فيه ${} | رسمي · ✅ سليم |
+| 526 | الجولة ${r.number} | قالب فيه ${} | رسمي · ✅ سليم |
+| 538 | نقطة | نص ثابت | رسمي · ✅ سليم |
 | 566 | <h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 567 | <p class="club-eff-note">متوسط النقاط لكل مباراة، مرتبة من الأعلى. الأشرطة على مقياس ثابت من 3.</p> | HTML | رسمي · ✅ سليم |
 | 570 | <div class="efficiency-row"> <div class="efficiency-label">${crestHTML(c.name, 20)}<span class="efficiency-name">${c.name}</span><small class="efficiency-record">${c.w}ف ${c.d}ت ${c.l}خ</small><b>${avg}</b></div> <progress max="${SCALE}" value="${Math.min(c.avg, SCALE)}" aria-label="${c.name}: متوسط ${avg} من ${SCALE}"></progress> </div> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
@@ -1773,7 +1813,7 @@
 | 603 | <h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 604 | <div class="death-map" tabindex="0" role="region" aria-label="خريطة الممّات"><table> | HTML | رسمي · ✏️ علامات تنصيص «» |
 | 605 | <tr><th>المشارك</th> | HTML | رسمي · ✅ سليم |
-| 606 | <th>ج${n}</th> | قالب فيه ${} | رسمي · ✅ سليم |
+| 606 | <th title="الجولة ${n}">${n}</th> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
 | 607 | <th>المجموع</th></tr> | HTML | رسمي · ✅ سليم |
 | 619 | <td class="dm-none empty-cell" title="لا بيانات لهذه الجولة"></td> | HTML | رسمي · ✏️ علامات تنصيص «» |
 | 632 | <tr style="border-top:2px solid var(--line);"><td style="color:var(--muted);font-size:0.72rem;">ممات الجولة</td> | HTML | رسمي · ✅ سليم |
@@ -1986,10 +2026,10 @@
 | 48 | تعذّر تحميل مكتبة الصور (html2canvas) — تحقق من الاتصال بالإنترنت | نص ثابت | رسمي · ✏️ شرطة طويلة |
 | 52 | <div class="status-msg ok">تم تحميل الصورة — أرسلها في الجروب 📲</div> | HTML | رسمي · ✏️ شرطة طويلة، إيموجي بالواجهة |
 | 55 | <div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية${detail}.</div> | قالب فيه ${} | رسمي · ✅ سليم |
-| 69 | <html dir="rtl"><head><meta charset="utf-8"> <title>تقرير الموسم — دوري بروكي الفانتازي</title> <style> *{box-sizing:border-box;margin:0;padding:0;} body{font-family:system-ui,Arial,sans-serif;background:#fff;color:#111;padding:24px;direction:rtl;} h1{font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:4px;} .sub{text-align:center;color:#666;font-size:0.85rem;margin-bottom:20px;} h2{font-size:1rem;font-weight:800;border-bottom:2px solid #eee;padding-bottom:4px;margin:20px 0 10px;} table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:16px;} th{background:#f5f5f5;font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid #ddd;} td{padding:5px 8px;text-align:center;border-bottom:1px solid #eee;} td:first-child{text-align:right;font-weight:700;} .gold{color:#B8902A;font-weight:900;} .muted{color:#888;} .badges{display:flex;flex-wrap:wrap;gap:10px;} .badge{border:1px solid #eee;border-radius:8px;padding:8px 12px;font-size:0.8rem;min-width:140px;} .badge-icon{font-size:1.4rem;display:block;margin-bottom:3px;} .badge-title{font-weight:800;color:#B8902A;} @media print{body{padding:10px;} @page{margin:15mm;}} </style></head><body> <h1>🏆 دوري بروكي الفانتازي — الموسم الثاني</h1> <div class="sub">تقرير الموسم حتى الجولة ${n} · ${new Date().toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'})}</div> <h2>📊 الترتيب العام</h2> <table> <tr><th>#</th><th style="text-align:right;">المشارك</th><th>نقاط</th><th>ممات</th><th>أفضل جولة</th><th>معدل</th></tr> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
+| 69 | <html dir="rtl"><head><meta charset="utf-8"> <title>تقرير الموسم — دوري بروكي الفانتازي</title> <style> *{box-sizing:border-box;margin:0;padding:0;} body{font-family:system-ui,Arial,sans-serif;background:#fff;color:#111;padding:24px;direction:rtl;} h1{font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:4px;} .sub{text-align:center;color:#666;font-size:0.85rem;margin-bottom:20px;} h2{font-size:1rem;font-weight:800;border-bottom:2px solid #eee;padding-bottom:4px;margin:20px 0 10px;} table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:16px;} th{background:#f5f5f5;font-weight:700;padding:6px 8px;text-align:center;border-bottom:2px solid #ddd;} td{padding:5px 8px;text-align:center;border-bottom:1px solid #eee;} td:first-child{text-align:right;font-weight:700;} .gold{color:#B8902A;font-weight:900;} .muted{color:#888;} .badges{display:flex;flex-wrap:wrap;gap:10px;} .badge{border:1px solid #eee;border-radius:8px;padding:8px 12px;font-size:0.8rem;min-width:140px;} .badge-icon{font-size:1.4rem;display:block;margin-bottom:3px;} .badge-title{font-weight:800;color:#B8902A;} @media print{body{padding:10px;} @page{margin:15mm;}} </style></head><body> <h1>🏆 دوري بروكي الفانتازي — الموسم الثاني</h1> <div class="sub">تقرير الموسم حتى الجولة ${n} · ${formatDate(new Date(), {style: 'full'})}</div> <h2>📊 الترتيب العام</h2> <table> <tr><th>#</th><th style="text-align:right;">المشارك</th><th>نقاط</th><th>ممات</th><th>أفضل جولة</th><th>معدل</th></tr> | قالب فيه ${} | رسمي · ✏️ شرطة طويلة، علامات تنصيص «»، إيموجي بالواجهة |
 | 113 | </table> <h2>🏅 أوسمة الموسم</h2> <div class="badges"> | HTML | رسمي · ✏️ إيموجي بالواجهة |
 | 127 | <h2>📅 تاريخ الجولات</h2> <table><tr><th style="text-align:right;">المشارك</th> | HTML | رسمي · ✏️ إيموجي بالواجهة |
-| 129 | <th>ج${r.number}</th> | قالب فيه ${} | رسمي · ✅ سليم |
+| 129 | <th title="الجولة ${r.number}">${r.number}</th> | قالب فيه ${} | رسمي · ✏️ علامات تنصيص «» |
 | 130 | <th>المجموع</th></tr> | HTML | رسمي · ✅ سليم |
 
 ## `js/ui/my-clubs-card.js` (26)

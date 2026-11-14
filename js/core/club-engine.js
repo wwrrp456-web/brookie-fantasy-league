@@ -138,5 +138,5 @@ function clubPlayLine(name){
     else l++;
   });
   if(!played) return 'لم تبدأ مبارياته بعد';
-  return `لعب ${played} · فاز ${w} · تعادل ${d} · خسر ${l} · ${pts} نقطة`;
+  return `لعب ${played} · فاز ${w} · تعادل ${d} · خسر ${l} · ${formatCount(pts, 'نقطة')}`;
 }

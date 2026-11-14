@@ -38,7 +38,7 @@ function renderLiveFocusMode(){
     <div class="live-focus-inner">
       <button type="button" class="live-focus-close" id="liveFocusCloseBtn" aria-label="إغلاق الوضع المباشر">✖</button>
       <div class="live-focus-badge"><span class="live-focus-dot"></span> مباشر · الجولة ${rn}</div>
-      ${heroes && heroes.top ? `<div class="live-focus-hero">👑 ${heroes.top.name} — ${heroes.top.points} نقطة هذي الجولة</div>` : ''}
+      ${heroes && heroes.top ? `<div class="live-focus-hero">👑 ${heroes.top.name} — ${formatCount(heroes.top.points, 'نقطة')} هذي الجولة</div>` : ''}
       <div class="live-focus-list">
         ${top5.map((s,i)=>{
           const d = mv[s.id];

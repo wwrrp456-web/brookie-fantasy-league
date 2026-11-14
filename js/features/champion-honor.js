@@ -76,7 +76,7 @@ function championDefensePathHTML(pid){
   if(!CHAMPION_FEATURES.defense_path || !CHAMPION_ID || pid !== CHAMPION_ID) return '';
   const entry = findChampionLastSeasonEntry();
   if(!entry) return '';
-  return `<div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${entry.points} نقطة</div>`;
+  return `<div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${formatCount(entry.points, 'نقطة')}</div>`;
 }
 
 // ميزة 2: بانر تذكير بالبطل أعلى الصفحة
@@ -103,7 +103,7 @@ function renderHallOfFame(){
   if(!CHAMPION_FEATURES.hall_of_fame || !SEASON_CHAMPIONS_ARCHIVE.length){ box.innerHTML=''; return; }
   const sorted = SEASON_CHAMPIONS_ARCHIVE.slice().sort((a,b)=>(b.points||0)-(a.points||0));
   box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2>
-    <div>${sorted.map(r=>`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${r.points} نقطة</span></div>`).join('')}</div>`;
+    <div>${sorted.map(r=>`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${formatCount(r.points, 'نقطة')}</span></div>`).join('')}</div>`;
 }
 
 // أرشيف مواسم فعلي — الترتيب النهائي الكامل لكل موسم قُفل بعد إضافة هذه
@@ -121,9 +121,9 @@ function renderSeasonsArchive(){
         <div class="season-archive-row">
           <span class="season-archive-rank">${i+1}</span>
           <span class="season-archive-name">${row.name}</span>
-          <span class="season-archive-pts">${row.total} نقطة</span>
+          <span class="season-archive-pts">${formatCount(row.total, 'نقطة')}</span>
         </div>`).join('');
-      const lockedLabel = s.lockedAt ? new Date(s.lockedAt).toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric'}) : '';
+      const lockedLabel = s.lockedAt ? formatDate(s.lockedAt, {style: 'short'}) : '';
       return `<details class="season-archive-card">
         <summary>${s.seasonName}${lockedLabel?` <span class="season-archive-date">— قُفل ${lockedLabel}</span>`:''}</summary>
         <div class="season-archive-table">${rows || '<div style="color:var(--muted);font-size:0.8rem;padding:8px;">لا يوجد ترتيب محفوظ.</div>'}</div>
@@ -148,7 +148,7 @@ function renderChampionHero(){
     const pct = Math.max(0, Math.min(100, Math.round(row.total/entry.points*100)));
     journeyHTML = `<div style="margin-top:12px;">
       <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:4px;">
-        <span>رحلة الدفاع عن اللقب</span><span>${row.total} / ${entry.points} نقطة (${entry.season})</span>
+        <span>رحلة الدفاع عن اللقب</span><span>${row.total} / ${formatCount(entry.points, 'نقطة')} (${entry.season})</span>
       </div>
       <div style="background:var(--line);border-radius:20px;height:10px;overflow:hidden;">
         <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));"></div>

@@ -225,7 +225,7 @@ async function renderVisitorCount(){
     const total  = d.total  || 0;
     const unique = d.unique || 0;
     const avg    = unique > 0 ? (total/unique).toFixed(1) : '—';
-    const fmt = n => n.toLocaleString('ar-SA');
+    const fmt = n => formatNumber(n);
     box.innerHTML = '<div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;">' +
       [['gold',fmt(total),'إجمالي الزيارات'],['sky',fmt(unique),'أجهزة فريدة'],['coral',avg,'متوسط زيارات/جهاز']]
       .map(([c,v,l]) => `<div style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:110px;text-align:center;"><div style="font-size:2.2rem;font-weight:900;color:var(--${c});">${v}</div><div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">${l}</div></div>`).join('') +
