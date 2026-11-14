@@ -22,6 +22,7 @@ const FILES = [
 
   'js/core/ar-format.js',
   'js/core/whatsapp-text.js',
+  'js/features/round-story-card.js',
   'js/core/storage.js',
   'js/core/standings-engine.js',
   'js/core/club-engine.js',
@@ -121,6 +122,48 @@ check('شهادة: بطل صالح ← لا نواقص', context.validateCertifi
   check('واتساب: بلا بطل (أول جولة) لا سطر بطل', wa({round: 1, hero: null}).includes('بطل الجولة'), false);
   check('واتساب: بلا قصة لا سطر قصة ولا خطأ', wa({story: ''}).includes('📝'), false);
 }
+
+// ---------- 002-T006 / S43-0: قصة الجولة (js/features/round-story-card.js): كل قالب بالقيم 0 و1 و2 و3 و10 و11 و12 و100 ----------
+{
+  const compose = (o) => context.composeSatiricalStory(Object.assign({rn: 10, hero: {name: 'أبو أوس', points: 6}, mummat: [], climber: null, dropper: null}, o));
+  const NPTS = {0: 'بلا نقاط', 1: 'نقطة واحدة', 2: 'نقطتين', 3: '3 نقاط', 10: '10 نقاط', 11: '11 نقطة', 12: '12 نقطة', 100: '100 نقطة'};
+  const NMRK = {2: 'مركزين', 3: '3 مراكز', 10: '10 مراكز', 11: '11 مركزًا', 12: '12 مركزًا', 100: '100 مركز'};
+  const allBad = s => /[–—]/.test(s) || /لسه/.test(s) || /(^|\s)2 (مراكز|نقاط|نقطة)/.test(s) || /(^|\s)(11|12|100) مراكز/.test(s) || /undefined|NaN|\$\{/.test(s) || /"/.test(s);
+  // قوالب البطل الأربعة (rn % 4) × عدد النقاط: المعدود صحيح، وحرف الجر «بـ6 نقاط/بنقطة واحدة/بنقطتين»
+  [0, 1, 2, 3].forEach(r => Object.keys(NPTS).forEach(k => {
+    const s = compose({rn: 8 + r, hero: {name: 'س', points: Number(k)}});
+    check(`قصة البطل قالب ${r} بـ${k} نقاط ← «${NPTS[k]}»`, [s.includes(NPTS[k]), allBad(s)], [true, false]);
+  }));
+  check('قصة البطل: «بـ6 نقاط» و«بنقطة واحدة» و«بنقطتين» بحرف الجر الصحيح (قالب 0)',
+    [compose({rn: 8}).includes('بـ6 نقاط'), compose({rn: 8, hero: {name: 'س', points: 1}}).includes('بنقطة واحدة'), compose({rn: 8, hero: {name: 'س', points: 2}}).includes('بنقطتين')], [true, true, true]);
+  check('قصة البطل: «برصيد» لنقاط الجولة ممنوعة', [0, 1, 2, 3].some(r => compose({rn: 8 + r}).includes('برصيد')), false);
+  // الصاعد والمتراجع: القالبان × المقادير
+  [0, 1].forEach(r => Object.keys(NMRK).forEach(k => {
+    const up = compose({rn: 10 + r, climber: {name: 'ص', val: Number(k)}}), dn = compose({rn: 10 + r, dropper: {name: 'ه', val: Number(k)}});
+    check(`قصة الصاعد قالب ${r} بـ${k} ← «${NMRK[k]}»`, [up.includes(NMRK[k]), allBad(up)], [true, false]);
+    check(`قصة المتراجع قالب ${r} بـ${k} ← «${NMRK[k]}»`, [dn.includes(NMRK[k]), allBad(dn)], [true, false]);
+  }));
+  check('قصة: حركة مركز واحد أو صفر لا تُذكر', [compose({climber: {name: 'مصعّد_فريد', val: 1}}).includes('مصعّد_فريد'), compose({dropper: {name: 'هابط_فريد', val: 0}}).includes('هابط_فريد')], [false, false]);
+  check('قصة الصاعد بلا «بجدول» ولا «دفعة وحدة بجدول»', compose({rn: 10, climber: {name: 'ص', val: 2}}).includes('بجدول'), false);
+  // الممّات: الفعل يطابق (مفرد/مثنى/جمع) في القوالب الثلاثة، وأكثر من 3 بالعدد
+  const MUM = {1: ['أ'], 2: ['أ', 'ب'], 3: ['أ', 'ب', 'ج'], 4: ['أ', 'ب', 'ج', 'د'], 11: Array.from({length: 11}, (_, i) => 'م' + i)};
+  const V = {1: ['سجّل ممة', 'قرّر يعدّ'], 2: ['سجّلا ممة', 'قرّرا يعدّان'], 3: ['سجّلوا ممة', 'قرّروا يعدّون'], 4: ['سجّلوا ممة', 'قرّروا يعدّون'], 11: ['سجّلوا ممة', 'قرّروا يعدّون']};
+  Object.keys(MUM).forEach(n => {
+    const s0 = compose({rn: 9, mummat: MUM[n]}), s1 = compose({rn: 10, mummat: MUM[n]}), s2 = compose({rn: 11, mummat: MUM[n]});
+    check(`قصة الممّات ${n}: قالب 0 بفعل مطابق (${V[n][0]})`, [s0.includes(V[n][0]), allBad(s0)], [true, false]);
+    check(`قصة الممّات ${n}: قالب 1 بفعلين مطابقين (${V[n][1]})`, [s1.includes(V[n][1]), allBad(s1)], [true, false]);
+    check(`قصة الممّات ${n}: قالب 2 بلا أخطاء`, allBad(s2), false);
+  });
+  check('قصة الممّات: ≤ 3 بالأسماء بواو العطف، وأكثر بالعدد', [compose({rn: 9, mummat: MUM[3]}).includes('أ، وب، وج'), compose({rn: 9, mummat: MUM[2]}).includes('أ وب'), compose({rn: 9, mummat: MUM[4]}).includes('4 مشاركين'), compose({rn: 9, mummat: MUM[11]}).includes('11 مشاركًا')], [true, true, true, true]);
+  check('قصة: بلا بطل نص فارغ', context.composeSatiricalStory({rn: 3, hero: null}), '');
+  check('قصة: قوالب بلا «بينما» ولا «سرق» ولا «يبحثون» (دليل الأسلوب §3)', [0, 1, 2, 3].some(r => /بينما|سرق|يبحثون/.test(compose({rn: 8 + r}))), false);
+}
+
+// جولات متتالية بصفتها المطابقة (insights-engine، standings-widgets، rounds-tab)
+check('جولات متتالية: 1/2/3/10/11/100', [1, 2, 3, 10, 11, 100].map(n => context.arRoundsRun(n)),
+  ['جولة واحدة', 'جولتان متتاليتان', '3 جولات متتالية', '10 جولات متتالية', '11 جولة متتالية', '100 جولة متتالية']);
+check('بادئة الباء: بـ6 نقاط · بنقطة واحدة · بنقطتين · بلا نقاط', [6, 1, 2, 0].map(n => context.arBaPrefix(context.formatCount(n, 'نقطة', {case: 'acc'}))),
+  ['بـ6 نقاط', 'بنقطة واحدة', 'بنقطتين', 'بلا نقاط']);
 
 // ---------- 003-T001: escapeHtml (S-07) ----------
 {
