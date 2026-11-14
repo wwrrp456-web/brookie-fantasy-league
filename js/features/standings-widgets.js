@@ -180,7 +180,7 @@ function renderHonorBoard(){
   // البطاقة بلا بيانات (لا نقطة جولة، أو لا سلسلة، أو لا ثبات محسوب) تُحذف بدل ما تعرض "—" (U-07)
   const cards = [
     {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:formatCount(leader.total,'نقطة')},
-    bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${bestSingle.pts} ن. (ج${bestSingle.round})`} : null,
+    bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${formatCount(bestSingle.pts, 'نقطة')} (الجولة ${bestSingle.round})`} : null,
     leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:formatCount(leastMumma.mumma,'ممة')} : null,
     longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:arRoundsRun(longestStreak.streak)} : null,
     mostStable.std !== Infinity ? {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
@@ -214,7 +214,7 @@ function buildFingerprintHTML(pid){
   const bars = hist.map(h=>{
     const h2 = h.points===0 ? 4 : Math.max(5, Math.round((h.points/maxPts)*BAR_H));
     const clr = h.points===0 ? 'var(--coral)' : color;
-    return `<div class="fingerprint-bar" style="height:${h2}px;background:${clr};opacity:0.85;" title="ج${h.number}: ${h.points} ن"></div>`;
+    return `<div class="fingerprint-bar" style="height:${h2}px;background:${clr};opacity:0.85;" title="الجولة ${h.number}: ${formatCount(h.points, 'نقطة')}"></div>`;
   }).join('');
 
   return `<div style="display:flex;align-items:flex-end;gap:2px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);">${bars}</div>`;
@@ -275,7 +275,7 @@ function renderSurprises(){
     .sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff));
   if(mostConsistent.length){
     const mc = mostConsistent[0];
-    cards.push({emoji:'🎯',title:'الأكثر ثباتًا هذا الأسبوع',name:mc.name,detail:`${mc.last} ن (متوسطه ${Math.round(mc.avg*10)/10})`});
+    cards.push({emoji:'🎯',title:'الأكثر ثباتًا هذا الأسبوع',name:mc.name,detail:`${formatCount(mc.last, 'نقطة')} (متوسطه ${Math.round(mc.avg*10)/10})`});
   }
 
   // الانتعاشة: ممة ثم نقاط هذا الأسبوع
@@ -465,10 +465,10 @@ function renderRankHistory(){
     changeEvents.forEach(c=>{
       const prev = c.prevName ? `<span style="color:var(--muted);">← ${c.prevName}</span> ` : '';
       html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--paper);border-radius:8px;border:1px solid var(--line);">
-        <span style="font-size:0.75rem;color:var(--muted);min-width:50px;">ج${c.round}</span>
+        <span style="font-size:0.75rem;color:var(--muted);min-width:72px;">الجولة ${c.round}</span>
         ${prev}
         <span style="font-weight:700;color:var(--gold);">👑 ${c.name}</span>
-        <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${c.total} ن</span>
+        <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${formatCount(c.total, 'نقطة')}</span>
       </div>`;
     });
     html += '</div>';
@@ -511,7 +511,7 @@ function renderRankLeaderboard(){
   html += '<div class="rank-leaderboard" tabindex="0" role="region" aria-label="لوحة أدق المتوقعين"><table>';
   html += '<tr><th>المشارك</th>';
   if(rounds.length > 0) html += '<th>قبل</th>';
-  roundNums.forEach(n=> html+=`<th>ج${n}</th>`);
+  roundNums.forEach(n=> html+=`<th title="الجولة ${n}">${n}</th>`);
   html += '</tr>';
 
   sorted.forEach(p=>{
