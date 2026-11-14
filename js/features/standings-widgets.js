@@ -60,7 +60,7 @@ function renderWeeklyDuels(){
   const duels = computeWeeklyDuels();
   const roundNum = getCurrentRoundNumber();
   let html = `<h2 class="section-title" style="margin-top:22px;">⚔️ تحدي مواجهة الجولة ${roundNum}</h2>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">مواجهات عشوائية بين المتسابقين هذه الجولة — فوز إضافي وفخر بس، بلا أي تأثير على الترتيب العام 😎</p>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">مواجهات عشوائية بين المشاركين هذه الجولة — فوز إضافي وفخر بس، بلا أي تأثير على الترتيب العام 😎</p>`;
   html += '<div class="duels-grid">';
   duels.forEach(d=>{
     if(d.bye){

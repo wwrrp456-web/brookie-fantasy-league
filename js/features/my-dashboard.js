@@ -196,10 +196,12 @@ function renderMyDashboard(){
   const above = idx>0 ? st[idx-1] : null;
   const below = idx<st.length-1 ? st[idx+1] : null;
   if(above){
-    rivalHtml += `<div class="my-dash-rival">🔼 <b>${above.name}</b> يسبقك بفارق ${above.total - meRow.total} نقطة</div>`;
+    const g = above.total - meRow.total;
+    rivalHtml += `<div class="my-dash-rival">🔼 <b>${above.name}</b> ${g > 0 ? 'يسبقك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
   }
   if(below){
-    rivalHtml += `<div class="my-dash-rival">🔽 <b>${below.name}</b> خلفك بفارق ${meRow.total - below.total} نقطة</div>`;
+    const g = meRow.total - below.total;
+    rivalHtml += `<div class="my-dash-rival">🔽 <b>${below.name}</b> ${g > 0 ? 'خلفك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
   }
   if(!above && !below){
     rivalHtml = '<div class="my-dash-rival">أنت المشارك الوحيد 🎉</div>';
@@ -263,11 +265,12 @@ function buildMyRankShareText(){
   const rank = idx+1;
   const rn = getCurrentRoundNumber();
   let t = `🏆 *دوري بروكي الفانتازي*\n`;
-  t += `أنا ${me.name}، مركزي رقم *${rank}* برصيد *${meRow.total}* نقطة بعد الجولة ${rn} 💪\n`;
+  t += `أنا ${me.name}، مركزي رقم *${rank}* برصيد *${formatCount(meRow.total, 'نقطة')}* بعد الجولة ${rn} 💪\n`;
   const above = idx>0 ? st[idx-1] : null;
   const below = idx<st.length-1 ? st[idx+1] : null;
-  if(above) t += `🔼 ناقصني ${above.total - meRow.total} نقطة أوصل ${above.name}\n`;
-  if(below) t += `🔽 متقدم على ${below.name} بفارق ${meRow.total - below.total} نقطة\n`;
+  // فارق صفر = تعادل بالنقاط (formatCount(0) يعطي «بلا نقاط» وهو غير مناسب بعد «بفارق»)
+  if(above) t += above.total - meRow.total > 0 ? `🔼 ناقصني ${formatCount(above.total - meRow.total, 'نقطة', {case: 'acc'})} أوصل ${above.name}\n` : `🔼 متعادل مع ${above.name} بالنقاط\n`;
+  if(below) t += meRow.total - below.total > 0 ? `🔽 متقدم على ${below.name} بفارق ${formatCount(meRow.total - below.total, 'نقطة', {case: 'acc'})}\n` : `🔽 متعادل مع ${below.name} بالنقاط\n`;
   t += `تابع الترتيب كامل: ${SITE_URL}`;
   return t;
 }
@@ -424,8 +427,8 @@ function renderMyAchievements(){
   const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
   const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
   const tiles = [
-    ['🔥','أفضل جولة',`${best} نقطة`,bestRound ? `جولة ${bestRound.number}` : ''],
-    ['📉','أضعف جولة',`${worst} نقطة`,worstRound ? `جولة ${worstRound.number}` : ''],
+    ['🔥','أفضل جولة',formatCount(best, 'نقطة'),bestRound ? `جولة ${bestRound.number}` : ''],
+    ['📉','أضعف جولة',formatCount(worst, 'نقطة'),worstRound ? `جولة ${worstRound.number}` : ''],
     ['📊','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
     ['🏆','أفضل مركز',`#${bestRank}`,''],
     ['😓','أسوأ مركز',`#${worstRank}`,''],
@@ -440,7 +443,7 @@ function renderMyAchievements(){
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
         <strong style="color:${readableColor(pc)};">${p?.name||''}</strong>
-        <span style="color:var(--muted);font-size:0.82rem;">— ${getCurrentRoundNumber()} جولات</span>
+        <span style="color:var(--muted);font-size:0.82rem;">— ${formatCount(getCurrentRoundNumber(), 'جولة')}</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
         ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">
