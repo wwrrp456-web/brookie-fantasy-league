@@ -954,6 +954,111 @@ const asyncDiffTests = (async () => {
   check('تنوّع: المولّد قليل الصيغ يُصنَّف waiting مع ما ينقص', [rep2[0].verdict, rep2[0].missing], ['waiting', 1]);
 }
 
+
+// ---------- 002-R22 / S51: استيراد النتائج js/core/results-import.js ----------
+{
+  const rsb = {console}; rsb.window = rsb;
+  const rctx = vm.createContext(rsb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/config.js', 'js/core/ar-format.js', 'js/core/results-import.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), rctx, {filename: f}));
+  vm.runInContext('this.RI = {parseResults, validateDraft, buildSearchPrompt, draftToParsed, resultsDaysInPeriod, resultsLinkForDate, resultsClubKey, resultsClassifyCompetition, resultsSwapRow, arNormalize, RESULTS_LINK_YESTERDAY, CLUBS, CLUB_LEAGUE_MAP};', rctx);
+  const RI = rctx.RI;
+  const P = (t, o) => RI.parseResults(t, Object.assign({year: 2026}, o || {}));
+  // كتلة 365 كما تُنسخ: اسم + تكراره + حالة + نتيجة + اسم + تكراره
+  const blk = (league, country, matches) => `${league}, ${country}\n${league}\n${country}\n\n` + matches.map(([h, hs, as, a, st]) => `${h}\n${h}\n${st || 'انتهت'}\n${hs}\n-\n${as}\n${a}\n${a}\n`).join('\n') + `\nترتيب ${league}\n`;
+
+  // 1) عيّنة المنظّم الأصلية (الأسماء بلا ترجمة): الهلال × النصر داخلية 1-1، وأتلتيكو فاز 2-1 خارج أرضه (الفريق الأول يأخذ الرقم الأول)
+  const nat = fs.readFileSync(path.join(ROOT, 'tests/fixtures/365-native-sample.txt'), 'utf8');
+  const rn = P(nat);
+  const by = Object.fromEntries(rn.rows.map(r => [r.club, r]));
+  check('عيّنة 365 الأصلية: أنديتنا فقط (الهلال والنصر وأتلتيكو)، والباقي يُهمل بصمت', rn.rows.map(r => r.club).sort(), ['أتلتيكو مدريد', 'النصر', 'الهلال'].sort());
+  check('عيّنة 365: الهلال × النصر 1-1 داخلية، لكل مالكيها بتاريخ 12 مايو', [by['الهلال'].gf, by['الهلال'].ga, by['الهلال'].opp, by['النصر'].opp, by['الهلال'].date], [1, 1, 'النصر', 'الهلال', '2026-05-12']);
+  check('عيّنة 365: أوساسونا 1-2 أتلتيكو ← أتلتيكو له 2 وعليه 1 (الفريق الأول يأخذ الرقم الأول)', [by['أتلتيكو مدريد'].gf, by['أتلتيكو مدريد'].ga, by['أتلتيكو مدريد'].opp], [2, 1, 'أوساسونا']);
+  const vn = RI.validateDraft(rn.rows, {start: '2026-05-10', end: '2026-05-17'});
+  check('عيّنة 365: فحص ← الداخلية متطابقة (لا internal_*) ولا تاريخ خارج الفترة، والخصم أوساسونا غير معروف، وأندية بلا سطر', [vn.issues.some(i => /^internal_/.test(i.code)), vn.issues.some(i => i.code === 'date_outside'), vn.issues.some(i => i.code === 'unknown_opp'), vn.issues.some(i => i.code === 'missing_clubs')], [false, false, true, true]);
+  const dn = RI.validateDraft(rn.rows, {start: '2026-05-18', end: '2026-05-24'});
+  check('فحص: تاريخ خارج الفترة يُعلَّم', dn.issues.filter(i => i.code === 'date_outside').length, 3);
+
+  // 2) مطابقة الاسم كاملًا (لا includes)
+  const K = RI.resultsClubKey;
+  check('تشابه الأسماء: «إنتر ميلان» ≠ ميلان، «الاتحاد السكندري» ≠ الاتحاد، «الأهلي المصري» ≠ الأهلي السعودي، «النصر الإماراتي» ≠ النصر', [K('إنتر ميلان'), K('الاتحاد السكندري'), K('الأهلي المصري'), K('النصر الإماراتي')], [null, null, null, null]);
+  check('الأسماء الصحيحة: «ميلان» و«الاتحاد» و«الأهلي» (سعودي بالدوري) و«النصر»', [K('ميلان'), K('الاتحاد'), K('الأهلي'), K('النصر')], ['ميلان', 'الاتحاد', 'الأهلي السعودي', 'النصر']);
+  check('همزات وتشكيل وتاء مربوطة: «اتلتيكو مدريد» «أتلتيكو مَدريد» «برشلونه» «بايرن ميونخ» «فنربهتشه» «جالطة سراي»', [K('اتلتيكو مدريد'), K('أتلتيكو مَدريد'), K('برشلونه'), K('بايرن ميونخ'), K('فنربهتشه'), K('جالطة سراي')], ['أتلتيكو مدريد', 'أتلتيكو مدريد', 'برشلونة', 'بايرن ميونيخ', 'فنربخشة', 'غلطة سراي']);
+  check('أسماء إنجليزية: Al Hilal وReal Madrid وBayern Munich وManchester City وSporting CP', [K('Al Hilal'), K('Real Madrid'), K('Bayern Munich'), K('Manchester City'), K('Sporting CP')], ['الهلال', 'ريال مدريد', 'بايرن ميونيخ', 'مانشستر سيتي', 'سبورتينغ لشبونة']);
+  check('أسماء الفرق الأخرى بنفس الكلمة لا تلتقط: «ريال بيتيس» «ريال سوسيداد» «مانشستر يونايتد»', [K('ريال بيتيس'), K('ريال سوسيداد'), K('مانشستر يونايتد')], [null, null, null]);
+
+  // 3) فلترة المسابقة: الدوري المحلي فقط
+  const mixed = blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 3, 1, 'ريال بيتيس']]) + blk('كأس ملك إسبانيا', 'إسبانيا', [['ريال مدريد', 2, 0, 'ألباسيتي']])
+    + blk('دوري أبطال أوروبا', 'أوروبا', [['برشلونة', 1, 1, 'أرسنال']]) + blk('الدوري الإسباني الدرجة الثانية', 'إسبانيا', [['أتلتيكو مدريد', 0, 0, 'ريال بيتيس']])
+    + blk('دوري غريب جدًا', 'العالم', [['أرسنال', 2, 1, 'ليفربول']]);
+  const rm = P(mixed);
+  check('فلترة المسابقة: يُقبل الدوري المحلي فقط (برشلونة)', rm.rows.map(r => r.club), ['برشلونة']);
+  check('فلترة المسابقة: كأس + قارية + درجة ثانية ← ثلاثة أسباب مختلفة (لا مباراة قبلت)', [rm.ignored.filter(x => /كأس/.test(x.reason)).length, rm.ignored.filter(x => /قارية/.test(x.reason)).length, rm.ignored.filter(x => /درجة/.test(x.reason)).length, rm.ignored.filter(x => x.club === 'ريال مدريد' || x.club === 'أتلتيكو مدريد').length >= 2], [1, 2, 1, true]);
+  check('عنوان مسابقة غير معروف: يُعرض للمنظّم (مع المباراة) بدل القبول الصامت', [rm.ignored.filter(x => x.unknownLeague).length >= 2, rm.rows.some(r => r.club === 'أرسنال')], [true, false]);
+  const cup1 = blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 2, 0, 'ريال بيتيس']]) + blk('كأس ملك إسبانيا', 'إسبانيا', [['برشلونة', 5, 0, 'ألباسيتي']]);
+  check('نادٍ بمباراتي دوري وكأس بنفس اليوم: تُقبل مباراة الدوري فقط', P(cup1).rows.map(r => `${r.club} ${r.gf}-${r.ga}`), ['برشلونة 2-0']);
+  const euro = blk('دوري أبطال أوروبا', 'أوروبا', [['برشلونة', 1, 1, 'أرسنال']]);
+  const ve = RI.validateDraft(P(euro).rows, {});
+  check('نادٍ بمباراة قارية فقط: لا سطر، وتحذير «أندية بلا سطر»', [P(euro).rows.length, ve.missingClubs.includes('برشلونة')], [0, true]);
+  const youth = blk('الدوري الإسباني', 'إسبانيا', [['برشلونة تحت 21', 3, 0, 'ريال بيتيس'], ['برشلونة B', 1, 0, 'ريال بيتيس'], ['ريال مدريد (نساء)', 2, 0, 'أتلتيكو مدريد']]);
+  check('فرق الشباب والاحتياط والنساء: لا تُقبل', [P(youth).rows.length], [0]);
+  check('«الدوري السعودي» لا يُعدّ «ودية» (حماية من تطابق «ودي» داخل «السعودي»)', RI.resultsClassifyCompetition('الدوري السعودي').kind, 'domestic');
+  check('الدوري الأوروبي الآخر المطابق بالاسم الكامل فقط (الإسباني الدرجة الثانية ≠ الإسباني)', [RI.resultsClassifyCompetition('الدوري الإسباني').kind, RI.resultsClassifyCompetition('الدوري الإسباني الدرجة الثانية').kind], ['domestic', 'other']);
+
+  // 4) حالات الكتل: مؤجلة، مباشرة، لم تبدأ، تكرار بين القسمين، بطاقات حمراء
+  const st = blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 1, 0, 'ريال بيتيس', 'مباشر']]) + 'الدوري الإسباني, إسبانيا\nالدوري الإسباني\nإسبانيا\nريال مدريد\nريال مدريد\n20:00\nأتلتيكو مدريد\nأتلتيكو مدريد\nترتيب الدوري الإسباني\n';
+  const rs = P(st);
+  check('مباراة مباشرة تُتجاهل («لم تنتهِ»)، وغير المبدوءة (وقت) تصير «لم تبدأ» لكل فريق', [rs.ignored.some(x => /لم تنتهِ/.test(x.reason)), rs.rows.filter(r => r.status === 'not_played').length, rs.rows.some(r => r.club === 'برشلونة')], [true, 2, false]);
+  const dup = blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 2, 1, 'ريال بيتيس']]) + blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 2, 1, 'ريال بيتيس']]);
+  check('تكرار المباراة بين قسمي الصفحة: تُحسب مرة', P(dup).rows.length, 1);
+  const red = 'الدوري الإسباني, إسبانيا\nالدوري الإسباني\nإسبانيا\nبرشلونة\nبرشلونة\n2\nانتهت\n3\n-\n1\nريال بيتيس\nريال بيتيس\n';
+  check('أرقام البطاقات الحمراء بين الأسطر تُتجاهل', P(red).rows.map(r => `${r.club} ${r.gf}-${r.ga}`), ['برشلونة 3-1']);
+  const dated = 'الأحد, 9 نوفمبر\n' + blk('الدوري الإسباني', 'إسبانيا', [['برشلونة', 2, 1, 'ريال بيتيس']]);
+  check('رأس التاريخ بالنص يُلتقط (9 نوفمبر ← 2026-11-09)، ويتجاوزه تاريخ اللصقة', [P(dated).rows[0].date, P(dated, {date: '2026-11-10'}).rows[0].date], ['2026-11-09', '2026-11-10']);
+  const translated = Array.from({length: 6}, (_, i) => `الدوري الإسباني, إسبانيا\nالدوري الإسباني\nإسبانيا\nطعام${i}\nطعام${i}\nانتهت\n1\n-\n0\nميناء${i}\nميناء${i}\n`).join('');
+  check('نص مترجَم آليًا (أسماء مشوّهة): تنبيه «ترجمة المتصفح»', [P(translated).rows.length, P(translated).stats.likelyTranslated], [0, true]);
+
+  // 5) الصيغ الأخرى: جدول | وماركداون وتبويب والصيغة القديمة وحالات الجدول
+  const tbl = `| النادي | النتيجة | الخصم | التاريخ | الحالة | المصدر |
+|---|---|---|---|---|---|
+| الهلال | 3-0 | الخليج | 2026-11-10 | لُعبت | https://example.com/a |
+| برشلونة | 2-0 | ريال بيتيس | 2026-11-09 | لعبت | |
+| ريال مدريد |  |  |  | لم يلعب | |
+| أرسنال | | ليفربول | 2026-11-12 | مؤجلة | |
+أتلتيكو مدريد\t1-1\tإشبيلية\t2026-11-08\tلعبت`;
+  const rt = P(tbl);
+  const tb = Object.fromEntries(rt.rows.map(r => [r.club, r]));
+  check('جدول | (ماركداون): الأسطر والفاصل والترويسة والتبويب', [rt.rows.length, tb['الهلال'].gf, tb['الهلال'].ga, tb['الهلال'].opp, tb['الهلال'].source, tb['أتلتيكو مدريد'].gf], [5, 3, 0, 'الخليج', 'https://example.com/a', 1]);
+  check('جدول: «لم يلعب» و«مؤجلة» تصيران لا مباراة بملاحظة', [tb['ريال مدريد'].status, tb['ريال مدريد'].note, tb['أرسنال'].status, tb['أرسنال'].note, tb['أرسنال'].gf], ['not_played', 'لم يلعب', 'postponed', 'مؤجلة', null]);
+  const old = P('الهلال 3-0 الخليج\nبرشلونة 2-0\nريال مدريد 4-1 ريال سوسيداد\nنادي غير معروف 1-0 س\nسطر بلا نتيجة');
+  check('الصيغة القديمة (سطر لكل مباراة) ما زالت تعمل، وغير المعروف يُعلَّم', [old.rows.map(r => `${r.club} ${r.gf}-${r.ga} ${r.opp}`), old.unknown.length], [['الهلال 3-0 الخليج', 'برشلونة 2-0 ', 'ريال مدريد 4-1 ريال سوسيداد'], 1]);
+  const accents = P('أتلتيكو مَدريد 1-0 س\nBarcelona 2-1 س\nبرشلونه 0-0 س');
+  check('أسماء بتشكيل وهمزات وإنجليزية بالصيغة القديمة', accents.rows.map(r => r.club), ['أتلتيكو مدريد', 'برشلونة', 'برشلونة']);
+
+  // 6) تقرير الفحص
+  const R6 = (rows, c) => RI.validateDraft(rows, Object.assign({expectAll: false}, c || {})).issues.map(i => i.code);
+  const row = (club, opp, gf, ga, o) => Object.assign({club, opp, oppKnown: true, gf, ga, date: null, status: 'played', source: '', note: ''}, o || {});
+  check('فحص: سليم تمامًا (نتيجة عادية وخصم معروف) ← بلا تنبيه', R6([row('الهلال', 'الخليج', 2, 1, {opp: ''})]).filter(c => c !== 'unknown_opp'), []);
+  check('فحص: مباراة بلا نتيجة رقمية، ونتيجة غريبة (مجموع > 12)', [R6([row('الهلال', '', null, null)]), R6([row('الهلال', '', 9, 5)])], [['no_score'], ['odd_score']]);
+  check('فحص: نادٍ بمباراتين بالفترة', R6([row('الهلال', '', 1, 0), row('الهلال', '', 2, 0)]), ['multi_match', 'multi_match']);
+  check('فحص: تاريخ خارج الفترة ← تنبيه، وداخلها ← لا', [R6([row('الهلال', '', 1, 0, {date: '2026-11-20'})], {start: '2026-11-10', end: '2026-11-17'}), R6([row('الهلال', '', 1, 0, {date: '2026-11-12'})], {start: '2026-11-10', end: '2026-11-17'})], [['date_outside'], []]);
+  check('فحص: خصم غير معروف ← تنبيه (يُسجَّل «غير ذلك»)', R6([row('الهلال', 'فريق مجهول', 1, 0)]), ['unknown_opp']);
+  check('فحص: داخلية 2-1 مقابل 1-2 ← سليمة', R6([row('الهلال', 'النصر', 2, 1), row('النصر', 'الهلال', 1, 2)]), []);
+  check('فحص: داخلية بنتيجتين متناقضتين (2-1 مقابل 2-1) ← تنبيه على السطرين', R6([row('الهلال', 'النصر', 2, 1), row('النصر', 'الهلال', 2, 1)]), ['internal_mismatch', 'internal_mismatch']);
+  check('فحص: داخلية بلا سطر مقابل ← تنبيه', R6([row('الهلال', 'النصر', 2, 1)]), ['internal_missing']);
+  const swapped = RI.resultsSwapRow(row('الهلال', 'النصر', 2, 1));
+  check('«عكس» يقلب له/عليه', [swapped.gf, swapped.ga], [1, 2]);
+
+  // 7) الروابط وطلب البحث والتحويل
+  check('روابط الأيام: من 10 إلى 12 نوفمبر ← 3 أيام بالصيغة الصحيحة (التاريخ بعد #)', [RI.resultsDaysInPeriod('2026-11-10', '2026-11-12'), RI.resultsLinkForDate('2026-11-10')], [['2026-11-10', '2026-11-11', '2026-11-12'], 'https://www.365scores.com/ar/football/match-results#date=2026-11-10']);
+  check('الأيام: حد أقصى 8، ونهاية قبل البداية ← فارغ، وتاريخ غير صالح ← فارغ', [RI.resultsDaysInPeriod('2026-11-01', '2026-11-30').length, RI.resultsDaysInPeriod('2026-11-10', '2026-11-09').length, RI.resultsDaysInPeriod('x', 'y').length], [8, 0, 0]);
+  check('رابط «نتائج أمس» ثابت بلا تاريخ، والإنجليزي بصيغة /en-us/', [RI.RESULTS_LINK_YESTERDAY, RI.resultsLinkForDate('2026-11-10', 'en')], ['https://www.365scores.com/ar/football/yesterdays-matches', 'https://www.365scores.com/en-us/football/match-results#date=2026-11-10']);
+  const pr = RI.buildSearchPrompt({start: '2026-11-10', end: '2026-11-17'});
+  check('طلب البحث: كل الأندية بأسمائها الحرفية، والتواريخ، والدوري المحلي فقط، وشكل الجواب، ولا تخمّن', [RI.CLUBS.every(c => pr.includes(c)), /10 نوفمبر 2026/.test(pr) && /17 نوفمبر 2026/.test(pr), /مباريات الدوري المحلي فقط/.test(pr), /النادي \| النتيجة/.test(pr), /لا تخمّن/.test(pr), /الدوري السعودي: /.test(pr)], [true, true, true, true, true, true]);
+  const dp = RI.draftToParsed([row('الهلال', 'النصر', 1, 1), row('برشلونة', '', null, null, {status: 'not_played'}), row('ريال مدريد', 'س', 2, 0), row('ريال مدريد', '', null, null, {status: 'postponed'})]);
+  check('draftToParsed: نتيجة فعلية + لا مباراة (يُسقَط لو للنادي مباراة فعلية)', dp.recognized.map(r => [r.club, r.matches.map(m => m.result).join(',')]), [['الهلال', 'draw'], ['برشلونة', 'no_match'], ['ريال مدريد', 'win']]);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
