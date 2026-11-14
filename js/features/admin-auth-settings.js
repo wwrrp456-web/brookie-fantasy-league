@@ -218,6 +218,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
     // إلا بعد ما يدخل هنا ويرجع لذاك التبويب)
     document.getElementById('copySummaryBtn').style.display='';
     document.getElementById('champCardBtn').style.display='';
+    renderSpotlightCard();   // يظهر زر «نسخ للواتساب» بعد الدخول
     // قسم "المواجهة المباشرة" فُتح لواجهة المشارك بتاريخ 15 سبتمبر 2026
     // (ميزة 3 من حزمة التفاعل الاجتماعي) — لم يعد مقيّدًا بتسجيل دخول
     // المنظم؛ renderH2H() نفسها تتحكم بظهوره حسب هوية الزائر.
