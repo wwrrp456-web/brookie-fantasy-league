@@ -52,10 +52,10 @@ function renderCopyBox(){
     const ta = document.getElementById('summaryArea');
     try{
       await navigator.clipboard.writeText(ta.value);
-      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">تم النسخ ✅ الصقه في الجروب</div>';
+      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">تم النسخ ✅ الصقه في المجموعة</div>';
     }catch(e){
       ta.select();
-      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">حدّد النص واضغط نسخ يدوياً</div>';
+      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">حدّد النص واضغط نسخ يدويًا</div>';
     }
   };
   // فتح واتساب مباشرة والنص جاهز بالداخل — يفتح تطبيق واتساب على الجوال
@@ -156,7 +156,7 @@ function renderSmartProfile(){
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
             <span style="font-weight:800;color:${readableColor(pc)};">#${i+1}</span>
             <span style="font-weight:700;">${p?.name||''}</span>
-            <span style="color:var(--muted);font-size:0.8rem;">${s.total} نقطة</span>
+            <span style="color:var(--muted);font-size:0.8rem;">${formatCount(s.total,'نقطة')}</span>
           </div>
           ${buildSmartProfile(s.id)}
         </div>`;
@@ -255,7 +255,7 @@ function renderStandings(){
             }).join('');
             const avg = hist.length ? Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10 : 0;
             return `<div>
-              <div class="quick-hist-mini-label">آخر ${last5.length} جولات | معدل الموسم: ${avg}</div>
+              <div class="quick-hist-mini-label">آخر ${formatCount(last5.length,'جولة')} · معدل الموسم: ${avg}</div>
               <div class="quick-hist">${pills}</div>
             </div>`;
           })()}
@@ -330,7 +330,7 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
   try{
     await loadData();
     renderRefreshSummary();
-    msg.innerHTML = '<div class="status-msg ok">تم تحديث ترتيب المتسابقين بأحدث نتائج الجولات ✅</div>';
+    msg.innerHTML = '<div class="status-msg ok">تم تحديث ترتيب المشاركين بأحدث نتائج الجولات ✅</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">حدث خطأ أثناء التحديث، حاول مجددًا.</div>';
   }

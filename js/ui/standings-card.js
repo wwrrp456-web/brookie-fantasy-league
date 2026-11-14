@@ -172,15 +172,15 @@ async function exportStandingsCard(action, forcedTheme){
       const shared = await tryShareCanvas(cv, filename, 'ترتيب دوري بروكي', `الترتيب العام بعد الجولة ${round}`);
       if(shared){ _standingsMsg('<div class="status-msg ok">تم فتح المشاركة</div>'); return true; }
       downloadCanvasPNG(cv, filename);
-      _standingsMsg('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في الجروب.</div>');
+      _standingsMsg('<div class="status-msg ok">جهازك لا يدعم المشاركة المباشرة، فتم تحميل الصورة. أرسلها في المجموعة.</div>');
       return true;
     }
     downloadCanvasPNG(cv, filename);
-    _standingsMsg('<div class="status-msg ok">تم تحميل صورة الترتيب. أرسلها في الجروب.</div>');
+    _standingsMsg('<div class="status-msg ok">تم تحميل صورة الترتيب. أرسلها في المجموعة.</div>');
     return true;
   }catch(e){
-    if(e && e.name === 'CardDataError') _standingsMsg(`<div class="status-msg err">ما نقدر نجهّز صورة الترتيب: ${e.problems.join('، ')}.</div>`);
-    else _standingsMsg('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية.</div>');
+    if(e && e.name === 'CardDataError') _standingsMsg(`<div class="status-msg err">تعذّر تجهيز صورة الترتيب: ${e.problems.join('، ')}.</div>`);
+    else _standingsMsg('<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة أخرى.</div>');
     return false;
   } finally {
     if(btn) btn.disabled = false;
