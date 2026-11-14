@@ -574,7 +574,7 @@ const asyncDiffTests = (async () => {
   const vctx = vm.createContext(vsb);
   ['js/core/ar-format.js', 'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/spotlight-angles.js', 'js/voice/banter.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), vctx, {filename: f}));
-  vm.runInContext('this.L = {WA_REPORT, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_SEASON, spotlightLength, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, VOICE_ROUND_STORY, VOICE_STREAKS, VOICE_NOTIFY, VOICE_REGISTRY, voiceApply};', vctx);
+  vm.runInContext('this.L = {WA_REPORT, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_SEASON, spotlightLength, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, VOICE_ROUND_STORY, VOICE_STREAKS, VOICE_NOTIFY, VOICE_BOTTOM, VOICE_TIE, VOICE_DUEL, VOICE_REGISTRY, voiceApply};', vctx);
   const L = vctx.L, h = {formatCount: vctx.formatCount, pickForm: vctx.pickForm, formatList: vctx.formatList};
   const apply = (t, st) => L.voiceApply(t, st, h);
 
@@ -586,11 +586,15 @@ const asyncDiffTests = (async () => {
     ['streak.hot', L.VOICE_STREAKS.hot], ['streak.cold', L.VOICE_STREAKS.cold], ['notify.newRound', L.VOICE_NOTIFY.newRound], ['notify.badge', L.VOICE_NOTIFY.badge], ['notify.hero', L.VOICE_NOTIFY.hero]]
     .forEach(([k, v]) => { if(v.length < 5) short.push(k); });
   Object.entries(L.VOICE_ROUND_STORY).forEach(([k, v]) => { if(v.length < 8) short.push('rs.' + k); });
+  // FR-08: 8 مواقف × 8 قوالب على الأقل (البطل، والممة، والصاعد، والهابط، والمتصدر، والقاع، والتعادل، والمواجهة)
+  const fr08 = {hero: L.VOICE_ROUND_STORY.hero, mumma: L.VOICE_ROUND_STORY.mummat, climb: L.VOICE_ROUND_STORY.climb, drop: L.VOICE_ROUND_STORY.drop,
+    leader: L.WA_REPORT.lead, bottom: L.VOICE_BOTTOM, tie: L.VOICE_TIE, duel: [...L.VOICE_DUEL.win, ...L.VOICE_DUEL.draw]};
+  Object.entries(fr08).forEach(([k, v]) => { if(v.length < 8) short.push('FR-08.' + k); });
   check('صوت: ≥ 5 صيغ لكل مقطع، و≥ 8 لكل موقف قصة، و13 زاوية للمنافس', [short, L.SPOTLIGHT_ANGLES.length], [[], 13]);
 
   const all = [].concat(...Object.values(L.WA_REPORT), ...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke]), L.SPOTLIGHT_FACTS, L.SPOTLIGHT_SEASON,
     L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down, ...Object.values(L.VOICE_ROUND_STORY),
-    L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY));
+    L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY), L.VOICE_BOTTOM, L.VOICE_TIE, L.VOICE_DUEL.win, L.VOICE_DUEL.draw);
   const ids = all.map(t => t.id);
   check('صوت: معرّفات القوالب فريدة', ids.filter((x, i) => ids.indexOf(x) !== i), []);
   const conflictIds = [].concat(...Object.entries(L.SPOTLIGHT_CONFLICTS).map(([k, v]) => [k, ...v]));
@@ -622,13 +626,15 @@ const asyncDiffTests = (async () => {
       seasonMumma: [0, 1, 2, 11][i % 4], heroCount: [0, 1, 2, 11][i % 4], bestPts: [1, 2, 12][i % 3],
       leaderName: 'أبا مناف', leaderGap: [0, 1, 2, 6, 11][i % 5], roundsPlayed: [1, 2, 3, 11][i % 4], seasonTotal: 30, rank3: [null, 1, 9, 15][i % 4]});
     rsStates.push({round: 10, hero: waStates[i].hero, mummat: waStates[i].mummat, climber: waStates[i].climbers, dropper: waStates[i].droppers,
-      names: names(c), count: [2, 3, 11][i % 3], title: 'أطول سلسلة نقاط', name: 'أبا أوس'});
+      names: names(c), count: [2, 3, 11][i % 3], title: 'أطول سلسلة نقاط', name: 'أبا أوس',
+      total: [1, 2, 62, 111][i % 4], above: {name: 'أبي رمزي', gap: [1, 2, 4, 11][i % 4]}, playersCount: 20,
+      a: {name: 'أبا حمد', pts: [0, 1, 3, 6][i % 4]}, b: {name: 'العندليب', pts: [0, 3, 3, 1][i % 4]}});
   }
   const texts = [];
   const run = (list, states) => list.forEach(t => states.forEach(st => { const o = apply(t, st); if(o !== null) texts.push([t.id, o]); }));
   run([].concat(...Object.values(L.WA_REPORT)), waStates);
   run([].concat(...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke]), L.SPOTLIGHT_FACTS, L.SPOTLIGHT_SEASON, L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down), spStates);
-  run([].concat(...Object.values(L.VOICE_ROUND_STORY), L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY)), rsStates);
+  run([].concat(...Object.values(L.VOICE_ROUND_STORY), L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY), L.VOICE_BOTTOM, L.VOICE_TIE, L.VOICE_DUEL.win, L.VOICE_DUEL.draw), rsStates);
   const RULES = [
     ['عدد ومعدود', /(^|[^\d])([3-9]|10) (نقطة|مركز|جولة|ممة)(?![ء-ي])|(^|[^\d])[12] (نقاط|نقطة|مراكز|مركز|جولات|جولة)(?![ء-ي])|(^|[^\d])(1[1-9]|[2-9]\d) (نقاط|مراكز|جولات|ممّات)(?![ء-ي])/],
     ['شرطة طويلة', /[—–]/], ['ترقيم مكرر', /!!|؟؟|\.\./], ['مسافة قبل الترقيم أو مزدوجة', / [،.؟!:]|  /],

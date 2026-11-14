@@ -19,7 +19,7 @@ function loadContext(fixturePath){
   const sb = {console}; sb.window = sb;
   const ctx = vm.createContext(sb);
   vm.runInContext(ENGINE.map(f => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n;\n') +
-    '\n;this.__lib = {WA_REPORT, WA_REPORT_ORDER, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_SEASON, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, spotlightLength, VOICE_ROUND_STORY, voiceApply, voiceEligible};',
+    '\n;this.__lib = {WA_REPORT, WA_REPORT_ORDER, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_SEASON, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, spotlightLength, VOICE_ROUND_STORY, VOICE_BOTTOM, VOICE_TIE, VOICE_DUEL, voiceApply, voiceEligible};',
     ctx, {filename: 'voice-bundle.js'});
   ctx.__allRounds = JSON.parse(fs.readFileSync(fixturePath, 'utf8')).data.rounds;
   return ctx;
@@ -198,6 +198,15 @@ function main(argv){
   const mA = ctxLib.SPOTLIGHT_ANGLES.find(a => a.id === 'mummaHonor');
   ['title', 'story', 'joke'].forEach(k => show(`زاوية «ممة بشرف»: ${({title: 'العنوان', story: 'القصة', joke: 'النكتة'})[k]}`, mA[k], mSp));
   show('زاوية «ممة بشرف»: الخاتمة', ctxLib.SPOTLIGHT_CLOSING.down, mSp);
+  // القاع من بيانات حقيقية، والتعادل والمواجهة بحالة معلنة
+  const lastSpot = lastB.spots[lastB.spots.length - 1];
+  const bottomNames = lastB.spots.filter(x => x.total === lastSpot.total).map(x => x.name);
+  const aboveB = lastB.spots[lastB.spots.length - 1 - bottomNames.length];
+  show('القاع (بيانات حقيقية)', ctxLib.VOICE_BOTTOM, {round: lastB.report.round, names: bottomNames, total: lastSpot.total, above: aboveB ? {name: aboveB.name, gap: aboveB.total - lastSpot.total} : null, playersCount: lastB.report.playersCount});
+  show('التعادل على الصدارة', ctxLib.VOICE_TIE, {round: lastB.report.round, names: tie, total: lastB.report.leader.total});
+  const dA = lastB.spots[3], dB = lastB.spots[7];
+  show('مواجهة الجولة: فوز (الزوج والنقاط مختارة للعرض)', ctxLib.VOICE_DUEL.win, {round: lastB.report.round, a: {name: dA.name, pts: dA.pts}, b: {name: dB.name, pts: Math.max(0, dA.pts - 2)}});
+  show('مواجهة الجولة: تعادل', ctxLib.VOICE_DUEL.draw, {round: lastB.report.round, a: {name: dA.name, pts: dA.pts}, b: {name: dB.name, pts: dA.pts}});
   md += `\n---\n\n## مقاطع ما ظهرت في الجولات الثلاث (حالة مصطنعة للمراجعة فقط)\n\n> بيانات الجولة ${lastB.report.round} بعد تعديل مُعلَن (أسماء أصحاب الممة أو المتعادلين مختارة للعرض، **مو حقيقية**)، عشان المنظّم يقرأ صيغ المقاطع النادرة.\n\n` + demo.join('\n\n') + '\n';
   fs.mkdirSync(path.dirname(outFile), {recursive: true});
   fs.writeFileSync(outFile, md);
