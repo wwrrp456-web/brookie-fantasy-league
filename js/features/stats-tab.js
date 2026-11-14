@@ -530,7 +530,7 @@ function updateRaceBars(){
   st.forEach((s,i)=>{
     const pct = Math.round((s.total/maxTotal)*100);
     const color = PARTICIPANT_COLORS[s.id] || 'var(--gold)';
-    const rankIcon = i===0?'👑':i===1?'🥈':i===2?'🥉':'';
+    const rankIcon = i===0?'👑':medalHTML(i+1);
     html += `<div class="race-row">
       <span class="race-name">${rankIcon}${s.name}</span>
       <div class="race-bar-wrap">

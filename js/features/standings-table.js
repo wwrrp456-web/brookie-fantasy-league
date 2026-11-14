@@ -136,7 +136,7 @@ function buildSmartProfile(pid){
   else if(trend>1) trendTxt='📉 تراجع في الجولات الأخيرة';
   else trendTxt='➡️ مستقر في مركزه';
   let grade='';
-  if(avgRank<=3) grade='🥇 نخبة — من أقوى المشاركين';
+  if(avgRank<=3) grade=medalHTML(1) + ' نخبة — من أقوى المشاركين';
   else if(avgRank<=7) grade='💪 قوي — في النصف الأعلى باستمرار';
   else if(avgRank<=12) grade='🌊 وسط الميدان — مباراته مفتوحة';
   else grade='🔄 يبحث عن مستواه';

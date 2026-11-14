@@ -30,7 +30,8 @@ const FORBIDDEN = ['المتسابق', 'المتسابقين', 'المتسابق
 const NOT_AR_LETTER = '(?![\\u0621-\\u064A\\u064B-\\u0652])';
 const RE = {
   hex: /#[0-9a-fA-F]{3,8}\b/,
-  emoji: /\p{Extended_Pictographic}/u,
+  // الميداليات 🥇🥈🥉 مستثناة (R-23): تبقى نصًا مسموحًا بالواتساب ونصوص النسخ، وبالواجهة تُعرض صورًا عبر medalHTML
+  emoji: {test: l => /\p{Extended_Pictographic}/u.test(l.replace(/[\u{1F947}-\u{1F949}]/gu, ''))},
   inlineStyle: /style="/,
   numberNoun: new RegExp('\\$\\{[^}]*\\}\\s*(?:' + COUNTED.join('|') + ')' + NOT_AR_LETTER),
   rawDate: /toLocale(?:Date)?String\(/,
