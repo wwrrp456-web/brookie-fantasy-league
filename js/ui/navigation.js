@@ -42,6 +42,7 @@ function syncFolds(){
 function renderAll(){
   renderHeroes();
   renderRoundStoryCard();
+  renderSpotlightCard();
   renderWhatsNewCard();
   renderStandings();
   renderNameReactions();
