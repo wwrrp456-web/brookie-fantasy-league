@@ -26,9 +26,9 @@
   - القبول: كل نص عربي في `js/` و`index.html` مذكور في الجرد
 - [ ] T006 [Sonnet] ترحيل الأولوية 1: الواتساب والكروت (يعتمد على T001، T002) — `js/features/standings-table.js`، و`js/ui/canvas-cards.js`
   - القبول: `numberNoun` و`rawDates` = 0 في هذين الملفين؛ وملخص الواتساب بطبقتين منفصلتين (R-03)؛ وعينة الملخص لآخر جولة مرفقة بالـPR
-- [ ] T007 [Sonnet] ترحيل الأولوية 2: الصفحة الأولى — `round-story-card.js`، و`standings-widgets.js`، و`my-dashboard.js`، و`personal-status-bar.js`، و`whats-new-card.js`، و`badge-toast.js`، و`notification-center.js`
-- [ ] T008 [Sonnet] ترحيل الأولوية 3: باقي التبويبات — `rounds-tab.js`، و`stats-tab.js`، و`rules-and-about.js`، و`participants-tab.js`، و`participant-profile.js`، و`club-swap-lab.js`، و`season-duel.js`، و`insights-engine.js`، و`champion-honor.js`. يشمل L-13: أي "13 دوريًا" وأخواتها تُحسب من البيانات
-- [ ] T009 [Sonnet] ترحيل الأولوية 4: المنظّم و`report.html`
+- [x] T007 [Sonnet] ترحيل الأولوية 2: الصفحة الأولى — `round-story-card.js`، و`standings-widgets.js`، و`my-dashboard.js`، و`personal-status-bar.js`، و`whats-new-card.js`، و`badge-toast.js`، و`notification-center.js`
+- [x] T008 [Sonnet] ترحيل الأولوية 3: باقي التبويبات — `rounds-tab.js`، و`stats-tab.js`، و`rules-and-about.js`، و`participants-tab.js`، و`participant-profile.js`، و`club-swap-lab.js`، و`season-duel.js`، و`insights-engine.js`، و`champion-honor.js`. يشمل L-13: أي "13 دوريًا" وأخواتها تُحسب من البيانات
+- [x] T009 [Sonnet] ترحيل الأولوية 4: المنظّم و`report.html`
   - **القبول المشترك لـT006–T009:** `numberNoun` = 0 و`rawDates` = 0 و`forbiddenTerms` = 0 على مستوى المشروع بعد T009
 
 ## المرحلة 3: الصوت
@@ -36,9 +36,9 @@
 - [x] T010 [Opus] مكتبة قوالب الطقطقة (R-02) — 🆕 `js/voice/banter.js`
   - 🟨 **14 نوفمبر (Opus):** `js/voice/{voice-kit,whatsapp-report,spotlight-angles,banter}.js` (373 قالبًا): تقرير الواتساب (R-20)، والزوايا الـ13 لـ«منافس الجولة» (R-21)، وقصة الجولة المصحّحة (≥ 8 لكل موقف)، والسلاسل والإشعارات. ✅ **FR-08 مكتمل (14 نوفمبر):** القاع 8، والتعادل 8، ومواجهة الجولة 13 (فوز 8 + تعادل 5)، فصارت المواقف الثمانية كلها ≥ 8 (اختبار آلي). العينات: `samples/voice-samples.md`، والتقرير: `reports/002-opus-voice.md`
   - القبول: 8 مواقف × 8 قوالب على الأقل؛ وكل قالب يمر على قائمة مراجعة الحد (الدستور 17)؛ وصفر أخطاء عدد، لأن القوالب تستخدم سياق مصاغ مسبقًا
-- [ ] T011 [Sonnet] محرك الاختيار + الربط (يعتمد على T010) — 🆕 `js/voice/voice-engine.js`، و`round-story-card.js`، و`standings-table.js` (سطر الطقطقة)
+- [x] T011 [Sonnet] محرك الاختيار + الربط (يعتمد على T010) — 🆕 `js/voice/voice-engine.js`، و`round-story-card.js`، و`standings-table.js` (سطر الطقطقة)
   - القبول: نفس النص لكل الزوار في نفس الجولة؛ ولا تكرار لنفس القالب لنفس الشخص في جولتين متتاليتين (اختبار على 10 جولات وهمية)
-- [ ] T012 [Sonnet] أداة العينات `text-samples.js` (يعتمد على 000-T008) — المخرج `samples/texts.md`: كل المولّدات × آخر 3 جولات
+- [x] T012 [Sonnet] أداة العينات `text-samples.js` (يعتمد على 000-T008) — المخرج `samples/texts.md`: كل المولّدات × آخر 3 جولات
 - [ ] T013 [المنظّم + Opus] المراجعة اللغوية (يعتمد على T011، T012) — المنظّم يقرأ العينات ويعلّق، وOpus يطبّق التعديلات على القوالب والمعجم ويحدّث المواصفة (R-05)
 - [ ] T015 [Sonnet] فحص الطبقات آليًا (FR-07، `coverage.md` القرار 6) — `tools/lint.js`: قاعدتا `dialectInFormal` (كلمات اللهجة والكلمات غير السعودية من `style-guide.md` §4 في رسائل `status-msg` وملفات الطبقة الرسمية) و`dashInProse` (الشرطة الطويلة داخل النصوص العربية)، بالمنطق الموجود في `tools/text-classify.js`، وخط أساس واختبار سلبي لكل قاعدة
 - [ ] T016 [Sonnet] محرك تقرير الواتساب (R-20) = أمر **S48b** — `js/voice/voice-engine.js` يركّب `WA_REPORT` بالترتيب `WA_REPORT_ORDER`، ويختار حتميًا بلا تكرار آخر 3 جولات، ويحل محل الخاتمة المؤقتة في `buildWhatsAppSummary`
