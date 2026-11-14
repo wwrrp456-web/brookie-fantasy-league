@@ -19,7 +19,7 @@ function loadContext(fixturePath){
   const sb = {console}; sb.window = sb;
   const ctx = vm.createContext(sb);
   vm.runInContext(ENGINE.map(f => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n;\n') +
-    '\n;this.__lib = {WA_REPORT, WA_REPORT_ORDER, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, VOICE_ROUND_STORY, voiceApply, voiceEligible};',
+    '\n;this.__lib = {WA_REPORT, WA_REPORT_ORDER, SPOTLIGHT_ANGLES, SPOTLIGHT_FACTS, SPOTLIGHT_SEASON, SPOTLIGHT_MOTIVATION, SPOTLIGHT_CLOSING, SPOTLIGHT_CONFLICTS, spotlightLength, VOICE_ROUND_STORY, voiceApply, voiceEligible};',
     ctx, {filename: 'voice-bundle.js'});
   ctx.__allRounds = JSON.parse(fs.readFileSync(fixturePath, 'utf8')).data.rounds;
   return ctx;
@@ -33,7 +33,7 @@ function buildRound(ctx, k){
   const snap = upto => { ctx.__k = upto; return run(`(() => { DATA.rounds = __allRounds.slice(0, __k);
     const st = computeStandings(); const heroes = st.length ? getRoundHeroes() : null;
     const badges = computeBadges().filter(b => ${JSON.stringify(BADGES_OK)}.includes(b.title));
-    const hist = {}; PARTICIPANTS.forEach(p => { hist[p.id] = getAllRoundsHistory(p.id).filter(r => r.round >= 3).map(r => r.points); });
+    const hist = {}, played = {}; PARTICIPANTS.forEach(p => { const all = getAllRoundsHistory(p.id); played[p.id] = all.length; hist[p.id] = all.filter(r => r.round >= 3).map(r => r.points); });
     const heroIds = DATA.rounds.map(r => getRoundChampion(r.number));
     const last = DATA.rounds[DATA.rounds.length - 1];
     const clubs = {}; PARTICIPANTS.forEach(p => { const en = (last && last.entries && last.entries[p.id]) || [];
@@ -43,9 +43,9 @@ function buildRound(ctx, k){
         best: wins[0] ? {club: wins[0].club, opp: wins[0].e.opp, gf: wins[0].e.gf, ga: wins[0].e.ga} : null}; });
     return {round: last ? last.number : 0, st: st.map(s => ({id: s.id, name: s.name, total: s.total})),
       hero: heroes && heroes.top ? {id: heroes.top.id, name: heroes.top.name, pts: heroes.top.points, tieBreak: !!heroes.top.tieBreak} : null,
-      mummat: heroes ? heroes.mummat : [], badges, hist, heroIds, clubs, total: SEASON_TOTAL_ROUNDS};
+      mummat: heroes ? heroes.mummat : [], badges, hist, played, heroIds, clubs, total: SEASON_TOTAL_ROUNDS};
   })()`); };
-  const cur = snap(k + 1), prev = snap(k);
+  const cur = snap(k + 1), prev = snap(k), back3 = k >= 3 ? snap(k - 2) : null;
   const rankOf = (st, id) => st.findIndex(s => s.id === id) + 1;
   const tailCount = (arr, pred) => { let c = 0; for(let i = arr.length - 1; i >= 0 && pred(arr[i]); i--) c++; return c; };
   const st = cur.st, n = st.length;
@@ -77,6 +77,8 @@ function buildRound(ctx, k){
       hotRun: tailCount(h, x => x >= 4), coldEnded: pts > 0 ? tailCount(h.slice(0, -1), x => x === 0) : 0,
       clubs: cur.clubs[m.id], duel: null, badge: newBadge ? {title: newBadge.title} : null, predictor: null,
       seasonMumma: h.filter(x => x === 0).length, heroCount: cur.heroIds.filter(x => x === m.id).length, bestPts: Math.max(0, ...h),
+      leaderName: st[0].name, leaderGap: st[0].total - m.total, roundsPlayed: cur.played[m.id], seasonTotal: cur.total,
+      rank3: back3 ? (rankOf(back3.st, m.id) || null) : null,
     };
   });
   return {report, spots, story: {round: cur.round, hero: report.hero, mummat: cur.mummat, climber: report.climbers, dropper: report.droppers}};
@@ -128,20 +130,29 @@ function chooseSpotlight(spots, history, h){
   return pool[0] || null;
 }
 
-function composeSpotlight(pick, c, h){
-  const {sp, a} = c, r = sp.round, ids = [];
-  const take = (key, list) => { const x = pick('sp.' + key, list, sp, h, r); if(x){ ids.push(x.id); return x.text; } return null; };
+function composeSpotlight(pick, c, h, len){
+  const {sp, a} = c, r = sp.round, ids = [], P = len === 'long' ? 'L.' : '';
+  const take = (key, list) => { const x = pick('sp.' + P + key, list, sp, h, r); if(x){ ids.push(x.id); return x.text; } return null; };
   const title = take(a.id + '.title', a.title), story = take(a.id + '.story', a.story);
   // حتى 3 أرقام داعمة مختلفة بترتيبها في المكتبة، بلا تعارض مع القصة (SPOTLIGHT_CONFLICTS)، والصاروخ ما يكرر الحركة
   const C = ctxLib.SPOTLIGHT_CONFLICTS, clash = (id) => (C[id] || []).some(x => ids.includes(x)) || Object.keys(C).some(k => ids.includes(k) && C[k].includes(id));
-  let facts = ctxLib.SPOTLIGHT_FACTS.filter(t => !(a.id === 'rocket' && t.id === 'sp.fact.8'));
+  // sp.fact.1 يُترك لو القصة ذكرت المركز والرصيد (قاعدة موثّقة في spotlight-angles.js)
+  const storyHasBoth = story && story.includes(`المركز ${sp.rank}`) && story.includes(h.formatCount(sp.total, 'نقطة'));
+  let facts = ctxLib.SPOTLIGHT_FACTS.filter(t => !(a.id === 'rocket' && t.id === 'sp.fact.8') && !(storyHasBoth && t.id === 'sp.fact.1'));
   const chosen = [];
-  for(let i = 0; i < 3; i++){ const L = facts.filter(t => !clash(t.id)); const x = pick('sp.fact' + i, L, sp, h, r); if(!x) break; ids.push(x.id); chosen.push(x); facts = facts.filter(t => t.id !== x.id); }
+  for(let i = 0; i < 3; i++){ const L = facts.filter(t => !clash(t.id)); const x = pick('sp.' + P + 'fact' + i, L, sp, h, r); if(!x) break; ids.push(x.id); chosen.push(x); facts = facts.filter(t => t.id !== x.id); }
   const order = ctxLib.SPOTLIGHT_FACTS.map(t => t.id);
   const factTexts = chosen.sort((x, y) => order.indexOf(x.id) - order.indexOf(y.id)).map(x => x.text);
   const motiv = take('motiv.' + a.mood, ctxLib.SPOTLIGHT_MOTIVATION[a.mood].filter(t => !clash(t.id)));
-  const joke = take(a.id + '.joke', a.joke), close = take('close.' + a.mood, ctxLib.SPOTLIGHT_CLOSING[a.mood]);
-  return {text: [`*${title}*`, [story, ...factTexts].filter(Boolean).join(' '), motiv, joke, close].filter(Boolean).join('\n\n'), ids};
+  let season = [];
+  if(len === 'long'){
+    let pool = ctxLib.SPOTLIGHT_SEASON;
+    for(let i = 0; i < 3; i++){ const x = take('season' + i, pool.filter(t => !clash(t.id))); if(!x) break; season.push(x); pool = pool.filter(t => !ids.includes(t.id)); }
+  }
+  const joke = take(a.id + '.joke', a.joke);
+  const joke2 = len === 'long' ? take(a.id + '.joke2', a.joke.filter(t => !ids.includes(t.id))) : null;
+  const close = take('close.' + a.mood, ctxLib.SPOTLIGHT_CLOSING[a.mood]);
+  return {text: [`*${title}*`, [story, ...factTexts].filter(Boolean).join(' '), season.join(' '), motiv, [joke, joke2].filter(Boolean).join(' '), close].filter(Boolean).join('\n\n'), ids};
 }
 
 const words = t => t.replace(/\*/g, '').split(/\s+/).filter(Boolean).length;
@@ -158,16 +169,20 @@ function main(argv){
     const b = buildRound(ctx, k);
     const wa = composeWhatsApp(pick, b.report, h);
     const c = chooseSpotlight(b.spots, history, h);
-    const spot = c ? composeSpotlight(pick, c, h) : null;
+    const len = c ? ctxLib.spotlightLength(c.sp, h) : null;
+    const spot = c ? composeSpotlight(pick, c, h, len) : null;
+    const alt = c ? composeSpotlight(makePicker(), c, h, len === 'long' ? 'short' : 'long') : null;  // للمقارنة فقط
     if(c) history.push({id: c.sp.id, angle: c.a.id});
-    if(want.includes(b.report.round)) samples.push({round: b.report.round, wa, spot, c});
+    if(want.includes(b.report.round)) samples.push({round: b.report.round, wa, spot, alt, len, c});
   }
   let md = `# عينات مكتبة الصوت: تقرير الواتساب و«منافس الجولة» (002-T010)\n\n` +
     `> مولَّد بـ\`node tools/voice-samples.js\` من \`tests/fixtures/season.json\` (بيانات حقيقية معقّمة) والقوالب في \`js/voice/\`.\n` +
     `> المختار والمنتقي هنا مبسّطان للمراجعة فقط، والمحرك الفعلي في S48b وS49/S50. **للمنظّم:** اقرأ وعلّق على أي جملة (رقم القالب بين القوسين).\n`;
   samples.forEach(x => {
-    md += `\n---\n\n## الجولة ${x.round}\n\n### تقرير الواتساب (${words(x.wa.text)} كلمة)\n\n\`\`\`\n${x.wa.text}\n\`\`\`\n\n<sub>القوالب: ${x.wa.ids.join(' · ')}</sub>\n`;
-    if(x.spot) md += `\n### منافس الجولة: ${x.c.sp.name} · زاوية «${x.c.a.label}» (${words(x.spot.text)} كلمة)\n\n\`\`\`\n${x.spot.text}\n\`\`\`\n\n<sub>القوالب: ${x.spot.ids.join(' · ')}</sub>\n`;
+    md += `\n---\n\n## الجولة ${x.round}\n\n### تقرير الواتساب (عدد الكلمات: ${words(x.wa.text)})\n\n\`\`\`\n${x.wa.text}\n\`\`\`\n\n<sub>القوالب: ${x.wa.ids.join(' · ')}</sub>\n`;
+    const LN = {long: 'الطويلة', short: 'القصيرة'};
+    if(x.spot) md += `\n### منافس الجولة: ${ctx.vkName(x.c.sp.name, 'nom')} · زاوية «${x.c.a.label}» · النسخة ${LN[x.len]} (يختارها المحرك، عدد الكلمات: ${words(x.spot.text)})\n\n\`\`\`\n${x.spot.text}\n\`\`\`\n\n<sub>القوالب: ${x.spot.ids.join(' · ')}</sub>\n` +
+      `\n<details><summary>للمقارنة: النسخة ${LN[x.len === 'long' ? 'short' : 'long']} لنفس المنافس (عدد الكلمات: ${words(x.alt.text)})</summary>\n\n\`\`\`\n${x.alt.text}\n\`\`\`\n\n</details>\n`;
   });
   // مقاطع ما ظهرت في الجولات المطلوبة (ممّات، وتعادل الصدارة، وزاوية الممة): حالة الجولة الأخيرة بعد تعديل مُعلَن
   const lastB = buildRound(ctx, ctx.__allRounds.length - 1);

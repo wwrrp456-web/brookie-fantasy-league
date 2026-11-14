@@ -33,18 +33,27 @@ function vkBi(h, n, noun){
   return (/^\d/.test(t) ? 'بـ' : 'ب') + t;
 }
 
-// لام الجر مع الاسم: «للعندليب» (اسم بأل) · «لـأبو أوس» · «لـ5 مشاركين»
+// تصريف الكنية حسب الإعراب (F-voice-1): «أبو/أبا/أبي» في أول الاسم أو بعد واو العطف
+//   'nom' فاعل ومبتدأ وخبر ← أبو · 'gen' بعد حرف جر أو مضاف ← أبي · 'acc' مفعول به ومنادى واسم إنّ ← أبا
+// الاسم المخزّن بأي صيغة («أبا عتاب») يتصرّف صح، وباقي الاسم (بين قوسين مثلًا) ما يتغيّر.
+function vkName(name, c){
+  const f = c === 'gen' ? 'أبي' : c === 'acc' ? 'أبا' : 'أبو';
+  return String(name).replace(/(^|\s|و)(أبو|أبا|أبي)(?=\s)/g, (m, pre) => pre + f);
+}
+const vkN = n => vkName(n, 'nom'), vkG = n => vkName(n, 'gen'), vkA = n => vkName(n, 'acc');
+// لام الجر مع الاسم بلا تطويل: «للعندليب» · «لأبي صالح» · «لمصطفى» · «لـ5 مشاركين» (التطويل قبل الرقم فقط)
 function vkLi(name){
-  const t = String(name);
-  return t.startsWith('ال') ? 'ل' + t.slice(1) : 'لـ' + t;
+  const t = vkG(name);
+  if(t.startsWith('ال')) return 'ل' + t.slice(1);
+  return (/^\d/.test(t) ? 'لـ' : 'ل') + t;
 }
 // الأسماء: حتى 3 بالعطف «أ، وب، وج»، وأكثر «5 مشاركين»
-function vkWho(h, names){
-  return names.length <= 3 ? h.formatList(names) : h.formatCount(names.length, 'مشارك');
+function vkWho(h, names, c){
+  return names.length <= 3 ? h.formatList(names.map(n => vkName(n, c || 'nom'))) : h.formatCount(names.length, 'مشارك');
 }
-// « (أولهم فلان)» لما يكثر العدد
+// « (أولهم فلان)» لما يكثر العدد (خبر مرفوع)
 function vkFirst(names){
-  return names.length > 3 ? ` (أولهم ${names[0]})` : '';
+  return names.length > 3 ? ` (أولهم ${vkN(names[0])})` : '';
 }
 // الفعل حسب عدد الفاعلين
 function vkV(h, n, one, two, many){
@@ -55,4 +64,4 @@ function vkOrdinalF(n){
   return ({2: 'ثانية', 3: 'ثالثة', 4: 'رابعة', 5: 'خامسة', 6: 'سادسة'})[n] || null;
 }
 
-if(typeof module !== 'undefined') module.exports = {vt, voiceApply, voiceEligible, vkBi, vkLi, vkWho, vkFirst, vkV, vkOrdinalF};
+if(typeof module !== 'undefined') module.exports = {vt, voiceApply, voiceEligible, vkBi, vkName, vkN, vkG, vkA, vkLi, vkWho, vkFirst, vkV, vkOrdinalF};
