@@ -66,7 +66,7 @@ function renderWhatsNewCard(){
   const lines = [];
   lines.push(`⏳ فاتك ${missedRounds} ${missedRounds===1 ? 'جولة' : 'جولات'} من دوري بروكي!`);
   if(heroes && heroes.top){
-    lines.push(`👑 بطل آخر جولة: <strong>${heroes.top.name}</strong> بـ ${heroes.top.points} نقطة.`);
+    lines.push(`👑 بطل آخر جولة: <strong>${heroes.top.name}</strong> ${arBaPrefix(formatCount(heroes.top.points, 'نقطة', {case: 'acc'}))}.`);
   }
   if(rankDelta !== null){
     if(rankDelta > 0) lines.push(`📈 تقدّمت <strong>${rankDelta}</strong> ${rankDelta===1?'مركز':'مراكز'} بجدول الترتيب منذ آخر زيارة لك.`);
