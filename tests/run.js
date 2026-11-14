@@ -891,6 +891,20 @@ const asyncDiffTests = (async () => {
   check('محاكاة 30 جولة: توزيع عادل (الكل ظهر، والأعلى ≤ 4)', [Math.min(...sim.counts) >= 1, Math.max(...sim.counts) <= 4], [true, true]);
 }
 
+
+// ---------- 002-T012 / S44: أداة عينات النصوص tools/text-samples.js ----------
+{
+  const cp = require('child_process');
+  const tmpOut = path.join(require('os').tmpdir(), `texts-${process.pid}.md`);
+  const r = cp.spawnSync(process.execPath, [path.join(ROOT, 'tools/text-samples.js'), '--check', '--out', tmpOut], {encoding: 'utf8'});
+  check('text-samples: تعمل بلا خطأ (--check)', r.status, 0);
+  const md = fs.existsSync(tmpOut) ? fs.readFileSync(tmpOut, 'utf8') : '';
+  check('text-samples: تغطي ≥ 12 مولّدًا و≥ 80 عينة وتسرد غير المغطّى', [/مولّدات مغطّاة: \*\*(\d+)\*\*/.test(md) && Number(md.match(/مولّدات مغطّاة: \*\*(\d+)\*\*/)[1]) >= 12,
+    Number((md.match(/عينات: \*\*(\d+)\*\*/) || [0, 0])[1]) >= 80, md.includes('مولّدات غير مغطّاة')], [true, true, true]);
+  check('text-samples: بلا undefined/NaN في الناتج', /undefined|NaN/.test(md.replace(/undefined\/NaN/g, '')), false);
+  try{ fs.unlinkSync(tmpOut); }catch(e){}
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
