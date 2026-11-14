@@ -84,8 +84,8 @@ function spotlightSeries(upToRound){
 function spotlightPlainText(c, h){
   const sp = c.sp;
   const move = sp.move > 0 ? `وصعد ${h.formatCount(sp.move, 'مركز', {case: 'acc'})}` : sp.move < 0 ? `وتراجع ${h.formatCount(-sp.move, 'مركز', {case: 'acc'})}` : 'وثبت مكانه';
-  const pts = sp.pts === 0 ? 'بلا نقاط' : vkBi(h, sp.pts);
-  return `منافس الجولة ${sp.round}: ${vkN(sp.name)} (${c.angle.label}). جمع ${pts} هذه الجولة ${move}، ورصيده ${h.formatCount(sp.total, 'نقطة')} في المركز ${sp.rank}.`;
+  const pts = sp.pts === 0 ? 'ما جمع نقاطًا' : 'جمع ' + h.formatCount(sp.pts, 'نقطة', {case: 'acc'});
+  return `منافس الجولة ${sp.round}: ${vkN(sp.name)}، والزاوية «${c.angle.label}». ${pts} هذه الجولة ${move}، ورصيده ${h.formatCount(sp.total, 'نقطة')} في المركز ${sp.rank}.`;
 }
 
 if(typeof module !== 'undefined') module.exports = {spotlightBuildStates, computeSpotlightCandidates, pickSpotlight, spotlightSeries, spotlightPlainText};
