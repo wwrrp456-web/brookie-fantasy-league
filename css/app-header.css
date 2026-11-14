@@ -29,6 +29,15 @@ header.app-header .champion-crown{position:static;font-size:1.3rem;animation:non
 .notif-bell-btn .notif-count{top:-6px;inset-inline-end:-6px;}
 .header-actions .notif-dropdown{top:48px;left:0;inset-inline-start:auto;}
 
+/* الجوال (001-P1): العنوان كامل بلا قص ولا تغطية على 360 و390: أيقونات 36px، والتاج مخفي (الشريط تحته يذكر الحامل)، والخط أصغر قليلًا */
+@media (max-width:599px){
+  .header-inner{padding-inline:var(--sp-3);}
+  header.app-header .champion-crown{display:none;}
+  .icon-btn,.header-actions .notif-bell-btn{width:36px;height:36px;}
+  .icon-btn svg,.notif-bell-btn svg{width:18px;height:18px;}
+  header.app-header h1{font-size:var(--fs-sm);}
+  header.app-header p{font-size:11px;}
+}
 @media (min-width:900px){
   .header-inner{height:104px;padding-inline:var(--sp-6);}
   .brand-mark{display:none;}
