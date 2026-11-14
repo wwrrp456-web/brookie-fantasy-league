@@ -104,6 +104,55 @@ const VOICE_NOTIFY = {
   ],
 };
 
+// 4) القاع (FR-08): آخر الجدول، بلطف وباب أمل (الدستور 17 وstyle-guide §8 السؤال 5)
+//    الحالة: {round, names: [أصحاب المركز الأخير، بترتيب الجدول], total, above: {name, gap} | null, playersCount}
+const VOICE_BOTTOM = [
+  vt('bt.bottom.1', s => s.names.length > 0, (s, h) => { const n = s.names.length; return `${_bt.who(h, s.names)} ${vkV(h, n, 'يقفل', 'يقفلان', 'يقفلون')} الجدول هالجولة برصيد ${h.formatCount(s.total, 'نقطة')}، والموسم طويل والعودة ممكنة.`; }),
+  vt('bt.bottom.2', s => s.names.length > 0 && s.above && s.above.gap > 0 && s.above.gap <= 4, (s, h) => `آخر الجدول باسم ${vkWho(h, s.names, 'gen')}${vkFirst(s.names)}، والفارق عن ${vkG(s.above.name)} ${h.formatCount(s.above.gap, 'نقطة')} بس، يعني جولة زينة وحدة تغيّر المكان.`),
+  vt('bt.bottom.3', s => s.names.length > 0, (s, h) => `المركز ${s.playersCount} صار محطة مؤقتة ${vkLi(vkWho(h, s.names, 'gen'))}${vkFirst(s.names)}، والمحطات المؤقتة ما يطوّل فيها أحد.`),
+  vt('bt.bottom.4', s => s.names.length > 0, (s, h) => { const n = s.names.length; return `${_bt.who(h, s.names)} ${vkV(h, n, 'يشوف', 'يشوفان', 'يشوفون')} الجدول كله من تحت، والمنظر من هناك يعطي حافز للصعود.`; }),
+  vt('bt.bottom.5', s => s.names.length > 0, (s, h) => `ذيل الجدول هالجولة عند ${vkWho(h, s.names, 'gen')}${vkFirst(s.names)}، بس الجولات الباقية كثيرة، والجدول يتقلّب.`),
+  vt('bt.bottom.6', s => s.names.length > 0 && s.above && s.above.gap <= 2 && s.above.gap > 0, (s, h) => `القاع قريب من اللي فوقه: ${h.formatCount(s.above.gap, 'نقطة')} بين ${vkWho(h, s.names, 'gen')} و${vkG(s.above.name)}، والمكان ما راح يطوّل.`),
+  vt('bt.bottom.7', s => s.names.length > 0, (s, h) => { const n = s.names.length; return `${_bt.who(h, s.names)} ${vkV(h, n, 'بدأ', 'بدآ', 'بدؤوا')} المطاردة من آخر نقطة في الجدول، وأحلى القصص تبدأ من تحت.`; }),
+  vt('bt.bottom.8', s => s.names.length > 0, (s, h) => `الجولة ${s.round} خلّت ${vkWho(h, s.names, 'acc')}${vkFirst(s.names)} في آخر الجدول، والجولة الجاية فرصة للتعويض.`),
+];
+
+// 5) التعادل على الصدارة (FR-08)
+//    الحالة: {round, names: [المتعادلون على الصدارة، اثنان فأكثر], total}
+const VOICE_TIE = [
+  vt('bt.tie.1', s => s.names.length >= 2, (s, h) => `القمة مشتركة بين ${vkWho(h, s.names, 'gen')}${vkFirst(s.names)} برصيد ${h.formatCount(s.total, 'نقطة')} لكل واحد، والجولة الجاية تفصل.`),
+  vt('bt.tie.2', s => s.names.length >= 2, (s, h) => { const n = s.names.length; return `${_bt.who(h, s.names)} ${vkV(h, n, 'يتقاسم', 'يتقاسمان', 'يتقاسمون')} الصدارة برصيد ${h.formatCount(s.total, 'نقطة')}، والكرسي ما يتسع إلا لواحد.`; }),
+  vt('bt.tie.3', s => s.names.length >= 2, (s, h) => `تعادل على القمة! ${_bt.who(h, s.names)} عند ${h.formatCount(s.total, 'نقطة')}، ومين يكسر التعادل الجولة الجاية؟`),
+  vt('bt.tie.4', s => s.names.length === 2, (s, h) => `القمة صارت لاثنين: ${h.formatList(s.names.map(vkN))}، والسباق مشتعل من الجهتين.`),
+  vt('bt.tie.5', s => s.names.length >= 2, (s, h) => `ما فيه فرق بين ${vkWho(h, s.names, 'gen')}${vkFirst(s.names)} في الصدارة، ${h.formatCount(s.total, 'نقطة')} لكل واحد، والحسم مؤجّل.`),
+  vt('bt.tie.6', s => s.names.length >= 2, (s, h) => { const n = s.names.length; return `${_bt.who(h, s.names)} ${vkV(h, n, 'واقف', 'واقفين', 'واقفين')} على نفس الدرجة في القمة، وكل نقطة الجولة الجاية لها وزن ذهب.`; }),
+  vt('bt.tie.7', s => s.names.length >= 2, (s, h) => `الصدارة بلا صاحب واحد هالجولة: ${_bt.who(h, s.names)} برصيد واحد، ${h.formatCount(s.total, 'نقطة')}.`),
+  vt('bt.tie.8', s => s.names.length >= 2, (s, h) => `جدول الترتيب ما قدر يختار بين ${vkWho(h, s.names, 'gen')}${vkFirst(s.names)}، فخلّاهم كلهم فوق برصيد ${h.formatCount(s.total, 'نقطة')}.`),
+];
+
+// 6) مواجهة الجولة (FR-08، ميزة المواجهات العشوائية في standings-widgets.js)
+//    الحالة: {round, a: {name, pts}, b: {name, pts}} — الفائز صاحب النقاط الأعلى، والتعادل لو تساوت
+const _btDuel = s => s.a.pts === s.b.pts ? null : (s.a.pts > s.b.pts ? {w: s.a, l: s.b} : {w: s.b, l: s.a});
+const VOICE_DUEL = {
+  win: [
+    vt('dl.win.1', s => _btDuel(s) && _btDuel(s).l.pts > 0, (s, h) => { const d = _btDuel(s); return `${vkN(d.w.name)} كسب مواجهة الجولة على ${vkG(d.l.name)}، ${h.formatCount(d.w.pts, 'نقطة')} مقابل ${h.formatCount(d.l.pts, 'نقطة')}.`; }, ['a', 'b']),
+    vt('dl.win.2', s => _btDuel(s), (s, h) => { const d = _btDuel(s); return `مواجهة الجولة ${s.round} راحت ${vkLi(d.w.name)}، و${vkN(d.l.name)} يطالب بإعادة الجولة الجاية.`; }, ['a', 'b']),
+    vt('dl.win.3', s => _btDuel(s), (s, h) => { const d = _btDuel(s); return `${vkN(d.w.name)} تفوّق على ${vkG(d.l.name)} ${vkBi(h, d.w.pts - d.l.pts)}، والفخر هالأسبوع له.`; }, ['a', 'b']),
+    vt('dl.win.4', s => { const d = _btDuel(s); return d && d.w.pts - d.l.pts >= 4; }, (s, h) => { const d = _btDuel(s); return `مواجهة من طرف واحد: ${vkN(d.w.name)} ${vkBi(h, d.w.pts)} و${vkN(d.l.name)} ${d.l.pts ? vkBi(h, d.l.pts) : 'بلا نقاط'}، والنتيجة واضحة.`; }, ['a', 'b']),
+    vt('dl.win.5', s => { const d = _btDuel(s); return d && d.w.pts - d.l.pts === 1; }, (s, h) => { const d = _btDuel(s); return `نقطة وحدة فصلت ${vkA(d.w.name)} عن ${vkG(d.l.name)} في مواجهة الجولة، والفرق كان شعرة.`; }, ['a', 'b']),
+    vt('dl.win.6', s => _btDuel(s), (s, h) => { const d = _btDuel(s); return `${vkN(d.w.name)} يرفع راسه في مواجهة الجولة ${s.round}، و${vkN(d.l.name)} يجهّز الرد.`; }, ['a', 'b']),
+    vt('dl.win.7', s => _btDuel(s) && _btDuel(s).l.pts > 0, (s, h) => { const d = _btDuel(s); return `الفوز في المواجهة ${vkLi(d.w.name)}: ${h.formatCount(d.w.pts, 'نقطة')} مقابل ${h.formatCount(d.l.pts, 'نقطة')}، والحساب مفتوح بينهم.`; }, ['a', 'b']),
+    vt('dl.win.8', s => _btDuel(s), (s, h) => { const d = _btDuel(s); return `${vkN(d.l.name)} خسر المواجهة قدّام ${vkG(d.w.name)} هالجولة، بس المواجهات الجاية كثيرة.`; }, ['a', 'b']),
+  ],
+  draw: [
+    vt('dl.draw.1', s => s.a.pts === s.b.pts, (s, h) => `تعادل في مواجهة الجولة: ${h.formatList([vkN(s.a.name), vkN(s.b.name)])}، ${h.formatCount(s.a.pts, 'نقطة', {zero: 'بلا نقاط'})} لكل واحد.`, ['a', 'b']),
+    vt('dl.draw.2', s => s.a.pts === s.b.pts, (s, h) => `${vkN(s.a.name)} و${vkN(s.b.name)} تقاسما مواجهة الجولة، والحسم مؤجّل للمرة الجاية.`, ['a', 'b']),
+    vt('dl.draw.3', s => s.a.pts === s.b.pts, (s, h) => `ما فيه فايز في مواجهة ${vkG(s.a.name)} و${vkG(s.b.name)}، نفس النقاط بالضبط.`, ['a', 'b']),
+    vt('dl.draw.4', s => s.a.pts === s.b.pts, (s, h) => `مواجهة الجولة ${s.round} بين ${vkG(s.a.name)} و${vkG(s.b.name)} انتهت بالتعادل، وكل واحد يقول: أنا الأحق.`, ['a', 'b']),
+    vt('dl.draw.5', s => s.a.pts === s.b.pts, (s, h) => `${vkN(s.a.name)} و${vkN(s.b.name)} ما تفارقا هالجولة، تعادل تام في المواجهة.`, ['a', 'b']),
+  ],
+};
+
 // سجلّ المولّدات وحالتها (مرجع S44b وتقرير التنوّع). status: متنوّع (≥ 5 صيغ) · ثابت بقصد · ينتظر ترحيل
 const VOICE_REGISTRY = [
   {id: 'whatsapp.report', lib: 'WA_REPORT', status: 'متنوّع', note: 'R-20، 7 مقاطع'},
@@ -113,9 +162,12 @@ const VOICE_REGISTRY = [
   {id: 'notify.newRound', lib: 'VOICE_NOTIFY.newRound', status: 'متنوّع'},
   {id: 'notify.badge', lib: 'VOICE_NOTIFY.badge', status: 'متنوّع', note: 'توست الأوسمة'},
   {id: 'notify.hero', lib: 'VOICE_NOTIFY.hero', status: 'متنوّع'},
+  {id: 'banter.bottom', lib: 'VOICE_BOTTOM', status: 'متنوّع', note: 'FR-08 القاع'},
+  {id: 'banter.tie', lib: 'VOICE_TIE', status: 'متنوّع', note: 'FR-08 التعادل على الصدارة'},
+  {id: 'banter.duel', lib: 'VOICE_DUEL', status: 'متنوّع', note: 'FR-08 مواجهة الجولة (فوز 8، تعادل 5)'},
   {id: 'badges.titles', lib: null, status: 'ثابت بقصد', note: 'أسماء الأوسمة هوية ثابتة (insights-engine.js)'},
   {id: 'stats.titles', lib: null, status: 'ثابت بقصد', note: 'عناوين الإحصاءات رسمية (stats-tab.js)'},
   {id: 'myDashboard.motivation', lib: null, status: 'ينتظر ترحيل', note: 'رسائل «حالتي» (my-dashboard.js): تحتاج جرد صيغها في S45 ثم صيغ Opus'},
 ];
 
-if(typeof module !== 'undefined') module.exports = {VOICE_ROUND_STORY, VOICE_STREAKS, VOICE_NOTIFY, VOICE_REGISTRY};
+if(typeof module !== 'undefined') module.exports = {VOICE_ROUND_STORY, VOICE_STREAKS, VOICE_NOTIFY, VOICE_BOTTOM, VOICE_TIE, VOICE_DUEL, VOICE_REGISTRY};
