@@ -792,7 +792,7 @@ const asyncDiffTests = (async () => {
   const ectx = vm.createContext(esb);
   ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/data/season-2/rounds-seed.js', 'js/core/config.js', 'js/core/dom-utils.js',
     'js/core/ar-format.js', 'js/core/storage.js', 'js/core/standings-engine.js', 'js/core/club-engine.js', 'js/core/insights-engine.js',
-    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/voice-engine.js']
+    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/registry.js', 'js/voice/voice-engine.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ectx, {filename: f}));
   ectx.__r = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8')).data.rounds;
   vm.runInContext('DATA.rounds = __r; this.E = {voicePickTemplate, voiceComposeReport, voiceBuildReportState, voiceReportSeries, WA_REPORT, voiceEligible};', ectx);
@@ -903,6 +903,37 @@ const asyncDiffTests = (async () => {
     Number((md.match(/عينات: \*\*(\d+)\*\*/) || [0, 0])[1]) >= 80, md.includes('مولّدات غير مغطّاة')], [true, true, true]);
   check('text-samples: بلا undefined/NaN في الناتج', /undefined|NaN/.test(md.replace(/undefined\/NaN/g, '')), false);
   try{ fs.unlinkSync(tmpOut); }catch(e){}
+}
+
+
+// ---------- 002-VAR / S44b: سجلّ المولّدات وتقرير التنوّع (js/voice/registry.js) ----------
+{
+  const rsb = {console}; rsb.window = rsb;
+  const rctx = vm.createContext(rsb);
+  ['js/core/ar-format.js', 'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/banter.js', 'js/voice/registry.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), rctx, {filename: f}));
+  vm.runInContext('this.RG = {voiceGeneratorRegistry, voiceVarietyReport, voiceGeneratorVariants, vt};', rctx);
+  const RG = rctx.RG;
+  const rep = RG.voiceVarietyReport(RG.voiceGeneratorRegistry(), 30);
+  const diverse = rep.filter(v => v.status === 'متنوّع');
+  check('تنوّع: كل مولّد «متنوّع» ✅ (≥ 4 صيغ وبلا تكرار متتالٍ مع بديل)', diverse.filter(v => v.verdict !== 'ok').map(v => v.id), []);
+  check('تنوّع: 11 مولّدًا متنوّعًا على الأقل بالسجل', diverse.length >= 11, true);
+  check('تنوّع: كل مولّد متنوّع يعطي ≥ 4 نصوص مختلفة خلال 30 جولة', diverse.filter(v => v.distinct < 4).map(v => v.id), []);
+  const sv = rep.find(v => v.id === 'badges.titles');
+  check('تنوّع: الثابت بقصد يُصنَّف fixed ولا يفشل', sv ? sv.verdict : null, 'fixed');
+  // مولّد مزيّف يعلن «متنوّع» بصيغتين فقط ← فشل؛ وآخر يكرر لأن بديله ما ينطبق ← لا يُعدّ تكرارًا مرفوضًا
+  const mkv = (n, when) => Array.from({length: n}, (_, i) => RG.vt('f.' + i, when ? when(i) : null, () => 'نص ' + 'أبجد'[i]));
+  const fake = [
+    {id: 'bad.few', label: 'صيغتان', status: 'متنوّع', slots: [{key: 'k1', list: mkv(2), state: r => ({round: r})}]},
+    {id: 'ok.one', label: 'صيغة منطبقة واحدة', status: 'ثابت بقصد', variants: 1, fixed: () => 'ثابت'}
+  ];
+  const frep = RG.voiceVarietyReport(fake, 12);
+  check('تنوّع: مولّد «متنوّع» بصيغتين فقط ← fail', frep[0].verdict, 'fail');
+  check('تنوّع: يقيس النصوص المختلفة والتكرار المتتالي', [frep[0].distinct, frep[0].consecRepeatPct], [2, 0]);
+  check('تنوّع: المولّد الثابت = تكرار 100% وأطول سلسلة = عدد الجولات', [frep[1].consecRepeatPct, frep[1].maxRun], [100, 12]);
+  // مولّد يكرر القالب نفسه مع توفّر بديل ← يُكتشف (محاكاة منتقٍ سيّئ عبر fixed)
+  const rep2 = RG.voiceVarietyReport([{id: 'dup', label: 'يكرر', status: 'يحتاج صيغ', variants: 3, fixed: () => 'نفس النص دائمًا'}], 10);
+  check('تنوّع: المولّد قليل الصيغ يُصنَّف waiting مع ما ينقص', [rep2[0].verdict, rep2[0].missing], ['waiting', 1]);
 }
 
 // ---------- الخلاصة ----------

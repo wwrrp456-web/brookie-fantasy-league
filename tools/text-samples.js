@@ -167,6 +167,11 @@ function main(argv){
     ['نصوص الكروت المرسومة بالكانفس (champion/wrap/profile/duel/my-clubs/certificate/standings)', 'تُرسم على canvas؛ تُغطّى بلقطات tools/snap.js وtools/card-compare.js، وهنا رسائل التحقق فقط'],
     ['spotlight (قوالب Opus الكاملة)', 'عيناتها في `samples/voice-samples.md` (أداة Opus)']
   ];
+  // 9) تقرير التنوّع (S44b): كل مولّد على الجولات 1..30
+  const VMAP = {ok: '✅ متنوّع', fixed: '✅ ثابت بقصد', fail: '❌ فشل'};
+  const variety = ev('voiceVarietyReport(voiceGeneratorRegistry(), 30)').map(v => ({...v, verdict: VMAP[v.verdict] || `⏸️ ينتظر صيغ (ينقص ${v.missing})`}));
+  const varietyFails = variety.filter(v => v.verdict.startsWith('❌'));
+  varietyFails.forEach(v => errors.push(`تنوّع · ${v.id}: ${v.variants < 4 ? 'صيغه أقل من 4' : 'يكرر نفس النص جولتين متتاليتين مع توفّر بديل'}`));
   const sections = {};
   rows.forEach(r => { (sections[r.gen] = sections[r.gen] || []).push(r); });
   const flagged = rows.filter(r => r.flags.length);
@@ -176,6 +181,9 @@ function main(argv){
   if(skipped.length) md += `- ملفات تعذّر تحميلها بلا DOM (فتُغطّى بالجدول أدناه): ${skipped.map(s => '`' + s + '`').join('، ')}\n`;
   md += `\n## ملاحظات الأعداد المكتشفة (للمراجعة)\n\n`;
   md += flagged.length ? flagged.map(r => `- **${r.gen}** (${r.source} · ${r.label}): ${r.flags.map(f => '«' + f + '»').join('، ')}`).join('\n') : '- لا شيء.';
+  md += `\n\n## تقرير التنوّع (الجولات 1–30)\n\n> حالة كل جولة تتغيّر برقم الجولة (بقية البيانات نموذجية ثابتة)، والمنتقي \`pickVariant\` حتمي ولا يكرر قالبًا بآخر 3 جولات. ✅ متنوّع = ≥ 4 صيغ وبلا تكرار متتالٍ مع توفّر بديل؛ ⏸️ ينتظر صيغ = أقل من 4 (الصيغ الإبداعية يكتبها Opus).\n\n| المولّد | الحالة | الصيغ | نصوص مختلفة / 30 | تكرار متتالٍ | أطول سلسلة |\n|---|---|---|---|---|---|\n` +
+    variety.map(v => `| ${v.id} (${v.label}) | ${v.verdict} | ${v.variants} | ${v.distinct} | ${v.consecRepeatPct}% | ${v.maxRun} |`).join('\n') +
+    `\n\n**الملخص:** ✅ متنوّع ${variety.filter(v => v.verdict === '✅ متنوّع').length} · ✅ ثابت بقصد ${variety.filter(v => v.verdict === '✅ ثابت بقصد').length} · ⏸️ ينتظر صيغ ${variety.filter(v => v.verdict.startsWith('⏸️')).length} · ❌ فشل ${varietyFails.length}\n`;
   md += `\n\n## المولّدات المغطّاة\n\n| المولّد | عدد العينات |\n|---|---|\n` + Object.entries(sections).map(([g, v]) => `| ${g} | ${v.length} |`).join('\n');
   md += `\n\n## مولّدات غير مغطّاة (وسببها)\n\n| المولّد | السبب |\n|---|---|\n` + NOT_COVERED.map(([a, b]) => `| ${a} | ${b} |`).join('\n') + '\n';
   Object.entries(sections).forEach(([g, v]) => {

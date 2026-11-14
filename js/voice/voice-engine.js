@@ -1,5 +1,5 @@
 /* محرك تقرير الواتساب (002-T011 / S48b): يركّب التقرير من قوالب Opus (js/voice/whatsapp-report.js) بلا DOM ولا عشوائية.
- * الاعتماد: voice-kit.js وwhatsapp-report.js وar-format.js، وللبناء من بيانات الموقع: standings-engine.js وclub-engine.js.
+ * الاعتماد: voice-kit.js وwhatsapp-report.js وregistry.js (pickVariant) وar-format.js، وللبناء من بيانات الموقع: standings-engine.js وclub-engine.js.
  *
  *   voiceSnapshot(upto)                      لقطة بيانات بعد upto جولة (تحجب DATA.rounds مؤقتًا وتعيدها)
  *   voiceBuildReportState(cur, prev)         حالة الجولة s من لقطتين (الحالية والسابقة) — حقائق من البيانات فقط
@@ -15,15 +15,8 @@ function _voiceH(){ return {formatCount, pickForm, formatList}; }
 
 // اختيار حتمي لقالب مقطع واحد. history: {مفتاح: [معرّفات بترتيب الجولات]} ويُحدَّث.
 function voicePickTemplate(key, list, s, h, history){
-  const L = voiceEligible(list, s, h);
-  if(!L.length) return null;
-  const used = history[key] = history[key] || [];
-  const recent = used.slice(-VOICE_REPEAT_WINDOW);
-  const fresh = L.filter(t => !recent.includes(t.id));
-  const pool = fresh.length ? fresh : L;
-  const t = pool[(s.round * 7 + key.length) % pool.length];
-  used.push(t.id);
-  return {id: t.id, text: voiceApply(t, s, h)};
+  const t = pickVariant(key, s.round, s, list, history, h);   // المنتقي المشترك (registry.js)
+  return t ? {id: t.id, text: voiceApply(t, s, h)} : null;
 }
 
 // تقرير جولة واحدة. المقاطع بلا قالب صالح تُحذف، والعنوان ثابت.
