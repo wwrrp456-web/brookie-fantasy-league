@@ -77,3 +77,4 @@
 | 2026-11-14 | #74 | `f389c32` | 002-T008 لغة باقي التبويبات (M67). SHA مطابق، `verify` أخضر. دمج: `98ad40e`. |
 | 2026-11-14 | #75 | `72b5542` | 002-T009 لغة المنظّم + القبول النهائي (M68). SHA مطابق، `verify` أخضر. دمج: `1de94c2`. |
 | 2026-11-14 | — | — | **بعد M62–M68:** `node tests/run.js` **453 ✅ / 0 ❌**، و`lint.js` نظيف: numberNoun **0**، rawDates **0**، forbiddenTerms **0** (hexColors 177، emoji 442، importants 0). عُلّمت T007 وT008 وT009 وT011 وT012 `[x]` بـ`specs/002-language-voice/tasks.md`. |
+| 2026-11-14 | #76 | `07ba2fe` | **M69 · نشر فرع التكامل على `main`** (تفويض المنظّم الدائم). `verify` أخضر على `07ba2fe` ([التشغيل](https://github.com/wwrrp456-web/brookie-fantasy-league/actions/runs/43638262686))، دمج بـMerge commit بلا حذف الفرع ولا تجاوز لحماية `main`. دمج: `ffe5c86`. **التحقق من الموقع المنشور على Pages يفعله المنظّم** (المضيف محجوب من بيئة التنفيذ). |
