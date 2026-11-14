@@ -33,6 +33,11 @@ function buildRoundStory(){
 
 // رسالة الواتساب: تقرير سردي قصير بلا جدول ولا مفتاح (R-20)؛ صورة الترتيب تُرسل منفصلة. التركيب بدالة صافية بـjs/core/whatsapp-text.js
 function buildWhatsAppSummary(){
+  // التقرير الكامل من محرك الصوت (قوالب Opus، اختيار حتمي)؛ لو تعذّر لأي سبب نرجع للنص الثابت القديم
+  try{
+    const rep = (typeof voiceCurrentReport === 'function') ? voiceCurrentReport() : null;
+    if(rep && rep.text) return rep.text;
+  }catch(e){}
   const h = getRoundHeroes();
   return composeWhatsAppSummary({round: getCurrentRoundNumber(), story: buildRoundStory(), hero: h ? h.top : null});
 }

@@ -785,6 +785,65 @@ const asyncDiffTests = (async () => {
   ], [true, true, true, 'رسمي · ✅ سليم']);
 }
 
+
+// ---------- 002-T011 / S48b: محرك تقرير الواتساب js/voice/voice-engine.js ----------
+{
+  const esb = {console}; esb.window = esb;
+  const ectx = vm.createContext(esb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/data/season-2/rounds-seed.js', 'js/core/config.js', 'js/core/dom-utils.js',
+    'js/core/ar-format.js', 'js/core/storage.js', 'js/core/standings-engine.js', 'js/core/club-engine.js', 'js/core/insights-engine.js',
+    'js/voice/voice-kit.js', 'js/voice/whatsapp-report.js', 'js/voice/voice-engine.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ectx, {filename: f}));
+  ectx.__r = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/fixtures/season.json'), 'utf8')).data.rounds;
+  vm.runInContext('DATA.rounds = __r; this.E = {voicePickTemplate, voiceComposeReport, voiceBuildReportState, voiceReportSeries, WA_REPORT, voiceEligible};', ectx);
+  const E = ectx.E, h = {formatCount: ectx.formatCount, pickForm: ectx.pickForm, formatList: ectx.formatList};
+
+  const series = E.voiceReportSeries();
+  check('محرك التقرير: تقرير لكل جولة بالـfixture', series.length, ectx.__r.length);
+  check('محرك التقرير: حتمي (نفس البيانات ← نفس النص)', E.voiceReportSeries().map(x => x.text), series.map(x => x.text));
+  const bad = series.filter(x => /undefined|NaN|null|\[object|[━═─]{3}|الإجمالي|▲|▼|فوز=3/.test(x.text));
+  check('محرك التقرير: بلا undefined ولا جدول ولا مفتاح ولا فواصل', bad.map(x => x.round), []);
+  // لا قالب يتكرر بنفس المقطع خلال آخر 3 جولات (كل مقطع فيه 5 قوالب صالحة فأكثر بالحالة الشائعة)
+  const rep = [];
+  series.forEach((x, i) => x.ids.forEach(id => { const sec = id.replace(/\.\d+$|\.last$/, ''); for(let j = Math.max(0, i - 3); j < i; j++) if(series[j].ids.includes(id) && !/streak|close\.last|climb|drop|quiet/.test(sec)) rep.push(`${x.round}:${id}`); }));
+  check('محرك التقرير: لا تكرار قالب بآخر 3 جولات (الافتتاحية والبطل والصدارة والممّات والخاتمة)', rep, []);
+  const wc = t => t.replace(/\*/g, '').split(/\s+/).filter(Boolean).length;
+  check('محرك التقرير: الطول 60-170 كلمة', series.filter(x => wc(x.text) < 60 || wc(x.text) > 170).map(x => x.round), []);
+
+  // حالات حافة: كل واحدة تنتج تقريرًا سليمًا وتحذف المقطع الذي لا قالب صالح له
+  const base = {round: 10, nextRound: 11, firstRound: false, playersCount: 20, hero: {name: 'أبو أوس', pts: 6, tieBreak: false, repeat: false, prevRank: 3},
+    leader: {name: 'لطفي', total: 92}, chaser: {name: 'أيوب', total: 90}, gap: 2, topTied: [], leaderChanged: false, prevLeader: 'لطفي',
+    climbers: {names: ['العندليب'], val: 3}, droppers: {names: ['أبو رمزي', 'مصطفى عبده'], val: 2}, mummat: [], mummaRepeat: null, hotStreak: null};
+  const comp = st => E.voiceComposeReport({...base, ...st}, {});
+  const ok = r => r.text.includes('بعد الجولة') && !/undefined|NaN|null/.test(r.text);
+  const tie = comp({topTied: ['لطفي', 'أيوب'], gap: 0, chaser: {name: 'أيوب', total: 92}});
+  check('حافة: تعادل على الصدارة', [ok(tie), tie.ids.some(i => /^wa\.lead\.(12|13|14|15|16)$/.test(i))], [true, true]);
+  const chg = comp({leaderChanged: true, prevLeader: 'أيوب'});
+  check('حافة: تبديل الصدارة', [ok(chg), chg.ids.some(i => /^wa\.lead\.(9|10|11)$/.test(i))], [true, true]);
+  const quiet = comp({climbers: null, droppers: null});
+  check('حافة: لا صاعدين ولا هابطين ← مقطع الهدوء', [ok(quiet), quiet.ids.some(i => i.startsWith('wa.quiet'))], [true, true]);
+  const mums = comp({mummat: ['أ', 'ب', 'ج', 'د', 'هـ']});
+  check('حافة: ممّات متعددة (5 ← «5 مشاركين») بلا خطأ', [ok(mums), mums.ids.some(i => i.startsWith('wa.mumma.')), mums.text.includes('5 مشاركين')], [true, true, true]);
+  const mrep = comp({mummat: ['أبو رمزي'], mummaRepeat: {name: 'أبو رمزي', count: 2}});
+  check('حافة: ممة ثانية على التوالي', ok(mrep), true);
+  const last = comp({round: 30, nextRound: null});
+  check('حافة: آخر جولة ← خاتمة الموسم بلا «الجولة 31»', [ok(last), last.ids.includes('wa.close.last'), last.text.includes('الجولة 31')], [true, true, false]);
+  const first = comp({round: 1, firstRound: true, leaderChanged: false, prevLeader: null, climbers: null, droppers: null});
+  check('حافة: أول جولة', ok(first), true);
+  const nohero = E.voiceComposeReport({...base, hero: null}, {});
+  check('حافة: بيانات ناقصة (بلا بطل) ← يحذف المقطع ولا ينهار', [ok(nohero), nohero.ids.some(i => i.startsWith('wa.hero'))], [true, false]);
+  const tb = comp({hero: {...base.hero, tieBreak: true}});
+  check('حافة: بطل بتعادل مكسور', [ok(tb), tb.text.includes('كسر')], [true, true]);
+
+  // المنتقي: يرفض غير المنطبق، ويتجنّب آخر 3، ويكرر فقط لو ما بقي بديل
+  const only = [E.WA_REPORT.mummat[0]];
+  check('منتقٍ: لا قالب منطبق ← null', E.voicePickTemplate('k', only, {...base, mummat: []}, h, {}), null);
+  const hist = {}, picks = [];
+  for(let r = 1; r <= 12; r++) picks.push(E.voicePickTemplate('t', E.WA_REPORT.opener, {...base, round: r}, h, hist).id);
+  check('منتقٍ: لا تكرار ضمن نافذة 3 جولات للافتتاحية', picks.filter((id, i) => picks.slice(Math.max(0, i - 3), i).includes(id)), []);
+  check('منتقٍ: تنويع ≥ 5 صيغ خلال 12 جولة', new Set(picks).size >= 5, true);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);
