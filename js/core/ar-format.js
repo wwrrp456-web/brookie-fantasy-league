@@ -90,6 +90,20 @@ function formatList(names, opts) {
   return withAnd.length === 2 ? withAnd.join(' ') : withAnd.join('، ');
 }
 
+// ───────────── مساعدات الصياغة المركّبة (001 S43-0) ─────────────
+// «بـ6 نقاط» قبل الرقم (بتطويل)، و«بنقطة واحدة/بنقطتين» قبل الكلمة (بلا تطويل)، و«بلا نقاط» بلا باء. countText ناتج formatCount.
+function arBaPrefix(countText){
+  if(/^بلا /.test(countText)) return countText;
+  return (/^\d/.test(countText) ? 'بـ' : 'ب') + countText;
+}
+
+// «جولة واحدة» · «جولتان متتاليتان» · «3 جولات متتالية» · «11 جولة متتالية» (الصفة تطابق المعدود)
+function arRoundsRun(n){
+  const c = formatCount(n, 'جولة');
+  if(n < 2) return c;
+  return c + ' ' + (n === 2 ? 'متتاليتان' : 'متتالية');
+}
+
 // ───────────── التاريخ ─────────────
 const AR_TZ = 'Asia/Riyadh';
 const _arDtf = {};
@@ -138,5 +152,5 @@ function formatDate(d, opts) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {formatCount, pickForm, formatList, formatDate, AR_NOUNS};
+  module.exports = {formatCount, pickForm, formatList, formatDate, AR_NOUNS, arBaPrefix, arRoundsRun};
 }

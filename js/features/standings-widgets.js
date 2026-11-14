@@ -106,7 +106,7 @@ function renderBottomRace(){
     html += `<div class="bottom-race-row">
       <span class="bottom-race-rank">${i+1}</span>
       <span class="bottom-race-name">${s.name}</span>
-      <span class="bottom-race-pts">${s.total} نقطة</span>
+      <span class="bottom-race-pts">${formatCount(s.total,'نقطة')}</span>
       <span class="bottom-race-gap ${i===0?'bottom-race-lead':''}">${i===0 ? '🔻 الأقرب للنجاة' : `-${gap} عن الأقرب للنجاة`}</span>
     </div>`;
   });
@@ -179,10 +179,10 @@ function renderHonorBoard(){
 
   // البطاقة بلا بيانات (لا نقطة جولة، أو لا سلسلة، أو لا ثبات محسوب) تُحذف بدل ما تعرض "—" (U-07)
   const cards = [
-    {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:`${leader.total} نقطة`},
+    {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:formatCount(leader.total,'نقطة')},
     bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${bestSingle.pts} ن. (ج${bestSingle.round})`} : null,
-    leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:`${leastMumma.mumma} ممة`} : null,
-    longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:`${longestStreak.streak} جولات متتالية`} : null,
+    leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:formatCount(leastMumma.mumma,'ممة')} : null,
+    longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:arRoundsRun(longestStreak.streak)} : null,
     mostStable.std !== Infinity ? {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
   ].filter(Boolean);
 
@@ -284,7 +284,7 @@ function renderSurprises(){
     return hist && hist.length>=2 && hist[hist.length-2].points===0 && hist[hist.length-1].points>0;
   }).sort((a,b)=>b.last-a.last);
   if(bouncebacks.length){
-    cards.push({emoji:'💪',title:'انتعاش بعد الممة',name:bouncebacks[0].name,detail:`${bouncebacks[0].last} نقطة هذا الأسبوع`});
+    cards.push({emoji:'💪',title:'انتعاش بعد الممة',name:bouncebacks[0].name,detail:`${formatCount(bouncebacks[0].last,'نقطة')} هذا الأسبوع`});
   }
 
   if(!cards.length){ box.innerHTML=''; return; }
@@ -452,7 +452,7 @@ function renderRankHistory(){
     // فقط (n) كما كان قبل 21 سبتمبر 2026 — وإلا كانت النسبة تتجاوز 100%.
     const pct = Math.round(rounds/leaders.length*100);
     html += `<div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:0.8rem;">
-      <b>${p.name}</b> — <span style="color:var(--gold);">${rounds} جولة</span> في الصدارة (${pct}%)
+      <b>${p.name}</b> — <span style="color:var(--gold);">${formatCount(rounds,'جولة')}</span> في الصدارة (${pct}%)
     </div>`;
   });
   html += '</div>';
