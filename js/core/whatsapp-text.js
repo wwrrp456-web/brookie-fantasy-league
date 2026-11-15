@@ -41,15 +41,14 @@ function composeRoundStory(d){
   return parts.join(' ');
 }
 
-// رسالة الواتساب بعد حذف الجدول والمفتاح وسطر الحساب والخطوط الفاصلة (قرار المنظّم R-20).
+// رسالة الواتساب الاحتياطية (لو تعذّر محرك الصوت): بالفصحى الإعلامية الرياضية (R-27) وبلا إيموجي (R-24)، والأسماء كما هي (R-25).
 function composeWhatsAppSummary(d){
-  let t = `🏆 *دوري بروكي الفانتازي · الموسم الثاني*\n`;
-  t += `📅 تحديث بعد الجولة ${d.round}\n`;
-  if(d.story) t += `\n📝 ${d.story}\n`;
+  let t = `*دوري بروكي الفانتازي · بعد الجولة ${d.round}*\n`;
+  if(d.story) t += `\n${d.story}\n`;
   if(d.hero){
     const withPts = arBaPrefix(formatCount(d.hero.points, 'نقطة', {case: 'acc'}));   // بنقطة واحدة · بنقطتين · بـ6 نقاط · بـ11 نقطة · بلا نقاط
-    t += `\n👑 بطل الجولة: *${d.hero.name}* ${withPts}${d.hero.tieBreak ? ' بعد كسر التعادل' : ''}\n`;
+    t += `\nبطل الجولة: *${d.hero.name}* ${withPts}${d.hero.tieBreak ? ' بعد كسر التعادل' : ''}\n`;
   }
-  t += `\nشدّوا الهمّة يا جماعة، فالجولة ${d.round + 1} ما تنتظر أحدًا!`;
+  t += `\nاستعدّوا للجولة ${d.round + 1}، فالمنافسة ما زالت مفتوحة.`;
   return t;
 }

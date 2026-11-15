@@ -119,8 +119,10 @@ function spotlightCompose(c, history, len, h){
     let pool = SPOTLIGHT_SEASON;
     for(let i = 0; i < 3; i++){ const x = take('season' + i, pool.filter(t => !clash(t.id))); if(!x) break; season.push(x); pool = pool.filter(t => !ids.includes(t.id)); }
   }
-  const joke = take(a.id + '.joke', a.joke);
-  const joke2 = len === 'long' ? take(a.id + '.joke', a.joke.filter(t => !ids.includes(t.id))) : null;   // نفس مفتاح السجل: النكتتان لا تتكرران بآخر 3 استعمالات
+  // النسخة الطويلة: «زوج» نكتتين متتابعتين مكتوبتين معًا من jokeLong (R-26/R-27)، والقصيرة نكتة واحدة من joke. بلا نكتة ثانية مستقلة (كانت تلتصق بلا رابط).
+  const jokeLongText = len === 'long' && a.jokeLong ? take(a.id + '.jokeLong', a.jokeLong) : null;
+  const joke = jokeLongText || take(a.id + '.joke', a.joke);
+  const joke2 = null;
   const close = take('close.' + a.mood, SPOTLIGHT_CLOSING[a.mood]);
   const paragraphs = [[story, ...factTexts].filter(Boolean).join(' '), season.join(' '), motiv, [joke, joke2].filter(Boolean).join(' '), close].filter(Boolean);
   const text = ['*' + title + '*', ...paragraphs].join('\n\n');   // نص الواتساب: العنوان بخط عريض، بلا إيموجي (R-24)

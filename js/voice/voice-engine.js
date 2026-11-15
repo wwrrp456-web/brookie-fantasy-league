@@ -94,6 +94,48 @@ function voiceReportSeries(upToRound){
   return out;
 }
 
+// ---------- قصة الجولة بالفصحى (VOICE_ROUND_STORY من banter.js، R-27) ----------
+// rs = {round, hero:{name,pts,tieBreak}|null, mummat:[أسماء], climber:{names,val}|null, dropper:{names,val}|null}
+// ← {text, ids, round}: جملة لكل مقطع منطبق (البطل ثم الممّات ثم الصعود ثم التراجع)، بنفس المنتقي الحتمي (لا تكرار آخر 3 جولات).
+function voiceComposeRoundStory(rs, history){
+  const h = _voiceH(), L = VOICE_ROUND_STORY, ids = [], parts = [];
+  const take = (key, cond) => { if(!cond) return; const x = voicePickTemplate('rs.' + key, L[key], rs, h, history); if(x){ ids.push(x.id); parts.push(x.text); } };
+  take('hero', !!rs.hero);
+  take('mummat', rs.mummat && rs.mummat.length > 0);
+  take('climb', !!rs.climber);
+  take('drop', !!rs.dropper);
+  return {text: parts.join(' '), ids, round: rs.round};
+}
+
+function voiceRoundStoryState(s){
+  return {round: s.round, hero: s.hero ? {name: s.hero.name, pts: s.hero.pts, tieBreak: !!s.hero.tieBreak} : null, mummat: s.mummat || [], climber: s.climbers, dropper: s.droppers};
+}
+
+// قصة كل جولة بالتسلسل (history حقيقي) ← [{round, text, ids}]
+function voiceRoundStorySeries(upToRound){
+  const total = upToRound === undefined ? DATA.rounds.length : upToRound;
+  const history = {}, out = [];
+  let prev = voiceSnapshot(0);
+  for(let k = 0; k < total; k++){
+    const cur = voiceSnapshot(k + 1);
+    out.push(voiceComposeRoundStory(voiceRoundStoryState(voiceBuildReportState(cur, prev, k === 0)), history));
+    prev = cur;
+  }
+  return out;
+}
+
+let _rsCache = {key: null, val: null};
+// قصة الجولة الحالية للصفحة الأولى (مخبّأة بمفتاح بيانات الجولات)، أو '' لو لا جولات/لا بطل
+function voiceCurrentRoundStory(){
+  if(!DATA.rounds.length) return '';
+  const key = JSON.stringify(DATA.rounds);
+  if(_rsCache.key === key) return _rsCache.val;
+  const s = voiceRoundStorySeries();
+  const val = s.length ? s[s.length - 1].text : '';
+  _rsCache = {key, val};
+  return val;
+}
+
 // تقرير الجولة الحالية للواجهة والواتساب، أو null لو لا جولات
 function voiceCurrentReport(){
   if(!DATA.rounds.length) return null;
@@ -101,4 +143,4 @@ function voiceCurrentReport(){
   return s[s.length - 1];
 }
 
-if(typeof module !== 'undefined') module.exports = {voicePickTemplate, voiceComposeReport, voiceBuildReportState, voiceReportSeries, voiceSnapshot, voiceCurrentReport};
+if(typeof module !== 'undefined') module.exports = {voiceComposeRoundStory, voiceRoundStorySeries, voiceCurrentRoundStory, voicePickTemplate, voiceComposeReport, voiceBuildReportState, voiceReportSeries, voiceSnapshot, voiceCurrentReport};
