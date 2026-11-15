@@ -105,7 +105,7 @@ function spotlightCompose(c, history, len, h){
   const storyHasBoth = story && story.includes('المركز ' + sp.rank) && story.includes(h.formatCount(sp.total, 'نقطة'));
   let facts = SPOTLIGHT_FACTS.filter(t => !(a.id === 'rocket' && t.id === 'sp.fact.8') && !(storyHasBoth && t.id === 'sp.fact.1'));
   const chosen = [];
-  for(let i = 0; i < 3; i++){
+  for(let i = 0; i < (len === 'long' ? 4 : 3); i++){   // الطويلة تأخذ رقمًا داعمًا رابعًا تعويضًا عن النكتة الثانية (R-26)
     const L = facts.filter(t => !clash(t.id));
     const v = pickVariant('sp.fact' + i, r, sp, L, history, h);
     if(!v) break;
@@ -120,7 +120,8 @@ function spotlightCompose(c, history, len, h){
     for(let i = 0; i < 3; i++){ const x = take('season' + i, pool.filter(t => !clash(t.id))); if(!x) break; season.push(x); pool = pool.filter(t => !ids.includes(t.id)); }
   }
   const joke = take(a.id + '.joke', a.joke);
-  const joke2 = len === 'long' ? take(a.id + '.joke', a.joke.filter(t => !ids.includes(t.id))) : null;   // نفس مفتاح السجل: النكتتان لا تتكرران بآخر 3 استعمالات
+  // نكتة واحدة بالنسختين (R-26): النكتة الثانية كانت تُختار مستقلة فتلتصق نكتتان بلا رابط؛ تعود لما يسلّم Opus قوائم التتابع (أزواج متتابعة)
+  const joke2 = null;
   const close = take('close.' + a.mood, SPOTLIGHT_CLOSING[a.mood]);
   const paragraphs = [[story, ...factTexts].filter(Boolean).join(' '), season.join(' '), motiv, [joke, joke2].filter(Boolean).join(' '), close].filter(Boolean);
   const text = ['*' + title + '*', ...paragraphs].join('\n\n');   // نص الواتساب: العنوان بخط عريض، بلا إيموجي (R-24)

@@ -703,24 +703,24 @@ const asyncDiffTests = (async () => {
   for(let i = 0; i < 40; i++){
     const c = counts[i % 4], g = [0, 1, 2, 3, 11][i % 5], tie = [[], [], ['لطفي', 'أيوب'], ['لطفي', 'أيوب', 'سعيد']][i % 4];
     waStates.push({round: 10, nextRound: i % 7 ? 11 : null, firstRound: false, playersCount: 20,
-      hero: {name: 'أبا أوس', pts: [1, 2, 6, 11][i % 4], tieBreak: i % 2 === 0, repeat: i % 3 === 0, prevRank: [2, 15][i % 2]},
+      hero: {name: 'أبو أوس', pts: [1, 2, 6, 11][i % 4], tieBreak: i % 2 === 0, repeat: i % 3 === 0, prevRank: [2, 15][i % 2]},
       leader: {name: 'لطفي', total: [1, 2, 92, 111][i % 4]}, chaser: {name: 'أبو يحيى', total: 90}, gap: tie.length ? 0 : g, topTied: tie,
-      leaderChanged: i % 3 === 1, prevLeader: 'أبي مناف', climbers: i % 6 ? mv(c, [2, 3, 11][i % 3]) : null, droppers: i % 5 ? mv([1, 2, 3, 5][i % 4], [2, 4, 11][i % 3]) : null,
+      leaderChanged: i % 3 === 1, prevLeader: 'أبو مناف', climbers: i % 6 ? mv(c, [2, 3, 11][i % 3]) : null, droppers: i % 5 ? mv([1, 2, 3, 5][i % 4], [2, 4, 11][i % 3]) : null,
       mummat: names([0, 1, 2, 3, 5][i % 5]), mummaRepeat: i % 4 === 0 ? {name: 'أبو حمد', count: [2, 3][i % 2]} : null, hotStreak: i % 3 ? {name: 'أيوب', count: [3, 11][i % 2]} : null});
     spStates.push({round: 10, nextRound: i % 7 ? 11 : null, name: ['العندليب', 'أبا عتاب'][i % 2], rank: [1, 2, 4, 5, 12][i % 5], prevRank: [7, 12, 15, 3][i % 4], move: [3, 5, 11, -2, 0][i % 5],
       total: [85, 101, 111][i % 3], pts: [0, 1, 2, 6, 9][i % 5], played: true, playersCount: 20,
-      above: {name: 'أبو رمزي', gap: [1, 2, 3][i % 3]}, below: {name: 'أبي صالح', gap: [1, 2, 11][i % 3]}, isHero: i % 2 === 0, heroTieBreak: false, heroPts: 9,
+      above: {name: 'أبو رمزي', gap: [1, 2, 3][i % 3]}, below: {name: 'أبو صالح', gap: [1, 2, 11][i % 3]}, isHero: i % 2 === 0, heroTieBreak: false, heroPts: 9,
       isLeader: i % 5 === 0, leaderChanged: i % 2 === 0, second: {name: 'أبو حمد', gap: [0, 1, 2, 3, 11][i % 5]}, prevPts: [0, 1, 3, 6][i % 4],
       last5: [[5, 5, 5, 5, 5], [4, 5, 6, 5, 4], [1, 9, 0, 6, 3]][i % 3], hotRun: [3, 4, 11, 0][i % 4], coldEnded: [2, 3, 11, 0][i % 4],
       clubs: {won: [1, 2, 3][i % 3], played: 3, best: {club: 'الهلال', opp: 'النصر', gf: [1, 3, 11][i % 3], ga: 0}},
       duel: i % 2 ? {opp: 'أبو صالح', myPts: [6, 3, 6][i % 3], oppPts: [3, 6, 6][i % 3], totalGap: [0, 1, 2, 3][i % 4]} : null,
       badge: i % 3 ? {title: 'أطول سلسلة نقاط'} : null, predictor: i % 2 ? {hits: [2, 3, 11][i % 3]} : null,
       seasonMumma: [0, 1, 2, 11][i % 4], heroCount: [0, 1, 2, 11][i % 4], bestPts: [1, 2, 12][i % 3],
-      leaderName: 'أبا مناف', leaderGap: [0, 1, 2, 6, 11][i % 5], roundsPlayed: [1, 2, 3, 11][i % 4], seasonTotal: 30, rank3: [null, 1, 9, 15][i % 4]});
+      leaderName: 'أبو مناف', leaderGap: [0, 1, 2, 6, 11][i % 5], roundsPlayed: [1, 2, 3, 11][i % 4], seasonTotal: 30, rank3: [null, 1, 9, 15][i % 4]});
     rsStates.push({round: 10, hero: waStates[i].hero, mummat: waStates[i].mummat, climber: waStates[i].climbers, dropper: waStates[i].droppers,
-      names: names(c), count: [2, 3, 11][i % 3], title: 'أطول سلسلة نقاط', name: 'أبا أوس',
-      total: [1, 2, 62, 111][i % 4], above: {name: 'أبي رمزي', gap: [1, 2, 4, 11][i % 4]}, playersCount: 20,
-      a: {name: 'أبا حمد', pts: [0, 1, 3, 6][i % 4]}, b: {name: 'العندليب', pts: [0, 3, 3, 1][i % 4]}});
+      names: names(c), count: [2, 3, 11][i % 3], title: 'أطول سلسلة نقاط', name: 'أبو أوس',
+      total: [1, 2, 62, 111][i % 4], above: {name: 'أبو رمزي', gap: [1, 2, 4, 11][i % 4]}, playersCount: 20,
+      a: {name: 'أبو حمد', pts: [0, 1, 3, 6][i % 4]}, b: {name: 'العندليب', pts: [0, 3, 3, 1][i % 4]}});
   }
   const texts = [];
   const run = (list, states) => list.forEach(t => states.forEach(st => { const o = apply(t, st); if(o !== null) texts.push([t.id, o]); }));
@@ -736,9 +736,7 @@ const asyncDiffTests = (async () => {
     ['مطابقة الصفة للمثنى', /(جولتان|جولتين|ممّتان|ممّتين|نقطتان|نقطتين|مركزان|مركزين) متتالية/],
     ['لام الجر مع أل', /لـال/],
     ['تطويل بعد لام الجر قبل غير رقم', /(^|[\s«(])لـ(?!\d)/],
-    ['كنية مرفوعة أو منصوبة بعد جار أو مضاف', /(^|[\s،])(عن|على|مع|بين|وبين|عند|من|إلى|لصالح|نقاط|راس|نصيب|سلسلة|سجل|حكاية|توقعات|أندية|لأندية|اسم|باسم|سلاح|ملاحقيه) (أبو|أبا) /],
-    ['كنية غير منصوبة بعد «يا» أو مفعول', /(^|\s)(يا|زارت|أزاح|يلاحق|يتخطى|يهدي|تكفي) (أبو|أبي) /],
-    ['جملة تبدأ بكنية منصوبة أو مجرورة', /(^|[.!؟:]\s)(أبا|أبي) [^\s]+ (?!و)/],
+    ['كنية مُصرَّفة (R-25: الاسم يبقى كما بالبيانات «أبو» لا «أبي» ولا «أبا»)', /(^|[\s،.!؟:])(أبي|أبا) (?!عتاب)[^\s]+/],
     ['مبالغة: تهويل لبطل بنقاط قليلة', /(خطف الأضواء|ما ترك للباقين إلا التصفيق|بدون ما يعرق|ما رحم أحد) ب(نقطة|نقطتين)/],
   ];
   const fails = [];
@@ -762,8 +760,8 @@ const asyncDiffTests = (async () => {
     'بالمقابل، أبو تغريد (زيد) وأبو رمزي تراجعا 4 مراكز، والموسم طويل والعودة ممكنة.',
     'لطفي وأيوب يتقاسمان الصدارة برصيد 92 نقطة.',
   ]);
-  check('صوت: تصريف الكنية (F-voice-1)', vm.runInContext(`[vkG('أبو رمزي'), vkN('أبا عتاب'), vkA('أبو صالح'), vkLi('أبو صالح'), vkLi('مصطفى عبده'), vkLi('العندليب'), vkLi('5 مشاركين'), vkG('أبو تغريد (زيد)'), vkWho({formatList, formatCount}, ['أبو رمزي', 'أبا عتاب', 'سعيد'], 'gen'), vkN('موسى (العجوز)'), vkFirst(['أبي أ', 'ب', 'ج', 'د'])]`, vctx),
-    ['أبي رمزي', 'أبو عتاب', 'أبا صالح', 'لأبي صالح', 'لمصطفى عبده', 'للعندليب', 'لـ5 مشاركين', 'أبي تغريد (زيد)', 'أبي رمزي، وأبي عتاب، وسعيد', 'موسى (العجوز)', ' (أولهم أبو أ)']);
+  check('صوت: الاسم لا يتغيّر أبدًا (R-25): vkN وvkG وvkA وvkWho وvkFirst بكل الحالات', vm.runInContext(`[vkG('أبو رمزي'), vkN('أبا عتاب'), vkA('أبو صالح'), vkName('أبو رمزي', 'gen'), vkName('أبو رمزي', 'acc'), vkLi('أبو صالح'), vkLi('مصطفى عبده'), vkLi('العندليب'), vkLi('5 مشاركين'), vkG('أبو تغريد (زيد)'), vkWho({formatList, formatCount}, ['أبو رمزي', 'أبا عتاب', 'سعيد'], 'gen'), vkWho({formatList, formatCount}, ['أبو رمزي', 'أبو أوس'], 'acc'), vkN('موسى (العجوز)'), vkFirst(['أبو أ', 'ب', 'ج', 'د'])]`, vctx),
+    ['أبو رمزي', 'أبا عتاب', 'أبو صالح', 'أبو رمزي', 'أبو رمزي', 'لأبو صالح', 'لمصطفى عبده', 'للعندليب', 'لـ5 مشاركين', 'أبو تغريد (زيد)', 'أبو رمزي، وأبا عتاب، وسعيد', 'أبو رمزي وأبو أوس', 'موسى (العجوز)', ' (أولهم أبو أ)']);
   const lens = spStates.map((st, i) => L.spotlightLength({...st, round: 9 + (i % 2)}, h));
   check('صوت: طول المنافس يتنوّع (الطويل بجولة زوجية وسياق كافٍ، والقصير غير كذا)', [lens.includes('long'), lens.includes('short'), L.spotlightLength({...spStates[0], round: 9}, h)], [true, true, 'short']);
   check('صوت: السجلّ يصنّف كل مولّد', L.VOICE_REGISTRY.filter(r => !['متنوّع', 'ثابت بقصد', 'ينتظر ترحيل'].includes(r.status)).map(r => r.id), []);
@@ -897,8 +895,16 @@ const asyncDiffTests = (async () => {
   check('تقرير المنافس: لكل جولة تقرير (عنوان وفقرات)', reps.every(r => r && r.title && r.paragraphs.length >= 3), true);
   check('تقرير المنافس: حتمي (نفس النص عند الإعادة)', sctx.SP2.spotlightReportSeries().map(x => x.report.text), reps.map(r => r.text));
   check('تقرير المنافس: نص الواتساب بعنوان بنجمتين، بلا إيموجي ولا undefined/NaN', reps.filter(r => !/^\*[^*]+\*\n\n/.test(r.text) || EMO.test(r.text) || /undefined|NaN|null/.test(r.text)).map(r => r.round), []);
-  check('تقرير المنافس: الطول يتنوّع (قصيرة وطويلة) والقصيرة 55–100 كلمة والطويلة 95–190', [new Set(reps.map(r => r.len)).size, reps.filter(r => r.len === 'short' && (r.words < 55 || r.words > 100)).length, reps.filter(r => r.len === 'long' && (r.words < 95 || r.words > 190)).length], [2, 0, 0]);
+  check('تقرير المنافس: الطول يتنوّع (قصيرة وطويلة) والقصيرة 55–100 كلمة والطويلة 100–180 (R-26)', [new Set(reps.map(r => r.len)).size, reps.filter(r => r.len === 'short' && (r.words < 55 || r.words > 100)).length, reps.filter(r => r.len === 'long' && (r.words < 100 || r.words > 180)).length], [2, 0, 0]);
+  check('تقرير المنافس: نكتة واحدة فقط بالنسختين (R-26: لا نكتة ثانية مستقلة)', reps.filter(r => r.ids.filter(id => /\.j\d+$/.test(id)).length !== 1).map(r => r.round), []);
   const tpl = []; reps.forEach((r, i) => { const keyOf = id => id.replace(/\.\d+$/, ''); r.ids.forEach(id => { if(/\.(t|s|j)\d+$/.test(id)){ for(let j = Math.max(0, i - 3); j < i; j++) if(reps[j].angle === r.angle && reps[j].ids.includes(id)) tpl.push(r.round + ':' + id); } }); });
+  // R-25: أسماء المشاركين تظهر حرفيًا بكل نص (تقرير الواتساب ومنافس الجولة) بلا «أبي» ولا «أبا» إلا لو هكذا بالبيانات
+  vm.runInContext('this.PNAMES = PARTICIPANTS.map(p => p.name);', sctx);
+  const pn = sctx.PNAMES, allTexts = reps.map(r => r.text).concat(vm.runInContext('voiceReportSeries()', sctx).map(x => x.text));
+  const inflected = [];
+  pn.filter(n => /^أبو /.test(n)).forEach(n => { const tail = n.slice(4); allTexts.forEach((t, i) => { if(t.includes('أبي ' + tail) || t.includes('أبا ' + tail)) inflected.push(`${n}:${i}`); }); });
+  check('R-25: أسماء المشاركين حرفية بكل تقارير الجولات (لا «أبي» ولا «أبا» لاسم مخزَّن «أبو»)', inflected, []);
+  check('R-25: ويظهر منها فعلًا «أبو» (التقارير ليست فاضية من الأسماء)', allTexts.some(t => /أبو [\u0621-\u064A]+/.test(t)), true);
   check('تقرير المنافس: لا يتكرر قالب العنوان/القصة/النكتة لنفس الزاوية بآخر 3 جولات', tpl, []);
 
   // محاكاة 30 جولة × 20 مشاركًا
