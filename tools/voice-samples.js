@@ -149,8 +149,9 @@ function composeSpotlight(pick, c, h, len){
     let pool = ctxLib.SPOTLIGHT_SEASON;
     for(let i = 0; i < 3; i++){ const x = take('season' + i, pool.filter(t => !clash(t.id))); if(!x) break; season.push(x); pool = pool.filter(t => !ids.includes(t.id)); }
   }
-  const joke = take(a.id + '.joke', a.joke);
-  const joke2 = len === 'long' ? take(a.id + '.joke2', a.joke.filter(t => !ids.includes(t.id))) : null;
+  // الطويلة: زوج نكتتين مصمّم معًا (jokeLong)، والقصيرة: نكتة واحدة (R-26، لا نكتة ثانية مستقلة)
+  const joke = len === 'long' && a.jokeLong ? take(a.id + '.jokeLong', a.jokeLong) : take(a.id + '.joke', a.joke);
+  const joke2 = null;
   const close = take('close.' + a.mood, ctxLib.SPOTLIGHT_CLOSING[a.mood]);
   return {text: [`*${title}*`, [story, ...factTexts].filter(Boolean).join(' '), season.join(' '), motiv, [joke, joke2].filter(Boolean).join(' '), close].filter(Boolean).join('\n\n'), ids};
 }

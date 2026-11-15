@@ -725,7 +725,7 @@ const asyncDiffTests = (async () => {
   const texts = [];
   const run = (list, states) => list.forEach(t => states.forEach(st => { const o = apply(t, st); if(o !== null) texts.push([t.id, o]); }));
   run([].concat(...Object.values(L.WA_REPORT)), waStates);
-  run([].concat(...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke]), L.SPOTLIGHT_FACTS, L.SPOTLIGHT_SEASON, L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down), spStates);
+  run([].concat(...L.SPOTLIGHT_ANGLES.map(a => [...a.title, ...a.story, ...a.joke, ...(a.jokeLong || [])]), L.SPOTLIGHT_FACTS, L.SPOTLIGHT_SEASON, L.SPOTLIGHT_MOTIVATION.up, L.SPOTLIGHT_MOTIVATION.down, L.SPOTLIGHT_CLOSING.up, L.SPOTLIGHT_CLOSING.down), spStates);
   run([].concat(...Object.values(L.VOICE_ROUND_STORY), L.VOICE_STREAKS.hot, L.VOICE_STREAKS.cold, ...Object.values(L.VOICE_NOTIFY), L.VOICE_BOTTOM, L.VOICE_TIE, L.VOICE_DUEL.win, L.VOICE_DUEL.draw), rsStates);
   const RULES = [
     ['عدد ومعدود', /(^|[^\d])([3-9]|10) (نقطة|مركز|جولة|ممة)(?![ء-ي])|(^|[^\d])[12] (نقاط|نقطة|مراكز|مركز|جولات|جولة)(?![ء-ي])|(^|[^\d])(1[1-9]|[2-9]\d) (نقاط|مراكز|جولات|ممّات)(?![ء-ي])/],
@@ -756,14 +756,28 @@ const asyncDiffTests = (async () => {
     apply(W.drop.find(t => t.id === 'wa.drop.1'), {droppers: {names: ['أبو تغريد (زيد)', 'أبو رمزي'], val: 4}}),
     apply(W.lead.find(t => t.id === 'wa.lead.14'), {leader: {name: 'لطفي', total: 92}, topTied: ['لطفي', 'أيوب']}),
   ], [
-    'لطفي على القمة برصيد 92 نقطة، لكن أيوب يتنفّس في رقبته بفارق نقطتين بس.',
-    'بالمقابل، أبو تغريد (زيد) وأبو رمزي تراجعا 4 مراكز، والموسم طويل والعودة ممكنة.',
+    'يتصدّر لطفي برصيد 92 نقطة، وأيوب يلاحقه عن قرب بفارق نقطتين فقط.',
+    'في المقابل، أبو تغريد (زيد) وأبو رمزي تراجعا 4 مراكز، والموسم طويل والعودة ممكنة.',
     'لطفي وأيوب يتقاسمان الصدارة برصيد 92 نقطة.',
   ]);
   check('صوت: الاسم لا يتغيّر أبدًا (R-25): vkN وvkG وvkA وvkWho وvkFirst بكل الحالات', vm.runInContext(`[vkG('أبو رمزي'), vkN('أبا عتاب'), vkA('أبو صالح'), vkName('أبو رمزي', 'gen'), vkName('أبو رمزي', 'acc'), vkLi('أبو صالح'), vkLi('مصطفى عبده'), vkLi('العندليب'), vkLi('5 مشاركين'), vkG('أبو تغريد (زيد)'), vkWho({formatList, formatCount}, ['أبو رمزي', 'أبا عتاب', 'سعيد'], 'gen'), vkWho({formatList, formatCount}, ['أبو رمزي', 'أبو أوس'], 'acc'), vkN('موسى (العجوز)'), vkFirst(['أبو أ', 'ب', 'ج', 'د'])]`, vctx),
     ['أبو رمزي', 'أبا عتاب', 'أبو صالح', 'أبو رمزي', 'أبو رمزي', 'لأبو صالح', 'لمصطفى عبده', 'للعندليب', 'لـ5 مشاركين', 'أبو تغريد (زيد)', 'أبو رمزي، وأبا عتاب، وسعيد', 'أبو رمزي وأبو أوس', 'موسى (العجوز)', ' (أولهم أبو أ)']);
   const lens = spStates.map((st, i) => L.spotlightLength({...st, round: 9 + (i % 2)}, h));
   check('صوت: طول المنافس يتنوّع (الطويل بجولة زوجية وسياق كافٍ، والقصير غير كذا)', [lens.includes('long'), lens.includes('short'), L.spotlightLength({...spStates[0], round: 9}, h)], [true, true, 'short']);
+  // R-27: تقارير الجولة بالفصحى الإعلامية، صفر كلمة لهجية (style-guide §1.1)
+  const reportTexts = texts.filter(([id]) => /^(wa\.|sp\.|rs\.|bt\.|dl\.)/.test(id));
+  const DIALECT = /(^|[^ء-ْ])(يبي|تبي|للحين|طاح|طاحوا|جا|وحدة|هالجولة|هالمرة|بس|الحين|اللي|وش|مو|مب|عشان|كذا|زين|شوي|ورا|لين|قاعد|يدوّر|يدوّرون|جاب|جابوا|خلّى|خلّت|راح يتعب|ما فيه|ياخذ|تاخذ|الجاية|يقفل|يشوف|يشوفون|حاجز المكان|مرة وحدة|دفعة وحدة)(?![ء-ْ])/;
+  const dialectHits = [...new Set(reportTexts.filter(([, o]) => DIALECT.test(o)).map(([id, o]) => id + ': ' + o.match(DIALECT)[2]))];
+  check(`صوت: ${reportTexts.length} نص تقرير بلا كلمة لهجية (R-27)`, dialectHits.slice(0, 6), []);
+  // R-26: لا جهات متخيّلة ولا فاعل مفاجئ، وأزواج النكت مصمّمة (جملتان) لكل زاوية
+  const IMAGINARY = /المحللين|المحللون|الدفاع المدني|برج المراقبة|الاستخبارات|تقارير المحللين/;
+  const SUDDEN = /^(المتصدرون|المتصدرين|الجميع|الباقون|الباقين|المنافسون|المنافسين|اللي) /;
+  const r26 = [...new Set(reportTexts.filter(([, o]) => IMAGINARY.test(o) || o.split(/(?<=[.!؟])\s+/).some(x => SUDDEN.test(x))).map(([id]) => id))];
+  check('صوت: لا جهات متخيّلة ولا فاعل مفاجئ في التقارير (R-26)', r26, []);
+  const pairBad = L.SPOTLIGHT_ANGLES.filter(a => !a.jokeLong || a.jokeLong.length < 5).map(a => a.id);
+  const pairSent = [];
+  L.SPOTLIGHT_ANGLES.forEach(a => (a.jokeLong || []).forEach(t => spStates.forEach(st => { const o = apply(t, st); if(o && o.split(/(?<=[.!؟])\s+/).filter(Boolean).length !== 2) pairSent.push(t.id); })));
+  check('صوت: كل زاوية فيها ≥ 5 أزواج نكت (jokeLong)، وكل زوج جملتان مترابطتان (R-26)', [pairBad, [...new Set(pairSent)]], [[], []]);
   check('صوت: السجلّ يصنّف كل مولّد', L.VOICE_REGISTRY.filter(r => !['متنوّع', 'ثابت بقصد', 'ينتظر ترحيل'].includes(r.status)).map(r => r.id), []);
 
   // 7) أداة العينات: حتمية وتطلع الجولة 10 بأرقامها الصحيحة
