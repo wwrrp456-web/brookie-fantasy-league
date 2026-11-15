@@ -60,6 +60,14 @@ function composeSatiricalStory(d){
 }
 
 function buildSatiricalRoundStory(){
+  // قصة الجولة بالفصحى الإعلامية الرياضية من محرك الصوت (VOICE_ROUND_STORY، R-27)، والأسماء كما هي (R-25).
+  // القوالب القديمة أدناه (ROUND_STORY_* وcomposeSatiricalStory) احتياطٌ فقط لو تعذّر المحرك، ولا تظهر عادةً.
+  try{
+    if(typeof voiceCurrentRoundStory === 'function' && typeof VOICE_ROUND_STORY !== 'undefined'){
+      const t = voiceCurrentRoundStory();
+      if(t) return t;
+    }
+  }catch(e){}
   const heroes = getRoundHeroes();
   if(!heroes || !heroes.top) return '';
   const mv = getMovements();
