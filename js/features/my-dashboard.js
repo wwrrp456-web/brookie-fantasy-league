@@ -19,7 +19,7 @@ function renderPredictionAccuracy(){
     .filter(r=>r.total>0)
     .sort((a,b)=> b.correct-a.correct || b.pct-a.pct || b.total-a.total || a.name.localeCompare(b.name,'ar'));
 
-  let html = `<h2 class="section-title" style="margin-top:22px;">🔮 لوحة أدق المتوقعين</h2>`;
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('crystal-ball')} لوحة أدق المتوقعين</h2>`;
   if(!list.length){
     html += emptyState({icon: 'poll', title: 'لا توقعات محسومة بعد', text: 'تظهر اللوحة هنا أول ما تنحسم أول جولة فيها توقعات.'});
     box.innerHTML = html;
@@ -197,14 +197,14 @@ function renderMyDashboard(){
   const below = idx<st.length-1 ? st[idx+1] : null;
   if(above){
     const g = above.total - meRow.total;
-    rivalHtml += `<div class="my-dash-rival">🔼 <b>${above.name}</b> ${g > 0 ? 'يسبقك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
+    rivalHtml += `<div class="my-dash-rival">${iconHTML('arrow-up')} <b>${above.name}</b> ${g > 0 ? 'يسبقك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
   }
   if(below){
     const g = meRow.total - below.total;
-    rivalHtml += `<div class="my-dash-rival">🔽 <b>${below.name}</b> ${g > 0 ? 'خلفك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
+    rivalHtml += `<div class="my-dash-rival">${iconHTML('arrow-down')} <b>${below.name}</b> ${g > 0 ? 'خلفك بفارق ' + formatCount(g, 'نقطة', {case: 'acc'}) : 'يعادلك بالنقاط'}</div>`;
   }
   if(!above && !below){
-    rivalHtml = '<div class="my-dash-rival">أنت المشارك الوحيد 🎉</div>';
+    rivalHtml = '<div class="my-dash-rival">أنت المشارك الوحيد ' + iconHTML('sparkles') + '</div>';
   }
 
   // سطر التوقع في اللوحة الشخصية يتبع نفس مفتاح المنظم لإظهار/إخفاء خانة
@@ -217,7 +217,7 @@ function renderMyDashboard(){
     const predName = myPrediction !== undefined ? (PARTICIPANTS.find(p=>p.id===Number(myPrediction))||{}).name : null;
     predHtml = predName
       ? `<div class="my-dash-pred">توقعك لبطل الجولة ${targetRound}: <b>${predName}</b></div>`
-      : `<div class="my-dash-pred">لسه ما توقعت بطل الجولة ${targetRound} 🔮</div>`;
+      : `<div class="my-dash-pred">لسه ما توقعت بطل الجولة ${targetRound} ${iconHTML('crystal-ball')}</div>`;
   }
 
   const whatINeedHtml = buildWhatINeedHTML(meRow, st, idx);
@@ -241,7 +241,7 @@ function renderMyDashboard(){
         ${rivalHtml}
         ${whatINeedHtml}
         ${predHtml}
-        <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">📤 شارك ترتيبي</button>
+        <button class="btn secondary" id="shareMyRankBtn" style="width:100%;margin-top:10px;">${iconHTML('share')} شارك ترتيبي</button>
         ${myClubsCardBlockHTML(MY_ID)}
       </details>
     </div>`;
@@ -313,7 +313,7 @@ function renderPredictions(){
   const myPrediction = (MY_ID !== null) ? roundEntries[MY_ID] : undefined;
 
   let html = '<div class="predict-card">';
-  html += `<div class="predict-title">🔮 توقّع بطل الجولة ${targetRound}</div>`;
+  html += `<div class="predict-title">${iconHTML('crystal-ball')} توقّع بطل الجولة ${targetRound}</div>`;
 
   if(MY_ID === null){
     html += '<div class="predict-hint">اختر اسمك من "مين أنت؟" بالأعلى عشان تقدر تتوقّع</div>';
@@ -340,7 +340,7 @@ function renderPredictions(){
     .filter(a=>a.total>0)
     .sort((a,b)=> b.correct-a.correct || (b.correct/b.total)-(a.correct/a.total));
   if(ranked.length){
-    html += '<div class="predict-leader-title">🏆 الأكثر توقعًا صحيحًا</div><div class="predict-leaderboard">';
+    html += '<div class="predict-leader-title">' + iconHTML('trophy') + ' الأكثر توقعًا صحيحًا</div><div class="predict-leaderboard">';
     ranked.slice(0,5).forEach((r,i)=>{
       html += `<div class="predict-leader-row"><span>${i+1}. ${r.name}</span><span>${r.correct}/${r.total}</span></div>`;
     });
@@ -389,7 +389,7 @@ function buildWhatINeedHTML(meRow, st, idx){
     rows += `<div class="my-dash-need-row"><span>للبقاء أمام <b>${below.name}</b></span><span class="my-dash-need-badge">+${gap} ن. كافية</span></div>`;
   }
   if(!rows) return '';
-  return `<div class="my-dash-need"><b>🎯 الجولة القادمة:</b>${rows}</div>`;
+  return `<div class="my-dash-need"><b>${iconHTML('target')} الجولة القادمة:</b>${rows}</div>`;
 }
 
 // ---------- إنجازاتي الشخصية (ميزة 6) ----------
@@ -427,18 +427,18 @@ function renderMyAchievements(){
   const favClub = Object.entries(clubCount).sort((a,b)=>b[1]-a[1])[0];
   const pc = PARTICIPANT_COLORS[pid]||'var(--gold)';
   const tiles = [
-    ['🔥','أفضل جولة',formatCount(best, 'نقطة'),bestRound ? `جولة ${bestRound.number}` : ''],
-    ['📉','أضعف جولة',formatCount(worst, 'نقطة'),worstRound ? `جولة ${worstRound.number}` : ''],
-    ['📊','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
-    ['🏆','أفضل مركز',`#${bestRank}`,''],
-    ['😓','أسوأ مركز',`#${worstRank}`,''],
-    ['👑','مرات في الصدارة',`${timesFirst}`,timesFirst===0?'لم تتصدر بعد':'مرة'],
-    ['💪','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
-    ['⚽','ناديك المفضل',favClub?favClub[0]:'لا يوجد بعد',favClub?`${favClub[1]} مرات`:''],
+    ['flame','أفضل جولة',formatCount(best, 'نقطة'),bestRound ? `جولة ${bestRound.number}` : ''],
+    ['trend-down','أضعف جولة',formatCount(worst, 'نقطة'),worstRound ? `جولة ${worstRound.number}` : ''],
+    ['chart-bar','معدلك',`${avg.toFixed(1)}`,`نقطة/جولة`],
+    ['trophy','أفضل مركز',`#${bestRank}`,''],
+    ['arrow-down','أسوأ مركز',`#${worstRank}`,''],
+    ['crown','مرات في الصدارة',`${timesFirst}`,timesFirst===0?'لم تتصدر بعد':'مرة'],
+    ['dumbbell','أطول سلسلة ≥ معدل',`${maxStreak}`,'جولة متتالية'],
+    ['ball','ناديك المفضل',favClub?favClub[0]:'لا يوجد بعد',favClub?`${favClub[1]} مرات`:''],
   ];
   // طلب المستخدم 17 سبتمبر 2026 — عدّ الجولات يجب أن يشمل الجولتين 1 و2
   // (getCurrentRoundNumber())، لا DATA.rounds.length التي تستثنيهما فتُنقِص العدّ.
-  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">⭐ إنجازاتي الشخصية</h2>
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">${iconHTML('sparkles')} إنجازاتي الشخصية</h2>
     <div style="background:var(--paper);border-radius:14px;padding:16px;border:2px solid ${pc}44;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="width:12px;height:12px;border-radius:50%;background:${pc};display:inline-block;"></span>
@@ -447,7 +447,7 @@ function renderMyAchievements(){
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;">
         ${tiles.map(([ic,label,val,sub])=>`<div style="background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center;">
-          <div style="font-size:1.3rem;">${ic}</div>
+          <div>${iconHTML(ic,{size:24})}</div>
           <div style="font-size:0.7rem;color:var(--muted);margin:2px 0;">${label}</div>
           <div style="font-size:0.98rem;font-weight:800;color:var(--gold-light);">${val}</div>
           ${sub?`<div style="font-size:0.68rem;color:var(--muted);">${sub}</div>`:''}
