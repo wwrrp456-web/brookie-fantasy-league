@@ -105,7 +105,7 @@ async function loadCommunityReports(){
         if(opponent && CLUBS.includes(opponent)){
           const mirror = byMatch[`${opponent}|${club}`];
           if(!mirror){
-            matchBadge = `<span class="match-badge match-badge-info">⚔️ داخلية — بانتظار تسجيل ${escapeHtml(opponent)}</span>`;
+            matchBadge = `<span class="match-badge match-badge-info">${iconHTML('swords')} داخلية — بانتظار تسجيل ${escapeHtml(opponent)}</span>`;
             hasIssue = true;
           }else{
             const rep = reports[0];
@@ -113,12 +113,12 @@ async function loadCommunityReports(){
             const matches = mirrorRep.result === invertMatchResult(rep.result)
               && Number(mirrorRep.gf) === Number(rep.ga) && Number(mirrorRep.ga) === Number(rep.gf);
             matchBadge = matches
-              ? `<span class="match-badge match-badge-ok">⚔️ داخلية — تُطابق تسجيل ${escapeHtml(opponent)} ✅</span>`
-              : `<span class="match-badge match-badge-warn">⚔️ داخلية — ⚠️ لا تُطابق تسجيل ${escapeHtml(opponent)}</span>`;
+              ? `<span class="match-badge match-badge-ok">${iconHTML('swords')} داخلية — تُطابق تسجيل ${escapeHtml(opponent)} ${iconHTML('check')}</span>`
+              : `<span class="match-badge match-badge-warn">${iconHTML('swords')} داخلية — ${iconHTML('warning')} لا تُطابق تسجيل ${escapeHtml(opponent)}</span>`;
             if(!matches) hasIssue = true;
           }
         }else if(opponent){
-          matchBadge = `<span class="match-badge match-badge-external">🌍 خصم خارجي</span>`;
+          matchBadge = `<span class="match-badge match-badge-external">${iconHTML('globe')} خصم خارجي</span>`;
         }
 
         // فحص تناسق تلقائي مع الجولة الرسمية المحفوظة (إن وُجدت) — يقارن كل
@@ -136,12 +136,12 @@ async function loadCommunityReports(){
             && Number(official.gf)===Number(r.gf) && Number(official.ga)===Number(r.ga);
           if(!matchesOfficial) hasIssue = true;
           return matchesOfficial
-            ? `<div class="official-check-note ok">📋 يطابق الجولة الرسمية المحفوظة ✅</div>`
-            : `<div class="official-check-note warn">📋 ⚠️ يختلف عن الرسمية المحفوظة: ${RESULT_LABEL_COMMUNITY[official.result]||official.result} (${official.gf}-${official.ga})</div>`;
+            ? `<div class="official-check-note ok">${iconHTML('clipboard')} يطابق الجولة الرسمية المحفوظة ${iconHTML('check')}</div>`
+            : `<div class="official-check-note warn">${iconHTML('clipboard')} ${iconHTML('warning')} يختلف عن الرسمية المحفوظة: ${RESULT_LABEL_COMMUNITY[official.result]||official.result} (${official.gf}-${official.ga})</div>`;
         });
 
         html += `<div data-issue="${hasIssue?1:0}" style="padding:8px 0;border-bottom:1px dotted var(--line);">
-          <div style="font-weight:800;">${escapeHtml(club)}${opponent?` ضد ${escapeHtml(opponent)}`:''} ${conflict ? '<span style="color:var(--coral);">⚠️ تعارض بين التقارير</span>' : ''}</div>
+          <div style="font-weight:800;">${escapeHtml(club)}${opponent?` ضد ${escapeHtml(opponent)}`:''} ${conflict ? '<span style="color:var(--coral);">' + iconHTML('warning') + ' تعارض بين التقارير</span>' : ''}</div>
           ${matchBadge ? `<div style="margin:3px 0 2px;">${matchBadge}</div>` : ''}`;
         reports.forEach((r,ri)=>{
           // كل تقرير له وضع عرض (view) ووضع تعديل (edit) — يبدأ العرض فقط
@@ -151,8 +151,8 @@ async function loadCommunityReports(){
             <div class="community-report-view">
               <span>${escapeHtml(RESULT_LABEL_COMMUNITY[r.result]||r.result)} (${escapeHtml(r.gf)}-${escapeHtml(r.ga)}) ${r.reporter ? '— أرسلها: '+escapeHtml(r.reporter) : ''}</span>
               <span class="actions">
-                <button type="button" class="btn ghost edit-report-btn">✏️ تعديل</button>
-                <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف</button>
+                <button type="button" class="btn ghost edit-report-btn">${iconHTML('edit')} تعديل</button>
+                <button type="button" class="btn ghost delete-report-btn" style="color:var(--coral);border-color:var(--coral);">${iconHTML('trash')} حذف</button>
               </span>
             </div>
             ${officialNotes[ri] || ''}
@@ -165,7 +165,7 @@ async function loadCommunityReports(){
               </select>
               <input type="number" class="edit-gf-input" min="0" placeholder="له" value="${escapeHtml(r.gf)}">
               <input type="number" class="edit-ga-input" min="0" placeholder="عليه" value="${escapeHtml(r.ga)}">
-              <button type="button" class="btn save-report-btn">💾 حفظ</button>
+              <button type="button" class="btn save-report-btn">${iconHTML('save')} حفظ</button>
               <button type="button" class="btn ghost cancel-report-btn">إلغاء</button>
             </div>
           </div>`;
@@ -198,7 +198,7 @@ async function loadCommunityReports(){
       pointsBox.innerHTML = html;
     }
 
-    msg.innerHTML = `<div class="status-msg ok">تم التحديث — بيانات الجولة ${targetRound} ✅</div>`;
+    msg.innerHTML = `<div class="status-msg ok">تم التحديث — بيانات الجولة ${targetRound} ${iconHTML('check')}</div>`;
     updateCommunityBadge();
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر تحميل التقارير، تحقق من الاتصال وحاول ثانية.</div>';
@@ -259,7 +259,7 @@ document.getElementById('communityMatchesBox').addEventListener('click', async (
       await loadCommunityReports();
     }catch(err){
       saveBtn.disabled = false;
-      saveBtn.textContent = '💾 حفظ';
+      saveBtn.innerHTML = iconHTML('save') + ' حفظ';
       document.getElementById('communityMsg').innerHTML = '<div class="status-msg err">تعذّر حفظ التعديل، تحقق من الاتصال وحاول ثانية.</div>';
     }
     return;
@@ -268,7 +268,7 @@ document.getElementById('communityMatchesBox').addEventListener('click', async (
   if(deleteBtn){
     const row = deleteBtn.closest('.community-report-row');
     const { id, round } = row.dataset;
-    const sure = await customConfirm('هل أنت متأكد إنك تبي تحذف هذا التقرير نهائيًا؟ هذا الإجراء لا يمكن التراجع عنه.', {confirmText: '🗑️ حذف'});
+    const sure = await customConfirm('هل أنت متأكد إنك تبي تحذف هذا التقرير نهائيًا؟ هذا الإجراء لا يمكن التراجع عنه.', {confirmText: iconHTML('trash') + ' حذف'});
     if(!sure) return;
     deleteBtn.disabled = true;
     try{

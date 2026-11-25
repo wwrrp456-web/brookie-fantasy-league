@@ -118,7 +118,7 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
   // ---------- الخطوة ٢: إضافة صف لسجل أبطال المواسم (نفس مسار addArchiveRowBtn) ----------
   SEASON_CHAMPIONS_ARCHIVE.push({season: seasonName, name: champName, points: champPoints});
   await window.storage.set('seasonChampionsArchive', SEASON_CHAMPIONS_ARCHIVE, true);
-  logAdminActivity(`🏆 إضافة ${champName} لسجل أبطال المواسم (${seasonName}) — ضمن قفل الموسم`);
+  logAdminActivity(`إضافة ${champName} لسجل أبطال المواسم (${seasonName}) — ضمن قفل الموسم`);
   renderChampionArchiveAdmin();
   renderHallOfFame();
 
@@ -169,7 +169,7 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
   CHAMPION_ID = null;
   await window.storage.set('currentChampionId', null, true);
 
-  logAdminActivity(`🔒 قفل موسم "${seasonName}" وتصفير الجولات لبدء موسم جديد`, {snapshot: preSnapshot});
+  logAdminActivity(`قفل موسم "${seasonName}" وتصفير الجولات لبدء موسم جديد`, {snapshot: preSnapshot});
 
   renderAll();
   renderPredictions();
@@ -189,7 +189,7 @@ document.getElementById('startSeasonLockBtn').addEventListener('click', async ()
   document.getElementById('seasonLockChampPointsInput').value = '';
 
   msg.innerHTML = (okData && okPred)
-    ? '<div class="status-msg ok">تم قفل الموسم وتصفير الجولات بنجاح ✅ جهّز الآن مشاركي وأندية الموسم الجديد بالقسم أدناه.</div>'
+    ? '<div class="status-msg ok">تم قفل الموسم وتصفير الجولات بنجاح ' + iconHTML('check') + ' جهّز الآن مشاركي وأندية الموسم الجديد بالقسم أدناه.</div>'
     : '<div class="status-msg err">تم التصفير محليًا لكن تعذّر الحفظ الكامل على الخادم — تحقّق من الاتصال، وإلا استعد من النسخة الاحتياطية.</div>';
 
   // كشف قسم تجهيز ملفات الموسم الجديد — لا يحتاج الكود الخاص (لا يعدّل أي
@@ -235,7 +235,7 @@ function renderNewSeasonRows(){
       <input type="text" class="ns-team1" placeholder="النادي الأول" value="${r.team1.replace(/"/g,'&quot;')}">
       <input type="text" class="ns-team2" placeholder="النادي الثاني" value="${r.team2.replace(/"/g,'&quot;')}">
       <input type="text" class="ns-team3" placeholder="النادي الثالث" value="${r.team3.replace(/"/g,'&quot;')}">
-      <button type="button" class="remove-participant-btn" data-idx="${r.id}">🗑️ حذف</button>
+      <button type="button" class="remove-participant-btn" data-idx="${r.id}">${iconHTML('trash')} حذف</button>
     </div>`).join('');
 }
 
@@ -448,6 +448,6 @@ if(generateSeasonFilesBtnEl){
     document.getElementById('newSeasonClubsPath').textContent = `js/data/${seasonId}/clubs.js`;
     const roundsSeedPathEl = document.getElementById('newSeasonRoundsSeedPath');
     if(roundsSeedPathEl) roundsSeedPathEl.textContent = `js/data/${seasonId}/rounds-seed.js`;
-    msg.innerHTML = `<div class="status-msg ok">تم تنزيل ثلاثة ملفات ✅ ارفعها يدويًا لمجلد <b>js/data/${seasonId}/</b> على GitHub (participants.js، clubs.js، rounds-seed.js)، ثم عدّل ACTIVE_SEASON ومسارات &lt;script&gt; كما هو موضّح أعلاه.</div>`;
+    msg.innerHTML = `<div class="status-msg ok">تم تنزيل ثلاثة ملفات ${iconHTML('check')} ارفعها يدويًا لمجلد <b>js/data/${seasonId}/</b> على GitHub (participants.js، clubs.js، rounds-seed.js)، ثم عدّل ACTIVE_SEASON ومسارات &lt;script&gt; كما هو موضّح أعلاه.</div>`;
   });
 }
