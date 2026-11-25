@@ -335,9 +335,19 @@ check('كسر التعادل بالقالب المعتمد: «7 أهداف مس�
   vm.runInContext(gen + ';this.R = {ICONS, CRESTS, CREST_NAMES, MOTIFS, LOGO_SVG, CRESTS_OFFICIAL};', ctx2);
   const R = ctx2.R;
   const sorted = o => JSON.stringify(Object.keys(o)) === JSON.stringify(Object.keys(o).slice().sort());
-  check('build-assets: المحتوى = 56 أيقونة و32 شعارًا بأسمائها و11 رمزًا وشعار PROKI (3) ورسمية فاضية',
+  check('build-assets: المحتوى = 94 أيقونة و32 شعارًا بأسمائها و11 رمزًا وشعار PROKI (3) ورسمية فاضية',
     [Object.keys(R.ICONS).length, Object.keys(R.CRESTS).length, Object.keys(R.CREST_NAMES).length, Object.keys(R.MOTIFS).length, Object.keys(R.LOGO_SVG).sort(), Object.keys(R.CRESTS_OFFICIAL).length],
-    [56, 32, 32, 11, ['logo', 'logoLight', 'mark'], 0]);
+    [94, 32, 32, 11, ['logo', 'logoLight', 'mark'], 0]);
+  // 001-T011b: الأيقونات الـ38 الجديدة بنفس أسلوب الموجودة (الشبكة والسماكة والنهايات و currentColor بلا hex ولا نص ولا صور)
+  {
+    const NEW = ['flask','undo','film','thumbs-up','dumbbell','pin','landmark','eye','book','pause','cloud','globe','dice','flag-race','flag','hand-wave','ban','play','arrow-right','wave','tornado','rollercoaster','tent','race-car','megaphone','phone','key','bell-off','sort-alpha','radar','printer','archive','map','handshake','goal','brain','calculator','bed'];
+    const head = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+    const raw = n => fs.readFileSync(path.join(ROOT, 'assets/icons', n + '.svg'), 'utf8');
+    check('أيقونات جديدة: 38 ملفًا بأسماء kebab-case وموجودة في ICONS المولَّد', [NEW.length, NEW.every(n => /^[a-z]+(-[a-z]+)*$/.test(n) && R.ICONS[n])], [38, true]);
+    check('أيقونات جديدة: نفس رأس الموجودة حرفيًا (viewBox 24، fill none، stroke currentColor، 1.75، round)', NEW.every(n => raw(n).includes(head)), true);
+    check('أيقونات جديدة: بلا hex ولا <text> ولا <image> ولا base64 ولا style', NEW.every(n => !/#[0-9a-f]{3,8}\b|<text|<image|base64|style=/i.test(raw(n)) && /<path /.test(raw(n))), true);
+    check('أيقونات جديدة: لا تكرار مع أيقونات موجودة (94 مميَّزة)', new Set(Object.keys(R.ICONS)).size, 94);
+  }
   check('build-assets: كل المجموعات مرتبة أبجديًا', [R.ICONS, R.CRESTS, R.CREST_NAMES, R.MOTIFS].every(sorted), true);
   check('build-assets: كل قيمة تبدأ بـ<svg وبلا <image أو base64 أو <?xml', Object.values(Object.assign({}, R.ICONS, R.CRESTS, R.MOTIFS, R.LOGO_SVG)).every(v => /^<svg[\s>]/.test(v) && !/<image|base64|<\?xml/.test(v)), true);
   // جذر مصطنع
