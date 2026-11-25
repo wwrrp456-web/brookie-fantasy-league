@@ -5,3 +5,9 @@
 .btn .ic,.btn [data-icon]{margin-inline-end:var(--sp-1);}
 .status-dot{display:inline-block;width:.7em;height:.7em;border-radius:50%;background:var(--c-up);vertical-align:baseline;margin-inline-end:var(--sp-1);}
 .status-dot-gold{background:var(--c-gold);}
+
+/* 001-T011d (S67): بالوضع الليلي الأيقونة الزخرفية بيضاء/فاتحة (لون النص) مهما كان لون حاويتها (بنفسجي، رمادي ثانوي…). النهاري كما هو.
+ * تبقى بلون حاويتها: (1) الدلالية بوسم صريح .ic-semantic (صعود/هبوط، حالة)؛ (2) أيقونات داخل مكوّن يحدّد لون نصه فوق خلفية مملوءة:
+ * الأزرار .btn، وأزرار الفرز .sort-mode-btn، ورسائل الحالة .status-msg. */
+html:not(.light-mode) .ic:not(.ic-semantic):not(.btn .ic):not(.sort-mode-btn .ic):not(.status-msg .ic){color:var(--c-text);}
+html:not(.light-mode) .fold-icon,html:not(.light-mode) .fold-chevron{color:var(--c-text);}
