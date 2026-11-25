@@ -1089,6 +1089,122 @@ const asyncDiffTests = (async () => {
   check('draftToParsed: نتيجة فعلية + لا مباراة (يُسقَط لو للنادي مباراة فعلية)', dp.recognized.map(r => [r.club, r.matches.map(m => m.result).join(',')]), [['الهلال', 'draw'], ['برشلونة', 'no_match'], ['ريال مدريد', 'win']]);
 }
 
+// ---------- 007-T001: محلل تقارير الأعضاء js/core/community-reports-analyze.js ----------
+{
+  const csb = {console}; csb.window = csb;
+  const cctx2 = vm.createContext(csb);
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/config.js', 'js/core/ar-format.js', 'js/core/results-import.js', 'js/core/community-reports-analyze.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx2, {filename: f}));
+  vm.runInContext('this.CR = {analyzeCommunityReports, effectiveDecision, pendingGroups, resolveMatches, buildPasteText, parseResults, resultsClubKey};', cctx2);
+  const CR = cctx2.CR;
+  let rid = 0;
+  const rep = (club, opp, gf, ga, reporter) => ({id: 'r' + (++rid), club, opponent: opp, result: gf > ga ? 'win' : gf < ga ? 'loss' : 'draw', gf, ga, reporter: reporter || null, submittedAt: 1700000000000 + rid});
+  const an = rs => CR.analyzeCommunityReports(rs);
+  const only = (rs, i) => an(rs).groups[i || 0];
+  const lines = (rs, dec) => { const a = an(rs); return CR.buildPasteText(a.groups, dec || {}).split('\n').filter(Boolean); };
+  const gk = g => g.key;
+
+  // 1) مفرد بلا شك: ينزل مباشرة بلا قرار
+  const g1 = only([rep('الهلال', 'الخليج', 3, 0, 'سعد')]);
+  check('تحليل: تقرير واحد بلا شك ← single، بلا قرار، وسطر مباشر', [g1.type, g1.needsDecision, CR.pendingGroups([g1], {}).length, lines([rep('الهلال', 'الخليج', 3, 0)])], ['single', false, 0, ['الهلال 3-0 الخليج']]);
+  // 2) تكرار متفق من مرسلين مختلفين
+  const rs2 = [rep('الهلال', 'الخليج', 3, 0, 'سعد'), rep('الهلال', 'الخليج', 3, 0, 'خالد')];
+  const g2 = only(rs2);
+  check('تحليل: تكرار متفق (مرسلان) ← agreed، الافتراضي «مكررة»، سطر واحد', [g2.type, g2.defaultDecision.mode, CR.pendingGroups([g2], {}).length, lines(rs2)], ['agreed', 'dup', 0, ['الهلال 3-0 الخليج']]);
+  // 3) نفس المرسل مرتين بنفس النتيجة
+  const g3 = only([rep('الهلال', 'الخليج', 3, 0, 'سعد'), rep('الهلال', 'الخليج', 3, 0, 'سعد')]);
+  check('تحليل: نفس المرسل مرتين بنفس النتيجة ← agreed (FR-02 البند 1) مع ذكر المُرسِل في السبب', [g3.type, /المُرسِل نفسه/.test(g3.reasons.join(' '))], ['agreed', true]);
+  // 4) مرآة داخلية
+  const rs4 = [rep('النصر', 'الاتحاد', 2, 1, 'سعد'), rep('الاتحاد', 'النصر', 1, 2, 'خالد')];
+  const g4 = only(rs4);
+  check('تحليل: مباراة داخلية من الطرفين بنتيجة متعاكسة ← mirror، الافتراضي «مكررة»، مباراة وحدة بسطرين متقابلين', [g4.type, g4.defaultDecision.mode, g4.variants.length, lines(rs4)], ['mirror', 'dup', 1, ['الاتحاد 1-2 النصر', 'النصر 2-1 الاتحاد']]);
+  // 5) داخلية من طرف واحد ← single وتُنتج السطرين
+  check('تحليل: داخلية من طرف واحد ← single، والنص بسطر لكل نادٍ', [only([rep('النصر', 'الاتحاد', 2, 1)]).type, lines([rep('النصر', 'الاتحاد', 2, 1)])], ['single', ['الاتحاد 1-2 النصر', 'النصر 2-1 الاتحاد']]);
+  // 6) نادٍ بلا خصم مقابل نادٍ بخصم (نفس النتيجة): مشكوك، بلا اختيار مسبق
+  const rs6 = [rep('الهلال', 'الخليج', 3, 0, 'سعد'), rep('الهلال', '', 3, 0, 'خالد')];
+  const g6 = only(rs6);
+  check('تحليل: نادٍ بلا خصم + نادٍ بخصم بنفس النتيجة ← suspect بلا افتراضي، ولا نص قبل القرار', [g6.type, g6.defaultDecision, CR.pendingGroups([g6], {}).length, lines(rs6)], ['suspect', null, 1, []]);
+  check('قرار: «مكررة» تدمج في مباراة وحدة (تحتاج اختيار نتيجة لأن الخصم يختلف)، و«ليست مكررة» تفصل', [
+    CR.pendingGroups([g6], {[g6.key]: {mode: 'dup'}}).length,
+    CR.buildPasteText([g6], {[g6.key]: {mode: 'dup', pick: g6.variants[0].key}}).split('\n').length,
+    CR.buildPasteText([g6], {[g6.key]: {mode: 'sep'}}).split('\n').length], [1, 1, 2]);
+  // 7) تهجئة متقاربة للخصم الخارجي
+  const g7 = only([rep('أرسنال', 'أوساسونا', 2, 1, 'سعد'), rep('أرسنال', 'اوساسونه', 2, 1, 'خالد')]);
+  check('تحليل: خصم بتهجئتين متقاربتين ← suspect (similar_opp)', [g7.type, /تهجئتين متقاربتين/.test(g7.reasons.join(' '))], ['suspect', true]);
+  // 8) نادٍ بخصمين مختلفين: مباراتان محتملتان
+  const rs8 = [rep('أرسنال', 'أوساسونا', 2, 1, 'سعد'), rep('أرسنال', 'إشبيلية', 0, 0, 'سعد')];
+  const g8 = only(rs8);
+  check('تحليل: نادٍ بخصمين مختلفين ← suspect (مباراتان محتملتان)، و«ليست مكررة» تُنتج سطرين', [g8.type, /مباراتين حقيقيتين/.test(g8.reasons.join(' ')), CR.buildPasteText([g8], {[g8.key]: {mode: 'sep'}}).split('\n').sort()], ['suspect', true, ['أرسنال 0-0 إشبيلية', 'أرسنال 2-1 أوساسونا']]);
+  // 9) تعارض: نفس المباراة بنتيجتين
+  const rs9 = [rep('الهلال', 'الخليج', 3, 0, 'سعد'), rep('الهلال', 'الخليج', 2, 0, 'خالد')];
+  const g9 = only(rs9);
+  check('تحليل: نفس المباراة بنتيجتين ← conflict، بلا افتراضي، ويحتاج اختيار نتيجة', [g9.type, g9.variants.length, CR.pendingGroups([g9], {}).length, CR.pendingGroups([g9], {[g9.key]: {mode: 'dup'}}).length], ['conflict', 2, 1, 1]);
+  check('قرار التعارض: اختيار نتيجة يعتمد سطرها فقط، و«ليست نفس المباراة» تُبقي النتيجتين', [
+    CR.buildPasteText([g9], {[g9.key]: {mode: 'dup', pick: g9.variants.find(v => v.gf === 2).key}}),
+    CR.buildPasteText([g9], {[g9.key]: {mode: 'sep'}}).split('\n').sort()], ['الهلال 2-0 الخليج', ['الهلال 2-0 الخليج', 'الهلال 3-0 الخليج']]);
+  // 10) تقارير غير مقروءة
+  const a10 = an([rep('نادي وهمي', 'س', 1, 0), rep('الهلال', 'الخليج', -1, 0), rep('الهلال', 'الهلال', 1, 0), rep('الهلال', 'الخليج', 100, 0)]);
+  check('تحليل: نادٍ غير معروف أو نتيجة غير صالحة أو خصم هو النادي نفسه ← غير مقروءة بسبب عربي، وبلا مجموعات', [a10.unreadable.length, a10.groups.length, a10.unreadable.map(u => u.reason).join('|')], [4, 0, 'النادي «نادي وهمي» غير معروف بأندية الموسم|نتيجة غير صالحة|النادي والخصم نفسه|نتيجة غير صالحة']);
+  // 11) أسماء بديلة للنادي تُطبَّع بنفس تطبيع results-import
+  check('تطبيع: «الأهلي» و«الأهلي السعودي» نفس النادي ← تكرار متفق بنص واحد', lines([rep('الأهلي', 'الخليج', 1, 1), rep('الأهلي السعودي', 'الخليج', 1, 1)]), ['الأهلي السعودي 1-1 الخليج']);
+  // 12) مفتاح المجموعة ثابت لقرارات التذكّر (FR-08): إضافة تقرير مكرر ما تغيّره، وتبديل ترتيب الإدخال ما يغيّر النص
+  const rs12 = [rep('الهلال', 'الخليج', 3, 0, 'سعد'), rep('الهلال', 'الخليج', 3, 0, 'خالد')];
+  check('مفتاح المجموعة ثابت مع تقرير متفق إضافي، والنص لا يتأثر بترتيب الإدخال', [only(rs12).key === only(rs12.concat([rep('الهلال', 'الخليج', 3, 0, 'ثالث')])).key, JSON.stringify(lines(rs12)) === JSON.stringify(lines(rs12.slice().reverse()))], [true, true]);
+  // 13) المجموعة غير المحسومة لا تدخل النص، والمحسومة تدخل
+  const mix = [rep('الهلال', 'الخليج', 3, 0), rep('أرسنال', 'أوساسونا', 2, 1), rep('أرسنال', 'إشبيلية', 0, 0)];
+  const am = an(mix);
+  check('نص اللصق يستثني المجموعات غير المحسومة (وpendingGroups تسرّدها)', [CR.buildPasteText(am.groups, {}), CR.pendingGroups(am.groups, {}).length], ['الهلال 3-0 الخليج', 1]);
+
+  // ---- رحلة ذهاب وعودة (SC-01): النص الناتج يمر على parseResults فيرجع نفس المباريات بالضبط
+  const roundTrip = (rs, dec) => {
+    const a = an(rs);
+    const text = CR.buildPasteText(a.groups, dec(a.groups));
+    const parsed = CR.parseResults(text, {year: 2026});
+    const got = parsed.rows.map(r => `${r.club}|${r.opp}|${r.gf}|${r.ga}`).sort();
+    const want = [];
+    CR.resolveMatches(a.groups, dec(a.groups)).forEach(m => { want.push(`${m.club}|${m.opp}|${m.gf}|${m.ga}`); if(m.internal) want.push(`${m.opp}|${m.club}|${m.ga}|${m.gf}`); });
+    return {got, want: want.sort(), text, unknown: parsed.unknown, ignored: parsed.ignored.length};
+  };
+  const decAll = mode => groups => Object.fromEntries(groups.filter(g => g.needsDecision).map(g => [g.key, mode === 'sep' ? {mode: 'sep'} : {mode: 'dup', pick: g.variants[0].key}]));
+  const big = [
+    rep('الهلال', 'الخليج', 3, 0, 'أ'), rep('الهلال', 'الخليج', 3, 0, 'ب'),                      // متفق
+    rep('النصر', 'الاتحاد', 2, 1, 'ج'), rep('الاتحاد', 'النصر', 1, 2, 'د'),                         // مرآة
+    rep('الأهلي', 'الشباب', 0, 0, 'ه'),                                                               // داخلية بطرف واحد
+    rep('أرسنال', 'أوساسونا', 2, 1, 'و'), rep('أرسنال', 'اوساسونه', 2, 1, 'ز'),                   // مشكوك (تهجئة)
+    rep('تشيلسي', 'برايتون', 1, 0, 'ح'), rep('تشيلسي', '', 1, 0, 'ط'),                              // مشكوك (بلا خصم)
+    rep('ليفربول', 'إيفرتون', 4, 4, 'ي'), rep('ليفربول', 'إيفرتون', 3, 3, 'ك'),                     // تعارض
+    rep('ريال مدريد', 'خيتافي', 5, 0, 'ل'), rep('ريال مدريد', 'إشبيلية', 1, 1, 'م'),               // مباراتان
+    rep('بنفيكا', 'فريق | غريب\tالاسم', 2, 2, 'ن')                                                     // رموز الفاصل تُنظَّف
+  ];
+  const rtDup = roundTrip(big, decAll('dup')), rtSep = roundTrip(big, decAll('sep'));
+  check('رحلة ذهاب وعودة (قرارات «مكررة»): parseResults يرجع نفس المباريات بالضبط، بلا فقد ولا تكرار ولا أسطر غير مفهومة', [rtDup.got, rtDup.unknown.length, rtDup.ignored], [rtDup.want, 0, 0]);
+  check('رحلة ذهاب وعودة (قرارات «ليست مكررة»): نفس المباريات بالضبط', [rtSep.got, rtSep.unknown.length], [rtSep.want, 0]);
+  check('رحلة ذهاب وعودة: أعداد الأسطر المتوقعة (مكررة 10 أسطر، ليست مكررة 14)', [rtDup.want.length, rtSep.want.length], [10, 14]);
+  // رحلة عشوائية: 40 مجموعة بيانات مولَّدة ببذرة ثابتة، بأي مزيج قرارات، تنجح كلها
+  {
+    let seed = 20261125; const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    const clubs = vm.runInContext('CLUBS', cctx2), ext = ['أوساسونا', 'إشبيلية', 'خيتافي', 'غرناطة', 'بيتيس', ''];
+    let bad = 0;
+    for(let t = 0; t < 40; t++){
+      const rs = [];
+      const n = 3 + Math.floor(rnd() * 10);
+      for(let i = 0; i < n; i++){
+        const c = clubs[Math.floor(rnd() * clubs.length)];
+        const useInternal = rnd() < 0.35, o = useInternal ? clubs[Math.floor(rnd() * clubs.length)] : ext[Math.floor(rnd() * ext.length)];
+        if(o === c) continue;
+        const gf = Math.floor(rnd() * 5), ga = Math.floor(rnd() * 5);
+        rs.push(rep(c, o, gf, ga, rnd() < 0.5 ? 'س' + Math.floor(rnd() * 3) : null));
+        if(rnd() < 0.3) rs.push(rep(c, o, gf, ga, 'ص'));
+        if(rnd() < 0.2 && o && clubs.includes(o)) rs.push(rep(o, c, ga, gf, 'ع'));
+      }
+      const mode = rnd() < 0.5 ? 'dup' : 'sep';
+      const r = roundTrip(rs, decAll(mode));
+      if(JSON.stringify(r.got) !== JSON.stringify(r.want) || r.unknown.length) bad++;
+    }
+    check('رحلة ذهاب وعودة عشوائية (40 مجموعة تقارير ببذرة ثابتة، قرارات مكررة/منفصلة): كلها تطابق', bad, 0);
+  }
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);

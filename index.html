@@ -50,6 +50,7 @@
 <link rel="stylesheet" href="css/theme-modes.css">
 <link rel="stylesheet" href="css/app-header.css">
 <link rel="stylesheet" href="css/empty-state.css">
+<link rel="stylesheet" href="css/community-copy.css">
 <link rel="stylesheet" href="css/card-theme-sheet.css">
 <link rel="stylesheet" href="css/adaptive-grids.css">
 <link rel="stylesheet" href="css/utilities.css">
@@ -570,6 +571,12 @@
             </label>
           </div>
           <div id="communityMsg"></div>
+          <div class="community-copy" id="communityCopyBox">
+            <button class="btn" id="copyAllReportsBtn" type="button"><span class="cc-ic" data-icon="clipboard"></span> نسخ كل نتائج الأعضاء</button>
+            <p class="cc-help">يحلّل نتائج الجولة القادمة، ويعرض لك المكرر والمشكوك فيه لتقرر، ثم ينسخ نصًا تلصقه في «لصق نتائج وتحليل تلقائي». للقراءة فقط: ما يحفظ شيئًا.</p>
+            <div id="ccMsg" role="status"></div>
+            <div class="cc-panel" id="communityCopyPanel" hidden></div>
+          </div>
           <div class="u-mt-10px">
             <div class="u-fw-800 u-fs-0-85rem u-mb-6px">⚽ نتائج مُرسَلة من الأعضاء</div>
             <div class="u-fs-0-85rem" id="communityMatchesBox"></div>
@@ -845,9 +852,11 @@
 <script src="js/features/champion-honor.js"></script>
 <script src="js/features/admin-auth-settings.js"></script>
 <script src="js/core/results-import.js"></script>
+<script src="js/core/community-reports-analyze.js"></script>
 <script src="js/features/admin-round-form.js"></script>
 <script src="js/features/results-import-ui.js"></script>
 <script src="js/features/admin-community-reports.js"></script>
+<script src="js/features/community-copy.js"></script>
 <script src="js/features/admin-champion-admin.js"></script>
 <script src="js/features/admin-season-lock.js"></script>
 <script src="js/ui/card-layout.js"></script>
