@@ -64,21 +64,21 @@ function renderWhatsNewCard(){
   const rankDelta = (prevRank !== null && curRank !== null) ? (prevRank - curRank) : null;
 
   const lines = [];
-  lines.push(`⏳ فاتك ${missedRounds} ${missedRounds===1 ? 'جولة' : 'جولات'} من دوري بروكي!`);
+  lines.push(`${iconHTML('clock')} فاتك ${missedRounds} ${missedRounds===1 ? 'جولة' : 'جولات'} من دوري بروكي!`);
   if(heroes && heroes.top){
-    lines.push(`👑 بطل آخر جولة: <strong>${heroes.top.name}</strong> ${arBaPrefix(formatCount(heroes.top.points, 'نقطة', {case: 'acc'}))}.`);
+    lines.push(`${iconHTML('crown')} بطل آخر جولة: <strong>${heroes.top.name}</strong> ${arBaPrefix(formatCount(heroes.top.points, 'نقطة', {case: 'acc'}))}.`);
   }
   if(rankDelta !== null){
-    if(rankDelta > 0) lines.push(`📈 تقدّمت <strong>${rankDelta}</strong> ${rankDelta===1?'مركز':'مراكز'} بجدول الترتيب منذ آخر زيارة لك.`);
-    else if(rankDelta < 0) lines.push(`📉 تراجعت <strong>${Math.abs(rankDelta)}</strong> ${Math.abs(rankDelta)===1?'مركز':'مراكز'} بجدول الترتيب منذ آخر زيارة لك.`);
-    else lines.push('📊 مركزك بجدول الترتيب ثابت زي ما تركته.');
+    if(rankDelta > 0) lines.push(`${iconHTML('trend-up')} تقدّمت <strong>${rankDelta}</strong> ${rankDelta===1?'مركز':'مراكز'} بجدول الترتيب منذ آخر زيارة لك.`);
+    else if(rankDelta < 0) lines.push(`${iconHTML('trend-down')} تراجعت <strong>${Math.abs(rankDelta)}</strong> ${Math.abs(rankDelta)===1?'مركز':'مراكز'} بجدول الترتيب منذ آخر زيارة لك.`);
+    else lines.push(iconHTML('chart-bar') + ' مركزك بجدول الترتيب ثابت زي ما تركته.');
   }
 
   box.innerHTML = `
     <div class="whats-new-card">
-      <div class="whats-new-title">🎁 اللي فاتك</div>
+      <div class="whats-new-title">${iconHTML('gift')} اللي فاتك</div>
       <div class="whats-new-body">${lines.map(l=>`<div class="whats-new-line">${l}</div>`).join('')}</div>
-      <button type="button" class="btn ghost" id="whatsNewDismissBtn">تمام، فهمت ✅</button>
+      <button type="button" class="btn ghost" id="whatsNewDismissBtn">تمام، فهمت ${iconHTML('check')}</button>
     </div>`;
 
   // تُسجَّل هذي الجولة كـ"آخر ما شاهده" فورًا (لا داعي لانتظار ضغط الزر —

@@ -39,7 +39,7 @@ function renderHotColdStreaks(){
     (groups[k] = groups[k] || {type: s.type, count: s.count, list: []}).list.push(s);
   });
   const ordered = Object.values(groups).sort((a,b)=> (a.type === b.type ? b.count - a.count : (a.type === 'hot' ? -1 : 1)));
-  let html = '<h2 class="section-title" style="margin-top:22px;">🔥❄️ سلاسل الحظ</h2><div class="streak-groups">';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('flame') + iconHTML('snowflake') + ' سلاسل الحظ</h2><div class="streak-groups">';
   ordered.forEach(g=>{
     const isHot = g.type === 'hot';
     const names = g.list.slice().sort((a,b)=> (rank[a.id] ?? 99) - (rank[b.id] ?? 99));

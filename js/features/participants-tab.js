@@ -57,7 +57,7 @@ function renderParticipants(){
     return (rankMap[a.id]?.rank||99) - (rankMap[b.id]?.rank||99);
   });
 
-  const sortLabels = {rank:'🏆 بالترتيب', alpha:'🔤 بالاسم', round:'⚡ آخر جولة'};
+  const sortLabels = {rank:iconHTML('trophy') + ' بالترتيب', alpha:iconHTML('sort-alpha') + ' بالاسم', round:iconHTML('bolt') + ' آخر جولة'};
   let html = `<div style="display:flex;gap:7px;margin-bottom:14px;">
     ${['rank','alpha','round'].map(mode => {
       const active = sortMode === mode;
@@ -100,14 +100,14 @@ function renderParticipants(){
 
     // إحصائيات سريعة
     const quickStats = [];
-    if(mumma > 0) quickStats.push(`💀 ${formatCount(mumma, 'ممة')}`);
-    if(bestStreak >= 2) quickStats.push(`🔥 سلسلة ${bestStreak}`);
-    if(mumma === 0 && history.length > 0) quickStats.push(`✅ بلا ممات`);
+    if(mumma > 0) quickStats.push(`${iconHTML('skull-zero')} ${formatCount(mumma, 'ممة')}`);
+    if(bestStreak >= 2) quickStats.push(`${iconHTML('flame')} سلسلة ${bestStreak}`);
+    if(mumma === 0 && history.length > 0) quickStats.push(`${iconHTML('check')} بلا ممات`);
     // قسم تكريم البطل — ميزة 16: تنبيه لمن سجّل نقاط جولة أعلى من حامل اللقب
     if(CHAMPION_FEATURES.weekly_challenge_notice && CHAMPION_ID && p.id !== CHAMPION_ID && history.length > 0){
       const champInfo = rankMap[CHAMPION_ID];
       if(champInfo && (lastPts||0) > (champInfo.lastPoints||0)){
-        quickStats.push(`<span class="weekly-beat-badge">🔥 تفوقت على حامل اللقب هالجولة</span>`);
+        quickStats.push(`<span class="weekly-beat-badge">${iconHTML('flame')} تفوقت على حامل اللقب هالجولة</span>`);
       }
     }
 
@@ -136,7 +136,7 @@ function renderParticipants(){
           ${quickStats.length ? `<div style="display:flex;gap:10px;font-size:0.78rem;color:var(--muted);">${quickStats.map(x=>`<span>${x}</span>`).join('')}</div>` : ''}
           ${fingerprintHTML}
           ${DATA.participantProfileEnabled !== false ? `
-          <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">📋 الملف الكامل</button>
+          <button type="button" class="btn ghost profile-toggle-btn" data-pid="${p.id}" style="margin-top:8px;font-size:0.74rem;padding:5px 10px;">${iconHTML('clipboard')} الملف الكامل</button>
           <div class="participant-profile-detail" id="profile-detail-${p.id}" style="display:none;"></div>
           ` : ''}
         </div>

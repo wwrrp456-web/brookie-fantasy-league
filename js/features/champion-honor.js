@@ -68,7 +68,7 @@ function championBadgeHTML(pid){
     const maxOtherTotal = others.length ? Math.max(...others.map(s=>s.total)) : 0;
     if(champRow && maxOtherTotal > champRow.total){ label = 'يحاول استعادة العرش'; cls = 'reclaim'; }
   }
-  return `<span class="champion-badge ${cls}">🛡️ ${label}</span>`;
+  return `<span class="champion-badge ${cls}">${iconHTML('shield')} ${label}</span>`;
 }
 
 // ميزة 10: ملاحظة صغيرة تحت اسم البطل بجدول الترتيب العام بنتيجة الموسم الماضي
@@ -76,7 +76,7 @@ function championDefensePathHTML(pid){
   if(!CHAMPION_FEATURES.defense_path || !CHAMPION_ID || pid !== CHAMPION_ID) return '';
   const entry = findChampionLastSeasonEntry();
   if(!entry) return '';
-  return `<div class="champion-defense-note">🏅 نتيجته الموسم الماضي (${entry.season}): ${formatCount(entry.points, 'نقطة')}</div>`;
+  return `<div class="champion-defense-note">${iconHTML('medal')} نتيجته الموسم الماضي (${entry.season}): ${formatCount(entry.points, 'نقطة')}</div>`;
 }
 
 // ميزة 2: بانر تذكير بالبطل أعلى الصفحة
@@ -102,8 +102,8 @@ function renderHallOfFame(){
   if(!box) return;
   if(!CHAMPION_FEATURES.hall_of_fame || !SEASON_CHAMPIONS_ARCHIVE.length){ box.innerHTML=''; return; }
   const sorted = SEASON_CHAMPIONS_ARCHIVE.slice().sort((a,b)=>(b.points||0)-(a.points||0));
-  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏛️ قاعة مشاهير الأبطال</h2>
-    <div>${sorted.map(r=>`<div class="hof-row"><span>🏆 <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${formatCount(r.points, 'نقطة')}</span></div>`).join('')}</div>`;
+  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('landmark')} قاعة مشاهير الأبطال</h2>
+    <div>${sorted.map(r=>`<div class="hof-row"><span>${iconHTML('trophy')} <b>${r.season}</b> — ${r.name}</span><span style="font-weight:800;color:var(--gold);">${formatCount(r.points, 'نقطة')}</span></div>`).join('')}</div>`;
 }
 
 // أرشيف مواسم فعلي — الترتيب النهائي الكامل لكل موسم قُفل بعد إضافة هذه
@@ -115,7 +115,7 @@ function renderSeasonsArchive(){
   if(!box) return;
   const seasons = Object.values(SEASONS_ARCHIVE || {}).filter(Boolean).sort((a,b)=>(b.lockedAt||0)-(a.lockedAt||0));
   if(!seasons.length){ box.innerHTML=''; return; }
-  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🗄️ أرشيف المواسم</h2>` +
+  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('archive')} أرشيف المواسم</h2>` +
     seasons.map(s=>{
       const rows = (s.finalStandings||[]).map((row,i)=>`
         <div class="season-archive-row">
@@ -155,9 +155,9 @@ function renderChampionHero(){
       </div>
     </div>`;
   }
-  const certBtn = CHAMPION_FEATURES.certificate ? `<button class="btn secondary" id="championCertBtn" style="margin-top:10px;">🎖️ شهادة تكريم البطل</button>` : '';
+  const certBtn = CHAMPION_FEATURES.certificate ? `<button class="btn secondary" id="championCertBtn" style="margin-top:10px;">${iconHTML('certificate')} شهادة تكريم البطل</button>` : '';
   box.innerHTML = `<div class="champion-hero-card">
-    <div style="font-size:0.75rem;color:var(--muted);font-weight:700;">🛡️ المدافع عن اللقب</div>
+    <div style="font-size:0.75rem;color:var(--muted);font-weight:700;">${iconHTML('shield')} المدافع عن اللقب</div>
     <div style="font-size:1.2rem;font-weight:900;margin:4px 0;">${champ.name}</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:0.85rem;color:var(--text2);">
       <span>المركز الحالي: <b>${rank}</b></span>
@@ -189,7 +189,7 @@ function handleChampionIdentityWelcome(id){
     const champ = PARTICIPANTS.find(p=>p.id===pid);
     const toast = document.createElement('div');
     toast.className = 'champion-toast';
-    toast.innerHTML = `👑 أهلًا ${champ?champ.name:''}! بصفتك حامل لقب الموسم الماضي، الكل يترقّب دفاعك عن العرش هالموسم 🛡️`;
+    toast.innerHTML = `${iconHTML('crown')} أهلًا ${escapeHtml(champ?champ.name:'')}! بصفتك حامل لقب الموسم الماضي، الكل يترقّب دفاعك عن العرش هالموسم`;
     document.body.appendChild(toast);
     setTimeout(()=>toast.remove(), 5000);
   }
@@ -215,7 +215,7 @@ function checkChampionAlerts(){
       const key = `${closest.id}-${champRow.total}-${closest.total}`;
       if(_proximityAlertLoggedKey !== key){
         _proximityAlertLoggedKey = key;
-        logAdminActivity(`⚠️ ${closest.name} يقترب من كسر رقم البطل (${closest.total} مقابل ${champRow.total})`);
+        logAdminActivity(`${closest.name} يقترب من كسر رقم البطل (${closest.total} مقابل ${champRow.total})`);
         saveData();
       }
     }
@@ -229,7 +229,7 @@ function checkChampionAlerts(){
       const beaters = st.filter(s=>s.id!==CHAMPION_ID && (s.lastPoints||0) > champLast);
       if(beaters.length){
         _weeklyChallengeLoggedRound = key2;
-        logAdminActivity(`🔥 ${beaters.map(b=>b.name).join('، ')} تفوّق على حامل اللقب هالجولة (الجولة ${roundNum})`);
+        logAdminActivity(`${beaters.map(b=>b.name).join('، ')} تفوّق على حامل اللقب هالجولة (الجولة ${roundNum})`);
         saveData();
       }
     }
