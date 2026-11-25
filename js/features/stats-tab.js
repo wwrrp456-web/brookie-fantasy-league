@@ -388,7 +388,7 @@ function renderPredChallenge(){
 // ---------- رادار الموسم الكامل ----------
 // SVG spider/radar chart لكل مشارك يُظهر 5 أبعاد
 function buildRadarSVG(pid, color){
-  const hist = buildParticipantHistory(pid);
+  const hist = buildPlayedHistory(pid);
   if(!hist.length) return '';
 
   const allHist = getAllParticipantsRoundsHistory();

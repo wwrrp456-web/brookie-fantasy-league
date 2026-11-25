@@ -6,6 +6,7 @@
 .profile-history-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
 .profile-history-table th,.profile-history-table td{padding:4px 6px;text-align:center;border-bottom:1px solid var(--line);}
 .profile-history-table tr.profile-row-mumma td{color:var(--coral);}
+.profile-history-table tr.profile-row-nomatch td{color:var(--c-text-2);}
 .profile-history-table tr.profile-row-great td{color:var(--gold);font-weight:800;}
 .profile-badges-list{display:flex;flex-direction:column;gap:6px;}
 .profile-badge-row{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text2);}

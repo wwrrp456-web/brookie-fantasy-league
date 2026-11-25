@@ -71,6 +71,8 @@
   .quick-hist-pill{min-width:34px;padding:3px 6px;border-radius:6px;text-align:center;font-size:0.7rem;font-weight:700;background:var(--c-surface-1);color:var(--c-text);}
   .quick-hist-pill.hi{background:var(--c-surface-1);color:var(--c-up);}
   .quick-hist-pill.mumma{background:var(--c-surface-1);color:var(--c-down);}
+  .quick-hist-pill.no-match{background:transparent;color:var(--c-text-2);border:1px dashed var(--c-border);}
+  .no-match-label{color:var(--c-text-2);font-size:0.78rem;}
   .quick-hist-mini-label{font-size:0.62rem;color:var(--c-text-2);margin-bottom:4px;}
 
   /* لوحة المفاجآت */

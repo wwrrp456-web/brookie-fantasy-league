@@ -117,7 +117,7 @@ function renderRefreshSummary(){
 
 // ---------- التحليل الذكي (ميزة 8) ----------
 function buildSmartProfile(pid){
-  const hist=buildParticipantHistory(pid);
+  const hist=buildPlayedHistory(pid);
   if(!hist.length) return '';
   const pts=hist.map(h=>h.points);
   const avg=pts.reduce((a,b)=>a+b,0)/pts.length;
@@ -255,8 +255,8 @@ function renderStandings(){
             if(!last5.length) return '';
             const mx = Math.max(...hist.map(h=>h.points));
             const pills = last5.map(h=>{
-              let cls = h.points===0 ? 'mumma' : h.points===mx ? 'hi' : '';
-              return `<div class="quick-hist-pill ${cls}" title="الجولة ${h.number}">${h.points}</div>`;
+              let cls = !h.played ? 'no-match' : h.points===0 ? 'mumma' : h.points===mx ? 'hi' : '';
+              return `<div class="quick-hist-pill ${cls}" title="الجولة ${h.number}${h.played?'':' — بلا مباراة'}">${h.played ? h.points : '–'}</div>`;
             }).join('');
             const avg = hist.length ? Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10 : 0;
             return `<div>
@@ -279,7 +279,7 @@ function renderStandings(){
                 ? `<tr><td>الجولة 2</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>
                    <tr><td>الرصيد الافتتاحي</td><td>${s.carry}</td><td>${s.carry}</td></tr>`
                 : `<tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>`}
-              ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.points}${h.points===0?' <span class="mumma">ممة</span>':''}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
+              ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.played ? h.points + (h.points===0?' <span class="mumma">ممة</span>':'') : '<span class="no-match-label">بلا مباراة</span>'}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
             </tbody>
           </table>
         </div>

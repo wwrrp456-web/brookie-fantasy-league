@@ -533,7 +533,7 @@ function renderRounds(){
         html += `<div class="r2-card${isChamp?' is-champion':''}">
           <div class="r2-head">
             <div class="r2-name">#${i+1} ${p.name}${isChamp?' <span class="round-champion-badge">بطل الجولة</span>':''}</div>
-            <div class="r2-pts">${formatCount(s.points, 'نقطة')}${(s.points===0 && round_has_entries(r,p.id))?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
+            <div class="r2-pts">${formatCount(s.points, 'نقطة')}${isMummaRound(r,p.id)?' <span class="mumma">ممة</span>':''} <span style="color:var(--muted);font-weight:600;font-size:0.72rem;">(${s.gf}-${s.ga})</span></div>
           </div>
           <div class="r2-clubs">
             ${p.teams.map((t,ti)=>{
