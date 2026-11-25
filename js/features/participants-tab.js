@@ -123,13 +123,13 @@ function renderParticipants(){
     html += `<div class="participant-card${isGoldenChamp ? ' champion-golden' : ''}" data-name="${p.name.toLowerCase()}" data-pid="${p.id}" id="participant-card-${p.id}" data-pcolor="${p.id}" style="--pcolor:${pColor};border-right:3px solid ${pColor};">
       <div style="display:flex;align-items:flex-start;gap:10px;">
         <div style="min-width:36px;height:36px;border-radius:9px;background:${rankBg};color:${rankClr};
-                    font-size:0.95rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div>
+                    font-size:${typeof rank === 'number' ? '0.95rem' : '0.6rem'};font-weight:900;padding-inline:4px;text-align:center;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${rank}</div>
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
             <span style="display:flex;align-items:center;gap:5px;font-size:0.98rem;font-weight:800;color:var(--text);">
               <span class="p-color-dot" style="background:${pColor};"></span>${p.name}
             </span>
-            <span style="font-size:1rem;font-weight:900;color:var(--gold);">${formatCount(total, 'نقطة')} ${lastBadge}</span>
+            <span style="font-size:1rem;font-weight:900;color:var(--gold);">${typeof total === 'number' ? formatCount(total, 'نقطة') : total} ${lastBadge}</span>
           </div>
           <div class="teams-row" style="margin-bottom:${history.length?'10px':'6px'};">${p.teams.map(t=>clubBadgeHTML(t)).join('')}</div>
           ${history.length ? `<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:8px;">${sparkHTML}</div>` : ''}
