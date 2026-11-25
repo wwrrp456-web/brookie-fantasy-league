@@ -107,7 +107,7 @@ function renderBottomRace(){
       <span class="bottom-race-rank">${i+1}</span>
       <span class="bottom-race-name">${s.name}</span>
       <span class="bottom-race-pts">${formatCount(s.total,'نقطة')}</span>
-      <span class="bottom-race-gap ${i===0?'bottom-race-lead':''}">${i===0 ? iconHTML('arrow-down') + ' الأقرب للنجاة' : `-${gap} عن الأقرب للنجاة`}</span>
+      <span class="bottom-race-gap ${i===0?'bottom-race-lead':''}">${i===0 ? iconHTML('arrow-down',{cls:'ic-semantic'}) + ' الأقرب للنجاة' : `-${gap} عن الأقرب للنجاة`}</span>
     </div>`;
   });
   html += '</div>';
