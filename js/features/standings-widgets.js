@@ -59,19 +59,19 @@ function renderWeeklyDuels(){
   }
   const duels = computeWeeklyDuels();
   const roundNum = getCurrentRoundNumber();
-  let html = `<h2 class="section-title" style="margin-top:22px;">⚔️ تحدي مواجهة الجولة ${roundNum}</h2>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">مواجهات عشوائية بين المشاركين هذه الجولة — فوز إضافي وفخر بس، بلا أي تأثير على الترتيب العام 😎</p>`;
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('swords')} تحدي مواجهة الجولة ${roundNum}</h2>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">مواجهات عشوائية بين المشاركين هذه الجولة — فوز إضافي وفخر بس، بلا أي تأثير على الترتيب العام</p>`;
   html += '<div class="duels-grid">';
   duels.forEach(d=>{
     if(d.bye){
-      html += `<div class="duel-card duel-bye"><div class="duel-bye-text">🛌 ${d.bye.name} بدون خصم هذه الجولة</div></div>`;
+      html += `<div class="duel-card duel-bye"><div class="duel-bye-text">${iconHTML('bed')} ${d.bye.name} بدون خصم هذه الجولة</div></div>`;
       return;
     }
     const aWin = d.winner === d.a.id, bWin = d.winner === d.b.id;
     html += `<div class="duel-card">
-      <div class="duel-side ${aWin?'duel-win':''}"><span class="duel-name">${aWin?'🏅 ':''}${d.a.name}</span><span class="duel-pts">${d.ap}</span></div>
+      <div class="duel-side ${aWin?'duel-win':''}"><span class="duel-name">${aWin?iconHTML('medal') + ' ':''}${d.a.name}</span><span class="duel-pts">${d.ap}</span></div>
       <div class="duel-vs">VS</div>
-      <div class="duel-side ${bWin?'duel-win':''}"><span class="duel-name">${bWin?'🏅 ':''}${d.b.name}</span><span class="duel-pts">${d.bp}</span></div>
+      <div class="duel-side ${bWin?'duel-win':''}"><span class="duel-name">${bWin?iconHTML('medal') + ' ':''}${d.b.name}</span><span class="duel-pts">${d.bp}</span></div>
       ${(!aWin && !bWin) ? '<div class="duel-draw">تعادل</div>' : ''}
       <button type="button" class="btn ghost duel-share-btn" data-a="${d.a.id}" data-b="${d.b.id}">${ICONS.share} مشاركة المواجهة</button>
       <div class="duel-share-msg"></div>
@@ -98,7 +98,7 @@ function renderBottomRace(){
   const n = Math.min(3, standings.length);
   if(n < 2){ box.innerHTML=''; return; }
   const bottom = standings.slice(-n).slice().sort((a,b)=> b.total - a.total);
-  let html = `<h2 class="section-title" style="margin-top:22px;">🔥 سباق الهروب من القاع</h2>`;
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('flame')} سباق الهروب من القاع</h2>`;
   html += `<p class="rounds-subtitle" style="margin-top:0;">آخر ${n} بالترتيب العام — مين بيفلت أول من منطقة الخطر؟</p>`;
   html += '<div class="bottom-race-list">';
   bottom.forEach((s,i)=>{
@@ -107,7 +107,7 @@ function renderBottomRace(){
       <span class="bottom-race-rank">${i+1}</span>
       <span class="bottom-race-name">${s.name}</span>
       <span class="bottom-race-pts">${formatCount(s.total,'نقطة')}</span>
-      <span class="bottom-race-gap ${i===0?'bottom-race-lead':''}">${i===0 ? '🔻 الأقرب للنجاة' : `-${gap} عن الأقرب للنجاة`}</span>
+      <span class="bottom-race-gap ${i===0?'bottom-race-lead':''}">${i===0 ? iconHTML('arrow-down') + ' الأقرب للنجاة' : `-${gap} عن الأقرب للنجاة`}</span>
     </div>`;
   });
   html += '</div>';
@@ -119,7 +119,7 @@ function renderBadges(){
   if(!box) return;
   const badges = [...computeBadges(), ...computeExtendedBadges()];
   if(!badges.length){ box.innerHTML=''; return; }
-  let html = '<h2 class="section-title" style="margin-top:22px;">🏅 أوسمة الموسم</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('medal') + ' أوسمة الموسم</h2>';
   html += '<div class="badges-grid">';
   badges.forEach(b=>{
     html += `<div class="badge-card">
@@ -179,21 +179,21 @@ function renderHonorBoard(){
 
   // البطاقة بلا بيانات (لا نقطة جولة، أو لا سلسلة، أو لا ثبات محسوب) تُحذف بدل ما تعرض "—" (U-07)
   const cards = [
-    {emoji:'👑', label:'متصدر الترتيب', name:leader.name, val:formatCount(leader.total,'نقطة')},
-    bestSingle.name && bestSingle.pts ? {emoji:'⚡', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${formatCount(bestSingle.pts, 'نقطة')} (الجولة ${bestSingle.round})`} : null,
-    leastMumma.name && leastMumma.mumma !== Infinity ? {emoji:'💀', label:'أقل ممات', name:leastMumma.name, val:formatCount(leastMumma.mumma,'ممة')} : null,
-    longestStreak.streak > 0 ? {emoji:'🔥', label:'أطول سلسلة', name:longestStreak.name, val:arRoundsRun(longestStreak.streak)} : null,
-    mostStable.std !== Infinity ? {emoji:'🎯', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
+    {icon:'crown', label:'متصدر الترتيب', name:leader.name, val:formatCount(leader.total,'نقطة')},
+    bestSingle.name && bestSingle.pts ? {icon:'bolt', label:'أعلى نقطة جولة واحدة', name:bestSingle.name, val:`${formatCount(bestSingle.pts, 'نقطة')} (الجولة ${bestSingle.round})`} : null,
+    leastMumma.name && leastMumma.mumma !== Infinity ? {icon:'skull-zero', label:'أقل ممات', name:leastMumma.name, val:formatCount(leastMumma.mumma,'ممة')} : null,
+    longestStreak.streak > 0 ? {icon:'flame', label:'أطول سلسلة', name:longestStreak.name, val:arRoundsRun(longestStreak.streak)} : null,
+    mostStable.std !== Infinity ? {icon:'target', label:'الأكثر ثباتاً', name:mostStable.name, val:`انحراف ±${mostStable.std}`} : null,
   ].filter(Boolean);
 
 
   box.innerHTML = `
     <div class="honor-board">
-      <div class="honor-board-title">🎖️ لوحة الشرف</div>
+      <div class="honor-board-title">${iconHTML('medal')} لوحة الشرف</div>
       <div class="honor-cards">
         ${cards.map(c=>`
           <div class="honor-card">
-            <span class="honor-card-emoji">${c.emoji}</span>
+            <span class="honor-card-emoji">${iconHTML(c.icon,{size:26})}</span>
             <span class="honor-card-label">${c.label}</span>
             <span class="honor-card-name">${c.name}</span>
             <span class="honor-card-val">${c.val}</span>
@@ -205,7 +205,7 @@ function renderHonorBoard(){
 // ---------- بصمة الموسم ----------
 // sparkline ملوّن داخل كرت المشارك
 function buildFingerprintHTML(pid){
-  const hist = buildParticipantHistory(pid);
+  const hist = buildPlayedHistory(pid);
   if(hist.length < 2) return '';
   const color = PARTICIPANT_COLORS[pid] || 'var(--gold)';
   const maxPts = Math.max(...hist.map(h=>h.points), 1);
@@ -247,14 +247,14 @@ function renderSurprises(){
   const overperformers = Object.values(lastStats).sort((a,b)=>b.diff-a.diff);
   if(overperformers.length && overperformers[0].diff > 1){
     const top = overperformers[0];
-    cards.push({emoji:'🚀',title:'تجاوز المتوقع',name:top.name,detail:`+${Math.round(top.diff*10)/10} عن متوسطه`});
+    cards.push({icon:'rocket',title:'تجاوز المتوقع',name:top.name,detail:`+${Math.round(top.diff*10)/10} عن متوسطه`});
   }
 
   // أكبر خيبة أمل: أعلى فرق سلبي
   const underperformers = Object.values(lastStats).sort((a,b)=>a.diff-b.diff);
   if(underperformers.length && underperformers[0].diff < -1){
     const bot = underperformers[0];
-    cards.push({emoji:'😤',title:'تحت المتوقع',name:bot.name,detail:`${Math.round(bot.diff*10)/10} عن متوسطه`});
+    cards.push({icon:'trend-down',title:'تحت المتوقع',name:bot.name,detail:`${Math.round(bot.diff*10)/10} عن متوسطه`});
   }
 
   // المتصدر المفاجئ: من لم يكن في المركز الأول بالجولة الفائتة لكنه صعد
@@ -265,7 +265,7 @@ function renderSurprises(){
     const curLeader = curList[0];
     if(prevLeader && curLeader && prevLeader.id !== curLeader.id){
       const prevRank = prevList.findIndex(s=>s.id===curLeader.id)+1;
-      cards.push({emoji:'👑',title:'انقلاب الصدارة',name:curLeader.name,detail:`صعد من المركز ${prevRank}`});
+      cards.push({icon:'crown',title:'انقلاب الصدارة',name:curLeader.name,detail:`صعد من المركز ${prevRank}`});
     }
   }
 
@@ -275,7 +275,7 @@ function renderSurprises(){
     .sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff));
   if(mostConsistent.length){
     const mc = mostConsistent[0];
-    cards.push({emoji:'🎯',title:'الأكثر ثباتًا هذا الأسبوع',name:mc.name,detail:`${formatCount(mc.last, 'نقطة')} (متوسطه ${Math.round(mc.avg*10)/10})`});
+    cards.push({icon:'target',title:'الأكثر ثباتًا هذا الأسبوع',name:mc.name,detail:`${formatCount(mc.last, 'نقطة')} (متوسطه ${Math.round(mc.avg*10)/10})`});
   }
 
   // الانتعاشة: ممة ثم نقاط هذا الأسبوع
@@ -284,16 +284,16 @@ function renderSurprises(){
     return hist && hist.length>=2 && hist[hist.length-2].points===0 && hist[hist.length-1].points>0;
   }).sort((a,b)=>b.last-a.last);
   if(bouncebacks.length){
-    cards.push({emoji:'💪',title:'انتعاش بعد الممة',name:bouncebacks[0].name,detail:`${formatCount(bouncebacks[0].last,'نقطة')} هذا الأسبوع`});
+    cards.push({icon:'dumbbell',title:'انتعاش بعد الممة',name:bouncebacks[0].name,detail:`${formatCount(bouncebacks[0].last,'نقطة')} هذا الأسبوع`});
   }
 
   if(!cards.length){ box.innerHTML=''; return; }
   const roundNum = lastRound.number;
-  let html = `<h2 class="section-title" style="margin-top:22px;">🎪 مفاجآت الجولة ${roundNum}</h2>`;
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('tent')} مفاجآت الجولة ${roundNum}</h2>`;
   html += '<div class="surprises-board">';
   cards.forEach(c=>{
     html += `<div class="surprise-card">
-      <div class="surprise-emoji">${c.emoji}</div>
+      <div class="surprise-emoji">${iconHTML(c.icon,{size:26})}</div>
       <div class="surprise-title">${c.title}</div>
       <div class="surprise-name">${c.name}</div>
       <div class="surprise-detail">${c.detail}</div>
@@ -438,7 +438,7 @@ function renderRankHistory(){
   PARTICIPANTS.forEach(p=> leaderRounds[p.id]=0);
   leaders.forEach(l=> leaderRounds[l.pid]++);
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">🔁 تاريخ الصدارة</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('refresh') + ' تاريخ الصدارة</h2>';
 
   // جدول مدة الصدارة
   const topLeaders = PARTICIPANTS.filter(p=>leaderRounds[p.id]>0)
@@ -467,7 +467,7 @@ function renderRankHistory(){
       html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--paper);border-radius:8px;border:1px solid var(--line);">
         <span style="font-size:0.75rem;color:var(--muted);min-width:72px;">الجولة ${c.round}</span>
         ${prev}
-        <span style="font-weight:700;color:var(--gold);">👑 ${c.name}</span>
+        <span style="font-weight:700;color:var(--gold);">${iconHTML('crown')} ${c.name}</span>
         <span style="font-size:0.72rem;color:var(--muted);margin-right:auto;">${formatCount(c.total, 'نقطة')}</span>
       </div>`;
     });
@@ -507,7 +507,7 @@ function renderRankLeaderboard(){
   // ترتيب المشاركين بحسب المركز النهائي
   const sorted = PARTICIPANTS.slice().sort((a,b)=>(finalRanks[a.id]||99)-(finalRanks[b.id]||99));
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">👑 لوحة قيادة الترتيب</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('crown') + ' لوحة قيادة الترتيب</h2>';
   html += '<div class="rank-leaderboard" tabindex="0" role="region" aria-label="لوحة أدق المتوقعين"><table>';
   html += '<tr><th>المشارك</th>';
   if(rounds.length > 0) html += '<th>قبل</th>';

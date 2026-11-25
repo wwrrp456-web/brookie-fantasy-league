@@ -27,7 +27,7 @@ function getUnifiedNotifications(){
       const seen = getSeenBadges(myPid);
       myBadges.filter(b=>!seen.includes(b.title)).forEach(b=>{
         items.push({
-          icon: b.icon || '🎖️',
+          icon: 'medal',
           text: `وسام جديد: ${b.title}`,
           kind: 'badge',
           onOpen: ()=> setSeenBadges(myPid, [...getSeenBadges(myPid), b.title])
@@ -44,7 +44,7 @@ function getUnifiedNotifications(){
       if(lastSeen !== null && lastSeen < currentRound){
         const missed = currentRound - lastSeen;
         items.push({
-          icon: '🎁',
+          icon: 'gift',
           text: `فاتك ${missed} ${missed===1?'جولة':'جولات'} — اضغط لعرض التفاصيل`,
           kind: 'whatsnew',
           onOpen: ()=> setLastSeenRound(myPid, currentRound)
@@ -60,7 +60,7 @@ function getUnifiedNotifications(){
       Object.values(_seasonDuels || {}).forEach(d=>{
         if(d.status === 'pending' && d.opponentPid === myPid){
           items.push({
-            icon: '🥊',
+            icon: 'swords',
             text: `دعوة نزال موسم من ${participantName(d.challengerPid)}`,
             kind: 'duel',
             tab: 'rounds'
@@ -77,7 +77,7 @@ function getUnifiedNotifications(){
       if(poll){
         const votes = poll.votes || {};
         if(votes[myPid] === undefined){
-          items.push({icon:'🗳️', text:'سؤال الجولة بانتظار تصويتك', kind:'poll', tab:'rounds'});
+          items.push({icon:'poll', text:'سؤال الجولة بانتظار تصويتك', kind:'poll', tab:'rounds'});
         }
       }
     }
@@ -99,7 +99,7 @@ function renderNotificationCenter(){
     <div class="notif-dropdown" data-open="${wasOpen ? '1':'0'}" style="display:${wasOpen?'block':'none'};">
       ${items.length ? items.map((it,i)=>`
         <div class="notif-item" data-idx="${i}">
-          <span class="notif-item-icon">${it.icon}</span>
+          <span class="notif-item-icon">${iconHTML(it.icon)}</span>
           <span class="notif-item-text">${it.text}</span>
         </div>`).join('')
       : emptyState({icon: 'bell', title: 'لا إشعارات جديدة', text: 'أنت مطّلع على آخر أخبار الدوري. ستظهر المستجدات هنا.'})}
@@ -175,7 +175,8 @@ function maybeShowNotifyPermissionPrompt(){
   btn.id = 'notifPermBtn';
   btn.className = 'notif-perm-btn';
   btn.title = 'فعّل تنبيه المتصفح عند نشر جولة جديدة';
-  btn.textContent = '🔕';
+  btn.setAttribute('aria-label', 'فعّل تنبيه المتصفح');
+  btn.innerHTML = iconHTML('bell-off');
   btn.addEventListener('click', (e)=>{
     e.stopPropagation();
     Notification.requestPermission().then(()=> btn.remove());

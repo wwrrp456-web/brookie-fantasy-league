@@ -43,13 +43,13 @@ function renderBadgeToast(){
   } else {
     box.innerHTML = `<div class="badge-toast-wrap">
       ${newOnes.map(b=>`<div class="badge-toast">
-        <span class="badge-toast-icon">${b.icon}</span>
+        <span class="badge-toast-icon">${(typeof ICONS !== "undefined" && ICONS[b.icon]) ? iconHTML(b.icon,{size:28}) : b.icon}</span>
         <div class="badge-toast-text">
-          <div class="badge-toast-title">🎉 وسام جديد: ${b.title}!</div>
+          <div class="badge-toast-title">${iconHTML('sparkles')} وسام جديد: ${b.title}!</div>
           <div class="badge-toast-detail">${b.detail}</div>
         </div>
       </div>`).join('')}
-      <button type="button" class="btn ghost" id="badgeToastDismissBtn">تمام 🎉</button>
+      <button type="button" class="btn ghost" id="badgeToastDismissBtn">تمام ${iconHTML('check')}</button>
     </div>`;
     const dismissBtn = document.getElementById('badgeToastDismissBtn');
     if(dismissBtn) dismissBtn.addEventListener('click', ()=>{ box.innerHTML=''; });

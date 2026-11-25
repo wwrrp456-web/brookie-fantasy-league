@@ -94,11 +94,11 @@ function renderRoundStoryCard(){
   }
   box.innerHTML = `
     <div class="round-story-card" id="roundStoryCardCapture">
-      <div class="round-story-icon">🎙️</div>
+      <div class="round-story-icon">${iconHTML('mic',{size:28})}</div>
       <div class="round-story-text">${escapeHtml(story)}</div>
     </div>
     <div style="margin-top:8px;">
-      <button type="button" class="btn ghost" id="dlRoundStoryBtn">⬇️ تحميل كصورة</button>
+      <button type="button" class="btn ghost" id="dlRoundStoryBtn">${iconHTML('download')} تحميل كصورة</button>
     </div>
     <div id="roundStoryMsg"></div>`;
   const dlBtn = document.getElementById('dlRoundStoryBtn');

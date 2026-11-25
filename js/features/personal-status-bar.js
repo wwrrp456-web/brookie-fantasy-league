@@ -46,7 +46,7 @@ function renderPersonalStatusBar(){
       <div class="status-bar-content">
         <span class="status-bar-name">${p.name}</span>
         <span class="status-bar-sep">·</span>
-        <span class="status-bar-rank">🏆 #${rank}</span>
+        <span class="status-bar-rank">${iconHTML('trophy')} #${rank}</span>
         <span class="status-bar-sep">·</span>
         <span class="status-bar-total">${formatCount(s.total, 'نقطة')}</span>
         ${lastLabel ? `<span class="status-bar-sep">·</span><span class="status-bar-last ${lastPts>0?'pos':'neg'}">${lastLabel} آخر جولة</span>` : ''}

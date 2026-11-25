@@ -49,7 +49,7 @@ function renderCopyBox(){
     <textarea class="copy-area" id="summaryArea" readonly>${text}</textarea>
     <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
       <button class="btn" id="doCopyBtn">نسخ النص</button>
-      <button class="btn secondary" id="waShareBtn">📤 شارك في واتساب مباشرة</button>
+      <button class="btn secondary" id="waShareBtn">${iconHTML('share')} شارك في واتساب مباشرة</button>
       <button class="btn ghost" id="closeCopyBtn">إغلاق</button>
     </div>
     <div id="copyMsg"></div>`;
@@ -57,7 +57,7 @@ function renderCopyBox(){
     const ta = document.getElementById('summaryArea');
     try{
       await navigator.clipboard.writeText(ta.value);
-      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">تم النسخ ✅ الصقه في المجموعة</div>';
+      document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">تم النسخ ' + iconHTML('check') + ' الصقه في المجموعة</div>';
     }catch(e){
       ta.select();
       document.getElementById('copyMsg').innerHTML = '<div class="status-msg ok">حدّد النص واضغط نسخ يدويًا</div>';
@@ -88,7 +88,7 @@ function renderRefreshSummary(){
   // بانر جولة جديدة
   if(_prevRoundCount !== null && DATA.rounds.length > _prevRoundCount){
     const newRound = getCurrentRoundNumber();
-    bannerBox.innerHTML = `<div class="new-round-banner" onclick="this.parentElement.innerHTML=''">🎉 جولة ${newRound} أُضيفت! اضغط للإغلاق</div>`;
+    bannerBox.innerHTML = '<div class="new-round-banner" onclick="this.parentElement.innerHTML=\'\'">' + iconHTML('sparkles') + ' جولة ' + newRound + ' أُضيفت! اضغط للإغلاق</div>';
   } else {
     bannerBox.innerHTML = '';
   }
@@ -103,21 +103,21 @@ function renderRefreshSummary(){
     const prevRank = _prevStandings.findIndex(x=>x.id===s.id)+1;
     const curRank = i+1;
     if(prevRank !== curRank){
-      const dir = curRank < prevRank ? '🔼' : '🔽';
+      const dir = curRank < prevRank ? iconHTML('arrow-up') : iconHTML('arrow-down');
       changes.push(`${dir} <b>${s.name}</b>: من ${prevRank} إلى ${curRank}`);
     }
   });
   if(!changes.length){ box.innerHTML=''; return; }
   box.innerHTML = `
     <div class="refresh-summary">
-      <div class="refresh-summary-title">📊 ما تغيّر بعد التحديث</div>
+      <div class="refresh-summary-title">${iconHTML('chart-bar')} ما تغيّر بعد التحديث</div>
       ${changes.map(c=>`<div class="refresh-summary-row">${c}</div>`).join('')}
     </div>`;
 }
 
 // ---------- التحليل الذكي (ميزة 8) ----------
 function buildSmartProfile(pid){
-  const hist=buildParticipantHistory(pid);
+  const hist=buildPlayedHistory(pid);
   if(!hist.length) return '';
   const pts=hist.map(h=>h.points);
   const avg=pts.reduce((a,b)=>a+b,0)/pts.length;
@@ -127,19 +127,19 @@ function buildSmartProfile(pid){
   const last3=stands.slice(-3);
   const trend=last3.length>=2?last3[last3.length-1]-last3[0]:0;
   let style='';
-  if(std<1.5) style='🧱 المتسق — نقاطك منتظمة كالساعة';
-  else if(std<3) style='🎯 المستقر — ثابت مع تذبذب بسيط';
-  else if(std<5) style='🎢 المتقلب — إما قمة أو هاوية';
-  else style='🌪️ الفوضوي — لا يمكن التنبؤ بأدائك!';
+  if(std<1.5) style=iconHTML('wall') + ' المتسق — نقاطك منتظمة كالساعة';
+  else if(std<3) style=iconHTML('target') + ' المستقر — ثابت مع تذبذب بسيط';
+  else if(std<5) style=iconHTML('rollercoaster') + ' المتقلب — إما قمة أو هاوية';
+  else style=iconHTML('tornado') + ' الفوضوي — لا يمكن التنبؤ بأدائك!';
   let trendTxt='';
-  if(trend< -1) trendTxt='📈 في صعود مؤخراً';
-  else if(trend>1) trendTxt='📉 تراجع في الجولات الأخيرة';
-  else trendTxt='➡️ مستقر في مركزه';
+  if(trend< -1) trendTxt=iconHTML('trend-up') + ' في صعود مؤخراً';
+  else if(trend>1) trendTxt=iconHTML('trend-down') + ' تراجع في الجولات الأخيرة';
+  else trendTxt=iconHTML('arrow-right') + ' مستقر في مركزه';
   let grade='';
   if(avgRank<=3) grade=medalHTML(1) + ' نخبة — من أقوى المشاركين';
-  else if(avgRank<=7) grade='💪 قوي — في النصف الأعلى باستمرار';
-  else if(avgRank<=12) grade='🌊 وسط الميدان — مباراته مفتوحة';
-  else grade='🔄 يبحث عن مستواه';
+  else if(avgRank<=7) grade=iconHTML('dumbbell') + ' قوي — في النصف الأعلى باستمرار';
+  else if(avgRank<=12) grade=iconHTML('wave') + ' وسط الميدان — مباراته مفتوحة';
+  else grade=iconHTML('refresh') + ' يبحث عن مستواه';
   return `<div style="font-size:0.84rem;line-height:1.85;color:var(--text2);">
     <span>${style}</span> &nbsp;·&nbsp; <span>${trendTxt}</span><br>
     <span style="color:var(--gold-light);">${grade}</span>
@@ -152,7 +152,7 @@ function renderSmartProfile(){
   if(!box) return;
   if(DATA.rounds.length<3){box.innerHTML='';return;}
   const stands=computeStandings();
-  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🧠 التحليل الذكي</h2>
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">${iconHTML('brain')} التحليل الذكي</h2>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${stands.map((s,i)=>{
         const p=PARTICIPANTS.find(x=>x.id===s.id);
@@ -255,8 +255,8 @@ function renderStandings(){
             if(!last5.length) return '';
             const mx = Math.max(...hist.map(h=>h.points));
             const pills = last5.map(h=>{
-              let cls = h.points===0 ? 'mumma' : h.points===mx ? 'hi' : '';
-              return `<div class="quick-hist-pill ${cls}" title="الجولة ${h.number}">${h.points}</div>`;
+              let cls = !h.played ? 'no-match' : h.points===0 ? 'mumma' : h.points===mx ? 'hi' : '';
+              return `<div class="quick-hist-pill ${cls}" title="الجولة ${h.number}${h.played?'':' — بلا مباراة'}">${h.played ? h.points : '–'}</div>`;
             }).join('');
             const avg = hist.length ? Math.round(hist.reduce((a,h)=>a+h.points,0)/hist.length*10)/10 : 0;
             return `<div>
@@ -279,7 +279,7 @@ function renderStandings(){
                 ? `<tr><td>الجولة 2</td><td colspan="2" style="color:var(--c-text-3);">لم يلتحق بعد بالمسابقة</td></tr>
                    <tr><td>الرصيد الافتتاحي</td><td>${s.carry}</td><td>${s.carry}</td></tr>`
                 : `<tr><td>الجولة 2</td><td>${s.carry - (ROUND1_POINTS[s.id]||0)}</td><td>${s.carry}</td></tr>`}
-              ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.points}${h.points===0?' <span class="mumma">ممة</span>':''}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
+              ${buildParticipantHistory(s.id).map(h=>`<tr><td>الجولة ${h.number}</td><td>${h.played ? h.points + (h.points===0?' <span class="mumma">ممة</span>':'') : '<span class="no-match-label">بلا مباراة</span>'}</td><td>${s.carry + h.cumulative}</td></tr>`).join('')}
             </tbody>
           </table>
         </div>
@@ -330,16 +330,16 @@ document.getElementById('refreshBtn').addEventListener('click', async ()=>{
   const btn = document.getElementById('refreshBtn');
   const msg = document.getElementById('refreshMsg');
   btn.disabled = true;
-  btn.textContent = '⏳ جارٍ التحديث...';
+  btn.innerHTML = iconHTML('clock') + ' جارٍ التحديث...';
   capturePreRefreshState();
   try{
     await loadData();
     renderRefreshSummary();
-    msg.innerHTML = '<div class="status-msg ok">تم تحديث ترتيب المشاركين بأحدث نتائج الجولات ✅</div>';
+    msg.innerHTML = '<div class="status-msg ok">تم تحديث ترتيب المشاركين بأحدث نتائج الجولات ' + iconHTML('check') + '</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">حدث خطأ أثناء التحديث، حاول مجددًا.</div>';
   }
   btn.disabled = false;
-  btn.textContent = '🔄 تحديث';
+  btn.innerHTML = iconHTML('refresh') + ' تحديث';
   setTimeout(()=>{ msg.innerHTML=''; }, 3000);
 });

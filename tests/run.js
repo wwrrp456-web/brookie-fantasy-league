@@ -335,9 +335,19 @@ check('كسر التعادل بالقالب المعتمد: «7 أهداف مس�
   vm.runInContext(gen + ';this.R = {ICONS, CRESTS, CREST_NAMES, MOTIFS, LOGO_SVG, CRESTS_OFFICIAL};', ctx2);
   const R = ctx2.R;
   const sorted = o => JSON.stringify(Object.keys(o)) === JSON.stringify(Object.keys(o).slice().sort());
-  check('build-assets: المحتوى = 56 أيقونة و32 شعارًا بأسمائها و11 رمزًا وشعار PROKI (3) ورسمية فاضية',
+  check('build-assets: المحتوى = 94 أيقونة و32 شعارًا بأسمائها و11 رمزًا وشعار PROKI (3) ورسمية فاضية',
     [Object.keys(R.ICONS).length, Object.keys(R.CRESTS).length, Object.keys(R.CREST_NAMES).length, Object.keys(R.MOTIFS).length, Object.keys(R.LOGO_SVG).sort(), Object.keys(R.CRESTS_OFFICIAL).length],
-    [56, 32, 32, 11, ['logo', 'logoLight', 'mark'], 0]);
+    [94, 32, 32, 11, ['logo', 'logoLight', 'mark'], 0]);
+  // 001-T011b: الأيقونات الـ38 الجديدة بنفس أسلوب الموجودة (الشبكة والسماكة والنهايات و currentColor بلا hex ولا نص ولا صور)
+  {
+    const NEW = ['flask','undo','film','thumbs-up','dumbbell','pin','landmark','eye','book','pause','cloud','globe','dice','flag-race','flag','hand-wave','ban','play','arrow-right','wave','tornado','rollercoaster','tent','race-car','megaphone','phone','key','bell-off','sort-alpha','radar','printer','archive','map','handshake','goal','brain','calculator','bed'];
+    const head = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+    const raw = n => fs.readFileSync(path.join(ROOT, 'assets/icons', n + '.svg'), 'utf8');
+    check('أيقونات جديدة: 38 ملفًا بأسماء kebab-case وموجودة في ICONS المولَّد', [NEW.length, NEW.every(n => /^[a-z]+(-[a-z]+)*$/.test(n) && R.ICONS[n])], [38, true]);
+    check('أيقونات جديدة: نفس رأس الموجودة حرفيًا (viewBox 24، fill none، stroke currentColor، 1.75، round)', NEW.every(n => raw(n).includes(head)), true);
+    check('أيقونات جديدة: بلا hex ولا <text> ولا <image> ولا base64 ولا style', NEW.every(n => !/#[0-9a-f]{3,8}\b|<text|<image|base64|style=/i.test(raw(n)) && /<path /.test(raw(n))), true);
+    check('أيقونات جديدة: لا تكرار مع أيقونات موجودة (94 مميَّزة)', new Set(Object.keys(R.ICONS)).size, 94);
+  }
   check('build-assets: كل المجموعات مرتبة أبجديًا', [R.ICONS, R.CRESTS, R.CREST_NAMES, R.MOTIFS].every(sorted), true);
   check('build-assets: كل قيمة تبدأ بـ<svg وبلا <image أو base64 أو <?xml', Object.values(Object.assign({}, R.ICONS, R.CRESTS, R.MOTIFS, R.LOGO_SVG)).every(v => /^<svg[\s>]/.test(v) && !/<image|base64|<\?xml/.test(v)), true);
   // جذر مصطنع
@@ -432,7 +442,7 @@ const asyncCrestTests = (async () => {
   const sb = {console, Blob, URL};
   sb.window = sb;
   const cctx = vm.createContext(sb);
-  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js', 'js/generated/card-themes.js', 'js/ui/card-layout.js', 'js/ui/card-kit.js']
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js', 'js/generated/card-themes.js', 'js/ui/card-layout.js', 'js/ui/card-kit.js', 'js/ui/icon-helper.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
   const run = code => vm.runInContext(code, cctx);
   const blobText = async url => resolveObjectURL(url).text();
@@ -476,6 +486,11 @@ const asyncCrestTests = (async () => {
   check('card-kit: validateCardData يرجع النواقص بالعربية (جولة، اسم، رصيد، أندية)', run("validateCardData('standings', {round: 0, standings: [{rank: 1, name: '', total: NaN, clubs: ['الهلال']}, {rank: 2, name: 'ب', total: 4, clubs: ['س', 'ص', 'ع']}]})"), ['رقم الجولة غير محدد', 'اسم المشارك ناقص في الصف 1', 'رصيد الصف 1 غير محدد', 'أندية الصف 1 ناقصة (المطلوب ثلاثة)']);
   check('card-kit: بلا مشاركين أو بيانات فاضية ← رسالة عربية', [run("validateCardData('standings', {round: 3, standings: []})"), run("validateCardData('standings', null)")], [['لا يوجد مشاركون في الترتيب'], ['لا توجد بيانات للكرت']]);
   check('card-kit: CardDataError يحمل النواقص', run("(() => { const e = new CardDataError(['أ', 'ب']); return [e.name, e.problems.length, e.message]; })()"), ['CardDataError', 2, 'أ، ب']);
+  // 001-T011c-1: المساعد iconHTML
+  const ih = run("iconHTML('trophy')"), ihl = run("iconHTML('check', {size: 14, label: 'تم'})");
+  check('iconHTML: span.ic فيه svg من ICONS بحجم افتراضي 18 وزخرفي (aria-hidden)، وبلا إيموجي', [/^<span class="ic"><svg width="18" height="18" aria-hidden="true" focusable="false" /.test(ih), /<path/.test(ih), /\p{Extended_Pictographic}/u.test(ih)], [true, true, false]);
+  check('iconHTML: مع label ← role="img" وaria-label بدل aria-hidden، وبالحجم المطلوب', [/width="14" height="14" role="img" aria-label="تم"/.test(ihl), /aria-hidden/.test(ihl)], [true, false]);
+  check('iconHTML: اسم غير موجود ← نص فاضي، والـlabel يُهرَّب، والـcls يُضاف', [run("iconHTML('ما-في')"), /aria-label="&lt;b&gt;"/.test(run("iconHTML('check', {label: '<b>'})")), /class="ic extra"/.test(run("iconHTML('check', {cls: 'extra'})"))], ['', true, true]);
   // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
   check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
   const fb = run("crestSource('نادي وهمي').svg");
@@ -1203,6 +1218,44 @@ const asyncDiffTests = (async () => {
     }
     check('رحلة ذهاب وعودة عشوائية (40 مجموعة تقارير ببذرة ثابتة، قرارات مكررة/منفصلة): كلها تطابق', bad, 0);
   }
+}
+
+// ---------- قاعدة الممة الموحّدة (S68، 25 نوفمبر) ----------
+{
+  const run = code => vm.runInContext(code, context);
+  const out = JSON.parse(run(`(()=>{
+    const pid = PARTICIPANTS[0].id, r = n => ({number: 900 + n, entries: {}});
+    const mk = (res) => { const x = r(1); x.entries[pid] = res.map((result, ti) => ({ti, result, gf: 0, ga: 0})); return x; };
+    const res = {};
+    const lossRest = mk(['loss', 'no_match', 'no_match']);      // خسارة نادٍ + الباقي بلا مباراة
+    const allNone = mk(['no_match', 'no_match', 'no_match']);   // كلهم بلا مباراة
+    const drawRest = mk(['draw', 'no_match', 'no_match']);      // تعادل واحد + الباقي بلا مباراة
+    const blankRest = mk(['', 'no_match', 'no_match']);         // نتيجة فاضية + الباقي بلا مباراة
+    const blankLoss = mk(['', 'loss', 'no_match']);             // فاضية + خسارة محدّدة
+    res.lossRest = [round_has_entries(lossRest, pid), isMummaRound(lossRest, pid)];
+    res.allNone = [round_has_entries(allNone, pid), isMummaRound(allNone, pid)];
+    res.drawRest = [round_has_entries(drawRest, pid), isMummaRound(drawRest, pid)];
+    res.blankRest = [round_has_entries(blankRest, pid), isMummaRound(blankRest, pid)];
+    res.blankLoss = [round_has_entries(blankLoss, pid), isMummaRound(blankLoss, pid)];
+    // الترتيب: الممة تُحسب مرة واحدة للخسارة، ولا تُحسب لجولة «كلهم بلا مباراة» ولا تكسر السلسلة
+    const base = DATA.rounds.slice();
+    const mc = () => { const s = computeStandings().find(x => x.id === pid); return [s.mummaCount, s.streak, s.total]; };
+    const before = mc();
+    DATA.rounds.push(lossRest); const a = mc(); DATA.rounds.length = base.length;
+    DATA.rounds.push(allNone); const b = mc(); DATA.rounds.length = base.length;
+    DATA.rounds.push(drawRest); const c = mc(); DATA.rounds.length = base.length;
+    res.standings = {before, loss: a, allNone: b, draw: c};
+    // buildParticipantHistory (إن حُمّلت) = نفس القاعدة
+    return JSON.stringify(res);
+  })()`));
+  check('ممة: خسارة نادٍ + مباراتان بلا مباراة = ممة', out.lossRest, [true, true]);
+  check('ممة: ثلاثة أندية كلها بلا مباراة = ليست ممة ولا «لعب»', out.allNone, [false, false]);
+  check('ممة: تعادل واحد + الباقي بلا مباراة = ليست ممة', out.drawRest, [true, false]);
+  check('ممة: نتيجة فاضية (لم تُدخل) + الباقي بلا مباراة = لا تُحسب ممة', out.blankRest, [false, false]);
+  check('ممة: نتيجة فاضية + خسارة محدّدة = ممة (لعب نادٍ فعليًا)', out.blankLoss, [true, true]);
+  check('ممة: الترتيب يعدّ الخسارة ممة مرة واحدة ويصفّر السلسلة', [out.standings.loss[0] - out.standings.before[0], out.standings.loss[1]], [1, 0]);
+  check('ممة: جولة «كلهم بلا مباراة» لا تغيّر العدّاد ولا السلسلة ولا الرصيد', out.standings.allNone, out.standings.before);
+  check('ممة: تعادل واحد = نقطة وسلسلة تزيد ولا ممة', [out.standings.draw[0] - out.standings.before[0], out.standings.draw[2] - out.standings.before[2], out.standings.draw[1] > out.standings.before[1]], [0, 1, true]);
 }
 
 // ---------- الخلاصة ----------
