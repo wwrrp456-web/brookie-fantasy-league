@@ -389,7 +389,7 @@ function buildWhatINeedHTML(meRow, st, idx){
     rows += `<div class="my-dash-need-row"><span>للبقاء أمام <b>${below.name}</b></span><span class="my-dash-need-badge">+${gap} ن. كافية</span></div>`;
   }
   if(!rows) return '';
-  return `<div class="my-dash-need"><b>${iconHTML('target')} الجولة القادمة:</b>${rows}</div>`;
+  return `<div class="my-dash-need"><b>${iconHTML('target',{cls:'ic-semantic'})} الجولة القادمة:</b>${rows}</div>`;
 }
 
 // ---------- إنجازاتي الشخصية (ميزة 6) ----------

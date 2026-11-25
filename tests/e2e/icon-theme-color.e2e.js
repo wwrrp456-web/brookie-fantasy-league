@@ -31,7 +31,10 @@ const measure = () => {
     const cs = getComputedStyle(svg);
     const col = parse(cs.color), bg = bgOf(svg);
     const fixed = /(?:stroke|fill)="(?!none|currentColor)[^"]+"/.test(svg.outerHTML) || /style="[^"]*(?:stroke|fill|color)/.test(svg.outerHTML);
-    out.push({ name: (svg.parentElement.className || '') + ' @ ' + (svg.closest('[id]') ? svg.closest('[id]').id : '?'), color: cs.color, bg: `rgb(${bg.c.r},${bg.c.g},${bg.c.b})`, ratio: Math.round(ratio(col, bg.c) * 100) / 100, fixed });
+    const lumv = 0.2126 * col.r + 0.7152 * col.g + 0.0722 * col.b;
+    const semantic = !!svg.closest('.ic-semantic');
+    const exempt = !!svg.closest('.btn, .sort-mode-btn, .status-msg');
+    out.push({ lum: Math.round(lumv), semantic, exempt, name: (svg.parentElement.className || '') + ' @ ' + (svg.closest('[id]') ? svg.closest('[id]').id : '?'), color: cs.color, bg: `rgb(${bg.c.r},${bg.c.g},${bg.c.b})`, ratio: Math.round(ratio(col, bg.c) * 100) / 100, fixed });
   });
   return out;
 };
@@ -72,6 +75,14 @@ const measure = () => {
     const low = a.filter(x => x.ratio < 3);
     check(`[${mode}] تباين كل أيقونة مع خلفيتها ≥ 3:1`, low.length === 0, low.slice(0, 8).map(x => `${x.tab}/${x.name} ${x.color} على ${x.bg} = ${x.ratio}`).join('\n   '));
   }
+  // S67: بالوضع الليلي كل أيقونة زخرفية لمعانها > 180. المستثنى صراحةً: الدلالية (.ic-semantic: صعود/هبوط وحالة)، وأيقونات داخل مكوّنات تحدّد لون نصها فوق خلفية مملوءة (.btn و.sort-mode-btn و.status-msg)
+  const decorDark = modes.dark.filter(x => !x.semantic && !x.exempt);
+  const dim = decorDark.filter(x => x.lum <= 180);
+  check(`[dark] كل الأيقونات الزخرفية فاتحة (لمعان > 180)، ${decorDark.length} أيقونة`, dim.length === 0, dim.slice(0, 8).map(x => `${x.tab}/${x.name} ${x.color} (${x.lum})`).join('\n   '));
+  const sem = modes.dark.filter(x => x.semantic);
+  check('الدلالية موسومة .ic-semantic وموجودة بالصفحة (مستثناة بوسم لا بأسماء)', sem.length >= 1, `العدد ${sem.length}`);
+  // النهاري كما هو: الزخرفية غير الدلالية بالنهاري ما صارت بيضاء
+  check('[light] لا أيقونة زخرفية بيضاء على الخلفية الفاتحة (لمعان ≤ 180 لغير المستثناة)', modes.light.filter(x => !x.semantic && !x.exempt && x.lum > 180).length === 0, JSON.stringify(modes.light.filter(x => !x.semantic && !x.exempt && x.lum > 180).slice(0, 4)));
   // الأيقونات الحيادية (تأخذ لون النص): لونها بالداكن فاتح وبالفاتح داكن، ويختلفان
   const lumOf = c => { const p = c.match(/\d+/g).map(Number); return 0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]; };
   const darkSet = new Set(modes.dark.map(x => x.color)), lightSet = new Set(modes.light.map(x => x.color));
