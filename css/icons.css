@@ -1,0 +1,7 @@
+/* مساعد الأيقونات (001-T011c-1): الأيقونة بجانب النص بدل الإيموجي، ونقطة الحالة بدل 🟢🟡. متغيّرات tokens.css فقط. */
+.ic{display:inline-flex;align-items:center;vertical-align:-0.2em;flex:none;}
+.ic svg{display:block;flex:none;}
+[data-icon].ic[hidden]{display:none;}
+.btn .ic,.btn [data-icon]{margin-inline-end:var(--sp-1);}
+.status-dot{display:inline-block;width:.7em;height:.7em;border-radius:50%;background:var(--c-up);vertical-align:baseline;margin-inline-end:var(--sp-1);}
+.status-dot-gold{background:var(--c-gold);}

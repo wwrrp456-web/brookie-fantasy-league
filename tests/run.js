@@ -442,7 +442,7 @@ const asyncCrestTests = (async () => {
   const sb = {console, Blob, URL};
   sb.window = sb;
   const cctx = vm.createContext(sb);
-  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js', 'js/generated/card-themes.js', 'js/ui/card-layout.js', 'js/ui/card-kit.js']
+  ['js/data/season-config.js', 'js/data/season-2/participants.js', 'js/data/season-2/clubs.js', 'js/core/dom-utils.js', 'js/generated/assets.js', 'js/ui/crests.js', 'js/ui/empty-state.js', 'js/generated/card-themes.js', 'js/ui/card-layout.js', 'js/ui/card-kit.js', 'js/ui/icon-helper.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), cctx, {filename: f}));
   const run = code => vm.runInContext(code, cctx);
   const blobText = async url => resolveObjectURL(url).text();
@@ -486,6 +486,11 @@ const asyncCrestTests = (async () => {
   check('card-kit: validateCardData يرجع النواقص بالعربية (جولة، اسم، رصيد، أندية)', run("validateCardData('standings', {round: 0, standings: [{rank: 1, name: '', total: NaN, clubs: ['الهلال']}, {rank: 2, name: 'ب', total: 4, clubs: ['س', 'ص', 'ع']}]})"), ['رقم الجولة غير محدد', 'اسم المشارك ناقص في الصف 1', 'رصيد الصف 1 غير محدد', 'أندية الصف 1 ناقصة (المطلوب ثلاثة)']);
   check('card-kit: بلا مشاركين أو بيانات فاضية ← رسالة عربية', [run("validateCardData('standings', {round: 3, standings: []})"), run("validateCardData('standings', null)")], [['لا يوجد مشاركون في الترتيب'], ['لا توجد بيانات للكرت']]);
   check('card-kit: CardDataError يحمل النواقص', run("(() => { const e = new CardDataError(['أ', 'ب']); return [e.name, e.problems.length, e.message]; })()"), ['CardDataError', 2, 'أ، ب']);
+  // 001-T011c-1: المساعد iconHTML
+  const ih = run("iconHTML('trophy')"), ihl = run("iconHTML('check', {size: 14, label: 'تم'})");
+  check('iconHTML: span.ic فيه svg من ICONS بحجم افتراضي 18 وزخرفي (aria-hidden)، وبلا إيموجي', [/^<span class="ic"><svg width="18" height="18" aria-hidden="true" focusable="false" /.test(ih), /<path/.test(ih), /\p{Extended_Pictographic}/u.test(ih)], [true, true, false]);
+  check('iconHTML: مع label ← role="img" وaria-label بدل aria-hidden، وبالحجم المطلوب', [/width="14" height="14" role="img" aria-label="تم"/.test(ihl), /aria-hidden/.test(ihl)], [true, false]);
+  check('iconHTML: اسم غير موجود ← نص فاضي، والـlabel يُهرَّب، والـcls يُضاف', [run("iconHTML('ما-في')"), /aria-label="&lt;b&gt;"/.test(run("iconHTML('check', {label: '<b>'})")), /class="ic extra"/.test(run("iconHTML('check', {cls: 'extra'})"))], ['', true, true]);
   // المصدر 3: نادٍ وهمي ← الدرع الاحتياطي
   check('crests: نادٍ وهمي بلا ملف ← الدرع الاحتياطي (fallback)', run("crestSource('نادي وهمي').kind"), 'fallback');
   const fb = run("crestSource('نادي وهمي').svg");

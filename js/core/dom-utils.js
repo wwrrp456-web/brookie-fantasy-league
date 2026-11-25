@@ -118,10 +118,11 @@ async function copyToClipboardWithFeedback(text, btn){
     }catch(e2){ ok = false; }
   }
   if(btn){
-    const original = btn.textContent;
-    btn.textContent = ok ? '✅ تم النسخ' : '⚠️ تعذّر النسخ';
+    // innerHTML (لا textContent) عشان الزر قد يحمل أيقونة تُرجَع كما كانت بعد التنبيه (001-T011c-1)
+    const original = btn.innerHTML;
+    btn.innerHTML = ok ? iconHTML('check') + ' تم النسخ' : iconHTML('warning') + ' تعذّر النسخ';
     btn.disabled = true;
-    setTimeout(()=>{ btn.textContent = original; btn.disabled = false; }, 1500);
+    setTimeout(()=>{ btn.innerHTML = original; btn.disabled = false; }, 1500);
   }
 }
 
