@@ -33,8 +33,10 @@ const measure = () => {
     const fixed = /(?:stroke|fill)="(?!none|currentColor)[^"]+"/.test(svg.outerHTML) || /style="[^"]*(?:stroke|fill|color)/.test(svg.outerHTML);
     const lumv = 0.2126 * col.r + 0.7152 * col.g + 0.0722 * col.b;
     const semantic = !!svg.closest('.ic-semantic');
-    const exempt = !!svg.closest('.btn, .sort-mode-btn, .status-msg');
-    out.push({ lum: Math.round(lumv), semantic, exempt, name: (svg.parentElement.className || '') + ' @ ' + (svg.closest('[id]') ? svg.closest('[id]').id : '?'), color: cs.color, bg: `rgb(${bg.c.r},${bg.c.g},${bg.c.b})`, ratio: Math.round(ratio(col, bg.c) * 100) / 100, fixed });
+    const inBtn = svg.closest('button');
+    const btnSize = inBtn ? Math.round(r.width) : 0;
+    const exempt = !!svg.closest('.btn, .sort-mode-btn, .status-msg, .status-pill');
+    out.push({ btnSize, lum: Math.round(lumv), semantic, exempt, name: (svg.parentElement.className || '') + ' @ ' + (svg.closest('[id]') ? svg.closest('[id]').id : '?'), color: cs.color, bg: `rgb(${bg.c.r},${bg.c.g},${bg.c.b})`, ratio: Math.round(ratio(col, bg.c) * 100) / 100, fixed });
   });
   return out;
 };
@@ -83,6 +85,9 @@ const measure = () => {
   check('الدلالية موسومة .ic-semantic وموجودة بالصفحة (مستثناة بوسم لا بأسماء)', sem.length >= 1, `العدد ${sem.length}`);
   // النهاري كما هو: الزخرفية غير الدلالية بالنهاري ما صارت بيضاء
   check('[light] لا أيقونة زخرفية بيضاء على الخلفية الفاتحة (لمعان ≤ 180 لغير المستثناة)', modes.light.filter(x => !x.semantic && !x.exempt && x.lum > 180).length === 0, JSON.stringify(modes.light.filter(x => !x.semantic && !x.exempt && x.lum > 180).slice(0, 4)));
+  // S59 (ملاحظة M83): أيقونة زر بلا حجم صريح تتمدّد (كانت أيقونة «مشاركة نتائج أنديتي» 296×296 مربعًا أسود بلقطة 390)؛ لا أيقونة داخل زر أكبر من 48px
+  const big = [...modes.dark, ...modes.light].filter(x => x.btnSize > 48);
+  check('لا أيقونة داخل زر أكبر من 48px (مربع «أنديتي» الأسود)', big.length === 0, JSON.stringify(big.slice(0, 4)));
   // الأيقونات الحيادية (تأخذ لون النص): لونها بالداكن فاتح وبالفاتح داكن، ويختلفان
   const lumOf = c => { const p = c.match(/\d+/g).map(Number); return 0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]; };
   const darkSet = new Set(modes.dark.map(x => x.color)), lightSet = new Set(modes.light.map(x => x.color));

@@ -40,9 +40,9 @@ function renderAdminActivityLog(){
     const d = new Date(entry.time);
     const timeStr = formatDate(d, {style: 'datetime'});
     const undoBtn = entry.snapshot
-      ? `<button type="button" class="btn ghost activity-undo-btn" data-idx="${idx}">↩️ تراجع</button>`
+      ? `<button type="button" class="btn ghost activity-undo-btn" data-idx="${idx}">${iconHTML('undo')} تراجع</button>`
       : '';
-    return `<div class="activity-log-row"><span>${entry.action}</span><span class="activity-log-time">${timeStr}</span>${undoBtn}</div>`;
+    return `<div class="activity-log-row"><span>${iconizeEmoji(entry.action)}</span><span class="activity-log-time">${timeStr}</span>${undoBtn}</div>`;
   }).join('');
 }
 
@@ -60,14 +60,14 @@ document.getElementById('adminActivityLog').addEventListener('click', async (e)=
     `سيتم استبدال كل بيانات الموسم الحيّة بلقطة محفوظة من قبل الحدث التالي:\n"${entry.action}" (${timeStr})\n\n` +
     `هذا استبدال كامل (الجولات، الأولوية اليدوية، سجل النشاط) بحالتها وقتها بالضبط — وليس دمجًا جزئيًا — وينعكس فورًا على كل الزوار.\n\n` +
     `هل تبي تتراجع فعلًا؟`,
-    {confirmText: '↩️ تراجع الآن'}
+    {confirmText: iconHTML('undo') + ' تراجع الآن'}
   );
   if(!sure) return;
   btn.disabled = true;
   const restoredAction = entry.action;
   DATA = JSON.parse(JSON.stringify(entry.snapshot));
   const ok = await saveData();
-  if(ok) logAdminActivity(`↩️ تراجع لحالة قبل: "${restoredAction}"`);
+  if(ok) logAdminActivity(`تراجع لحالة قبل: "${restoredAction}"`);
   renderAll();
   renderPastRoundsChips();
   updateRoundSettingsStatus();
@@ -80,103 +80,103 @@ function updateRoundSettingsStatus(){
   const predPill = document.getElementById('predStatusPill');
   if(predPill){
     const on = !!PRED_DATA.enabled;
-    predPill.textContent = on ? '🔮 مفعّل' : '🔮 معطّل';
+    predPill.innerHTML = iconHTML('crystal-ball') + (on ? ' مفعّل' : ' معطّل');
     predPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const duelPill = document.getElementById('duelStatusPill');
   if(duelPill){
     const on = DATA.duelsEnabled !== false;
-    duelPill.textContent = on ? '⚔️ مفعّل' : '⚔️ معطّل';
+    duelPill.innerHTML = iconHTML('swords') + (on ? ' مفعّل' : ' معطّل');
     duelPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const wallPill = document.getElementById('roundWallStatusPill');
   if(wallPill){
     const on = DATA.roundWallEnabled !== false;
-    wallPill.textContent = on ? '🧱 مفعّل' : '🧱 معطّل';
+    wallPill.innerHTML = iconHTML('wall') + (on ? ' مفعّل' : ' معطّل');
     wallPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const nrPill = document.getElementById('nameReactionsStatusPill');
   if(nrPill){
     const on = DATA.nameReactionsEnabled !== false;
-    nrPill.textContent = on ? '👏 مفعّل' : '👏 معطّل';
+    nrPill.innerHTML = iconHTML('thumbs-up') + (on ? ' مفعّل' : ' معطّل');
     nrPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const sdPill = document.getElementById('seasonDuelStatusPill');
   if(sdPill){
     const on = DATA.seasonDuelEnabled !== false;
-    sdPill.textContent = on ? '🥊 مفعّل' : '🥊 معطّل';
+    sdPill.innerHTML = iconHTML('swords') + (on ? ' مفعّل' : ' معطّل');
     sdPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const rsPill = document.getElementById('roundStoryStatusPill');
   if(rsPill){
     const on = DATA.roundStoryEnabled !== false;
-    rsPill.textContent = on ? '🎙️ مفعّل' : '🎙️ معطّل';
+    rsPill.innerHTML = iconHTML('mic') + (on ? ' مفعّل' : ' معطّل');
     rsPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const wnPill = document.getElementById('whatsNewStatusPill');
   if(wnPill){
     const on = DATA.whatsNewEnabled !== false;
-    wnPill.textContent = on ? '🎁 مفعّل' : '🎁 معطّل';
+    wnPill.innerHTML = iconHTML('gift') + (on ? ' مفعّل' : ' معطّل');
     wnPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const ppPill = document.getElementById('participantProfileStatusPill');
   if(ppPill){
     const on = DATA.participantProfileEnabled !== false;
-    ppPill.textContent = on ? '📋 مفعّل' : '📋 معطّل';
+    ppPill.innerHTML = iconHTML('clipboard') + (on ? ' مفعّل' : ' معطّل');
     ppPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const rpPill = document.getElementById('roundPollStatusPill');
   if(rpPill){
     const on = DATA.roundPollEnabled !== false;
-    rpPill.textContent = on ? '🗳️ مفعّل' : '🗳️ معطّل';
+    rpPill.innerHTML = iconHTML('poll') + (on ? ' مفعّل' : ' معطّل');
     rpPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const sgPill = document.getElementById('subGroupsStatusPill');
   if(sgPill){
     const on = DATA.subGroupsEnabled !== false;
-    sgPill.textContent = on ? '👥 مفعّل' : '👥 معطّل';
+    sgPill.innerHTML = iconHTML('users') + (on ? ' مفعّل' : ' معطّل');
     sgPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const hcPill = document.getElementById('hotColdStreaksStatusPill');
   if(hcPill){
     const on = DATA.hotColdStreaksEnabled !== false;
-    hcPill.textContent = on ? '🔥 مفعّل' : '🔥 معطّل';
+    hcPill.innerHTML = iconHTML('flame') + (on ? ' مفعّل' : ' معطّل');
     hcPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const btPill = document.getElementById('badgeToastStatusPill');
   if(btPill){
     const on = DATA.badgeToastEnabled !== false;
-    btPill.textContent = on ? '🏅 مفعّل' : '🏅 معطّل';
+    btPill.innerHTML = iconHTML('medal') + (on ? ' مفعّل' : ' معطّل');
     btPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const cslPill = document.getElementById('clubSwapLabStatusPill');
   if(cslPill){
     const on = DATA.clubSwapLabEnabled !== false;
-    cslPill.textContent = on ? '🔬 مفعّل' : '🔬 معطّل';
+    cslPill.innerHTML = iconHTML('flask') + (on ? ' مفعّل' : ' معطّل');
     cslPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const sbPill = document.getElementById('statusBarStatusPill');
   if(sbPill){
     const on = DATA.statusBarEnabled !== false;
-    sbPill.textContent = on ? '📌 مفعّل' : '📌 معطّل';
+    sbPill.innerHTML = iconHTML('pin') + (on ? ' مفعّل' : ' معطّل');
     sbPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const saPill = document.getElementById('standingsAnimationStatusPill');
   if(saPill){
     const on = DATA.standingsAnimationEnabled !== false;
-    saPill.textContent = on ? '🎞️ مفعّل' : '🎞️ معطّل';
+    saPill.innerHTML = iconHTML('film') + (on ? ' مفعّل' : ' معطّل');
     saPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const lfPill = document.getElementById('liveFocusModeStatusPill');
   if(lfPill){
     const on = DATA.liveFocusModeEnabled !== false;
-    lfPill.textContent = on ? '🔴 مفعّل' : '🔴 معطّل';
+    lfPill.innerHTML = iconHTML('live') + (on ? ' مفعّل' : ' معطّل');
     lfPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
   const rcPill = document.getElementById('roundChallengeStatusPill');
   if(rcPill){
     const on = DATA.roundChallengeEnabled !== false;
-    rcPill.textContent = on ? '🗳️ مفعّل' : '🗳️ معطّل';
+    rcPill.innerHTML = iconHTML('poll') + (on ? ' مفعّل' : ' معطّل');
     rcPill.className = 'status-pill ' + (on ? 'on' : 'off');
   }
 }
@@ -297,7 +297,7 @@ document.getElementById('saveNextRoundAtBtn').addEventListener('click', async ()
   const ok = await saveData();
   renderCountdown();
   msg.innerHTML = ok
-    ? '<div class="status-msg ok">تم حفظ موعد الجولة القادمة — العداد ظاهر الآن للجميع ✅</div>'
+    ? '<div class="status-msg ok">تم حفظ موعد الجولة القادمة — العداد ظاهر الآن للجميع ' + iconHTML('check') + '</div>'
     : '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
 });
 document.getElementById('clearNextRoundAtBtn').addEventListener('click', async ()=>{
@@ -326,7 +326,7 @@ document.getElementById('predictionsEnabledToggle').addEventListener('change', a
   renderMyDashboard();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار خانة التوقعات للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار خانة التوقعات للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء خانة التوقعات عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -354,7 +354,7 @@ document.getElementById('duelsEnabledToggle').addEventListener('change', async (
   renderWeeklyDuels();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار قسم مواجهة الجولة للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار قسم مواجهة الجولة للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء قسم مواجهة الجولة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -379,7 +379,7 @@ document.getElementById('roundChallengeEnabledToggle').addEventListener('change'
   renderRoundChallenge();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار قسم تصويت الجولة للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار قسم تصويت الجولة للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء قسم تصويت الجولة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -406,7 +406,7 @@ document.getElementById('roundWallEnabledToggle').addEventListener('change', asy
   renderRoundWall();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار جدار الجولة للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار جدار الجولة للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء جدار الجولة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -428,7 +428,7 @@ document.getElementById('nameReactionsEnabledToggle').addEventListener('change',
   renderNameReactions();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار ردود فعل الأسماء للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار ردود فعل الأسماء للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء ردود فعل الأسماء عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -453,7 +453,7 @@ document.getElementById('seasonDuelEnabledToggle').addEventListener('change', as
   renderMySeasonDuels();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار نزال الموسم للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار نزال الموسم للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء نزال الموسم عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -475,7 +475,7 @@ document.getElementById('roundStoryEnabledToggle').addEventListener('change', as
   renderRoundStoryCard();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار قصة الجولة الساخرة للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار قصة الجولة الساخرة للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء قصة الجولة الساخرة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -497,7 +497,7 @@ document.getElementById('whatsNewEnabledToggle').addEventListener('change', asyn
   renderWhatsNewCard();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم تفعيل بطاقة "اللي فاتك" ✅</div>'
+      ? '<div class="status-msg ok">تم تفعيل بطاقة "اللي فاتك" ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء بطاقة "اللي فاتك".</div>';
   }else{
     e.target.checked = !newVal;
@@ -519,7 +519,7 @@ document.getElementById('participantProfileEnabledToggle').addEventListener('cha
   renderParticipants();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار الملف الكامل بكروت المشاركين ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار الملف الكامل بكروت المشاركين ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء زر الملف الكامل.</div>';
   }else{
     e.target.checked = !newVal;
@@ -541,7 +541,7 @@ document.getElementById('roundPollEnabledToggle').addEventListener('change', asy
   renderRoundPoll();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار سؤال الجولة للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار سؤال الجولة للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء سؤال الجولة عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -563,7 +563,7 @@ document.getElementById('subGroupsEnabledToggle').addEventListener('change', asy
   renderSubGroups();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار المجموعات الفرعية للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار المجموعات الفرعية للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء المجموعات الفرعية عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -585,7 +585,7 @@ document.getElementById('hotColdStreaksEnabledToggle').addEventListener('change'
   renderHotColdStreaks();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار سلاسل الحظ للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار سلاسل الحظ للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء سلاسل الحظ عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -607,7 +607,7 @@ document.getElementById('badgeToastEnabledToggle').addEventListener('change', as
   renderBadgeToast();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم تفعيل تنبيه الأوسمة الجديدة ✅</div>'
+      ? '<div class="status-msg ok">تم تفعيل تنبيه الأوسمة الجديدة ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء تنبيه الأوسمة الجديدة.</div>';
   }else{
     e.target.checked = !newVal;
@@ -629,7 +629,7 @@ document.getElementById('clubSwapLabEnabledToggle').addEventListener('change', a
   renderClubSwapLab();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إظهار مختبر تبديل الأندية للجميع ✅</div>'
+      ? '<div class="status-msg ok">تم إظهار مختبر تبديل الأندية للجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء مختبر تبديل الأندية عن الجميع.</div>';
   }else{
     e.target.checked = !newVal;
@@ -651,7 +651,7 @@ document.getElementById('statusBarEnabledToggle').addEventListener('change', asy
   renderPersonalStatusBar();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم تفعيل شريط الحالة الشخصية ✅</div>'
+      ? '<div class="status-msg ok">تم تفعيل شريط الحالة الشخصية ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء شريط الحالة الشخصية.</div>';
   }else{
     e.target.checked = !newVal;
@@ -672,7 +672,7 @@ document.getElementById('standingsAnimationEnabledToggle').addEventListener('cha
   e.target.disabled = false;
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم تفعيل حركة إعادة الترتيب ✅</div>'
+      ? '<div class="status-msg ok">تم تفعيل حركة إعادة الترتيب ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إيقاف حركة إعادة الترتيب.</div>';
   }else{
     e.target.checked = !newVal;
@@ -694,7 +694,7 @@ document.getElementById('liveFocusModeEnabledToggle').addEventListener('change',
   renderLiveFocusToggleButton();
   if(ok){
     msg.innerHTML = newVal
-      ? '<div class="status-msg ok">تم إتاحة وضع المباشر للزوار ✅</div>'
+      ? '<div class="status-msg ok">تم إتاحة وضع المباشر للزوار ' + iconHTML('check') + '</div>'
       : '<div class="status-msg ok">تم إخفاء زر وضع المباشر عن الزوار.</div>';
   }else{
     e.target.checked = !newVal;
@@ -761,7 +761,7 @@ document.getElementById('exportBackupBtn').addEventListener('click', async ()=>{
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(url), 2000);
   btn.disabled = false;
-  if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية (شاملة الجدار وردود الفعل ونزال الموسم) ✅</div>';
+  if(msg) msg.innerHTML = '<div class="status-msg ok">تم تنزيل النسخة الاحتياطية (شاملة الجدار وردود الفعل ونزال الموسم) ' + iconHTML('check') + '</div>';
   try{ localStorage.setItem('brookie_last_backup_at', String(Date.now())); }catch(e){}
   updateLastBackupLabel();
 });
@@ -828,7 +828,7 @@ document.getElementById('importBackupInput').addEventListener('change', (e)=>{
     if(roundNumEl2) roundNumEl2.value = getCurrentRoundNumber() + 1;
 
     msg.innerHTML = (okData && okPred && okExtra)
-      ? '<div class="status-msg ok">تم استعادة النسخة الاحتياطية بنجاح ✅</div>'
+      ? '<div class="status-msg ok">تم استعادة النسخة الاحتياطية بنجاح ' + iconHTML('check') + '</div>'
       : '<div class="status-msg err">تعذّرت الاستعادة كاملة، تحقق من الاتصال وحاول مرة ثانية.</div>';
   };
   reader.onerror = ()=>{
@@ -888,7 +888,7 @@ document.getElementById('changePinBtn').addEventListener('click', async ()=>{
     pinChangeUnlocked = false;
     document.getElementById('pinChangeFields').style.display = 'none';
     document.getElementById('pinChangeLock').style.display = '';
-    msg.innerHTML = '<div class="status-msg ok">تم تغيير رمز الدخول بنجاح ✅ استخدم الرمز الجديد من الآن.</div>';
+    msg.innerHTML = '<div class="status-msg ok">تم تغيير رمز الدخول بنجاح ' + iconHTML('check') + ' استخدم الرمز الجديد من الآن.</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الحفظ، تحقق من الاتصال وحاول مرة ثانية.</div>';
   }
@@ -900,7 +900,7 @@ document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{
   const showing = box.style.display !== 'none';
   if(showing){
     box.style.display = 'none';
-    btn.textContent = '👁️ إظهار الرموز';
+    btn.innerHTML = iconHTML('eye') + ' إظهار الرموز';
     return;
   }
   box.innerHTML = PARTICIPANTS.map(p=>`
@@ -908,11 +908,11 @@ document.getElementById('toggleCodesBtn').addEventListener('click', ()=>{
       <span>${p.name}</span>
       <span style="display:flex;align-items:center;gap:8px;">
         <span style="font-weight:800;letter-spacing:1px;">${PARTICIPANT_CODES[p.id] || '—'}</span>
-        <button type="button" class="btn ghost copy-btn copy-code-btn" data-code="${PARTICIPANT_CODES[p.id] || ''}">📋 نسخ</button>
+        <button type="button" class="btn ghost copy-btn copy-code-btn" data-code="${PARTICIPANT_CODES[p.id] || ''}">${iconHTML('clipboard')} نسخ</button>
       </span>
     </div>`).join('');
   box.style.display = '';
-  btn.textContent = '🙈 إخفاء الرموز';
+  btn.innerHTML = iconHTML('eye') + ' إخفاء الرموز';
 });
 document.getElementById('participantCodesBox').addEventListener('click', (e)=>{
   const btn = e.target.closest('.copy-code-btn');
@@ -933,13 +933,13 @@ const copyReminderMsgBtnEl = document.getElementById('copyReminderMsgBtn');
 if(copyReminderMsgBtnEl){
   copyReminderMsgBtnEl.addEventListener('click', ()=>{
     const nextRound = getCurrentRoundNumber() + 1;
-    let msg = `⚽ تذكير دوري بروكي الفانتازي — الجولة ${nextRound}\n\n`
+    let msg = `تذكير دوري بروكي الفانتازي — الجولة ${nextRound}\n\n`
       + `مين عنده نتيجة أي نادٍ من أندية الجولة، يسجّلها من هنا (يستغرق دقيقة):\n${REPORT_URL}\n\n`
-      + `يساعدنا نطلع الترتيب أسرع وأدق 🙏`;
+      + `يساعدنا نطلع الترتيب أسرع وأدق`;
     // قسم تكريم البطل — ميزة 8: سطر إضافي عن حامل اللقب برسالة التذكير
     if(CHAMPION_FEATURES.whatsapp_line && CHAMPION_ID){
       const champ = PARTICIPANTS.find(p=>p.id===CHAMPION_ID);
-      if(champ) msg += `\n\n🏆 حامل اللقب: ${champ.name}`;
+      if(champ) msg += `\n\nحامل اللقب: ${champ.name}`;
     }
     copyToClipboardWithFeedback(msg, copyReminderMsgBtnEl);
   });

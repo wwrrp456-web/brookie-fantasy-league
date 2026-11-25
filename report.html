@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/report-page.css">
+<link rel="stylesheet" href="css/icons.css">
 <link rel="stylesheet" href="css/palette-overrides.css">
 <link rel="stylesheet" href="css/surfaces.css">
 <link rel="stylesheet" href="css/theme-modes.css">
@@ -14,13 +15,13 @@
 <body>
 
 <header>
-  <h1>🏆 دوري بروكي الفانتازي</h1>
+  <h1><span class="ic" data-icon="trophy"></span> دوري بروكي الفانتازي</h1>
   <p>ساهم ببيانات الجولة — تجربة مؤقتة</p>
 </header>
 
 <div class="tabs">
-  <button data-panel="matches" class="active" id="tabMatches">📋 نتائج المباريات</button>
-  <button data-panel="points" id="tabPoints">🎯 نقاطي هذي الجولة</button>
+  <button data-panel="matches" class="active" id="tabMatches"><span class="ic" data-icon="clipboard"></span> نتائج المباريات</button>
+  <button data-panel="points" id="tabPoints"><span class="ic" data-icon="target"></span> نقاطي هذي الجولة</button>
 </div>
 
 <div class="wrap">
@@ -65,7 +66,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">✅ نتائج مُسجَّلة لهذه الجولة</div>
+      <div class="section-title"><span class="ic" data-icon="check"></span> نتائج مُسجَّلة لهذه الجولة</div>
       <div class="live-list" id="matchesLiveList"><div class="empty-hint">لا توجد نتائج مسجّلة بعد</div></div>
     </div>
   </section>
@@ -83,7 +84,7 @@
         <input type="text" id="codeInput" inputmode="numeric" maxlength="4" placeholder="مثال: 1234">
         <p class="note" style="margin-top:-6px;">هذا الرمز أرسله لك المنظم خاص بواتساب — يثبّت اسمك ويمنع غيرك من الإرسال باسمك. ما تعرفه؟ تواصل مع المنظم.</p>
       </div>
-      <p class="note" id="codeSavedBox" style="display:none;">✅ رمزك محفوظ على هذا الجهاز — ما تحتاج تكتبه ثانية. <a href="#" id="forgetCodeLink">مو انت؟ امسح الحفظ</a></p>
+      <p class="note" id="codeSavedBox" style="display:none;"><span class="ic" data-icon="check"></span> رمزك محفوظ على هذا الجهاز — ما تحتاج تكتبه ثانية. <a href="#" id="forgetCodeLink">مو انت؟ امسح الحفظ</a></p>
 
       <label class="field-label" for="pointsInput">نقاطك هذه الجولة</label>
       <input type="number" id="pointsInput" min="0" placeholder="مثال: 6">
@@ -93,7 +94,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">📝 من سجّل نقاطه حتى الآن</div>
+      <div class="section-title"><span class="ic" data-icon="edit"></span> من سجّل نقاطه حتى الآن</div>
       <div class="live-list" id="pointsLiveList"><div class="empty-hint">ما أحد سجّل نقاطه بعد</div></div>
     </div>
   </section>
@@ -110,6 +111,9 @@
 <script src="js/core/ar-format.js"></script>
 <script src="js/core/storage.js"></script>
 <script src="js/core/dom-utils.js"></script>
+<script src="js/generated/assets.js"></script>
+<script src="js/ui/icon-helper.js"></script>
+<script>fillStaticIcons();</script>
 <script src="js/report/report-main.js"></script>
 </body>
 </html>
