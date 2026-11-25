@@ -42,7 +42,7 @@ function renderAdminActivityLog(){
     const undoBtn = entry.snapshot
       ? `<button type="button" class="btn ghost activity-undo-btn" data-idx="${idx}">${iconHTML('undo')} تراجع</button>`
       : '';
-    return `<div class="activity-log-row"><span>${entry.action}</span><span class="activity-log-time">${timeStr}</span>${undoBtn}</div>`;
+    return `<div class="activity-log-row"><span>${iconizeEmoji(entry.action)}</span><span class="activity-log-time">${timeStr}</span>${undoBtn}</div>`;
   }).join('');
 }
 

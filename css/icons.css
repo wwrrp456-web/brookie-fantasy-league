@@ -8,6 +8,6 @@
 
 /* 001-T011d (S67): بالوضع الليلي الأيقونة الزخرفية بيضاء/فاتحة (لون النص) مهما كان لون حاويتها (بنفسجي، رمادي ثانوي…). النهاري كما هو.
  * تبقى بلون حاويتها: (1) الدلالية بوسم صريح .ic-semantic (صعود/هبوط، حالة)؛ (2) أيقونات داخل مكوّن يحدّد لون نصه فوق خلفية مملوءة:
- * الأزرار .btn، وأزرار الفرز .sort-mode-btn، ورسائل الحالة .status-msg. */
-html:not(.light-mode) .ic:not(.ic-semantic):not(.btn .ic):not(.sort-mode-btn .ic):not(.status-msg .ic){color:var(--c-text);}
+ * الأزرار .btn، وأزرار الفرز .sort-mode-btn، ورسائل الحالة .status-msg، وحبوب الحالة .status-pill (الأيقونة بلون حالة الحبّة: أخضر للمفعّل). */
+html:not(.light-mode) .ic:not(.ic-semantic):not(.btn .ic):not(.sort-mode-btn .ic):not(.status-msg .ic):not(.status-pill .ic){color:var(--c-text);}
 html:not(.light-mode) .fold-icon,html:not(.light-mode) .fold-chevron{color:var(--c-text);}

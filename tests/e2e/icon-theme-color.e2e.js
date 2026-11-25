@@ -33,7 +33,7 @@ const measure = () => {
     const fixed = /(?:stroke|fill)="(?!none|currentColor)[^"]+"/.test(svg.outerHTML) || /style="[^"]*(?:stroke|fill|color)/.test(svg.outerHTML);
     const lumv = 0.2126 * col.r + 0.7152 * col.g + 0.0722 * col.b;
     const semantic = !!svg.closest('.ic-semantic');
-    const exempt = !!svg.closest('.btn, .sort-mode-btn, .status-msg');
+    const exempt = !!svg.closest('.btn, .sort-mode-btn, .status-msg, .status-pill');
     out.push({ lum: Math.round(lumv), semantic, exempt, name: (svg.parentElement.className || '') + ' @ ' + (svg.closest('[id]') ? svg.closest('[id]').id : '?'), color: cs.color, bg: `rgb(${bg.c.r},${bg.c.g},${bg.c.b})`, ratio: Math.round(ratio(col, bg.c) * 100) / 100, fixed });
   });
   return out;
