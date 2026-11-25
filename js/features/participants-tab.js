@@ -21,6 +21,9 @@ function handleParticipantHash(){
   }, 400);
 }
 
+// الجولات التي لعب فيها المشارك فعليًا فقط (للإحصاءات: متوسط، ممات، سلاسل) — جولة بلا مباراة لا تدخل فيها
+function buildPlayedHistory(pid){ return buildParticipantHistory(pid).filter(h=>h.played); }
+
 function buildParticipantHistory(pid){
   const p = PARTICIPANTS.find(x=>x.id===pid);
   let cum = 0;
@@ -35,7 +38,7 @@ function buildParticipantHistory(pid){
       const es = getTeamRoundEntries(entries, i);
       return {team:t, result: es.length?es[0].result:null, results: es.map(e=>e.result)};
     });
-    return {number:r.number, points:s.points, cumulative:cum, teamResults};
+    return {number:r.number, points:s.points, cumulative:cum, teamResults, played: round_has_entries(r, pid)};
   });
 }
 
@@ -88,10 +91,10 @@ function renderParticipants(){
     const sparkHTML = history.map(h => {
       const pct = h.points / maxPts;
       const barH = Math.max(6, Math.round(pct * 28) + 4);
-      const barBg = h.points === 0 ? 'var(--coral)' :
+      const barBg = !h.played ? 'var(--line)' : h.points === 0 ? 'var(--coral)' :
                     pct >= 0.8 ? 'var(--gold)' :
                     pct >= 0.5 ? 'var(--sky)' : 'var(--muted)';
-      return `<span title="الجولة ${h.number}: ${formatCount(h.points, 'نقطة')}"
+      return `<span title="${h.played ? 'الجولة ' + h.number + ': ' + formatCount(h.points, 'نقطة') : 'الجولة ' + h.number + ': بلا مباراة'}"
         style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:default;">
         <span style="display:block;width:20px;background:${barBg};border-radius:3px 3px 2px 2px;height:${barH}px;opacity:0.85;"></span>
         <span style="font-size:0.58rem;color:var(--muted);font-weight:700;line-height:1;">${h.number}</span>
@@ -102,7 +105,7 @@ function renderParticipants(){
     const quickStats = [];
     if(mumma > 0) quickStats.push(`${iconHTML('skull-zero')} ${formatCount(mumma, 'ممة')}`);
     if(bestStreak >= 2) quickStats.push(`${iconHTML('flame')} سلسلة ${bestStreak}`);
-    if(mumma === 0 && history.length > 0) quickStats.push(`${iconHTML('check')} بلا ممات`);
+    if(mumma === 0 && history.some(h=>h.played)) quickStats.push(`${iconHTML('check')} بلا ممات`);
     // قسم تكريم البطل — ميزة 16: تنبيه لمن سجّل نقاط جولة أعلى من حامل اللقب
     if(CHAMPION_FEATURES.weekly_challenge_notice && CHAMPION_ID && p.id !== CHAMPION_ID && history.length > 0){
       const champInfo = rankMap[CHAMPION_ID];

@@ -1220,6 +1220,44 @@ const asyncDiffTests = (async () => {
   }
 }
 
+// ---------- قاعدة الممة الموحّدة (S68، 25 نوفمبر) ----------
+{
+  const run = code => vm.runInContext(code, context);
+  const out = JSON.parse(run(`(()=>{
+    const pid = PARTICIPANTS[0].id, r = n => ({number: 900 + n, entries: {}});
+    const mk = (res) => { const x = r(1); x.entries[pid] = res.map((result, ti) => ({ti, result, gf: 0, ga: 0})); return x; };
+    const res = {};
+    const lossRest = mk(['loss', 'no_match', 'no_match']);      // خسارة نادٍ + الباقي بلا مباراة
+    const allNone = mk(['no_match', 'no_match', 'no_match']);   // كلهم بلا مباراة
+    const drawRest = mk(['draw', 'no_match', 'no_match']);      // تعادل واحد + الباقي بلا مباراة
+    const blankRest = mk(['', 'no_match', 'no_match']);         // نتيجة فاضية + الباقي بلا مباراة
+    const blankLoss = mk(['', 'loss', 'no_match']);             // فاضية + خسارة محدّدة
+    res.lossRest = [round_has_entries(lossRest, pid), isMummaRound(lossRest, pid)];
+    res.allNone = [round_has_entries(allNone, pid), isMummaRound(allNone, pid)];
+    res.drawRest = [round_has_entries(drawRest, pid), isMummaRound(drawRest, pid)];
+    res.blankRest = [round_has_entries(blankRest, pid), isMummaRound(blankRest, pid)];
+    res.blankLoss = [round_has_entries(blankLoss, pid), isMummaRound(blankLoss, pid)];
+    // الترتيب: الممة تُحسب مرة واحدة للخسارة، ولا تُحسب لجولة «كلهم بلا مباراة» ولا تكسر السلسلة
+    const base = DATA.rounds.slice();
+    const mc = () => { const s = computeStandings().find(x => x.id === pid); return [s.mummaCount, s.streak, s.total]; };
+    const before = mc();
+    DATA.rounds.push(lossRest); const a = mc(); DATA.rounds.length = base.length;
+    DATA.rounds.push(allNone); const b = mc(); DATA.rounds.length = base.length;
+    DATA.rounds.push(drawRest); const c = mc(); DATA.rounds.length = base.length;
+    res.standings = {before, loss: a, allNone: b, draw: c};
+    // buildParticipantHistory (إن حُمّلت) = نفس القاعدة
+    return JSON.stringify(res);
+  })()`));
+  check('ممة: خسارة نادٍ + مباراتان بلا مباراة = ممة', out.lossRest, [true, true]);
+  check('ممة: ثلاثة أندية كلها بلا مباراة = ليست ممة ولا «لعب»', out.allNone, [false, false]);
+  check('ممة: تعادل واحد + الباقي بلا مباراة = ليست ممة', out.drawRest, [true, false]);
+  check('ممة: نتيجة فاضية (لم تُدخل) + الباقي بلا مباراة = لا تُحسب ممة', out.blankRest, [false, false]);
+  check('ممة: نتيجة فاضية + خسارة محدّدة = ممة (لعب نادٍ فعليًا)', out.blankLoss, [true, true]);
+  check('ممة: الترتيب يعدّ الخسارة ممة مرة واحدة ويصفّر السلسلة', [out.standings.loss[0] - out.standings.before[0], out.standings.loss[1]], [1, 0]);
+  check('ممة: جولة «كلهم بلا مباراة» لا تغيّر العدّاد ولا السلسلة ولا الرصيد', out.standings.allNone, out.standings.before);
+  check('ممة: تعادل واحد = نقطة وسلسلة تزيد ولا ممة', [out.standings.draw[0] - out.standings.before[0], out.standings.draw[2] - out.standings.before[2], out.standings.draw[1] > out.standings.before[1]], [0, 1, true]);
+}
+
 // ---------- الخلاصة ----------
 Promise.all([asyncTests, asyncDiffTests, asyncCrestTests]).then(() => {
   console.log(`\n${pass} ✅ / ${fail} ❌`);

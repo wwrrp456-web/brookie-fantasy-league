@@ -80,7 +80,7 @@ function computeStandings(upTo){
     const stats = roundStatsList[idx];
     PARTICIPANTS.forEach(p=>{
       totals[p.id].points += stats[p.id].points;
-      if(round_has_entries(r,p.id) && stats[p.id].points===0){
+      if(isMummaRound(r, p.id, stats)){
         totals[p.id].mummaCount++;
         totals[p.id].streak = 0;
       } else if(round_has_entries(r,p.id)){
@@ -157,10 +157,19 @@ function computeStandings(upTo){
 // الاحتساب، حتى لا يُعامَل مشارك ناديه (أو كل أنديته) بلا مباراة هذه الجولة
 // كأنه لعب وسجّل صفر نقطة (ممة وهمية) أو يُكسر سلسلته بلا سبب حقيقي (طلب
 // المستخدم 16 سبتمبر 2026 — خيار "لا توجد مباراة هذه الجولة" بنموذج الجولة).
+// وكذلك لا يُحسب "لعب" لنادٍ نتيجته لم تُحدَّد بعد (result فاضية) حتى تُدخل (قاعدة الممة، 25 نوفمبر).
 function round_has_entries(round, pid){
   const es = round.entries && round.entries[pid];
   if(!es || !es.length) return false;
-  return es.some(e=> e && e.result !== 'no_match');
+  return es.some(e=> e && e.result && e.result !== 'no_match');
+}
+
+// قاعدة الممة الموحّدة: لعب فعليًا نادٍ واحد على الأقل (نتيجة محدّدة وليست no_match) وخرج المشارك بصفر نقاط.
+// المرجع الوحيد لكل العروض. stats اختياري (نتيجة computeRoundStats) لتفادي إعادة الحساب.
+function isMummaRound(round, pid, stats){
+  if(!round_has_entries(round, pid)) return false;
+  const s = (stats || computeRoundStats(round))[pid];
+  return !!s && s.points === 0;
 }
 
 

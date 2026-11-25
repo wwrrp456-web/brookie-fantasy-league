@@ -205,7 +205,7 @@ function renderHonorBoard(){
 // ---------- بصمة الموسم ----------
 // sparkline ملوّن داخل كرت المشارك
 function buildFingerprintHTML(pid){
-  const hist = buildParticipantHistory(pid);
+  const hist = buildPlayedHistory(pid);
   if(hist.length < 2) return '';
   const color = PARTICIPANT_COLORS[pid] || 'var(--gold)';
   const maxPts = Math.max(...hist.map(h=>h.points), 1);

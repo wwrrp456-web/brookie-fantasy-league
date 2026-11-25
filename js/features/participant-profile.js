@@ -58,10 +58,10 @@ function renderParticipantProfileInto(box, pid){
 
   const rowsHTML = history.length
     ? history.map(h=>{
-        const cls = h.points===0 ? 'profile-row-mumma' : h.points>=10 ? 'profile-row-great' : '';
+        const cls = !h.played ? 'profile-row-nomatch' : h.points===0 ? 'profile-row-mumma' : h.points>=10 ? 'profile-row-great' : '';
         return `<tr class="${cls}">
           <td>الجولة ${h.number}</td>
-          <td>${h.points}</td>
+          <td>${h.played ? h.points : 'بلا مباراة'}</td>
           <td>${h.cumulative}</td>
         </tr>`;
       }).join('')

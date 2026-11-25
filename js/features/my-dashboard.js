@@ -398,7 +398,7 @@ function renderMyAchievements(){
   if(!box) return;
   const pid = window._verifiedPid;
   if(!pid || !DATA.rounds.length){ box.innerHTML=''; return; }
-  const hist = buildParticipantHistory(pid);
+  const hist = buildPlayedHistory(pid);
   if(!hist.length){ box.innerHTML=''; return; }
   const pts = hist.map(h=>h.points);
   const best = Math.max(...pts);
