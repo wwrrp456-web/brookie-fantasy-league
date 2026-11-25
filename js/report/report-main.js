@@ -65,7 +65,7 @@ function refreshOpponentOptions(){
   });
   const otherOpt = document.createElement('option');
   otherOpt.value = OTHER_OPPONENT_VALUE;
-  otherOpt.textContent = '✍️ فريق آخر (اكتب الاسم)';
+  otherOpt.textContent = 'فريق آخر (اكتب الاسم)';
   opponentSelect.appendChild(otherOpt);
   if(prevOpponent && prevOpponent!==selectedClub){
     opponentSelect.value = prevOpponent;
@@ -190,7 +190,7 @@ document.getElementById('submitMatchBtn').addEventListener('click', async ()=>{
       reporter: reporter || null,
       submittedAt: Date.now()
     });
-    msg.innerHTML = '<div class="status-msg ok">تم إرسال النتيجة، شكرًا لمساهمتك ✅</div>';
+    msg.innerHTML = '<div class="status-msg ok">تم إرسال النتيجة، شكرًا لمساهمتك ' + iconHTML('check') + '</div>';
     document.getElementById('resultSelect').value = '';
     document.getElementById('gfInput').value = '';
     document.getElementById('gaInput').value = '';
@@ -248,7 +248,7 @@ document.getElementById('submitPointsBtn').addEventListener('click', async ()=>{
       points: Math.max(0, parseInt(points)||0),
       submittedAt: Date.now()
     });
-    msg.innerHTML = '<div class="status-msg ok">تم إرسال نقاطك، تقدر تعدّلها وترسلها ثانية أي وقت ✅</div>';
+    msg.innerHTML = '<div class="status-msg ok">تم إرسال نقاطك، تقدر تعدّلها وترسلها ثانية أي وقت ' + iconHTML('check') + '</div>';
   }catch(e){
     msg.innerHTML = '<div class="status-msg err">تعذّر الإرسال، تحقق من الاتصال وحاول ثانية.</div>';
   }
@@ -271,7 +271,7 @@ function startLiveListeners(){
       const isInternal = r.opponent && CLUBS.includes(r.opponent);
       return `
       <div class="live-row">
-        <span>${escapeHtml(r.club)}${r.opponent?` ضد ${escapeHtml(r.opponent)}`:''}${isInternal?' <span class="match-tag">⚔️ داخلية</span>':''}</span>
+        <span>${escapeHtml(r.club)}${r.opponent?` ضد ${escapeHtml(r.opponent)}`:''}${isInternal?' <span class="match-tag">' + iconHTML('swords') + ' داخلية</span>':''}</span>
         <span class="${escapeHtml(RESULT_CLASS[r.result]||'')}">${escapeHtml(RESULT_LABEL[r.result]||r.result)} (${escapeHtml(r.gf)}-${escapeHtml(r.ga)})</span>
       </div>`;
     }).join('');

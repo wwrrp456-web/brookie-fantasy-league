@@ -127,7 +127,7 @@ function exportMyClubsCard(pid, msgBox){
 // كتلة "نتائج أنديتي" داخل "حالتي": زر المشاركة لو فيه بيانات، وإلا حالة فاضية (بلا زر)
 function myClubsCardBlockHTML(pid){
   if(getMyClubsCardData(pid)){
-    return `<button type="button" class="btn secondary my-clubs-card-btn" id="myClubsCardBtn" style="width:100%;margin-top:10px;">${ICONS.share} مشاركة نتائج أنديتي</button><div id="myClubsCardMsg"></div>`;
+    return `<button type="button" class="btn secondary my-clubs-card-btn" id="myClubsCardBtn" style="width:100%;margin-top:10px;">${iconHTML('share')} مشاركة نتائج أنديتي</button><div id="myClubsCardMsg"></div>`;
   }
   return `<div class="my-clubs-card-empty">${emptyState({icon: 'ball', title: 'لا نتائج بعد', text: 'تظهر نتائج أنديتك هنا بعد تسجيل أول جولة.'})}</div>`;
 }

@@ -14,7 +14,7 @@ function renderChampionArchiveAdmin(){
   box.innerHTML = SEASON_CHAMPIONS_ARCHIVE.map((row,i)=>`
     <div class="hof-row">
       <span><b>${row.season}</b> — ${row.name} (${formatCount(row.points, 'نقطة')})</span>
-      <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">🗑️ حذف</button>
+      <button type="button" class="btn ghost archive-del-btn" data-idx="${i}" style="font-size:0.7rem;padding:4px 10px;">${iconHTML('trash')} حذف</button>
     </div>`).join('');
 }
 function syncChampionAdminUI(){

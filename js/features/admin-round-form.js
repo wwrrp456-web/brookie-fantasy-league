@@ -14,7 +14,7 @@ function renderPastRoundsChips(){
     const modLabel = r.lastModified
       ? `<span style="font-size:0.68rem;opacity:0.75;">— آخر تعديل ${timeAgoLabel(r.lastModified)}</span>`
       : '';
-    return `<button type="button" class="btn ghost past-round-chip" data-round="${r.number}">✏️ الجولة ${r.number} ${modLabel}</button>`;
+    return `<button type="button" class="btn ghost past-round-chip" data-round="${r.number}">${iconHTML('edit')} الجولة ${r.number} ${modLabel}</button>`;
   }).join('');
 }
 document.getElementById('pastRoundsChips').addEventListener('click', (e)=>{
@@ -254,7 +254,7 @@ function recomputeRoundCompletion(){
     if(isComplete) completeCount++;
     const badge = card.querySelector('.completion-badge');
     if(badge){
-      badge.textContent = isComplete ? '✅ مكتمل' : (missing > 0 ? `⚠️ ${missing} ناقصة` : '');
+      badge.innerHTML = isComplete ? iconHTML('check') + ' مكتمل' : (missing > 0 ? iconHTML('warning') + ` ${missing} ناقصة` : '');
       badge.className = 'completion-badge ' + (isComplete ? 'complete' : 'incomplete');
     }
     card.style.display = (hideComplete && isComplete) ? 'none' : '';
@@ -338,7 +338,7 @@ function matchRowHTML(prev, club){
       <option value="win" ${selResult==='win'?'selected':''}>فوز</option>
       <option value="draw" ${selResult==='draw'?'selected':''}>تعادل</option>
       <option value="loss" ${selResult==='loss'?'selected':''}>خسارة</option>
-      <option value="no_match" ${isNoMatch?'selected':''}>⏸️ لا توجد مباراة هذه الجولة</option>
+      <option value="no_match" ${isNoMatch?'selected':''}>لا توجد مباراة هذه الجولة</option>
     </select>
     <input type="number" class="gf-input" placeholder="له" min="0" value="${isNoMatch?0:gf}" ${isNoMatch?'disabled':''}>
     <input type="number" class="ga-input" placeholder="عليه" min="0" value="${isNoMatch?0:ga}" ${isNoMatch?'disabled':''}>
@@ -530,7 +530,7 @@ function prepareRoundForm(num, opts={}){
   let html = `<div id="roundForm" data-num="${num}">`;
   if(draft && !opts.useDraft && !opts.ignoreDraft){
     html += `<div class="draft-banner">
-      🕒 فيه مسودة محفوظة تلقائيًا لهذه الجولة (${timeAgoLabel(draft.savedAt)}) لم تُحفظ نهائيًا بعد.
+      ${iconHTML('clock')} فيه مسودة محفوظة تلقائيًا لهذه الجولة (${timeAgoLabel(draft.savedAt)}) لم تُحفظ نهائيًا بعد.
       <div class="row" style="margin-top:8px;">
         <button type="button" class="btn secondary" id="applyDraftBtn">استخدام المسودة</button>
         <button type="button" class="btn ghost" id="discardDraftBtn">تجاهل والبدء من المحفوظ</button>
@@ -539,8 +539,8 @@ function prepareRoundForm(num, opts={}){
   }
   html += `<div class="round-form-toolbar">
     <label><input type="checkbox" id="showIncompleteOnlyToggle"> عرض الناقص فقط</label>
-    <button type="button" class="btn ghost" id="expandAllParticipantsBtn">⬇️ فتح كل المشاركين</button>
-    <button type="button" class="btn ghost" id="collapseAllParticipantsBtn">⬆️ طيّ كل المشاركين</button>
+    <button type="button" class="btn ghost" id="expandAllParticipantsBtn">${iconHTML('download')} فتح كل المشاركين</button>
+    <button type="button" class="btn ghost" id="collapseAllParticipantsBtn">${iconHTML('arrow-up')} طيّ كل المشاركين</button>
   </div>`;
   // لصق وتحليل نتائج تلقائي — بديل أسرع للكتابة اليدوية لكل نادٍ على حدة
   // (طلب المستخدم: تسريع إدخال الجولة بدل بحث/كتابة يدوية لـ27+ ناديًا).
@@ -560,7 +560,7 @@ function prepareRoundForm(num, opts={}){
       // عبر كل المشاركين بغض النظر عن ترتيبه بقائمة أندية كل واحد منهم.
       const sharedCount = clubParticipantCount(team);
       const sharedBadge = sharedCount > 1
-        ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${formatCount(sharedCount, 'مشارك', {case: 'acc'})} — أي تعديل هنا ينعكس تلقائيًا على الجميع">🔗 مشترك (${sharedCount})</span>`
+        ? `<span class="shared-club-badge" title="هذا النادي مشترك بين ${formatCount(sharedCount, 'مشارك', {case: 'acc'})} — أي تعديل هنا ينعكس تلقائيًا على الجميع">${iconHTML('link')} مشترك (${sharedCount})</span>`
         : '';
       html += `<div class="team-block" data-pid="${p.id}" data-ti="${ti}" data-team="${team}">
         <div class="team-block-head">${crestHTML(team, 22)}<span>${team}</span>${sharedBadge}</div>
@@ -573,9 +573,9 @@ function prepareRoundForm(num, opts={}){
   html += `<div class="round-sticky-bar">
     <span id="roundStickyCounter"></span>
     <span style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn ghost" id="savePartialRoundBtn" title="يحفظ تقدّمك الحالي (حتى لو ناقصًا) على قاعدة البيانات المشتركة فقط، دون نشره للزوار — تقدر تكمله لاحقًا من أي جهاز">☁️ حفظ التقدّم كمسودة مشتركة</button>
+      <button class="btn ghost" id="savePartialRoundBtn" title="يحفظ تقدّمك الحالي (حتى لو ناقصًا) على قاعدة البيانات المشتركة فقط، دون نشره للزوار — تقدر تكمله لاحقًا من أي جهاز">${iconHTML('cloud')} حفظ التقدّم كمسودة مشتركة</button>
       <button class="btn" id="saveRoundBtn">حفظ الجولة</button>
-      ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">🗑️ حذف الجولة ${num} بالكامل</button>` : ''}
+      ${existing ? `<button class="btn ghost" id="deleteRoundBtn" style="color:var(--coral);border-color:var(--coral);">${iconHTML('trash')} حذف الجولة ${num} بالكامل</button>` : ''}
     </span>
     </div>
     <div id="saveRoundMsg"></div></div>`;
@@ -623,7 +623,7 @@ function prepareRoundForm(num, opts={}){
       const banner = document.createElement('div');
       banner.className = 'draft-banner';
       banner.id = 'sharedDraftBanner';
-      banner.innerHTML = `☁️ فيه مسودة محفوظة سحابيًا لهذه الجولة (${timeAgoLabel(shared.savedAt)}) — يمكنك المتابعة منها من هنا أو من أي جهاز آخر.
+      banner.innerHTML = `${iconHTML('cloud')} فيه مسودة محفوظة سحابيًا لهذه الجولة (${timeAgoLabel(shared.savedAt)}) — يمكنك المتابعة منها من هنا أو من أي جهاز آخر.
         <div class="row" style="margin-top:8px;">
           <button type="button" class="btn secondary" id="applySharedDraftBtn">استخدام المسودة السحابية</button>
         </div>`;
@@ -637,19 +637,19 @@ function prepareRoundForm(num, opts={}){
   const deleteBtn = document.getElementById('deleteRoundBtn');
   if(deleteBtn){
     deleteBtn.addEventListener('click', async ()=>{
-      const sure = await customConfirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها من بيانات كل الزوار فورًا — يمكن التراجع عنه لاحقًا من "📅 سجل نشاط المنظم" (زر ↩️ تراجع) أو باستعادة نسخة احتياطية.`, {confirmText: '🗑️ حذف الجولة'});
+      const sure = await customConfirm(`هل أنت متأكد إنك تبي تحذف الجولة ${num} بالكامل؟ هذا الإجراء يحذفها من بيانات كل الزوار فورًا — يمكن التراجع عنه لاحقًا من "${iconHTML('calendar')} سجل نشاط المنظم" (زر ${iconHTML('undo')} تراجع) أو باستعادة نسخة احتياطية.`, {confirmText: iconHTML('trash') + ' حذف الجولة'});
       if(!sure) return;
       const preSnapshot = JSON.parse(JSON.stringify(DATA));
       DATA.rounds = DATA.rounds.filter(r=>r.number!==num);
       DATA.updatedAt = Date.now();
-      logAdminActivity(`🗑️ حذف الجولة ${num}`, {snapshot: preSnapshot});
+      logAdminActivity(`حذف الجولة ${num}`, {snapshot: preSnapshot});
       deleteBtn.disabled = true;
       const ok = await saveData();
       renderAll();
       renderPastRoundsChips();
       const saveMsg = document.getElementById('saveRoundMsg');
       if(saveMsg) saveMsg.innerHTML = ok
-        ? `<div class="status-msg ok">تم حذف الجولة ${num} بنجاح ✅</div>`
+        ? `<div class="status-msg ok">تم حذف الجولة ${num} بنجاح ${iconHTML('check')}</div>`
         : '<div class="status-msg err">تعذّر الحذف، حاول مرة ثانية.</div>';
       if(ok){
         clearRoundDraft(num);
@@ -676,7 +676,7 @@ function prepareRoundForm(num, opts={}){
     btn.disabled = false;
     const msgEl = document.getElementById('saveRoundMsg');
     if(msgEl) msgEl.innerHTML = ok
-      ? '<div class="status-msg ok">تم حفظ تقدّمك الحالي سحابيًا ✅ — تقدر تكمل لاحقًا من أي جهاز (لن يظهر للزوار حتى تضغط "حفظ الجولة" لاحقًا).</div>'
+      ? '<div class="status-msg ok">تم حفظ تقدّمك الحالي سحابيًا ' + iconHTML('check') + ' — تقدر تكمل لاحقًا من أي جهاز (لن يظهر للزوار حتى تضغط "حفظ الجولة" لاحقًا).</div>'
       : '<div class="status-msg err">تعذّر الحفظ السحابي، حاول مرة ثانية.</div>';
     if(ok){
       // محفوظ الآن سحابيًا فلا خطر من فقدانه — إغلاق الصفحة آمن حتى لو الجولة
@@ -724,10 +724,10 @@ function prepareRoundForm(num, opts={}){
     // (طلب المستخدم 7 سبتمبر 2026).
     round.lastModified = Date.now();
     DATA.updatedAt = Date.now();
-    logAdminActivity(`💾 حفظ الجولة ${num}`, {snapshot: preSnapshot});
+    logAdminActivity(`حفظ الجولة ${num}`, {snapshot: preSnapshot});
     const ok = await saveData();
     document.getElementById('saveRoundMsg').innerHTML = ok
-      ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ✅</div>'
+      ? '<div class="status-msg ok">تم حفظ الجولة ومشاركتها مع الجميع ' + iconHTML('check') + '</div>'
       : '<div class="status-msg err">تعذّر الحفظ المشترك. النتائج ظاهرة عندك الآن لكنها لن تصل للآخرين — أعد المحاولة.</div>';
     if(ok){
       clearRoundDraft(num);
