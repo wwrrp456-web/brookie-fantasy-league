@@ -49,6 +49,7 @@
 <link rel="stylesheet" href="css/surfaces.css">
 <link rel="stylesheet" href="css/theme-modes.css">
 <link rel="stylesheet" href="css/app-header.css">
+<link rel="stylesheet" href="css/icons.css">
 <link rel="stylesheet" href="css/empty-state.css">
 <link rel="stylesheet" href="css/community-copy.css">
 <link rel="stylesheet" href="css/card-theme-sheet.css">
@@ -57,7 +58,7 @@
 </head>
 <body>
 
-<div id="offlineBadge" class="offline-badge" hidden>⚠️ أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
+<div id="offlineBadge" class="offline-badge" hidden><span class="ic" data-icon="warning"></span> أنت غير متصل بالإنترنت — البيانات المعروضة قد تكون قديمة</div>
 
 <div id="statusBarBox"></div>
 <div id="liveFocusOverlay"></div>
@@ -65,19 +66,19 @@
 <div id="onboardOverlay" class="onboard-overlay" hidden>
   <div class="onboard-card">
     <div id="onboardStepRole">
-      <div class="onboard-title">👋 أهلًا فيك بدوري بروكي الفانتازي!</div>
+      <div class="onboard-title"><span class="ic" data-icon="hand-wave"></span> أهلًا فيك بدوري بروكي الفانتازي!</div>
       <p class="onboard-hint">وش تبي تسوي بالموقع؟</p>
       <button class="btn" id="onboardRoleParticipant">متسابق</button>
       <button class="btn ghost" id="onboardRoleVisitor" style="margin-top:8px;">زائر</button>
     </div>
     <div id="onboardStepId" hidden>
-      <div class="onboard-title">🏆 مين أنت؟</div>
+      <div class="onboard-title"><span class="ic" data-icon="trophy"></span> مين أنت؟</div>
       <p class="onboard-hint">اختر اسمك وأدخل رمزك الخاص (4 أرقام) اللي أرسله لك المنظم.</p>
       <select id="onboardNameSelect"><option value="">— اختر اسمك —</option></select>
       <input type="text" id="onboardCodeInput" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)">
       <div id="onboardCodeMsg"></div>
-      <button class="btn" id="onboardCodeConfirmBtn">تأكيد ✅</button>
-      <button class="btn ghost" id="onboardBackBtn" style="margin-top:8px;">↩️ رجوع</button>
+      <button class="btn" id="onboardCodeConfirmBtn">تأكيد <span class="ic" data-icon="check"></span></button>
+      <button class="btn ghost" id="onboardBackBtn" style="margin-top:8px;"><span class="ic" data-icon="undo"></span> رجوع</button>
     </div>
   </div>
 </div>
@@ -85,7 +86,7 @@
 <header class="app-header">
   <div class="header-inner">
     <div class="brand">
-      <span id="championCrown" class="champion-crown" hidden>👑</span>
+      <span id="championCrown" class="champion-crown" hidden><span class="ic" data-icon="crown"></span></span>
       <img id="logoMark" class="brand-mark" alt="" width="34" height="42">
       <img id="logoImg" class="brand-logo" alt="شعار دوري بروكي الفانتازي" width="160" height="72">
       <div class="brand-label"><h1>دوري بروكي الفانتازي</h1><p>الموسم الثاني</p></div>
@@ -129,7 +130,7 @@
         <span class="u-fs-0-82rem u-fw-700">مين أنت؟</span>
         <select id="mePicker" aria-label="اختر اسمك"><option value="">— اختر اسمك —</option></select>
         <input type="text" id="meCodeInput" class="me-code-input" inputmode="numeric" maxlength="4" placeholder="رمزك الخاص (4 أرقام)" style="display:none;">
-        <button type="button" class="btn" id="meCodeConfirmBtn" style="display:none;">تأكيد ✅</button>
+        <button type="button" class="btn" id="meCodeConfirmBtn" style="display:none;">تأكيد <span class="ic" data-icon="check"></span></button>
         <button type="button" class="btn ghost" id="meCodeCancelBtn" style="display:none;">إلغاء</button>
       </div>
       <div id="meCodeMsg"></div>
@@ -141,12 +142,12 @@
     <div id="standingsBox" class="loading">جارٍ تحميل البيانات...</div>
 
     <div class="toolbar">
-      <button class="btn ghost" id="refreshBtn">🔄 تحديث</button>
-      <button class="btn secondary" id="copySummaryBtn" style="display:none;">📋 ملخص للواتساب</button>
-      <button class="btn" id="champCardBtn" style="display:none;">🏆 كرت بطل الجولة</button>
-      <button class="btn secondary" id="dlStandingsBtn" style="display:none;">⬇️ تحميل الترتيب كصورة</button>
-      <button class="btn secondary" id="shareStandingsBtn" style="display:none;">📤 شارك في واتساب</button>
-      <button class="btn" id="seasonWrapBtn" style="display:none;">📊 ملخص الموسم</button>
+      <button class="btn ghost" id="refreshBtn"><span class="ic" data-icon="refresh"></span> تحديث</button>
+      <button class="btn secondary" id="copySummaryBtn" style="display:none;"><span class="ic" data-icon="clipboard"></span> ملخص للواتساب</button>
+      <button class="btn" id="champCardBtn" style="display:none;"><span class="ic" data-icon="trophy"></span> كرت بطل الجولة</button>
+      <button class="btn secondary" id="dlStandingsBtn" style="display:none;"><span class="ic" data-icon="download"></span> تحميل الترتيب كصورة</button>
+      <button class="btn secondary" id="shareStandingsBtn" style="display:none;"><span class="ic" data-icon="share"></span> شارك في واتساب</button>
+      <button class="btn" id="seasonWrapBtn" style="display:none;"><span class="ic" data-icon="chart-bar"></span> ملخص الموسم</button>
       <span class="updated-chip" id="updatedChip"></span>
     </div>
     <div id="refreshMsg"></div>
@@ -189,10 +190,10 @@
 
   <section class="panel" id="panel-participants">
     <div class="toolbar" id="participantsToolbar" style="display:none;">
-      <button class="btn secondary" id="dlParticipantsBtn">⬇️ تحميل القائمة كصورة</button>
+      <button class="btn secondary" id="dlParticipantsBtn"><span class="ic" data-icon="download"></span> تحميل القائمة كصورة</button>
     </div>
     <div id="participantsImgMsg"></div>
-    <input type="text" id="participantsSearchInput" placeholder="🔍 دوّر باسم مشارك..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.88rem;margin-bottom:12px;">
+    <input type="text" id="participantsSearchInput" placeholder="دوّر باسم مشارك..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--text);font-family:inherit;font-size:0.88rem;margin-bottom:12px;">
     <div id="participantsCapture">
       <h2 class="section-title">قائمة المشاركين وأنديتهم</h2>
       <div id="participantsBox"></div>
@@ -201,7 +202,7 @@
 
   <section class="panel" id="panel-rounds">
     <div class="toolbar" id="roundsToolbar" style="display:none;">
-      <button class="btn secondary" id="dlRoundsBtn">⬇️ تحميل الجولات كصورة</button>
+      <button class="btn secondary" id="dlRoundsBtn"><span class="ic" data-icon="download"></span> تحميل الجولات كصورة</button>
     </div>
     <div id="roundsImgMsg"></div>
     <div id="roundsCapture">
@@ -211,7 +212,7 @@
       <div id="roundWallBox"></div>
       <div id="roundChallengeBox"></div>
       <div id="roundPollBox"></div>
-      <h2 class="section-title">🏆 أرشيف أبطال الجولات</h2>
+      <h2 class="section-title"><span class="ic" data-icon="trophy"></span> أرشيف أبطال الجولات</h2>
       <div id="championsArchiveBox"></div>
       <details class="fold" id="foldRoundsLog"><summary><span class="fold-icon" data-icon="clipboard"></span><span class="fold-title">سجل الجولات التفصيلي</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
         <div class="fold-body"><div id="roundsBox" class="loading">جارٍ التحميل...</div></div></details>
@@ -220,8 +221,8 @@
 
   <section class="panel" id="panel-stats">
     <div class="toolbar" id="statsToolbar" style="display:none;">
-      <button class="btn secondary" id="dlStatsBtn">⬇️ تحميل الإحصائيات كصورة</button>
-      <button class="btn" id="printReportBtn" onclick="printSeasonReport()">🖨️ تقرير الموسم</button>
+      <button class="btn secondary" id="dlStatsBtn"><span class="ic" data-icon="download"></span> تحميل الإحصائيات كصورة</button>
+      <button class="btn" id="printReportBtn" onclick="printSeasonReport()"><span class="ic" data-icon="printer"></span> تقرير الموسم</button>
     </div>
     <div id="statsImgMsg"></div>
     <div id="statsQuickNavBox"></div>
@@ -249,7 +250,7 @@
     </div>
     <details class="fold" id="foldExtraTools"><summary><span class="fold-icon" data-icon="settings"></span><span class="fold-title">أدوات إضافية</span><span class="fold-chevron" data-icon="chevron-down"></span></summary>
       <div class="fold-body">
-        <div class="toolbar"><button class="btn ghost" id="liveFocusOpenBtn">🔴 وضع مباشر</button></div>
+        <div class="toolbar"><button class="btn ghost" id="liveFocusOpenBtn"><span class="ic" data-icon="live"></span> وضع مباشر</button></div>
         <div id="whatIfBox"></div>
         <div id="scenarioBox"></div>
         <div id="seasonDuelBox"></div>
@@ -258,7 +259,7 @@
 
   <section class="panel" id="panel-rules">
     <div class="toolbar" id="rulesToolbar" style="display:none;">
-      <button class="btn secondary" id="dlRulesBtn">⬇️ تحميل اللائحة كصورة</button>
+      <button class="btn secondary" id="dlRulesBtn"><span class="ic" data-icon="download"></span> تحميل اللائحة كصورة</button>
     </div>
     <div id="rulesImgMsg"></div>
     <div id="rulesCapture">
@@ -280,7 +281,7 @@
         <p>فوز = 3 نقاط · تعادل = نقطة واحدة · خسارة = صفر</p>
       </div>
 
-      <h2 class="section-title" style="margin-top:22px;">❓ الأسئلة الشائعة</h2>
+      <h2 class="section-title" style="margin-top:22px;"><span class="ic" data-icon="info"></span> الأسئلة الشائعة</h2>
       <div class="faq-list">
         <details class="faq-item">
           <summary>كيف أشوف وضعي أنا بالتحديد؟</summary>
@@ -300,7 +301,7 @@
         </details>
         <details class="faq-item">
           <summary>أقدر أساهم ببيانات جولة حتى لو ما أنا منظم؟</summary>
-          <p>أكيد — افتح صفحة "🧾 ساهم بالبيانات" من الأعلى وسجّل أي نتيجة نادٍ تعرفها أو نقاطك أنت، ويراجعها المنظم قبل الاعتماد الرسمي.</p>
+          <p>أكيد — افتح صفحة "<span class="ic" data-icon="certificate"></span> ساهم بالبيانات" من الأعلى وسجّل أي نتيجة نادٍ تعرفها أو نقاطك أنت، ويراجعها المنظم قبل الاعتماد الرسمي.</p>
         </details>
         <details class="faq-item">
           <summary>ليش ما أقدر أشوف "المواجهة المباشرة"؟</summary>
@@ -327,15 +328,15 @@
     </div>
 
     <div id="adminPanel" style="display:none;">
-      <div class="status-msg ok admin-login-status">أنت مسجّل الدخول كمنظم ✅</div>
+      <div class="status-msg ok admin-login-status">أنت مسجّل الدخول كمنظم <span class="ic" data-icon="check"></span></div>
 
       <div class="admin-toolbar">
-        <button type="button" class="btn ghost" id="expandAllAdminBtn">⬇️ فتح كل الأقسام</button>
-        <button type="button" class="btn ghost" id="collapseAllAdminBtn">⬆️ طيّ كل الأقسام</button>
+        <button type="button" class="btn ghost" id="expandAllAdminBtn"><span class="ic" data-icon="download"></span> فتح كل الأقسام</button>
+        <button type="button" class="btn ghost" id="collapseAllAdminBtn"><span class="ic" data-icon="arrow-up"></span> طيّ كل الأقسام</button>
       </div>
 
       <details class="admin-accordion" open>
-        <summary>➕ إضافة أو تعديل جولة</summary>
+        <summary><span class="ic" data-icon="plus"></span> إضافة أو تعديل جولة</summary>
         <div class="acc-body">
           <div class="row u-mb-10px">
             <label class="field-label">رقم الجولة:</label>
@@ -343,7 +344,7 @@
             <button class="btn secondary" id="startRoundBtn">تجهيز نموذج الجولة</button>
           </div>
           <div class="u-mb-10px">
-            <div class="u-fs-0-78rem u-c-var-muted u-mb-6px">🗓️ جولات محفوظة — اضغط على أي واحدة لتعديل بياناتها (لو اكتشفت خطأ بحساباتها بعد إدخالها):</div>
+            <div class="u-fs-0-78rem u-c-var-muted u-mb-6px"><span class="ic" data-icon="calendar"></span> جولات محفوظة — اضغط على أي واحدة لتعديل بياناتها (لو اكتشفت خطأ بحساباتها بعد إدخالها):</div>
             <div id="pastRoundsChips" class="row u-flexwrap-wrap u-gap-6px"></div>
           </div>
           <div class="u-fs-0-8rem u-c-var-muted u-mb-8px" id="roundCompletionSummary"></div>
@@ -353,30 +354,30 @@
 
       <details class="admin-accordion">
         <summary>
-          <span>⚙️ إعدادات الجولة الحالية</span>
+          <span><span class="ic" data-icon="settings"></span> إعدادات الجولة الحالية</span>
           <span class="round-status-badges">
-            <span id="predStatusPill" class="status-pill off">🔮 —</span>
-            <span id="duelStatusPill" class="status-pill off">⚔️ —</span>
-            <span id="roundChallengeStatusPill" class="status-pill off">🗳️ —</span>
-            <span id="roundWallStatusPill" class="status-pill off">🧱 —</span>
-            <span id="nameReactionsStatusPill" class="status-pill off">👏 —</span>
-            <span id="seasonDuelStatusPill" class="status-pill off">🥊 —</span>
-            <span id="roundStoryStatusPill" class="status-pill off">🎙️ —</span>
-            <span id="whatsNewStatusPill" class="status-pill off">🎁 —</span>
-            <span id="participantProfileStatusPill" class="status-pill off">📋 —</span>
-            <span id="roundPollStatusPill" class="status-pill off">🗳️ —</span>
-            <span id="subGroupsStatusPill" class="status-pill off">👥 —</span>
-            <span id="hotColdStreaksStatusPill" class="status-pill off">🔥 —</span>
-            <span id="badgeToastStatusPill" class="status-pill off">🏅 —</span>
-            <span id="clubSwapLabStatusPill" class="status-pill off">🔬 —</span>
-            <span id="statusBarStatusPill" class="status-pill off">📌 —</span>
-            <span id="standingsAnimationStatusPill" class="status-pill off">🎞️ —</span>
-            <span id="liveFocusModeStatusPill" class="status-pill off">🔴 —</span>
+            <span id="predStatusPill" class="status-pill off"><span class="ic" data-icon="crystal-ball"></span> —</span>
+            <span id="duelStatusPill" class="status-pill off"><span class="ic" data-icon="swords"></span> —</span>
+            <span id="roundChallengeStatusPill" class="status-pill off"><span class="ic" data-icon="poll"></span> —</span>
+            <span id="roundWallStatusPill" class="status-pill off"><span class="ic" data-icon="wall"></span> —</span>
+            <span id="nameReactionsStatusPill" class="status-pill off"><span class="ic" data-icon="thumbs-up"></span> —</span>
+            <span id="seasonDuelStatusPill" class="status-pill off"><span class="ic" data-icon="swords"></span> —</span>
+            <span id="roundStoryStatusPill" class="status-pill off"><span class="ic" data-icon="mic"></span> —</span>
+            <span id="whatsNewStatusPill" class="status-pill off"><span class="ic" data-icon="gift"></span> —</span>
+            <span id="participantProfileStatusPill" class="status-pill off"><span class="ic" data-icon="clipboard"></span> —</span>
+            <span id="roundPollStatusPill" class="status-pill off"><span class="ic" data-icon="poll"></span> —</span>
+            <span id="subGroupsStatusPill" class="status-pill off"><span class="ic" data-icon="users"></span> —</span>
+            <span id="hotColdStreaksStatusPill" class="status-pill off"><span class="ic" data-icon="flame"></span> —</span>
+            <span id="badgeToastStatusPill" class="status-pill off"><span class="ic" data-icon="medal"></span> —</span>
+            <span id="clubSwapLabStatusPill" class="status-pill off"><span class="ic" data-icon="flask"></span> —</span>
+            <span id="statusBarStatusPill" class="status-pill off"><span class="ic" data-icon="pin"></span> —</span>
+            <span id="standingsAnimationStatusPill" class="status-pill off"><span class="ic" data-icon="film"></span> —</span>
+            <span id="liveFocusModeStatusPill" class="status-pill off"><span class="ic" data-icon="live"></span> —</span>
           </span>
         </summary>
         <div class="acc-body">
           <div class="admin-subsection">
-            <div class="admin-subsection-title">⏰ عداد الجولة القادمة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="clock"></span> عداد الجولة القادمة</div>
             <div class="row u-mb-10px">
               <label class="field-label">تاريخ ووقت بداية الجولة القادمة:</label>
               <input type="datetime-local" id="nextRoundAtInput">
@@ -387,7 +388,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔮 توقعات بطل الجولة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="crystal-ball"></span> توقعات بطل الجولة</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="predictionsEnabledToggle">إظهار خانة التوقعات للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="predictionsEnabledToggle">
@@ -396,7 +397,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">⚔️ تحدي مواجهة الجولة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="swords"></span> تحدي مواجهة الجولة</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="duelsEnabledToggle">إظهار قسم مواجهات الجولة للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="duelsEnabledToggle">
@@ -405,7 +406,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🗳️ تصويت الجولة (البطل القادم)</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="poll"></span> تصويت الجولة (البطل القادم)</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="roundChallengeEnabledToggle">إظهار قسم تصويت الجولة للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="roundChallengeEnabledToggle">
@@ -414,7 +415,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🧱 جدار الجولة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="wall"></span> جدار الجولة</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="roundWallEnabledToggle">إظهار جدار الجولة (تعليقات + ردود فعل) للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="roundWallEnabledToggle">
@@ -423,7 +424,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">👏 ردود فعل الأسماء بالترتيب</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="thumbs-up"></span> ردود فعل الأسماء بالترتيب</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="nameReactionsEnabledToggle">إظهار ردود الفعل على الأسماء للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="nameReactionsEnabledToggle">
@@ -432,7 +433,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🥊 نزال الموسم</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="swords"></span> نزال الموسم</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="seasonDuelEnabledToggle">إظهار قسم نزال الموسم للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="seasonDuelEnabledToggle">
@@ -441,7 +442,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🎙️ قصة الجولة الساخرة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="mic"></span> قصة الجولة الساخرة</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="roundStoryEnabledToggle">إظهار بطاقة قصة الجولة الساخرة للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="roundStoryEnabledToggle">
@@ -450,7 +451,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🎁 اللي فاتك</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="gift"></span> اللي فاتك</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="whatsNewEnabledToggle">إظهار بطاقة "اللي فاتك" عند التعريف:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="whatsNewEnabledToggle">
@@ -459,7 +460,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">📋 الملف الشخصي الكامل</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="clipboard"></span> الملف الشخصي الكامل</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="participantProfileEnabledToggle">إظهار زر "الملف الكامل" بكروت المشاركين:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="participantProfileEnabledToggle">
@@ -468,7 +469,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🗳️ سؤال الجولة</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="poll"></span> سؤال الجولة</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="roundPollEnabledToggle">إظهار سؤال الجولة للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="roundPollEnabledToggle">
@@ -477,7 +478,7 @@
               <input type="text" id="roundPollQuestionInput" placeholder="نص السؤال...">
               <input type="text" id="roundPollOptionsInput" placeholder="الخيارات مفصولة بفواصل، مثال: نعم, لا, ما أدري">
               <div class="row u-gap-8px">
-                <button type="button" class="btn secondary" id="publishRoundPollBtn">نشر السؤال 🗳️</button>
+                <button type="button" class="btn secondary" id="publishRoundPollBtn">نشر السؤال <span class="ic" data-icon="poll"></span></button>
                 <button type="button" class="btn ghost" id="clearRoundPollBtn">مسح السؤال الحالي</button>
               </div>
             </div>
@@ -486,7 +487,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">👥 المجموعات الفرعية</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="users"></span> المجموعات الفرعية</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="subGroupsEnabledToggle">إظهار لوحات المجموعات الفرعية للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="subGroupsEnabledToggle">
@@ -494,13 +495,13 @@
             <div class="u-mb-10px" id="subGroupsAdminList"></div>
             <input type="text" id="subGroupNameInput" class="me-code-input u-w-100 u-mb-8px" placeholder="اسم المجموعة الجديدة...">
             <div id="subGroupMembersCheckboxes"></div>
-            <button type="button" class="btn secondary" id="createSubGroupBtn">➕ إنشاء المجموعة</button>
+            <button type="button" class="btn secondary" id="createSubGroupBtn"><span class="ic" data-icon="plus"></span> إنشاء المجموعة</button>
             <div id="subGroupsAdminMsg"></div>
             <div id="subGroupsEnabledMsg"></div>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔥❄️ سلاسل الحظ</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="flame"></span><span class="ic" data-icon="snowflake"></span> سلاسل الحظ</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="hotColdStreaksEnabledToggle">إظهار سلاسل الحظ الساخن/البارد للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="hotColdStreaksEnabledToggle">
@@ -509,7 +510,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🏅 أوسمة تلقائية</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="medal"></span> أوسمة تلقائية</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="badgeToastEnabledToggle">إظهار تنبيه الوسام الجديد عند التعريف:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="badgeToastEnabledToggle">
@@ -518,7 +519,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔬 مختبر تبديل الأندية</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="flask"></span> مختبر تبديل الأندية</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="clubSwapLabEnabledToggle">إظهار مختبر سيناريوهات تبديل الأندية للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="clubSwapLabEnabledToggle">
@@ -527,7 +528,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">📌 شريط الحالة الشخصية</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="pin"></span> شريط الحالة الشخصية</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="statusBarEnabledToggle">إظهار الشريط الثابت لكل مشارك معرَّف:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="statusBarEnabledToggle">
@@ -536,7 +537,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🎞️ حركة إعادة ترتيب الجدول</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="film"></span> حركة إعادة ترتيب الجدول</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="standingsAnimationEnabledToggle">تحريك صفوف جدول الترتيب عند تغيّر المراكز:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="standingsAnimationEnabledToggle">
@@ -545,7 +546,7 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔴 وضع المباشر المُركَّز</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="live"></span> وضع المباشر المُركَّز</div>
             <div class="row u-mb-10px u-ai-center">
               <label class="field-label u-cur-pointer" for="liveFocusModeEnabledToggle">إتاحة زر "وضع مباشر" للزوار:</label>
               <input class="u-w-20px u-h-20px u-cur-pointer" type="checkbox" id="liveFocusModeEnabledToggle">
@@ -556,15 +557,15 @@
       </details>
 
       <details class="admin-accordion" id="communityAccordion">
-        <summary><span>📥 تقارير الأعضاء</span><span class="admin-badge" id="communityReportsBadge" style="display:none;"></span></summary>
+        <summary><span><span class="ic" data-icon="download"></span> تقارير الأعضاء</span><span class="admin-badge" id="communityReportsBadge" style="display:none;"></span></summary>
         <div class="acc-body">
           <p class="u-m-0-0-8px u-fs-0-85rem">
             رابط منفصل يقدر أي عضو بالجروب يفتحه ويسجّل فيه نتائج مباريات يعرفها أو نقاطه المحسوبة بنفسه —
             بدون أي تأثير على بيانات الموسم الرسمية. هذي القراءة للمراجعة اليدوية فقط، ما تدخل تلقائيًا بالترتيب.
           </p>
           <div class="row u-mb-10px u-ai-center">
-            <button class="btn secondary" id="refreshCommunityBtn">🔄 تحديث تقارير الجولة القادمة</button>
-            <button class="btn ghost copy-btn" id="copyReminderMsgBtn">📋 نسخ رسالة تذكير للواتساب</button>
+            <button class="btn secondary" id="refreshCommunityBtn"><span class="ic" data-icon="refresh"></span> تحديث تقارير الجولة القادمة</button>
+            <button class="btn ghost copy-btn" id="copyReminderMsgBtn"><span class="ic" data-icon="clipboard"></span> نسخ رسالة تذكير للواتساب</button>
             <label class="u-d-flex u-ai-center u-gap-6px u-cur-pointer u-fs-0-82rem">
               <input class="u-w-17px u-h-17px u-cur-pointer" type="checkbox" id="showConflictsOnlyToggle">
               عرض التعارضات فقط
@@ -578,25 +579,25 @@
             <div class="cc-panel" id="communityCopyPanel" hidden></div>
           </div>
           <div class="u-mt-10px">
-            <div class="u-fw-800 u-fs-0-85rem u-mb-6px">⚽ نتائج مُرسَلة من الأعضاء</div>
+            <div class="u-fw-800 u-fs-0-85rem u-mb-6px"><span class="ic" data-icon="ball"></span> نتائج مُرسَلة من الأعضاء</div>
             <div class="u-fs-0-85rem" id="communityMatchesBox"></div>
           </div>
           <div class="u-mt-16px">
-            <div class="u-fw-800 u-fs-0-85rem u-mb-6px">🎯 نقاط ذاتية مُرسَلة من المشاركين</div>
+            <div class="u-fw-800 u-fs-0-85rem u-mb-6px"><span class="ic" data-icon="target"></span> نقاط ذاتية مُرسَلة من المشاركين</div>
             <div class="u-fs-0-85rem" id="communityPointsBox"></div>
           </div>
         </div>
       </details>
 
       <details class="admin-accordion">
-        <summary>⚙️ إعدادات متقدمة</summary>
+        <summary><span class="ic" data-icon="settings"></span> إعدادات متقدمة</summary>
         <div class="acc-body">
           <div class="admin-subsection">
-            <div class="admin-subsection-title">💾 نسخة احتياطية</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="save"></span> نسخة احتياطية</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">يُنصح بتنزيل نسخة احتياطية بعد كل جولة — أي طارئ في قاعدة البيانات يقدر يُصلَح باستيراد آخر نسخة.</p>
             <div class="row u-mb-10px">
-              <button class="btn secondary" id="exportBackupBtn">⬇️ تنزيل نسخة احتياطية</button>
-              <button class="btn ghost" id="importBackupBtn">⬆️ استيراد نسخة احتياطية</button>
+              <button class="btn secondary" id="exportBackupBtn"><span class="ic" data-icon="download"></span> تنزيل نسخة احتياطية</button>
+              <button class="btn ghost" id="importBackupBtn"><span class="ic" data-icon="arrow-up"></span> استيراد نسخة احتياطية</button>
               <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
             </div>
             <div class="u-fs-0-76rem u-c-var-muted u-mb-6px" id="lastBackupLabel"></div>
@@ -604,54 +605,54 @@
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔒 تغيير رمز دخول المنظم</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="lock"></span> تغيير رمز دخول المنظم</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">الرمز الحالي محفوظ بأمان على قاعدة البيانات المشتركة — تغييره هنا يحدّثه فورًا لكل الأجهزة، بدون حاجة لتعديل أي كود.</p>
             <div id="pinChangeLock">
               <div class="row u-mb-8px">
                 <input class="u-mw-220px" type="password" id="superCodeInput" placeholder="الكود الخاص">
-                <button class="btn secondary" id="unlockPinChangeBtn">🔓 فتح</button>
+                <button class="btn secondary" id="unlockPinChangeBtn"><span class="ic" data-icon="unlock"></span> فتح</button>
               </div>
               <div id="unlockPinMsg"></div>
             </div>
             <div class="row u-mb-8px" id="pinChangeFields" style="display:none;">
               <input class="u-mw-220px" type="password" id="newPinInput" placeholder="رمز جديد (4 أرقام على الأقل)" inputmode="numeric">
               <input class="u-mw-220px" type="password" id="confirmPinInput" placeholder="تأكيد الرمز الجديد" inputmode="numeric">
-              <button class="btn secondary" id="changePinBtn">💾 حفظ الرمز الجديد</button>
+              <button class="btn secondary" id="changePinBtn"><span class="ic" data-icon="save"></span> حفظ الرمز الجديد</button>
             </div>
             <div id="changePinMsg"></div>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔑 رموز المشاركين</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="key"></span> رموز المشاركين</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">
               رمز خاص بكل مشارك (4 أرقام) يمنع أي شخص مضاف بالجروب وليس مشاركًا فعليًا من إرسال نقاط باسم غيره في صفحة "ساهم بالبيانات".
               أرسل لكل واحد رمزه <b>خاص</b> عبر واتساب (لا تنشرها بالجروب العام). الرموز ثابتة طول الموسم.
             </p>
             <div class="row u-mb-10px">
-              <button class="btn ghost" id="toggleCodesBtn">👁️ إظهار الرموز</button>
-              <button class="btn ghost copy-btn" id="copyAllCodesBtn">📋 نسخ كل الرموز دفعة وحدة</button>
+              <button class="btn ghost" id="toggleCodesBtn"><span class="ic" data-icon="eye"></span> إظهار الرموز</button>
+              <button class="btn ghost copy-btn" id="copyAllCodesBtn"><span class="ic" data-icon="clipboard"></span> نسخ كل الرموز دفعة وحدة</button>
             </div>
             <div class="u-fs-0-85rem" id="participantCodesBox" style="display:none;"></div>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">📱 روابط سريعة (QR)</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="phone"></span> روابط سريعة (QR)</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">امسح الكود بالكاميرا، أو انسخ الرابط نصًا لو الطرف الآخر ما يقدر يمسح الكود وقتها.</p>
             <div class="row u-gap-20px">
               <div class="u-ta-center">
                 <div id="qrSite" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div class="u-fs-0-76rem u-c-var-muted u-mt-4px">الموقع الرئيسي</div>
                 <div class="row u-jc-center u-mt-6px">
-                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="site">🔗 نسخ الرابط</button>
-                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="site">⬇️ تنزيل الصورة</button>
+                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="site"><span class="ic" data-icon="link"></span> نسخ الرابط</button>
+                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="site"><span class="ic" data-icon="download"></span> تنزيل الصورة</button>
                 </div>
               </div>
               <div class="u-ta-center">
                 <div id="qrReport" style="background:#fff;padding:8px;border-radius:10px;display:inline-block;"></div>
                 <div class="u-fs-0-76rem u-c-var-muted u-mt-4px">ساهم بالبيانات</div>
                 <div class="row u-jc-center u-mt-6px">
-                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="report">🔗 نسخ الرابط</button>
-                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="report">⬇️ تنزيل الصورة</button>
+                  <button type="button" class="btn ghost copy-btn copy-link-btn" data-link="report"><span class="ic" data-icon="link"></span> نسخ الرابط</button>
+                  <button type="button" class="btn ghost copy-btn download-qr-btn" data-qr="report"><span class="ic" data-icon="download"></span> تنزيل الصورة</button>
                 </div>
               </div>
             </div>
@@ -664,10 +665,10 @@
            seasonLockLock/seasonLockFields). المنطق الكامل في
            js/features/admin-season-lock.js -->
       <details class="admin-accordion" id="seasonLockAccordion">
-        <summary>🔒 قفل الموسم وبدء موسم جديد</summary>
+        <summary><span class="ic" data-icon="lock"></span> قفل الموسم وبدء موسم جديد</summary>
         <div class="acc-body">
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🚨 قفل الموسم الحالي وابدأ موسمًا جديدًا</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="warning"></span> قفل الموسم الحالي وابدأ موسمًا جديدًا</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">
               إجراء نهائي حساس (مثل تغيير رمز الدخول) — يتطلب الكود الخاص أولاً. يقوم بالترتيب:
               (1) تنزيل نسخة احتياطية كاملة تلقائيًا، (2) إضافة بطل الموسم الحالي لسجل أبطال المواسم
@@ -678,7 +679,7 @@
             <div id="seasonLockLock">
               <div class="row u-mb-8px">
                 <input class="u-mw-220px" type="password" id="seasonLockSuperCodeInput" placeholder="الكود الخاص">
-                <button class="btn secondary" id="unlockSeasonLockBtn">🔓 فتح</button>
+                <button class="btn secondary" id="unlockSeasonLockBtn"><span class="ic" data-icon="unlock"></span> فتح</button>
               </div>
               <div id="unlockSeasonLockMsg"></div>
             </div>
@@ -693,14 +694,14 @@
                 <input class="u-mw-100px" type="number" id="seasonLockChampPointsInput" placeholder="النقاط">
               </div>
               <div class="row">
-                <button class="btn" id="startSeasonLockBtn" style="background:var(--coral);border-color:var(--coral);">🔒 قفل الموسم الحالي وابدأ موسمًا جديدًا</button>
+                <button class="btn" id="startSeasonLockBtn" style="background:var(--coral);border-color:var(--coral);"><span class="ic" data-icon="lock"></span> قفل الموسم الحالي وابدأ موسمًا جديدًا</button>
               </div>
               <div id="seasonLockMsg"></div>
             </div>
           </div>
 
           <div class="admin-subsection" id="newSeasonRosterSection" style="display:none;">
-            <div class="admin-subsection-title">🆕 تجهيز ملفات الموسم الجديد (مشاركون + أندية)</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="sparkles"></span> تجهيز ملفات الموسم الجديد (مشاركون + أندية)</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">
               الموقع بلا خادم — أي ملف جديد لازم يُرفَع يدويًا عبر واجهة GitHub. هذا القسم يجهّز لك
               محتوى ملفات <code id="newSeasonParticipantsPath">js/data/season-3/participants.js</code>
@@ -719,10 +720,10 @@
             </div>
             <div id="newSeasonParticipantsRows"></div>
             <div class="row u-mt-8px">
-              <button class="btn ghost" id="addNewSeasonParticipantBtn">➕ إضافة مشارك</button>
+              <button class="btn ghost" id="addNewSeasonParticipantBtn"><span class="ic" data-icon="plus"></span> إضافة مشارك</button>
             </div>
             <div class="row u-mt-14px">
-              <button class="btn secondary" id="generateSeasonFilesBtn">⬇️ توليد وتنزيل ملفَّي المشاركين والأندية</button>
+              <button class="btn secondary" id="generateSeasonFilesBtn"><span class="ic" data-icon="download"></span> توليد وتنزيل ملفَّي المشاركين والأندية</button>
             </div>
             <div id="newSeasonMsg"></div>
           </div>
@@ -730,66 +731,66 @@
       </details>
 
       <details class="admin-accordion" id="championAccordion">
-        <summary>🏆 قسم تكريم البطل</summary>
+        <summary><span class="ic" data-icon="trophy"></span> قسم تكريم البطل</summary>
         <div class="acc-body">
           <div class="admin-subsection">
-            <div class="admin-subsection-title">👑 بطل الموسم الحالي</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="crown"></span> بطل الموسم الحالي</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">من تختاره هنا يظهر عليه كل الميزات المفعّلة أدناه. اختر "بدون بطل حاليًا" لإيقاف كل الميزات دفعة واحدة بضغطة وحدة.</p>
             <select class="u-mw-260px" id="championSelect"><option value="">بدون بطل حاليًا</option></select>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🏛️ سجل الأبطال عبر المواسم</div>
+            <div class="admin-subsection-title"><span class="ic" data-icon="landmark"></span> سجل الأبطال عبر المواسم</div>
             <p class="u-m-0-0-8px u-fs-0-85rem">سجل تاريخي يدوي مستقل تمامًا عن الاختيار أعلاه — لا يُحذف تلقائيًا أبدًا، ويبقى دائمًا ظاهرًا وقابلًا للتعديل بغض النظر عن أي مفتاح آخر.</p>
             <div id="championArchiveRows"></div>
             <div class="row u-mt-8px u-flexwrap-wrap">
               <input class="u-mw-150px" type="text" id="archiveSeasonInput" placeholder="اسم الموسم">
               <input class="u-mw-150px" type="text" id="archiveNameInput" placeholder="اسم البطل">
               <input class="u-mw-90px" type="number" id="archivePointsInput" placeholder="النقاط">
-              <button class="btn secondary" id="addArchiveRowBtn">➕ إضافة</button>
+              <button class="btn secondary" id="addArchiveRowBtn"><span class="ic" data-icon="plus"></span> إضافة</button>
             </div>
             <div id="archiveMsg"></div>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🟢 أساسية</div>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_badge_standings" data-key="badge_standings" data-label="شارة البطل بالترتيب"> 🛡️ شارة "حامل اللقب" بجدول الترتيب</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_top_banner" data-key="top_banner" data-label="بانر البطل العلوي"> 📣 بانر تذكير بالبطل أعلى الصفحة</label>
+            <div class="admin-subsection-title"><span class="status-dot"></span> أساسية</div>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_badge_standings" data-key="badge_standings" data-label="شارة البطل بالترتيب"> <span class="ic" data-icon="shield"></span> شارة "حامل اللقب" بجدول الترتيب</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_top_banner" data-key="top_banner" data-label="بانر البطل العلوي"> <span class="ic" data-icon="megaphone"></span> بانر تذكير بالبطل أعلى الصفحة</label>
             <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_golden_card" data-key="golden_card" data-label="الكرت الذهبي"> <span class="medal-slot" data-medal="1"></span> كرت ذهبي مميّز للبطل بتبويب المشاركين</label>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🟡 متوسطة</div>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_hero_card" data-key="hero_card" data-label="كرت المدافع عن اللقب"> 🛡️ كرت "المدافع عن اللقب" بأعلى الترتيب العام</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_welcome_message" data-key="welcome_message" data-label="رسالة ترحيب البطل"> 👋 رسالة ترحيب خاصة عند دخول البطل برمزه</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_golden_confetti" data-key="golden_confetti" data-label="كونفيتي ذهبي"> 🎉 كونفيتي ذهبي عند دخول البطل</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_certificate" data-key="certificate" data-label="شهادة تكريم"> 🎖️ زر شهادة تكريم قابلة للمشاركة (بكرت المدافع)</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_whatsapp_line" data-key="whatsapp_line" data-label="سطر البطل بالواتساب"> 📋 سطر إضافي عن البطل برسالة تذكير الواتساب</label>
+            <div class="admin-subsection-title"><span class="status-dot status-dot-gold"></span> متوسطة</div>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_hero_card" data-key="hero_card" data-label="كرت المدافع عن اللقب"> <span class="ic" data-icon="shield"></span> كرت "المدافع عن اللقب" بأعلى الترتيب العام</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_welcome_message" data-key="welcome_message" data-label="رسالة ترحيب البطل"> <span class="ic" data-icon="hand-wave"></span> رسالة ترحيب خاصة عند دخول البطل برمزه</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_golden_confetti" data-key="golden_confetti" data-label="كونفيتي ذهبي"> <span class="ic" data-icon="sparkles"></span> كونفيتي ذهبي عند دخول البطل</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_certificate" data-key="certificate" data-label="شهادة تكريم"> <span class="ic" data-icon="medal"></span> زر شهادة تكريم قابلة للمشاركة (بكرت المدافع)</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_whatsapp_line" data-key="whatsapp_line" data-label="سطر البطل بالواتساب"> <span class="ic" data-icon="clipboard"></span> سطر إضافي عن البطل برسالة تذكير الواتساب</label>
           </div>
 
           <div class="admin-subsection">
-            <div class="admin-subsection-title">🔴 متقدمة</div>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_defense_journey" data-key="defense_journey" data-label="رحلة الدفاع"> 📊 شريط مقارنة بالنقاط مع الموسم الماضي (بكرت المدافع)</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_defense_path" data-key="defense_path" data-label="مسار الدفاع بالترتيب"> 🏅 ملاحظة نتيجة الموسم الماضي تحت اسم البطل بجدول الترتيب</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_hall_of_fame" data-key="hall_of_fame" data-label="قاعة المشاهير"> 🏛️ قسم "قاعة مشاهير الأبطال" بتبويب الإحصائيات</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_animated_crown" data-key="animated_crown" data-label="التاج المتحرك"> 👑 تاج متحرك بجانب شعار الموقع</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_dynamic_badge" data-key="dynamic_badge" data-label="شارة ذكية"> 🔄 شارة ذكية تتحول تلقائيًا لـ"يحاول استعادة العرش" عند تفوّق أحد بالمجموع</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_proximity_alert" data-key="proximity_alert" data-label="تنبيه الاقتراب"> ⚠️ تنبيه بسجل النشاط عند اقتراب أحدهم من رقم البطل</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_smart_summary_highlight" data-key="smart_summary_highlight" data-label="تمييز بالملخص الذكي"> 📖 فقرة خاصة بالبطل ضمن "قصة الموسم" التلقائية</label>
-            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_weekly_challenge_notice" data-key="weekly_challenge_notice" data-label="تصويت الجولة"> 🔥 تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه</label>
+            <div class="admin-subsection-title"><span class="ic" data-icon="live"></span> متقدمة</div>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_defense_journey" data-key="defense_journey" data-label="رحلة الدفاع"> <span class="ic" data-icon="chart-bar"></span> شريط مقارنة بالنقاط مع الموسم الماضي (بكرت المدافع)</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_defense_path" data-key="defense_path" data-label="مسار الدفاع بالترتيب"> <span class="ic" data-icon="medal"></span> ملاحظة نتيجة الموسم الماضي تحت اسم البطل بجدول الترتيب</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_hall_of_fame" data-key="hall_of_fame" data-label="قاعة المشاهير"> <span class="ic" data-icon="landmark"></span> قسم "قاعة مشاهير الأبطال" بتبويب الإحصائيات</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_animated_crown" data-key="animated_crown" data-label="التاج المتحرك"> <span class="ic" data-icon="crown"></span> تاج متحرك بجانب شعار الموقع</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_dynamic_badge" data-key="dynamic_badge" data-label="شارة ذكية"> <span class="ic" data-icon="refresh"></span> شارة ذكية تتحول تلقائيًا لـ"يحاول استعادة العرش" عند تفوّق أحد بالمجموع</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_proximity_alert" data-key="proximity_alert" data-label="تنبيه الاقتراب"> <span class="ic" data-icon="warning"></span> تنبيه بسجل النشاط عند اقتراب أحدهم من رقم البطل</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem u-mb-6px"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_smart_summary_highlight" data-key="smart_summary_highlight" data-label="تمييز بالملخص الذكي"> <span class="ic" data-icon="book"></span> فقرة خاصة بالبطل ضمن "قصة الموسم" التلقائية</label>
+            <label class="row u-ai-center u-gap-8px u-cur-pointer u-fs-0-85rem"><input type="checkbox" class="champion-feature-toggle u-w-18px u-h-18px" id="cf_weekly_challenge_notice" data-key="weekly_challenge_notice" data-label="تصويت الجولة"> <span class="ic" data-icon="flame"></span> تنبيه "تفوقت على حامل اللقب هالجولة" لمن سجّل نقاط جولة أعلى منه</label>
           </div>
         </div>
       </details>
 
       <details class="admin-accordion">
-        <summary>📅 سجل نشاط المنظم</summary>
+        <summary><span class="ic" data-icon="calendar"></span> سجل نشاط المنظم</summary>
         <div class="acc-body">
           <div class="u-fs-0-82rem u-c-var-text" id="adminActivityLog"></div>
         </div>
       </details>
 
       <details class="admin-accordion" id="visitorAccordion">
-        <summary>👁️ إحصائيات الزوار</summary>
+        <summary><span class="ic" data-icon="eye"></span> إحصائيات الزوار</summary>
         <div class="acc-body">
           <div id="visitorCountBox"></div>
         </div>
@@ -809,6 +810,7 @@
 <script src="js/data/season-2/clubs.js"></script>
 <script src="js/data/season-2/rounds-seed.js"></script>
 <script src="js/generated/assets.js"></script>
+<script src="js/ui/icon-helper.js"></script>
 <script src="js/ui/crests.js"></script>
 <script src="js/ui/empty-state.js"></script>
 <script src="js/ui/medals.js"></script>

@@ -49,7 +49,7 @@ async function downloadElementAsImage(elementId, filename, msgBoxId, btnId){
     const bgFallback = getComputedStyle(document.documentElement).getPropertyValue('--cream').trim() || '#0A0A24';
     const cv = await html2canvas(el, {backgroundColor:bgFallback, scale:2, useCORS:true});
     downloadCanvasPNG(cv, filename);
-    if(box) box.innerHTML = '<div class="status-msg ok">تم تحميل الصورة — أرسلها في الجروب 📲</div>';
+    if(box) box.innerHTML = '<div class="status-msg ok">تم تحميل الصورة — أرسلها في الجروب.</div>';
   }catch(e){
     const detail = (e && e.message) ? ` (${e.message})` : '';
     if(box) box.innerHTML = `<div class="status-msg err">تعذّر تجهيز الصورة، حاول مرة ثانية${detail}.</div>`;
@@ -85,12 +85,13 @@ function printSeasonReport(){
     .badge{border:1px solid #eee;border-radius:8px;padding:8px 12px;font-size:0.8rem;min-width:140px;}
     .badge-icon{font-size:1.4rem;display:block;margin-bottom:3px;}
     .badge-title{font-weight:800;color:#B8902A;}
+    .ic{display:inline-flex;vertical-align:-0.2em;}
     @media print{body{padding:10px;} @page{margin:15mm;}}
   </style></head><body>
-  <h1>🏆 دوري بروكي الفانتازي — الموسم الثاني</h1>
+  <h1>${iconHTML('trophy', {size: 22})} دوري بروكي الفانتازي — الموسم الثاني</h1>
   <div class="sub">تقرير الموسم حتى الجولة ${n} · ${formatDate(new Date(), {style: 'full'})}</div>
 
-  <h2>📊 الترتيب العام</h2>
+  <h2>${iconHTML('chart-bar')} الترتيب العام</h2>
   <table>
     <tr><th>#</th><th style="text-align:right;">المشارك</th><th>نقاط</th><th>ممات</th><th>أفضل جولة</th><th>معدل</th></tr>`;
 
@@ -111,7 +112,7 @@ function printSeasonReport(){
   });
 
   body += `</table>
-  <h2>🏅 أوسمة الموسم</h2>
+  <h2>${iconHTML('medal')} أوسمة الموسم</h2>
   <div class="badges">`;
   badges.forEach(b=>{
     body += `<div class="badge">
@@ -124,7 +125,7 @@ function printSeasonReport(){
   body += `</div>`;
 
   // جدول تاريخ الجولات
-  body += `<h2>📅 تاريخ الجولات</h2>
+  body += `<h2>${iconHTML('calendar')} تاريخ الجولات</h2>
   <table><tr><th style="text-align:right;">المشارك</th>`;
   DATA.rounds.slice().sort((a,b)=>a.number-b.number).forEach(r=> body+=`<th title="الجولة ${r.number}">${r.number}</th>`);
   body += '<th>المجموع</th></tr>';

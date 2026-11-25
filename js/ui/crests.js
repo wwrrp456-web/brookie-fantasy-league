@@ -413,7 +413,7 @@ function resetCrestCache(){ _crestUrls.clear(); _crestImgs.clear(); _slugByName 
   if(mark) mark.src = svgToURL(LOGO_SVG.mark);
   const contribute = document.getElementById('contributeLink');
   if(contribute) contribute.innerHTML = ICONS.edit;
-  document.querySelectorAll('[data-icon]').forEach(el => { if(ICONS[el.dataset.icon]) el.innerHTML = ICONS[el.dataset.icon]; });
+  if(typeof fillStaticIcons === 'function') fillStaticIcons();   // icon-helper.js (001-T011c-1)
   const more = document.getElementById('tabMoreBtn');
   if(more) more.innerHTML = ICONS['chevron-left'];
 })();

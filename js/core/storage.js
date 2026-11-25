@@ -217,7 +217,7 @@ async function trackVisit(){
 async function renderVisitorCount(){
   const box = document.getElementById('visitorCountBox');
   if(!box) return;
-  box.innerHTML='<div style="color:var(--muted);font-size:0.82rem;">⏳ جاري التحميل...</div>';
+  box.innerHTML='<div style="color:var(--muted);font-size:0.82rem;">' + iconHTML('clock') + ' جاري التحميل...</div>';
   try{
     const db = _fbInit();
     const snap = await db.ref('brookie/visitors').get();
@@ -229,8 +229,8 @@ async function renderVisitorCount(){
     box.innerHTML = '<div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;">' +
       [['gold',fmt(total),'إجمالي الزيارات'],['sky',fmt(unique),'أجهزة فريدة'],['coral',avg,'متوسط زيارات/جهاز']]
       .map(([c,v,l]) => `<div style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:110px;text-align:center;"><div style="font-size:2.2rem;font-weight:900;color:var(--${c});">${v}</div><div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">${l}</div></div>`).join('') +
-      '</div><div style="font-size:0.73rem;color:var(--muted);margin-bottom:10px;">⚠️ الجهاز الواحد يُحتسب مرة كزائر فريد.</div>' +
-      '<button class="btn ghost" id="refreshVisitorBtn" style="font-size:0.8rem;">🔄 تحديث الأرقام</button>';
+      '</div><div style="font-size:0.73rem;color:var(--muted);margin-bottom:10px;">' + iconHTML('warning', {size: 14}) + ' الجهاز الواحد يُحتسب مرة كزائر فريد.</div>' +
+      '<button class="btn ghost" id="refreshVisitorBtn" style="font-size:0.8rem;">' + iconHTML('refresh') + ' تحديث الأرقام</button>';
     document.getElementById('refreshVisitorBtn').onclick=renderVisitorCount;
   }catch(e){
     box.innerHTML='<div style="color:var(--coral);font-size:0.82rem;">تعذّر تحميل إحصائيات الزوار.</div>';
