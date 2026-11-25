@@ -4,7 +4,7 @@ function roundTitlesHTML(titles){
   if(!titles || !titles.length) return '';
   let html = '<div class="round-titles-row">';
   titles.forEach(t=>{
-    html += `<span class="round-title-chip">${t.icon} <b>${t.label}:</b> ${t.names.join(' و')} <span class="round-title-extra">(${t.extra})</span></span>`;
+    html += `<span class="round-title-chip">${iconHTML(t.icon)} <b>${t.label}:</b> ${t.names.join(' و')} <span class="round-title-extra">(${t.extra})</span></span>`;
   });
   html += '</div>';
   return html;
@@ -18,18 +18,18 @@ function renderHeroes(){
   if(!h){ box.innerHTML = emptyState({icon: 'clock', title: 'الجولة لم تُسجّل بعد', text: 'تظهر نقاط الجولة وبطلها بعد أن يسجّل المنظّم النتائج.'}); return; }
   let html = '<div class="heroes-strip">';
   html += `<div class="hero-card gold">
-    <div class="hero-label">👑 بطل الجولة ${h.roundNumber}</div>
+    <div class="hero-label">${iconHTML('crown')} بطل الجولة ${h.roundNumber}</div>
     <div class="hero-name">${h.top.name}</div>
     <div class="hero-sub">${formatCount(h.top.points,'نقطة')}${h.top.tieBreak ? ' <span title="حُسم بكسر التعادل: الأكثر أهدافًا ثم الأقل استقبالًا">(بعد كسر التعادل)</span>' : ''}</div>
   </div>`;
   html += `<div class="hero-card">
-    <div class="hero-label">💀 ممّات الجولة</div>
+    <div class="hero-label">${iconHTML('skull-zero')}&nbsp;ممّات الجولة</div>
     <div class="hero-name">${h.mummat.length ? formatCount(h.mummat.length,'مشارك') : 'لا أحد'}</div>
     <div class="hero-sub">${h.mummat.length ? h.mummat.slice(0,3).join('، ') + (h.mummat.length>3?'…':'') : 'الجميع سجّل نقاطًا'}</div>
   </div>`;
   if(h.bestStreak && h.bestStreak.streak > 0){
     html += `<div class="hero-card">
-      <div class="hero-label">🔥 أطول سلسلة بلا ممة</div>
+      <div class="hero-label">${iconHTML('flame')} أطول سلسلة بلا ممة</div>
       <div class="hero-name">${h.bestStreak.name}</div>
       <div class="hero-sub">${arRoundsRun(h.bestStreak.streak)}</div>
     </div>`;
@@ -57,7 +57,7 @@ function renderCountdown(){
   function tick(){
     const diff = target - Date.now();
     if(diff <= 0){
-      box.innerHTML = `<div class="countdown-card"><div class="countdown-label">⏰ الجولة ${nextRoundNum}</div><div class="countdown-timer">بدأت الجولة! 🔥</div></div>`;
+      box.innerHTML = `<div class="countdown-card"><div class="countdown-label">${iconHTML('clock')}&nbsp;الجولة ${nextRoundNum}</div><div class="countdown-timer">بدأت الجولة! ${iconHTML('flame')}</div></div>`;
       if(countdownInterval){ clearInterval(countdownInterval); countdownInterval=null; }
       return;
     }
@@ -67,7 +67,7 @@ function renderCountdown(){
     const secs = Math.floor((diff/1000)%60);
     const pad = n => String(n).padStart(2,'0');
     const dayPart = days>0 ? `${days}ي ` : '';
-    box.innerHTML = `<div class="countdown-card"><div class="countdown-label">⏰ العد التنازلي لبداية الجولة ${nextRoundNum}</div><div class="countdown-timer">${dayPart}${pad(hours)}:${pad(mins)}:${pad(secs)}</div></div>`;
+    box.innerHTML = `<div class="countdown-card"><div class="countdown-label">${iconHTML('clock')} العد التنازلي لبداية الجولة ${nextRoundNum}</div><div class="countdown-timer">${dayPart}${pad(hours)}:${pad(mins)}:${pad(secs)}</div></div>`;
   }
   tick();
   countdownInterval = setInterval(tick, 1000);
@@ -139,13 +139,13 @@ function renderRoundsInsights(){
   box.innerHTML = `
     <div class="rounds-insights">
       <div class="rounds-insight-card best">
-        <span class="rounds-insight-icon">⚔️</span>
+        <span class="rounds-insight-icon">${iconHTML('swords')}</span>
         <span class="rounds-insight-label">الجولة الأكثر تنافسية</span>
         <span class="rounds-insight-val">جولة ${mostCompetitive.round||'—'}</span>
         <span class="rounds-insight-sub">${mostCompetitive.spread > 0 ? 'فارق ' + formatCount(mostCompetitive.spread, 'نقطة') + ' فقط' : 'تعادل بالنقاط'}</span>
       </div>
       <div class="rounds-insight-card worst">
-        <span class="rounds-insight-icon">📊</span>
+        <span class="rounds-insight-icon">${iconHTML('chart-bar')}</span>
         <span class="rounds-insight-label">الجولة الأكثر تفاوتاً</span>
         <span class="rounds-insight-val">جولة ${mostDivergent.round||'—'}</span>
         <span class="rounds-insight-sub">فارق ${formatCount(mostDivergent.spread, 'نقطة')}</span>
@@ -165,7 +165,7 @@ function renderNightMode(){
   const dayNames = {5:'الجمعة',6:'السبت',0:'الأحد'};
   const dayName = dayNames[day];
   box.innerHTML = `<div class="night-mode-banner">
-    <div class="night-title">🌙 ليلة الجولة — ${dayName}</div>
+    <div class="night-title">${iconHTML('moon')} ليلة الجولة — ${dayName}</div>
     <div class="night-sub">
       المتصدر الحالي: <b style="color:#E0C4FF;">${leader ? leader.name : '—'}</b>
       بـ <b style="color:#E0C4FF;">${leader ? leader.total : 0}</b> نقطة
@@ -208,7 +208,7 @@ function renderRoundComments(){
   if(myPid && myName){
     const alreadyCommented = !!comments[myPid];
     if(alreadyCommented){
-      formHTML = `<span class="rc-locked">✅ أضفت تعليقك على الجولة ${roundNum}</span>`;
+      formHTML = `<span class="rc-locked">${iconHTML('check')} أضفت تعليقك على الجولة ${roundNum}</span>`;
     } else {
       formHTML = `<div class="rc-add-form">
         <input type="text" class="rc-input" id="rcInput_${roundNum}" maxlength="80" placeholder="رأيك عن جولتك... (حتى 80 حرف)">
@@ -216,11 +216,11 @@ function renderRoundComments(){
       </div>`;
     }
   } else {
-    formHTML = `<span class="rc-locked">🔒 اختر اسمك وأدخل رمزك للتعليق</span>`;
+    formHTML = `<span class="rc-locked">${iconHTML('lock')} اختر اسمك وأدخل رمزك للتعليق</span>`;
   }
 
   box.innerHTML = `<div class="round-comment-section">
-    <div style="font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:8px;">💬 تعليقات الجولة ${roundNum}</div>
+    <div style="font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:8px;">${iconHTML('comment')} تعليقات الجولة ${roundNum}</div>
     ${commentsHTML ? `<div class="round-comments-list">${commentsHTML}</div>` : '<div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px;">لا تعليقات بعد — كن أول من يعلّق!</div>'}
     ${formHTML}
   </div>`;
@@ -251,7 +251,7 @@ function renderScenario(){
   if(remaining<=0){box.innerHTML='';return;}
   if(_scenarioRendered) return;
   _scenarioRendered=true;
-  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🎲 محاكاة السيناريوهات</h2>
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">${iconHTML('dice')} محاكاة السيناريوهات</h2>
     <div style="background:var(--paper);border-radius:14px;padding:16px;">
       <p style="color:var(--muted);margin:0 0 12px;font-size:0.87rem;">ماذا لو حصل المتصدر على نقاط أقل في الجولات الـ${remaining} القادمة؟</p>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
@@ -289,7 +289,7 @@ function renderScenario(){
         }).join('')}</tbody>
       </table>
       ${newLead.id!==lid
-        ?`<div style="margin-top:10px;padding:8px;background:var(--gold)22;border-radius:8px;color:var(--gold);font-size:0.87rem;text-align:center;">⚡ في هذا السيناريو، <strong>${nl?.name}</strong> يتصدر بدلاً من <strong>${ol?.name}</strong>!</div>`
+        ?`<div style="margin-top:10px;padding:8px;background:var(--gold)22;border-radius:8px;color:var(--gold);font-size:0.87rem;text-align:center;">${iconHTML('bolt')} في هذا السيناريو، <strong>${nl?.name}</strong> يتصدر بدلاً من <strong>${ol?.name}</strong>!</div>`
         :`<div style="margin-top:10px;padding:8px;background:var(--cream);border-radius:8px;color:var(--muted);font-size:0.85rem;text-align:center;">${ol?.name} يظل في الصدارة حتى في هذا السيناريو.</div>`
       }
     </div>`;
@@ -323,12 +323,12 @@ function renderRoundChallenge(){
   const totalVotes=Object.values(voteCounts).reduce((a,b)=>a+b,0);
   const canVote=pid&&!myVote;
   const myVotedName=myVote?PARTICIPANTS.find(x=>x.id==myVote.vote)?.name:'';
-  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">🗳️ تصويت الجولة ${nextNum}</h2>
+  box.innerHTML=`<h2 class="section-title" style="margin-top:22px;">${iconHTML('poll')} تصويت الجولة ${nextNum}</h2>
     <div style="background:var(--paper);border-radius:14px;padding:16px;">
       <p style="color:var(--text2);margin:0 0 12px;font-size:0.9rem;">
         <strong>من سيتصدر الجولة ${nextNum}؟</strong>
         ${!pid?'<br><span style="color:var(--muted);font-size:0.8rem;">سجّل دخولك للتصويت</span>':''}
-        ${myVote?`<br><span style="color:var(--gold);font-size:0.82rem;">✅ صوّتت لـ: ${myVotedName}</span>`:''}
+        ${myVote?`<br><span style="color:var(--gold);font-size:0.82rem;">${iconHTML('check')} صوّتت لـ: ${myVotedName}</span>`:''}
       </p>
       ${canVote?`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px;">
         ${stands.slice(0,6).map((s,i)=>{
@@ -393,7 +393,7 @@ function toggleExpand(pid){
 
 // شارة نتيجة صغيرة (فوز/تعادل/خسارة/لا توجد مباراة) بلون مناسب
 function r2ResBadge(res){
-  if(res==='no_match') return `<span class="r2-res-nomatch">⏸️ ${RESULT_LABEL[res]}</span>`;
+  if(res==='no_match') return `<span class="r2-res-nomatch">${iconHTML('pause')} ${RESULT_LABEL[res]}</span>`;
   const cls = res==='win' ? 'r2-res-win' : res==='draw' ? 'r2-res-draw' : 'r2-res-loss';
   return `<span class="${cls}">${RESULT_LABEL[res]}</span>`;
 }
@@ -419,8 +419,8 @@ function renderRound2Section(){
     return a.p.name.localeCompare(b.p.name, 'ar');
   });
 
-  let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">🏁 الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
-  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "🏆 أرشيف أبطال الجولات" أعلاه.</p>`;
+  let html = `<h4 style="margin:0 0 8px;font-size:0.95rem;color:var(--text);">${iconHTML('flag-race')}&nbsp;الجولة 2 — بالتفصيل (26 أغسطس – 2 سبتمبر 2026)</h4>`;
+  html += `<p class="rounds-subtitle" style="margin-top:0;">مباريات كل نادٍ الحقيقية في دوريه المحلي ضمن هذه الجولة، نادٍ نادٍ ومباراة مباراة — بحث حقيقي عبر 365Scores. بطل الجولة الثانية تحديدًا (تاريخي، لا يتغيّر) مُعلَّم بشارة "بطل الجولة" أدناه: أبو أوس (كسر تعادل بالأهداف، التفاصيل في تبويب اللائحة). لبطل الجولة الحالية شوف "أرشيف أبطال الجولات" أعلاه.</p>`;
   html += roundTitlesHTML((computeRoundTitlesArchive())[2]);
 
   rows.forEach(({p, r2, joined})=>{
@@ -452,7 +452,7 @@ function renderRound2Section(){
           </div>
         `).join('')}
       </div>
-      ${p.id===18 ? `<div class="r2-note">⚠️ أبو صالح التحق بالمسابقة بعد الجولة الأولى، فرصيده المعروض في الترتيب العام (${p.carry}) محسوب من كامل موسم أنديته حتى الآن — أما الرقم أعلاه (${r2.points}) فهو حصاد أنديته الفعلي ضمن نافذة الجولة 2 تحديدًا فقط، وهو أقل طبيعيًا لأنه لا يشمل مبارياتها الأقدم.</div>` : ''}
+      ${p.id===18 ? `<div class="r2-note">${iconHTML('warning')} أبو صالح التحق بالمسابقة بعد الجولة الأولى، فرصيده المعروض في الترتيب العام (${p.carry}) محسوب من كامل موسم أنديته حتى الآن — أما الرقم أعلاه (${r2.points}) فهو حصاد أنديته الفعلي ضمن نافذة الجولة 2 تحديدًا فقط، وهو أقل طبيعيًا لأنه لا يشمل مبارياتها الأقدم.</div>` : ''}
     </div>`;
   });
   return html;

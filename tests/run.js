@@ -526,6 +526,10 @@ const asyncCrestTests = (async () => {
   check('empty-state: النصوص والرابط مهرَّبة (لا وسوم ولا كسر خاصية)', [/<img/.test(esx), /<b>/.test(esx), /onclick="1/.test(esx)], [false, false, false]);
   check('empty-state: الزر الاختياري (رابط أو زر بمعرّف)', [/<a class="btn" href="x">ذهاب<\/a>/.test(run("emptyState({title:'t', action:{label:'ذهاب', href:'x'}})")), /<button type="button" class="btn" id="b1">ذهاب<\/button>/.test(run("emptyState({title:'t', action:{label:'ذهاب', id:'b1'}})"))], [true, true]);
   check('empty-state: emptyInline نص خافت بدل شرطة، وافتراضيه "لا بيانات بعد"', [run("emptyInline('لا جولات')"), run("emptyInline()")], ['<span class="empty-inline">لا جولات</span>', '<span class="empty-inline">لا بيانات بعد</span>']);
+  // 001-T011c-4 (S60): iconizeEmoji يهرّب النص غير الإيموجي (الدستور 23)
+  const iz = run("iconizeEmoji('<img src=x onerror=alert(1)> \\u{1F3C6} & \"س\"')");
+  check('iconizeEmoji: الوسم المحقون يظهر نصًا مهرَّبًا لا عنصرًا، والإيموجي يصير أيقونة', [/<img/.test(iz), /&lt;img src=x onerror=alert\(1\)&gt;/.test(iz), /<svg/.test(iz), /&amp;/.test(iz)], [false, true, true, true]);
+  check('iconizeEmoji: نص بلا إيموجي يُهرَّب فقط ويبقى كما هو', run("iconizeEmoji('a<b')"), 'a&lt;b');
 })();
 
 // ---------- 000-T005: tools/make-fixture.js (التعقيم) على عينة خام صغيرة مصطنعة ----------

@@ -138,7 +138,7 @@ function renderSeasonStory(){
   });
   let chap5='';
   if(zeroMum.length){
-    chap5 += `${hl(zeroMum.map(p=>p.name).join(' و'))} ${zeroMum.length>1?'يحافظون':'يحافظ'} على سجل نظيف — بلا ممات حتى الآن 🧊. `;
+    chap5 += `${hl(zeroMum.map(p=>p.name).join(' و'))} ${zeroMum.length>1?'يحافظون':'يحافظ'} على سجل نظيف — بلا ممات حتى الآن ${iconHTML('snowflake')}. `;
   }
   if(mostMumPid && mostMumVal>0){
     chap5 += `في المقابل، ${hl(name(mostMumPid))} يحمل ثقل ${hl(formatCount(mostMumVal, 'ممة', {case: 'acc'}))} — الأكثر في الموسم.`;
@@ -161,7 +161,7 @@ function renderSeasonStory(){
   let chap6=`إذا استمر كل مشارك بمتوسطه الحالي وبقيت ${hl(formatCount(roundsLeft, 'جولة'))}، يُتوقع أن يُنهي ${hl(projLeader.name)} الموسم أولًا ${hl(arBaPrefix(formatCount(projLeader.projected, 'نقطة', {case: 'acc'})))} `;
   chap6 += `متقدمًا على ${hl(projSecond.name)} ${hl(arBaPrefix(formatCount(projGap, 'نقطة', {case: 'acc'})))}.`;
   if(projLeader.id !== leader.id){
-    chap6 += ` ⚠️ المتصدر الحالي ${hl(leader.name)} في خطر!`;
+    chap6 += ` ${iconHTML('warning')} المتصدر الحالي ${hl(leader.name)} في خطر!`;
   }
 
   // ---- فصل تكريم البطل (قسم تكريم البطل — ميزة 15، معطّل افتراضيًا) ----
@@ -188,30 +188,30 @@ function renderSeasonStory(){
 
   // ---- تجميع الفصول ----
   const chapters = [
-    {num:'1', icon:'🏁', title:'الافتتاحية', body:chap1},
-    {num:'2', icon:'👑', title:'معركة الصدارة', body:chap2},
-    {num:'3', icon:'⚔️', title:'المعارك الحامية', body:chap3},
-    {num:'4', icon:'🌟', title:'نجوم ومفاجآت', body:chap4},
-    {num:'5', icon:'💀', title:'الممات والثبات', body:chap5},
-    {num:'6', icon:'🔮', title:'ماذا يُخبئ الموسم؟', body:chap6},
-    {num:'7', icon:'🛡️', title:'دفاع البطل', body:chapChamp},
+    {num:'1', icon:'flag-race', wa:'\u{1F3C1}', title:'الافتتاحية', body:chap1},
+    {num:'2', icon:'crown', wa:'\u{1F451}', title:'معركة الصدارة', body:chap2},
+    {num:'3', icon:'swords', wa:'\u{2694}', title:'المعارك الحامية', body:chap3},
+    {num:'4', icon:'sparkles', wa:'\u{1F31F}', title:'نجوم ومفاجآت', body:chap4},
+    {num:'5', icon:'skull-zero', wa:'\u{1F480}', title:'الممات والثبات', body:chap5},
+    {num:'6', icon:'crystal-ball', wa:'\u{1F52E}', title:'ماذا يُخبئ الموسم؟', body:chap6},
+    {num:'7', icon:'shield', wa:'\u{1F6E1}', title:'دفاع البطل', body:chapChamp},
   ].filter(c=>c.body);
 
   let html = '<div class="story-wrap">';
-  html += '<h2 class="section-title" style="margin-top:22px;">📖 قصة الموسم</h2>';
+  html += '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('book') + ' قصة الموسم</h2>';
   html += `<p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;">سرد تلقائي مُولَّد من البيانات — يتحدّث نفسه مع كل جولة جديدة</p>`;
 
   chapters.forEach(c=>{
     html += `<div class="story-chapter" data-num="${c.num}">
-      <div class="story-chapter-title">${c.icon} الفصل ${c.num}: ${c.title}</div>
+      <div class="story-chapter-title">${iconHTML(c.icon)} الفصل ${c.num}: ${c.title}</div>
       <div class="story-chapter-body">${c.body}</div>
     </div>`;
   });
 
   // زر مشاركة القصة في الواتساب
-  const storyText = chapters.map(c=>`*${c.icon} ${c.title}*\n${c.body.replace(/<[^>]+>/g,'')}`).join('\n\n');
+  const storyText = chapters.map(c=>`*${c.wa} ${c.title}*\n${c.body.replace(/<[^>]+>/g,'')}`).join('\n\n');
   const waText = encodeURIComponent(`📖 *قصة دوري بروكي الفانتازي — الموسم الثاني*\n\n${storyText}\n\n${SITE_URL}`);
-  html += `<a href="https://wa.me/?text=${waText}" target="_blank" class="story-share-btn">📤 شارك القصة في واتساب</a>`;
+  html += `<a href="https://wa.me/?text=${waText}" target="_blank" class="story-share-btn">${iconHTML('share')} شارك القصة في واتساب</a>`;
   html += '</div>';
   box.innerHTML = html;
 }
@@ -240,7 +240,7 @@ function renderAboutLeague(){
   box.innerHTML = `
     <div class="about-league">
       <div class="about-section">
-        <div class="about-section-title">🏆 دوري بروكي الفانتازي — الموسم الثاني</div>
+        <div class="about-section-title">${iconHTML('trophy')}&nbsp;دوري بروكي الفانتازي — الموسم الثاني</div>
         <div class="about-stat-grid">
           <div class="about-stat"><span class="about-stat-num">${PARTICIPANTS.length}</span><span class="about-stat-label">مشارك</span></div>
           <div class="about-stat"><span class="about-stat-num">${Object.keys(CLUBS).length}</span><span class="about-stat-label">نادٍ</span></div>
@@ -253,25 +253,25 @@ function renderAboutLeague(){
         </div>
       </div>
       <div class="about-section">
-        <div class="about-section-title">🏆 فكرة البطولة</div>
+        <div class="about-section-title">${iconHTML('trophy')} فكرة البطولة</div>
         <ul style="margin:0;padding-inline-start:20px;font-size:0.85rem;color:var(--text2);line-height:1.9;">
           <li>بطولة فانتازي كروية بين 20 مشاركًا، كل واحد يختار 3 أندية من 3 دوريات مختلفة حول العالم.</li>
           <li>نقاط كل مشارك تُحسب من نتائج أنديته الثلاثة أسبوعيًا (بمباريات الدوري المحلي فقط).</li>
           <li>نظام النقاط: فوز = 3، تعادل = 1، خسارة = 0.</li>
-          <li>"الممة" 💀: إذا خرج المشارك بلا أي نقطة خلال الجولة كاملة.</li>
+          <li>"الممة" ${iconHTML('skull-zero')}: إذا خرج المشارك بلا أي نقطة خلال الجولة كاملة.</li>
           <li>الترتيب يتحدّث أسبوعيًا حسب مجموع نقاط كل مشارك التراكمي.</li>
           <li>عند تساوي النقاط، الأفضلية لمن حصد أكثر بالجولة الأخيرة، ثم الأسبق وصولًا لنفس النقاط، ثم الأكثر تسجيلًا للأهداف.</li>
           <li>البطولة تُدار بالكامل عبر هذا الموقع: الترتيب، الإحصائيات، تاريخ الصدارة، وقصة الموسم يتحدّثون تلقائيًا مع كل جولة جديدة.</li>
         </ul>
       </div>
       <div class="about-section">
-        <div class="about-section-title">📋 معلومات الموسم</div>
+        <div class="about-section-title">${iconHTML('clipboard')} معلومات الموسم</div>
         <p style="margin:0;font-size:0.85rem;color:var(--text2);line-height:1.8;">
-          🗓️ انطلق الموسم الثاني في أغسطس 2026<br>
-          ⚽ كل مشارك لديه 3 أندية من 3 دوريات مختلفة<br>
-          📊 نقاط الفوز: 3 · التعادل: 1 · الخسارة: 0<br>
-          💀 الممة: صفر نقطة في الجولة كاملة<br>
-          🔗 <a href="${SITE_URL}" target="_blank" style="color:var(--gold);">رابط الدوري</a>
+          ${iconHTML('calendar')} انطلق الموسم الثاني في أغسطس 2026<br>
+          ${iconHTML('ball')} كل مشارك لديه 3 أندية من 3 دوريات مختلفة<br>
+          ${iconHTML('chart-bar')}&nbsp;نقاط الفوز: 3 · التعادل: 1 · الخسارة: 0<br>
+          ${iconHTML('skull-zero')} الممة: صفر نقطة في الجولة كاملة<br>
+          ${iconHTML('link')} <a href="${SITE_URL}" target="_blank" style="color:var(--gold);">رابط الدوري</a>
         </p>
       </div>
     </div>`;

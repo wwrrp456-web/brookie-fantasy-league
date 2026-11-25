@@ -116,7 +116,7 @@ function printSeasonReport(){
   <div class="badges">`;
   badges.forEach(b=>{
     body += `<div class="badge">
-      <span class="badge-icon">${b.icon}</span>
+      <span class="badge-icon">${iconHTML(b.icon)}</span>
       <span class="badge-title">${b.title}</span><br>
       <span>${b.names}</span><br>
       <span class="muted">${b.detail}</span>

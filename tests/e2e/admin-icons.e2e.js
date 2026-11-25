@@ -56,6 +56,16 @@ const EMO_TEST = () => /\p{Extended_Pictographic}/u;
       const pills = await page.evaluate(() => [...document.querySelectorAll('#adminPanel .status-pill')].map(p => ({ svg: !!p.querySelector('svg'), txt: p.textContent.replace(/\s+/g, ' ').trim(), cls: p.className })));
       check(`[${mode}] حبوب الحالة: أيقونة + نص مفعّل/معطّل (ليست بلون وحده)`, pills.length >= 10 && pills.every(p => p.svg && /مفعّل|معطّل/.test(p.txt) && /\b(on|off)\b/.test(p.cls)), JSON.stringify(pills.filter(p => !(p.svg && /مفعّل|معطّل/.test(p.txt))).slice(0, 3)));
 
+      // الدستور 23 (S60): سجل النشاط يهرّب النص غير الإيموجي؛ وسم محقون يظهر نصًا لا عنصرًا
+      const xss = await page.evaluate(() => {
+        window.__xss = 0;
+        DATA.activityLog = [{ action: '\u{1F3C6} <img src=x onerror="window.__xss=1"> مشكلة', time: Date.now() }];
+        renderAdminActivityLog();
+        const row = document.querySelector('#adminActivityLog .activity-log-row span');
+        return { img: !!document.querySelector('#adminActivityLog img'), txt: row.textContent, svg: !!row.querySelector('svg'), fired: window.__xss };
+      });
+      await page.waitForTimeout(200);
+      check(`[${mode}] سجل النشاط: وسم <img> محقون يظهر نصًا لا عنصرًا، والإيموجي أيقونة`, !xss.img && xss.svg && xss.txt.includes('<img src=x') && !(await page.evaluate(() => window.__xss)), JSON.stringify(xss));
       const m = await page.evaluate(measure, '#adminPanel');
       check(`[${mode}] أيقونات اللوحة موجودة (${m.length})`, m.length >= 20, `العدد ${m.length}`);
       check(`[${mode}] تباين كل أيقونة باللوحة ≥ 3:1`, m.filter(x => x.ratio < 3).length === 0, JSON.stringify(m.filter(x => x.ratio < 3).slice(0, 5)));

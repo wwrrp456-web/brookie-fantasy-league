@@ -123,7 +123,7 @@ function renderBadges(){
   html += '<div class="badges-grid">';
   badges.forEach(b=>{
     html += `<div class="badge-card">
-      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-icon">${iconHTML(b.icon,{size:26})}</div>
       <div class="badge-title">${b.title}</div>
       <div class="badge-names">${b.names}</div>
       <div class="badge-detail">${b.detail}</div>

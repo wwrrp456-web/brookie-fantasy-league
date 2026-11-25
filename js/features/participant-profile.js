@@ -85,7 +85,7 @@ function renderParticipantProfileInto(box, pid){
       <div class="profile-detail-col">
         <div class="profile-col-title">🏅 أوسمته الشخصية</div>
         ${myBadges.length
-          ? `<div class="profile-badges-list">${myBadges.map(b=>`<div class="profile-badge-row"><span class="profile-badge-icon">${b.icon}</span><span>${b.title} — ${b.detail}</span></div>`).join('')}</div>`
+          ? `<div class="profile-badges-list">${myBadges.map(b=>`<div class="profile-badge-row"><span class="profile-badge-icon">${iconHTML(b.icon)}</span><span>${b.title} — ${b.detail}</span></div>`).join('')}</div>`
           : `<div class="wall-empty">لا أوسمة شخصية بعد.</div>`}
         ${duelRecord ? `
         <div class="profile-col-title" style="margin-top:12px;">🥊 سجل نزال الموسم</div>
