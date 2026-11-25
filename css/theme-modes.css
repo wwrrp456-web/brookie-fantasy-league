@@ -72,6 +72,7 @@ html.light-mode .rank-leaderboard .rl-cell-3{color:#A0651D;}
 html.light-mode .medal-silver{background:rgba(120,115,140,.08);}
 html.light-mode .medal-bronze{background:rgba(214,168,104,.12);}
 html.light-mode .dm-dead{color:#B23A1C;}
+html.light-mode .dm-zero-cell,html.light-mode .dm-alive{color:var(--c-up);}
 
 /* الوضع الليلي: رماديات داكنة ثابتة كانت ضعيفة التباين على الخلفيات الداكنة */
 html:not(.light-mode) .mv-same{color:#A9A8D6;}

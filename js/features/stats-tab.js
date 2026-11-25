@@ -26,20 +26,20 @@ function renderRecords(){
   const box = document.getElementById('recordsBox');
   if(!box) return;
   const rec = computeRecords();
-  let html = '<h2 class="section-title" style="margin-top:22px;">📊 أرقام الموسم القياسية</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('chart-bar') + ' أرقام الموسم القياسية</h2>';
   html += '<div class="badges-grid">';
 
   if(rec.topRound){
-    html += `<div class="badge-card"><div class="badge-icon">💥</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${formatCount(rec.topRound.points, 'نقطة')} — الجولة ${rec.topRound.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">${iconHTML('sparkles')}</div><div class="badge-title">أعلى حصاد في جولة واحدة</div><div class="badge-names">${rec.topRound.name}</div><div class="badge-detail">${formatCount(rec.topRound.points, 'نقطة')} — الجولة ${rec.topRound.round}</div></div>`;
   }
   if(rec.closest){
-    html += `<div class="badge-card"><div class="badge-icon">⚔️</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">${rec.closest.gap > 0 ? 'يفصل بينهما ' + formatCount(rec.closest.gap, 'نقطة') + ' فقط' : 'متعادلان بالنقاط'}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">${iconHTML('swords')}</div><div class="badge-title">أعنف صراع في الترتيب</div><div class="badge-names">${rec.closest.a.name} و${rec.closest.b.name}</div><div class="badge-detail">${rec.closest.gap > 0 ? 'يفصل بينهما ' + formatCount(rec.closest.gap, 'نقطة') + ' فقط' : 'متعادلان بالنقاط'}</div></div>`;
   }
   if(rec.maxUp && rec.maxUp.delta > 0){
-    html += `<div class="badge-card"><div class="badge-icon">🚀</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">صعد ${formatCount(rec.maxUp.delta, 'مركز', {case: 'acc'})} — الجولة ${rec.maxUp.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">${iconHTML('rocket')}</div><div class="badge-title">أكبر صعود دفعة واحدة</div><div class="badge-names">${rec.maxUp.name}</div><div class="badge-detail">صعد ${formatCount(rec.maxUp.delta, 'مركز', {case: 'acc'})} — الجولة ${rec.maxUp.round}</div></div>`;
   }
   if(rec.maxDown && rec.maxDown.delta < 0){
-    html += `<div class="badge-card"><div class="badge-icon">📉</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">هبط ${formatCount(Math.abs(rec.maxDown.delta), 'مركز', {case: 'acc'})} — الجولة ${rec.maxDown.round}</div></div>`;
+    html += `<div class="badge-card"><div class="badge-icon">${iconHTML('trend-down')}</div><div class="badge-title">أكبر هبوط دفعة واحدة</div><div class="badge-names">${rec.maxDown.name}</div><div class="badge-detail">هبط ${formatCount(Math.abs(rec.maxDown.delta), 'مركز', {case: 'acc'})} — الجولة ${rec.maxDown.round}</div></div>`;
   }
   html += '</div>';
   box.innerHTML = html;
@@ -60,8 +60,8 @@ function renderH2H(){
 
   const myPid = window._verifiedPid || null;
   if(!myPid && !isAdmin){
-    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>
-      <span class="rc-locked">🔒 اختر اسمك وأدخل رمزك لفتح المواجهة المباشرة مع أي خصم</span>`;
+    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('swords')} مواجهة مباشرة</h2>
+      <span class="rc-locked">${iconHTML('lock')} اختر اسمك وأدخل رمزك لفتح المواجهة المباشرة مع أي خصم</span>`;
     return;
   }
 
@@ -74,7 +74,7 @@ function renderH2H(){
   }
 
   const options = PARTICIPANTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
-  let html = '<h2 class="section-title" style="margin-top:22px;">⚔️ مواجهة مباشرة</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('swords') + ' مواجهة مباشرة</h2>';
   html += `<div id="h2hCapture">
     <div class="h2h-picker">
       <select id="h2hSelectA" aria-label="المشارك الأول">${options}</select>
@@ -84,7 +84,7 @@ function renderH2H(){
     <div id="h2hResult"></div>
   </div>`;
   html += `<div class="toolbar" style="margin-top:8px;">
-    <button class="btn secondary" id="dlH2HBtn">⬇️ تحميل النتيجة كصورة</button>
+    <button class="btn secondary" id="dlH2HBtn">${iconHTML('download')} تحميل النتيجة كصورة</button>
   </div>
   <div id="h2hImgMsg"></div>`;
   box.innerHTML = html;
@@ -236,14 +236,14 @@ function renderWhatIf(){
   // نحتاج نرندر مرة واحدة فقط، ثم نحدّث النتيجة عند الضغط
   if(!_whatifRendered){
     box.innerHTML = `<div class="whatif-box">
-      <div class="whatif-title">🧮 حاسبة "ماذا لو؟" — تخيّل الجولة القادمة</div>
+      <div class="whatif-title">${iconHTML('calculator')} حاسبة "ماذا لو؟" — تخيّل الجولة القادمة</div>
       <div class="whatif-controls">
         <span class="whatif-label">لو حصل</span>
         <select class="whatif-select" id="wiPid" aria-label="المشارك">${opts}</select>
         <span class="whatif-label">على</span>
         <input type="number" class="whatif-input" id="wiPts" min="0" max="9" value="3" placeholder="نقاط">
         <span class="whatif-label">نقطة الجولة القادمة</span>
-        <button class="whatif-btn" onclick="calcWhatIf()">احسب ▶</button>
+        <button class="whatif-btn" onclick="calcWhatIf()">احسب ${iconHTML('play',{cls:'ic-semantic'})}</button>
       </div>
       <div id="wiResult"></div>
     </div>`;
@@ -286,12 +286,12 @@ function renderClubMap(){
     .sort((a,b)=>a.localeCompare(b,'ar'));
   const leagueOrder = [...preferredLeagueOrder, ...extraLeagues, 'أخرى'];
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">🗺️ خريطة الأندية بالدوريات</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('map') + ' خريطة الأندية بالدوريات</h2>';
   html += '<div class="club-map">';
 
   leagueOrder.forEach(league=>{
     if(!byLeague[league]) return;
-    const flag = leagueFlags[league]||'🌍';
+    const flag = leagueFlags[league]||iconHTML('globe');
     html += `<div class="club-map-league">
       <div class="club-map-league-name">${flag} ${league} (${formatCount(byLeague[league].length, 'نادٍ')})</div>
       <div class="club-map-clubs">`;
@@ -347,7 +347,7 @@ function renderPredChallenge(){
   const scores = {}; // pid -> {correct,total}
   PARTICIPANTS.forEach(p=>scores[p.id]={correct:0,total:0});
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">🎲 تحدي التوقعات — السجل الكامل</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('dice') + ' تحدي التوقعات — السجل الكامل</h2>';
   html += '<div style="overflow-x:auto;"><table class="pred-challenge-table">';
   html += '<tr><th>المشارك</th>';
   roundsWithPred.forEach(r=> html+=`<th title="الجولة ${r.number}">${r.number}</th>`);
@@ -369,7 +369,7 @@ function renderPredChallenge(){
       if(isCorrect){ correct++; scores[p.id].correct++; }
       const predName = (PARTICIPANTS.find(x=>x.id===Number(pred[p.id]))||{}).name||'?';
       const short = predName.split(' ')[0];
-      row.push(`<td class="${isCorrect?'pred-ch-correct':'pred-ch-wrong'}" title="${predName}">${isCorrect?'✅':'❌'} ${short}</td>`);
+      row.push(`<td class="${isCorrect?'pred-ch-correct':'pred-ch-wrong'}" title="${predName}">${isCorrect?iconHTML('check',{label:'توقع صحيح'}):iconHTML('close',{label:'توقع خاطئ'})} ${short}</td>`);
     });
     const pct = total>0?Math.round(correct/total*100):0;
     html += `<tr>
@@ -467,7 +467,7 @@ function renderRadar(){
   if(DATA.rounds.length < 2){ box.innerHTML=''; return; }
 
   const st = computeStandings();
-  let html = '<h2 class="section-title" style="margin-top:22px;">🕸️ رادار الموسم الكامل</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('radar') + ' رادار الموسم الكامل</h2>';
   html += '<div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">5 أبعاد: نقاط الموسم · معدل الجولة · أعلى جولة · الثبات · أطول سلسلة</div>';
   html += '<div class="radar-wrap">';
   st.forEach(s=>{
@@ -494,7 +494,7 @@ function renderRace(){
   const maxTotal = computeStandings(n)[0]?.total || 1;
 
   if(!_raceInit){
-    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🏎️ سباق الترتيب المتحرك</h2>
+    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('race-car')} سباق الترتيب المتحرك</h2>
       <div class="race-slider">
         <label for="raceSlider">الجولة:</label>
         <input type="range" id="raceSlider" min="0" max="${n}" value="${n}" step="1">
@@ -530,7 +530,7 @@ function updateRaceBars(){
   st.forEach((s,i)=>{
     const pct = Math.round((s.total/maxTotal)*100);
     const color = PARTICIPANT_COLORS[s.id] || 'var(--gold)';
-    const rankIcon = i===0?'👑':medalHTML(i+1);
+    const rankIcon = i===0?iconHTML('crown',{label:'المتصدر'}):medalHTML(i+1);
     html += `<div class="race-row">
       <span class="race-name">${rankIcon}${s.name}</span>
       <div class="race-bar-wrap">
@@ -563,7 +563,7 @@ function renderClubEfficiency(){
   // أشرطة نسبية على مقياس ثابت (أقصى متوسط ممكن = 3 نقاط للمباراة) فتظهر الفروق الحقيقية بين الأندية (FR-18، U-09)
   const SCALE = 3;
   let html = '<div class="club-eff">';
-  html += '<h2 class="section-title" style="margin-top:22px;">⚽ كفاءة الأندية في الدوري</h2>';
+  html += '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('ball') + ' كفاءة الأندية في الدوري</h2>';
   html += '<p class="club-eff-note">متوسط النقاط لكل مباراة، مرتبة من الأعلى. الأشرطة على مقياس ثابت من 3.</p>';
   const row = c => {
     const avg = Math.round(c.avg*10)/10;
@@ -600,7 +600,7 @@ function renderDeathMap(){
     return ma - mb;
   });
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">💀 خريطة الممات</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('skull-zero') + ' خريطة الممات</h2>';
   html += '<div class="death-map" tabindex="0" role="region" aria-label="خريطة الممّات"><table>';
   html += '<tr><th>المشارك</th>';
   roundNums.forEach(n=> html+=`<th title="الجولة ${n}">${n}</th>`);
@@ -618,13 +618,13 @@ function renderDeathMap(){
       if(pts === undefined){
         html += `<td class="dm-none empty-cell" title="لا بيانات لهذه الجولة"></td>`;
       } else if(pts === 0){
-        html += `<td class="dm-dead">☠️</td>`;
+        html += `<td class="dm-dead">${iconHTML('skull-zero')}</td>`;
       } else {
         html += `<td class="dm-alive">✓</td>`;
       }
     });
     const totCls = mumCount===0 ? 'dm-zero-cell' : 'dm-total-cell';
-    html += `<td class="${totCls}">${mumCount===0?'🧊':mumCount}</td>`;
+    html += `<td class="${totCls}">${mumCount===0?iconHTML('snowflake',{label:'بلا ممات'}):mumCount}</td>`;
     html += '</tr>';
   });
 

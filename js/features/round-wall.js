@@ -80,12 +80,12 @@ function renderRoundWall(){
       <div id="wallFormMsg_${roundNum}"></div>
     </div>`;
   } else {
-    formHTML = `<span class="rc-locked">🔒 اختر اسمك وأدخل رمزك للكتابة بجدار الجولة</span>`;
+    formHTML = `<span class="rc-locked">${iconHTML('lock')} اختر اسمك وأدخل رمزك للكتابة بجدار الجولة</span>`;
   }
 
   box.innerHTML = `<div class="round-wall-section">
-    <div class="round-wall-title">🧱 جدار الجولة ${roundNum}</div>
-    <p class="rounds-subtitle" style="margin-top:0;">اكتب رأيك، رد بإيموجي على أي رسالة — بس تذكّر إن الكل يشوف كلامك 😅</p>
+    <div class="round-wall-title">${iconHTML('wall')} جدار الجولة ${roundNum}</div>
+    <p class="rounds-subtitle" style="margin-top:0;">اكتب رأيك، رد بإيموجي على أي رسالة — بس تذكّر إن الكل يشوف كلامك</p>
     ${formHTML}
     <div class="wall-messages-list" id="wallMessagesList_${roundNum}"></div>
   </div>`;
@@ -130,7 +130,7 @@ function renderRoundWallList(roundNum){
       </button>`;
     }).join('');
     const deleteBtn = isAdmin
-      ? `<button type="button" class="wall-delete-btn" data-key="${escapeHtml(key)}" title="حذف الرسالة">🗑️</button>`
+      ? `<button type="button" class="wall-delete-btn" data-key="${escapeHtml(key)}" title="حذف الرسالة" aria-label="حذف الرسالة">${iconHTML('trash')}</button>`
       : '';
     return `<div class="wall-message-item">
       <div class="wall-message-head">

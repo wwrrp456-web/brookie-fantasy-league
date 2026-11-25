@@ -75,7 +75,7 @@ function renderClubSwapLab(){
   if(!DATA.rounds.length){ box.innerHTML=''; return; }
 
   const pOpts = PARTICIPANTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
-  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🔬 مختبر سيناريوهات تبديل الأندية</h2>
+  box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('flask')} مختبر سيناريوهات تبديل الأندية</h2>
     <div class="club-swap-card">
       <p class="rounds-subtitle" style="margin-top:0;">لو كان عند مشارك نادٍ غير ناديه الحالي طول الموسم، وين كان يكون ترتيبه؟</p>
       <div class="club-swap-controls">
@@ -83,7 +83,7 @@ function renderClubSwapLab(){
         <select id="clubSwapOldClubSelect" aria-label="النادي الحالي"></select>
         <span class="club-swap-arrow">⇄</span>
         <select id="clubSwapNewClubSelect" aria-label="النادي البديل">${CLUBS.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
-        <button type="button" class="btn secondary" id="runClubSwapBtn">شغّل السيناريو 🔬</button>
+        <button type="button" class="btn secondary" id="runClubSwapBtn">شغّل السيناريو ${iconHTML('flask')}</button>
       </div>
       <div id="clubSwapResultBox"></div>
     </div>`;
@@ -109,7 +109,7 @@ function renderClubSwapLab(){
     const r = simulateClubSwap(pid, oldClub, newClub);
     if(!r){ resBox.innerHTML = '<div class="status-msg err">تعذّر حساب السيناريو.</div>'; return; }
     const pName = PARTICIPANTS.find(x=>x.id===pid).name;
-    const rankArrow = r.rankDelta > 0 ? `📈 يتقدّم ${formatCount(r.rankDelta, 'مركز', {case: 'acc'})}` : r.rankDelta < 0 ? `📉 يتراجع ${formatCount(Math.abs(r.rankDelta), 'مركز', {case: 'acc'})}` : '📊 نفس المركز';
+    const rankArrow = r.rankDelta > 0 ? `${iconHTML('trend-up')} يتقدّم ${formatCount(r.rankDelta, 'مركز', {case: 'acc'})}` : r.rankDelta < 0 ? `${iconHTML('trend-down')} يتراجع ${formatCount(Math.abs(r.rankDelta), 'مركز', {case: 'acc'})}` : `${iconHTML('chart-bar')} نفس المركز`;
     const ptsArrow = r.totalDelta > 0 ? `+${r.totalDelta}` : `${r.totalDelta}`;
     resBox.innerHTML = `<div class="club-swap-result">
       <div class="club-swap-result-row"><span>ترتيبه الحقيقي:</span><strong>#${r.realRank} — ${formatCount(r.realTotal, 'نقطة')}</strong></div>

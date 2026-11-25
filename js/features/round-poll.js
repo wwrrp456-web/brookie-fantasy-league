@@ -61,7 +61,7 @@ document.getElementById('publishRoundPollBtn')?.addEventListener('click', async 
   }
   const ok = await publishRoundPoll(question, options);
   if(msg) msg.innerHTML = ok
-    ? '<div class="status-msg ok">تم نشر سؤال الجولة ✅</div>'
+    ? '<div class="status-msg ok">تم نشر سؤال الجولة ' + iconHTML('check') + '</div>'
     : '<div class="status-msg err">تعذّر النشر، حاول مرة ثانية.</div>';
   if(ok){ if(qEl) qEl.value=''; if(oEl) oEl.value=''; }
 });
@@ -93,10 +93,10 @@ function renderRoundPoll(){
   Object.values(votes).forEach(idx=>{ if(counts[idx] !== undefined) counts[idx]++; });
   const total = counts.reduce((a,b)=>a+b, 0);
 
-  let html = `<h2 class="section-title" style="margin-top:22px;">🗳️ سؤال الجولة ${rn}</h2>
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('poll')} سؤال الجولة ${rn}</h2>
     <div class="round-poll-card">
       <div class="round-poll-question">${poll.question}</div>
-      ${!pid ? '<div class="rc-locked">🔒 سجّل دخولك للتصويت</div>' : ''}`;
+      ${!pid ? '<div class="rc-locked">' + iconHTML('lock') + ' سجّل دخولك للتصويت</div>' : ''}`;
 
   if(canVote){
     html += `<div class="round-poll-options">`;
@@ -105,7 +105,7 @@ function renderRoundPoll(){
     });
     html += `</div>`;
   } else if(pid && myVoteIdx !== undefined){
-    html += `<div class="round-poll-my-vote">✅ صوّتت لـ: <strong>${poll.options[myVoteIdx] ?? '—'}</strong></div>`;
+    html += `<div class="round-poll-my-vote">${iconHTML('check')} صوّتت لـ: <strong>${poll.options[myVoteIdx] ?? '—'}</strong></div>`;
   }
 
   if(total > 0){

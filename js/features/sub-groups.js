@@ -39,7 +39,7 @@ function renderSubGroups(){
   const totalMap = {};
   standings.forEach(s=> totalMap[s.id] = s.total);
 
-  let html = `<h2 class="section-title" style="margin-top:22px;">👥 المجموعات الفرعية</h2>
+  let html = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('users')} المجموعات الفرعية</h2>
     <div class="sub-groups-grid">`;
   groups.forEach(g=>{
     const members = g.memberPids
@@ -75,7 +75,7 @@ function renderAdminSubGroupsList(){
     const names = g.memberPids.map(pid=> (PARTICIPANTS.find(p=>p.id===pid)||{}).name).filter(Boolean).join('، ');
     return `<div class="sub-group-admin-row">
       <div><strong>${g.name}</strong><br><span style="font-size:0.75rem;color:var(--muted);">${names}</span></div>
-      <button type="button" class="btn ghost sub-group-delete-btn" data-id="${g.id}">🗑️ حذف</button>
+      <button type="button" class="btn ghost sub-group-delete-btn" data-id="${g.id}">${iconHTML('trash')} حذف</button>
     </div>`;
   }).join('');
 }
@@ -100,7 +100,7 @@ document.getElementById('createSubGroupBtn')?.addEventListener('click', async ()
   }
   const ok = await createSubGroup(name, checked);
   if(msg) msg.innerHTML = ok
-    ? '<div class="status-msg ok">تم إنشاء المجموعة ✅</div>'
+    ? '<div class="status-msg ok">تم إنشاء المجموعة ' + iconHTML('check') + '</div>'
     : '<div class="status-msg err">تعذّر الحفظ، حاول مرة ثانية.</div>';
   if(ok){
     if(nameEl) nameEl.value='';

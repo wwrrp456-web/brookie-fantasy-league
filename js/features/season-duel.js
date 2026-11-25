@@ -78,7 +78,7 @@ async function sendSeasonDuel(opponentPid, myPid){
       startRound: getCurrentRoundNumber()+1,
       status: 'pending', createdAt: Date.now()
     });
-    if(msg) msg.innerHTML = '<div class="status-msg ok">أُرسل التحدي — بانتظار قبوله ✅</div>';
+    if(msg) msg.innerHTML = '<div class="status-msg ok">أُرسل التحدي — بانتظار قبوله ' + iconHTML('check') + '</div>';
   }catch(e){
     if(msg) msg.innerHTML = '<div class="status-msg err">تعذّر إرسال التحدي، حاول مرة ثانية.</div>';
   }
@@ -101,13 +101,13 @@ async function cancelSeasonDuel(key){
 }
 
 function duelStatusLabel(duel, status){
-  if(status.phase==='pending') return '⏳ بانتظار الرد';
-  if(status.phase==='declined') return '❌ مرفوض';
-  if(status.phase==='cancelled') return '🚫 مُلغى';
-  if(status.phase==='in_progress') return `⚔️ جارٍ (${escapeHtml(status.played)}/3 جولات)`;
+  if(status.phase==='pending') return '' + iconHTML('clock') + ' بانتظار الرد';
+  if(status.phase==='declined') return '' + iconHTML('close') + ' مرفوض';
+  if(status.phase==='cancelled') return '' + iconHTML('ban') + ' مُلغى';
+  if(status.phase==='in_progress') return `${iconHTML('swords')} جارٍ (${escapeHtml(status.played)}/3 جولات)`;
   if(status.phase==='completed'){
-    if(status.winnerPid===null) return '🤝 تعادل';
-    return `🏆 فاز ${participantName(status.winnerPid)}`;
+    if(status.winnerPid===null) return '' + iconHTML('handshake') + ' تعادل';
+    return `${iconHTML('trophy')} فاز ${participantName(status.winnerPid)}`;
   }
   return '';
 }
@@ -119,19 +119,19 @@ function duelCardHTML(key, duel, myPid){
   let actions = '';
   if(status.phase==='pending' && isOpponent){
     actions = `<div class="duel-card-actions">
-      <button type="button" class="btn secondary sd-accept-btn" data-key="${escapeHtml(key)}">✅ قبول</button>
-      <button type="button" class="btn ghost sd-decline-btn" data-key="${escapeHtml(key)}">❌ رفض</button>
+      <button type="button" class="btn secondary sd-accept-btn" data-key="${escapeHtml(key)}">${iconHTML('check')} قبول</button>
+      <button type="button" class="btn ghost sd-decline-btn" data-key="${escapeHtml(key)}">${iconHTML('close')} رفض</button>
     </div>`;
   } else if(status.phase==='pending' && isChallenger){
     actions = `<div class="duel-card-actions">
-      <button type="button" class="btn ghost sd-cancel-btn" data-key="${escapeHtml(key)}">🚫 إلغاء الطلب</button>
+      <button type="button" class="btn ghost sd-cancel-btn" data-key="${escapeHtml(key)}">${iconHTML('ban')} إلغاء الطلب</button>
     </div>`;
   }
   const scoreLine = (status.phase==='in_progress' || status.phase==='completed')
     ? `<div class="duel-card-score">${participantName(duel.challengerPid)} ${escapeHtml(status.aSum)} — ${escapeHtml(status.bSum)} ${participantName(duel.opponentPid)}</div>`
     : '';
   return `<div class="duel-card season-duel-card">
-    <div class="duel-card-title">${participantName(duel.challengerPid)} ⚔️ ${participantName(duel.opponentPid)}</div>
+    <div class="duel-card-title">${participantName(duel.challengerPid)} ${iconHTML('swords')} ${participantName(duel.opponentPid)}</div>
     <div class="duel-card-sub">يبدأ من الجولة ${escapeHtml(duel.startRound)} · ${duelStatusLabel(duel, status)}</div>
     ${scoreLine}
     ${actions}
@@ -149,8 +149,8 @@ function renderSeasonDuel(){
 
   const myPid = window._verifiedPid || null;
   if(!myPid){
-    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">🥊 نزال الموسم</h2>
-      <span class="rc-locked">🔒 اختر اسمك وأدخل رمزك لإرسال أو قبول نزال الموسم</span>`;
+    box.innerHTML = `<h2 class="section-title" style="margin-top:22px;">${iconHTML('swords')} نزال الموسم</h2>
+      <span class="rc-locked">${iconHTML('lock')} اختر اسمك وأدخل رمزك لإرسال أو قبول نزال الموسم</span>`;
     return;
   }
 
@@ -159,11 +159,11 @@ function renderSeasonDuel(){
     .filter(([,d])=> d.challengerPid===myPid || d.opponentPid===myPid)
     .sort((a,b)=> (b[1].createdAt||0)-(a[1].createdAt||0));
 
-  let html = '<h2 class="section-title" style="margin-top:22px;">🥊 نزال الموسم</h2>';
+  let html = '<h2 class="section-title" style="margin-top:22px;">' + iconHTML('swords') + ' نزال الموسم</h2>';
   html += `<p class="rounds-subtitle" style="margin-top:0;">تحدَّ أي مشارك على 3 جولات قادمة — الأعلى مجموع نقاط بالثلاث جولات يفوز.</p>`;
   html += `<div class="duel-picker">
     <select id="seasonDuelOpponentSelect">${opts}</select>
-    <button type="button" class="btn" id="sendSeasonDuelBtn">إرسال التحدي ⚔️</button>
+    <button type="button" class="btn" id="sendSeasonDuelBtn">إرسال التحدي ${iconHTML('swords')}</button>
   </div>
   <div id="seasonDuelFormMsg"></div>`;
 
@@ -195,7 +195,7 @@ function renderMySeasonDuels(){
   const rows = myDuels.map(([k,d])=>{
     const status = computeDuelStatus(d);
     const opp = d.challengerPid===myPid ? d.opponentPid : d.challengerPid;
-    return `<div class="my-duel-row">🥊 ضد ${participantName(opp)} — ${duelStatusLabel(d, status)}</div>`;
+    return `<div class="my-duel-row">${iconHTML('swords')} ضد ${participantName(opp)} — ${duelStatusLabel(d, status)}</div>`;
   }).join('');
   box.innerHTML = `<div class="my-duels-summary"><div class="my-duels-title">نزالات موسمي</div>${rows}</div>`;
 }
